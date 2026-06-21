@@ -391,6 +391,13 @@
         </div>
     </div>
     <script>
+        // Valid Student IDs by Section
+        const validStudentIds = {
+            'M3/2': [37581, 37582, 37583, 37584, 37585, 37586, 37587, 37588, 37589, 37590, 37591, 37592, 37593, 37594, 37596, 37597, 37598, 37599, 37600, 37601, 37602, 37603, 37604, 37606, 37607, 37608, 37609, 37611, 37615, 37618, 37620, 37621, 37622, 39688, 33680],
+            'M3/4': [37667, 37668, 37669, 37670, 37671, 37674, 37675, 37676, 37677, 37678, 37679, 37680, 37681, 37682, 37683, 37684, 37685, 37686, 37687, 37688, 37689, 37690, 37691, 37692, 37693, 37694, 37695, 37697, 37698, 37700, 37701, 37702, 37703, 37704, 37705, 37706, 37707, 39678],
+            'M3/6': [37750, 37751, 37752, 37753, 37754, 37756, 37757, 37758, 37759, 37760, 37761, 37762, 37763, 37764, 37765, 37766, 37767, 37768, 37769, 37770, 37771, 37772, 37774, 37775, 37776, 37777, 37778, 37780, 37781, 37782, 37783, 37784, 37785, 37788, 37789, 37790, 37791, 37792]
+        };
+
         // M3 A1 Questions
         const questionsM3A1 = [
             { id: 1, text: "You heard \"Where is Nammon, student number 24972?\" How do you answer?", image: "31.png", options: [
@@ -484,6 +491,14 @@
 
             document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
             if (!section) isValid = false;
+
+            // Validate student ID against roster
+            const studentIdNum = parseInt(studentId);
+            if (section && !validStudentIds[section].includes(studentIdNum)) {
+                document.getElementById('idWarning').textContent = 'Student ID ไม่ถูกต้องสำหรับส่วนนี้';
+                document.getElementById('idWarning').style.display = 'block';
+                isValid = false;
+            }
 
             if (!isValid) return;
 
