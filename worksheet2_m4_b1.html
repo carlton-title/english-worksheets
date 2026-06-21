@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 2 M4 (B1): Making Requests Politely</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .title {
+            font-size: 2.5em;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin: 10px 0;
+        }
+        .info-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-weight: bold;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #667eea;
+        }
+        .form-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        .warning {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        .attempts-tracker {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .worksheet-locked {
+            display: none;
+            background: #ffebee;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e74c3c;
+        }
+        .locked-message {
+            font-size: 1.3em;
+            color: #c41e3a;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .worksheet-locked.show {
+            display: block;
+        }
+        .questions-section {
+            display: none;
+        }
+        .questions-section.show {
+            display: block;
+        }
+        .question-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+        }
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .question-text {
+            font-size: 1.05em;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .image-placeholder {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+        .option input[type="radio"] {
+            cursor: pointer;
+        }
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #667eea;
+        }
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            margin: 0;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            padding: 12px 30px;
+            width: auto;
+        }
+        .btn-retry {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            padding: 12px 30px;
+            width: auto;
+        }
+        .score-display {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid #4caf50;
+        }
+        .score-value {
+            font-size: 2em;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        .score-status {
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 10px;
+        }
+        .status-pass {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .status-fail {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .summary-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 2px solid #ddd;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .summary-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .summary-value {
+            color: #667eea;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .title {
+                font-size: 1.8em;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">📝 WORKSHEET 2 💬</div>
+            <div class="subtitle">Making Requests Politely</div>
+            <div class="subtitle">M4 (B1) - Grade 10 | Sections 10-13</div>
+        </div>
+        <div class="info-banner">
+            <div class="info-item">
+                <span>📖</span> <span>Multiple Choice</span>
+            </div>
+            <div class="info-item">
+                <span>⭐</span> <span>Passing Score: 8/10</span>
+            </div>
+            <div class="info-item">
+                <span>🔒</span> <span>Max 3 Attempts</span>
+            </div>
+            <div class="info-item">
+                <span>🎉</span> <span>Have Fun!</span>
+            </div>
+        </div>
+        <div class="form-section">
+            <h3>📋 Before You Start</h3>
+            <div class="form-group">
+                <label>🌸 1. English Nickname</label>
+                <input type="text" id="nickname" placeholder="Enter your English nickname" value="">
+                <div class="warning" id="nicknameWarning">⚠️ Please enter your nickname.</div>
+            </div>
+            <div class="form-group">
+                <label>🔢 2. Student ID (5 Digits)</label>
+                <input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5" value="">
+                <div class="warning" id="idWarning">⚠️ Please enter a valid 5-digit ID.</div>
+            </div>
+            <div class="form-group">
+                <label>📅 3. Date</label>
+                <input type="date" id="date">
+                <div class="warning" id="dateWarning">⚠️ Please select today's date.</div>
+            </div>
+            <div class="form-group">
+                <label>🏫 4. Your Class (M4/10-M4/13)</label>
+                <select id="section">
+                    <option value="M4/10" selected>M4/10</option>
+                    <option value="M4/11">M4/11</option>
+                    <option value="M4/12">M4/12</option>
+                    <option value="M4/13">M4/13</option>
+                </select>
+                <div class="warning" id="sectionWarning">⚠️ Please select your class.</div>
+            </div>
+            <button onclick="startWorksheet()">▶ Start Worksheet 🚀</button>
+        </div>
+        <div class="attempts-tracker">
+            <h4>📊 Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
+            <p id="attemptsMessage" style="color: #666; margin: 0;"></p>
+        </div>
+        <div class="worksheet-locked" id="lockedMessage">
+            <div style="font-size: 3em; margin-bottom: 10px;">🔒</div>
+            <div class="locked-message">Worksheet Locked</div>
+            <p>🔒 จบการทำแบบฝึกหัดแล้วครับ</p>
+            <p>กรุณาไปพบครูเพื่อรับคำแนะนำ</p>
+            <p>เรื่องคะแนนของคุณค่ะ</p>
+        </div>
+        <div class="questions-section" id="questionsSection">
+            <h3 style="color: #667eea; margin-bottom: 20px;" id="topicTitle">💬 Making Requests Politely (B1)</h3>
+            <div id="questionsContainer"></div>
+            <div class="button-group">
+                <button class="btn-submit" onclick="submitAnswers()">✔ Submit Answers 🎯</button>
+                <button class="btn-retry" onclick="resetForm()">↻ Try Again 💪</button>
+            </div>
+        </div>
+        <div id="scoreDisplay" style="display: none;">
+            <div class="score-display">
+                <div>Your Score</div>
+                <div class="score-value" id="scoreValue">0/10</div>
+                <div class="score-status" id="scoreStatus"></div>
+            </div>
+            <div class="summary-section">
+                <h4 style="margin-bottom: 15px;">📋 Summary</h4>
+                <div class="summary-item">
+                    <span class="summary-label">🌸 Nickname</span>
+                    <span class="summary-value" id="summaryNickname">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">🔢 Student ID</span>
+                    <span class="summary-value" id="summaryId">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">📅 Date</span>
+                    <span class="summary-value" id="summaryDate">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">🏫 Class</span>
+                    <span class="summary-value" id="summarySection">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">⭐ Score</span>
+                    <span class="summary-value" id="summaryScore">—</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">🕐 Submitted</span>
+                    <span class="summary-value" id="summaryTime">—</span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; color: #666;">
+                📸 Take a screenshot and send it to your teacher on Line or Google Classroom.
+            </p>
+        </div>
+    </div>
+    <script>
+        // B1 Images: 6 new + 4 recycled from original
+        const originalImages = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png"];
+        const newImages = ["21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png", "29.png", "30.png"];
+
+        // Image mapping for B1
+        const b1ImageMap = {
+            1: originalImages[5],  // Q1: image 6 from original
+            2: newImages[0],       // Q2: image 1 new (21.png)
+            3: newImages[1],       // Q3: image 2 new (22.png)
+            4: newImages[2],       // Q4: image 3 new (23.png)
+            5: newImages[4],       // Q5: image 5 new (25.png)
+            6: originalImages[1],  // Q6: image 2 from original
+            7: newImages[5],       // Q7: image 6 new (26.png)
+            8: originalImages[2],  // Q8: image 3 from original
+            9: originalImages[7],  // Q9: image 8 from original
+            10: newImages[6]       // Q10: image 7 new (27.png)
+        };
+
+        // Google Apps Script URL for M4
+        const M4_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
+
+        // B1 Questions
+        const questionsM4 = {
+            'B1': [
+                { id: 1, text: "Your friend borrowed your homework but hasn't returned it. How do you ask politely?", image: b1ImageMap[1], options: [
+                    { text: "A) 'Give me my homework back!'", correct: false },
+                    { text: "B) 'Could you return that homework when you have a chance?'", correct: true },
+                    { text: "C) 'You still have my homework!'", correct: false },
+                    { text: "D) 'Return my work immediately!'", correct: false }
+                ]},
+                { id: 2, text: "You want to ask your teacher for more time on an assignment because you were sick. What's best?", image: b1ImageMap[2], options: [
+                    { text: "A) 'I need more time for this assignment.'", correct: false },
+                    { text: "B) 'Would it be possible to have an extension? I was sick and got behind on my work.'", correct: true },
+                    { text: "C) 'Give me more time!'", correct: false },
+                    { text: "D) 'Can I hand it in later?'", correct: false }
+                ]},
+                { id: 3, text: "Your classmate is talking loudly during a test. How do you ask them to stop?", image: b1ImageMap[3], options: [
+                    { text: "A) 'Be quiet! You're distracting me!'", correct: false },
+                    { text: "B) 'Could you please keep it down? It's hard to concentrate.'", correct: true },
+                    { text: "C) 'Stop being annoying!'", correct: false },
+                    { text: "D) 'You're being too loud!'", correct: false }
+                ]},
+                { id: 4, text: "You want to ask your parent to go to a party on a school night. What's the best way?", image: b1ImageMap[4], options: [
+                    { text: "A) 'I'm going to a party on Thursday.'", correct: false },
+                    { text: "B) 'Could we talk about this? I want to go to a party. I'll finish my homework first and be home by 10 PM.'", correct: true },
+                    { text: "C) 'Let me go to the party!'", correct: false },
+                    { text: "D) 'Can I go?'", correct: false }
+                ]},
+                { id: 5, text: "Your groupmate made a mistake on a project. How do you tell them politely?", image: b1ImageMap[5], options: [
+                    { text: "A) 'You did this wrong!'", correct: false },
+                    { text: "B) 'I think there's an issue with this part. Can we work on it together?'", correct: true },
+                    { text: "C) 'This is completely wrong!'", correct: false },
+                    { text: "D) 'Your work has errors.'", correct: false }
+                ]},
+                { id: 6, text: "You want to ask your friend to study with you. What should you say?", image: b1ImageMap[6], options: [
+                    { text: "A) 'Help me study!'", correct: false },
+                    { text: "B) 'Would you study with me? I'm having trouble with some of the material.'", correct: true },
+                    { text: "C) 'You need to help me study.'", correct: false },
+                    { text: "D) 'Can you help me?'", correct: false }
+                ]},
+                { id: 7, text: "Your roommate is being noisy late at night. How do you ask them politely?", image: b1ImageMap[7], options: [
+                    { text: "A) 'Stop making so much noise!'", correct: false },
+                    { text: "B) 'Hey, could you keep it down after 10 PM? I have early classes tomorrow.'", correct: true },
+                    { text: "C) 'You're too loud!'", correct: false },
+                    { text: "D) 'Be quiet!'", correct: false }
+                ]},
+                { id: 8, text: "You don't understand something in class. How do you ask your teacher?", image: b1ImageMap[8], options: [
+                    { text: "A) 'This lesson is confusing.'", correct: false },
+                    { text: "B) 'Could you explain this part more? I'm having trouble understanding it.'", correct: true },
+                    { text: "C) 'I don't get this.'", correct: false },
+                    { text: "D) 'Teach this better.'", correct: false }
+                ]},
+                { id: 9, text: "Your friend invites you to a party, but you need to study for exams. How should you say no?", image: b1ImageMap[9], options: [
+                    { text: "A) 'No, I don't want to go.'", correct: false },
+                    { text: "B) 'Thank you for inviting me. I have to study for exams that day. Can we celebrate another time?'", correct: true },
+                    { text: "C) 'I can't go.'", correct: false },
+                    { text: "D) 'I'm busy.'", correct: false }
+                ]},
+                { id: 10, text: "A family member did something that upset you. How do you talk to them about it?", image: b1ImageMap[10], options: [
+                    { text: "A) 'What you did was terrible!'", correct: false },
+                    { text: "B) 'I want to talk about what happened. I felt hurt, and I want to understand why you did it.'", correct: true },
+                    { text: "C) 'You upset me!'", correct: false },
+                    { text: "D) 'That was wrong!'", correct: false }
+                ]}
+            ]
+        };
+
+        let currentLevel = 'B1';
+        let userAnswers = {};
+        let attempts = 0;
+        let allAttemptScores = [];
+        const maxAttempts = 3;
+
+        // Set today's date
+        document.getElementById('date').valueAsDate = new Date();
+
+        function startWorksheet() {
+            const nickname = document.getElementById('nickname').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            const date = document.getElementById('date').value;
+            const section = document.getElementById('section').value;
+
+            let isValid = true;
+            document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
+            if (!nickname) isValid = false;
+
+            document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
+            if (!studentId || studentId.length !== 5) isValid = false;
+
+            document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
+            if (!date) isValid = false;
+
+            document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
+            if (!section) isValid = false;
+
+            if (!isValid) return;
+
+            // Load attempt history
+            const storageKey = `ws2_m4_b1_${studentId}_${section}`;
+            const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+            attempts = savedData.attempts || 0;
+            allAttemptScores = savedData.scores || [];
+
+            if (attempts >= maxAttempts) {
+                document.querySelector('.form-section').style.display = 'none';
+                document.getElementById('questionsSection').classList.remove('show');
+                document.getElementById('lockedMessage').classList.add('show');
+                document.getElementById('scoreDisplay').style.display = 'none';
+                updateAttemptsDisplay();
+                return;
+            }
+
+            document.querySelector('.form-section').style.display = 'none';
+            document.getElementById('questionsSection').classList.add('show');
+            renderQuestions();
+            userAnswers = {};
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            const qList = questionsM4[currentLevel];
+
+            qList.forEach((q) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${q.id}`;
+
+                const imageHtml = `<img src="${q.image}" alt="Question image" class="image-placeholder">`;
+                const optionsHtml = q.options.map((opt, idx) => `
+                    <label class="option">
+                        <input type="radio" name="q${q.id}" value="${idx}">
+                        <span>${opt.text}</span>
+                    </label>
+                `).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <span class="question-number">${q.id}</span>
+                        <span class="question-text">${q.text}</span>
+                    </div>
+                    ${imageHtml}
+                    <div class="options">${optionsHtml}</div>
+                `;
+
+                card.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        userAnswers[q.id] = parseInt(this.value);
+                    });
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        function submitAnswers() {
+            const qList = questionsM4[currentLevel];
+            let score = 0;
+
+            qList.forEach((q) => {
+                if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) {
+                    score++;
+                }
+            });
+
+            const nickname = document.getElementById('nickname').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            const section = document.getElementById('section').value;
+            const storageKey = `ws2_m4_b1_${studentId}_${section}`;
+
+            const isPassed = score >= 8;
+
+            // Save attempt
+            const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+            savedData.attempts = (savedData.attempts || 0) + 1;
+            if (!savedData.scores) savedData.scores = [];
+            savedData.scores.push(score);
+            attempts = savedData.attempts;
+            allAttemptScores = savedData.scores;
+            localStorage.setItem(storageKey, JSON.stringify(savedData));
+
+            // Show results
+            document.getElementById('questionsSection').classList.remove('show');
+            document.getElementById('scoreDisplay').style.display = 'block';
+            document.getElementById('scoreValue').textContent = `${score}/10`;
+
+            const statusEl = document.getElementById('scoreStatus');
+
+            if (isPassed) {
+                submitToGoogleSheet(studentId, nickname, section, score, 'PASSED');
+
+                statusEl.innerHTML = `<span class="status-pass">
+                    ✅ ยินดีด้วยครับ! 🎉<br>
+                    ผ่านแบบฝึกหัด 2 แล้ว<br>
+                    ทำได้ดีมากนะครับ
+                </span>`;
+            } else {
+                if (attempts >= maxAttempts) {
+                    const highestScore = Math.max(...allAttemptScores);
+                    submitToGoogleSheet(studentId, nickname, section, highestScore, 'HIGHEST_FAIL');
+
+                    statusEl.innerHTML = `<span class="status-fail">
+                        ❌ ยังไม่ผ่านค่ะ<br>
+                        กรุณาลองใหม่อีกครั้ง<br>
+                        คะแนนผ่าน: 8, 9, 10<br>
+                        โอกาสเหลือ: 0 ครั้ง
+                    </span>`;
+                } else {
+                    const remaining = maxAttempts - attempts;
+                    statusEl.innerHTML = `<span class="status-fail">
+                        ❌ ยังไม่ผ่านค่ะ<br>
+                        กรุณาลองใหม่อีกครั้ง<br>
+                        คะแนนผ่าน: 8, 9, 10<br>
+                        โอกาสเหลือ: ${remaining} ครั้ง
+                    </span>`;
+                }
+            }
+
+            document.getElementById('summaryNickname').textContent = nickname;
+            document.getElementById('summaryId').textContent = studentId;
+            document.getElementById('summaryDate').textContent = section;
+            document.getElementById('summarySection').textContent = section;
+            document.getElementById('summaryScore').textContent = `${score}/10`;
+            document.getElementById('summaryTime').textContent = new Date().toLocaleString();
+
+            updateAttemptsDisplay();
+        }
+
+        function submitToGoogleSheet(studentId, nickname, section, score, status) {
+            const data = {
+                studentId: studentId,
+                nickname: nickname,
+                section: section,
+                score: score,
+                date: new Date().toISOString(),
+                status: status
+            };
+
+            fetch(M4_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            }).catch(err => console.log('Score submitted'));
+        }
+
+        function resetForm() {
+            userAnswers = {};
+            document.getElementById('questionsSection').classList.remove('show');
+            document.getElementById('scoreDisplay').style.display = 'none';
+
+            if (attempts >= maxAttempts) {
+                document.getElementById('lockedMessage').classList.add('show');
+            } else {
+                document.querySelector('.form-section').style.display = 'block';
+                document.getElementById('nickname').value = '';
+                document.getElementById('studentId').value = '';
+                document.getElementById('section').value = 'M4/10';
+                document.getElementById('date').valueAsDate = new Date();
+            }
+        }
+
+        function updateAttemptsDisplay() {
+            document.getElementById('attemptsUsed').textContent = attempts;
+            const msg = document.getElementById('attemptsMessage');
+            if (attempts >= maxAttempts) {
+                msg.textContent = '🔒 จบการทำแบบฝึกหัดแล้ว';
+                msg.style.color = '#c41e3a';
+            } else {
+                msg.textContent = `โอกาสเหลือ: ${maxAttempts - attempts} ครั้ง`;
+                msg.style.color = '#666';
+            }
+        }
+
+        updateAttemptsDisplay();
+    </script>
+</body>
+</html>
