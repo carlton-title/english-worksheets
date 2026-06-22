@@ -392,14 +392,6 @@
         </div>
     </div>
     <script>
-        // Valid Student IDs by Section
-        const validStudentIds = {
-            'M4/10': [36894, 36895, 36896, 36897, 36898, 36899, 36900, 36901, 36902, 36903, 36904, 36905, 36906, 36907, 36908, 36909, 36910, 36911, 36912, 36913, 36914, 36915, 36916, 36917, 36918, 36919, 36920, 36921, 39652],
-            'M4/11': [36896, 36897, 36898, 36899, 36900, 36901, 36902, 36903, 36904, 36905, 36906, 36907, 36908, 36909, 36910, 36911, 36912, 36913, 36914, 36915, 36916, 39660],
-            'M4/12': [36787, 36788, 36789, 36790, 36791, 36792, 36793, 36794, 36795, 36796, 36797, 36798, 36799, 36800, 36801, 36802, 36803, 36804, 36805, 36806, 36807, 36808, 36809, 36810, 36811, 36812, 36813, 36814, 36815, 36816, 36817, 36818, 36819, 36820, 39666],
-            'M4/13': [36900, 36901, 36902, 36903, 36904, 36905, 36906, 36907, 36908, 36909, 36910, 36911, 36912, 36913, 36914, 36915, 36916, 36917, 36918, 36919, 36920, 36921, 36922, 36923, 36924, 36925, 36926, 36927, 36928, 36929, 36930, 36931, 36932, 36933, 39675]
-        };
-
         // B1 Images: 6 new + 4 recycled from original
         const originalImages = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png"];
         const newImages = ["21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png", "29.png", "30.png"];
@@ -514,14 +506,6 @@
 
             document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
             if (!section) isValid = false;
-
-            // Validate student ID against roster
-            const studentIdNum = parseInt(studentId);
-            if (section && !validStudentIds[section].includes(studentIdNum)) {
-                document.getElementById('idWarning').textContent = 'Student ID ไม่ถูกต้องสำหรับส่วนนี้';
-                document.getElementById('idWarning').style.display = 'block';
-                isValid = false;
-            }
 
             if (!isValid) return;
 
