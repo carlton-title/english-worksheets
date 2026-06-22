@@ -390,12 +390,6 @@
         </div>
     </div>
     <script>
-        // Valid Student IDs by Section
-        const validStudentIds = {
-            'M3/10': [37917, 37918, 37919, 37920, 37921, 37923, 37925, 37926, 37927, 37928, 37929, 37930, 37931, 37932, 37933, 37934, 37935, 37936, 37938, 37939, 37940, 37942, 37943, 37944, 37945, 37946, 37947, 37948, 37950, 37953, 37954, 37955, 37956],
-            'M3/12': [37996, 37997, 37998, 37999, 38000, 38001, 38002, 38003, 38004, 38005, 38006, 38007, 38008, 38009, 38010, 38011, 38012, 38013, 38014, 38015, 38016, 38017, 38018, 38019, 38020, 38021, 38022, 38023, 38024, 38025, 38026, 38027, 38028, 38034]
-        };
-
         // M3 B1 Questions
         const questionsM3B1 = [
             { id: 1, text: "Your teacher gives detailed instructions quickly. What should you do?", image: "41.png", options: [
@@ -461,7 +455,7 @@
         ];
 
         // Google Apps Script URL for M3
-        const M3_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
+        const M3_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
 
         let userAnswers = {};
         let attempts = 0;
@@ -489,14 +483,6 @@
 
             document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
             if (!section) isValid = false;
-
-            // Validate student ID against roster
-            const studentIdNum = parseInt(studentId);
-            if (section && !validStudentIds[section].includes(studentIdNum)) {
-                document.getElementById('idWarning').textContent = 'Student ID ไม่ถูกต้องสำหรับส่วนนี้';
-                document.getElementById('idWarning').style.display = 'block';
-                isValid = false;
-            }
 
             if (!isValid) return;
 
