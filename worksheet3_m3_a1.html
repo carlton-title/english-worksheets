@@ -111,6 +111,7 @@
             margin-right: 10px;
         }
         .question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
+        .image-placeholder { width: 100%; max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px; }
         .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .option {
             background: white;
@@ -282,9 +283,15 @@
     // Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
     // Q1:C(2) Q2:A(0) Q3:D(3) Q4:B(1) Q5:C(2) Q6:D(3) Q7:A(0) Q8:B(1) Q9:D(3) Q10:C(2)
 
+    const canvaImages = [
+        "A1Q1.png","A1Q2.png","A1Q3.png","A1Q4.png","A1Q5.png",
+        "A1Q6.png","A1Q7.png","A1Q8.png","A1Q9.png","A1Q10.png"
+    ];
+
     const questions = [
         {
             id: 1,
+            image: canvaImages[0],
             text: "Which sentence means you like something very much?",
             options: [
                 { text: "A) I hate it so much.", correct: false },
@@ -295,6 +302,7 @@
         },
         {
             id: 2,
+            image: canvaImages[1],
             text: "What does 'I prefer swimming than running' mean?",
             options: [
                 { text: "A) I like swimming more than running.", correct: true },
@@ -305,6 +313,7 @@
         },
         {
             id: 3,
+            image: canvaImages[2],
             text: "Your friend asks 'Do you like spicy food?' You don't like it. What do you say?",
             options: [
                 { text: "A) Yes, it's delicious!", correct: false },
@@ -315,6 +324,7 @@
         },
         {
             id: 4,
+            image: canvaImages[3],
             text: "Which expression shows a strong dislike?",
             options: [
                 { text: "A) I enjoy it sometimes.", correct: false },
@@ -325,6 +335,7 @@
         },
         {
             id: 5,
+            image: canvaImages[4],
             text: "What does 'I'm not really into horror movies' mean?",
             options: [
                 { text: "A) I love horror movies.", correct: false },
@@ -335,6 +346,7 @@
         },
         {
             id: 6,
+            image: canvaImages[5],
             text: "Your friend says 'I love Thai food!' Which answer shows you feel the same?",
             options: [
                 { text: "A) I hate Thai food.", correct: false },
@@ -345,6 +357,7 @@
         },
         {
             id: 7,
+            image: canvaImages[6],
             text: "Which word means you like something very much?",
             options: [
                 { text: "A) Adore", correct: true },
@@ -355,6 +368,7 @@
         },
         {
             id: 8,
+            image: canvaImages[7],
             text: "Your teacher asks 'Do you prefer group work or individual work?' Which is a correct answer?",
             options: [
                 { text: "A) I hate to work.", correct: false },
@@ -365,6 +379,7 @@
         },
         {
             id: 9,
+            image: canvaImages[8],
             text: "Which sentence best shows a personal preference?",
             options: [
                 { text: "A) Pizza is an Italian food.", correct: false },
@@ -375,6 +390,7 @@
         },
         {
             id: 10,
+            image: canvaImages[9],
             text: "What does 'I'm fond of drawing' mean?",
             options: [
                 { text: "A) I hate drawing.", correct: false },
@@ -448,12 +464,14 @@
                     <span>${opt.text}</span>
                 </label>
             `).join('');
+            const imageHtml = `<img src="${q.image}" alt="Question image" class="image-placeholder">`;
             card.innerHTML = `
                 <div>
                     <span class="question-number">${q.id}</span>
                     <span class="question-text">${q.text}</span>
                 </div>
-                <div class="options" style="margin-top:15px;">${optionsHtml}</div>
+                ${imageHtml}
+                <div class="options">${optionsHtml}</div>
             `;
             card.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
