@@ -1,573 +1,591 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Worksheet 3 M4 (A1): Giving Advice</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .header { text-align: center; margin-bottom: 30px; }
-        .title { font-size: 2.5em; color: #667eea; margin: 10px 0; }
-        .subtitle { font-size: 1.1em; color: #666; margin: 10px 0; }
-        .info-banner {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-weight: bold;
-        }
-        .info-item { display: flex; align-items: center; gap: 8px; }
-        .form-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border: 2px solid #667eea;
-        }
-        .form-section h3 { color: #667eea; margin-bottom: 15px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: bold; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 10px rgba(102,126,234,0.3);
-        }
-        .warning { color: #e74c3c; font-size: 0.85em; margin-top: 5px; display: none; }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.3); }
-        .attempts-tracker {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 5px solid #ffc107;
-        }
-        .worksheet-locked {
-            display: none;
-            background: #ffebee;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            border: 2px solid #e74c3c;
-        }
-        .locked-message { font-size: 1.3em; color: #c41e3a; font-weight: bold; margin: 15px 0; }
-        .worksheet-locked.show { display: block; }
-        .questions-section { display: none; }
-        .questions-section.show { display: block; }
-        .question-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #ddd;
-        }
-        .question-number {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 35px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        .question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .option {
-            background: white;
-            border: 2px solid #ddd;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .option:hover { border-color: #667eea; background: #f0f3ff; }
-        .option input[type="radio"] { cursor: pointer; }
-        .option label { cursor: pointer; flex: 1; margin: 0; }
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn-submit { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); padding: 12px 30px; width: auto; }
-        .btn-retry { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); padding: 12px 30px; width: auto; }
-        .score-display {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 20px;
-            border: 2px solid #4caf50;
-        }
-        .score-value { font-size: 2em; color: #2e7d32; font-weight: bold; }
-        .score-status { font-size: 1.1em; color: #555; margin-top: 10px; }
-        .status-pass { color: #4caf50; font-weight: bold; }
-        .status-fail { color: #e74c3c; font-weight: bold; }
-        .summary-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 25px;
-            border: 2px solid #ddd;
-        }
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .summary-item:last-child { border-bottom: none; }
-        .summary-label { font-weight: bold; color: #333; }
-        .summary-value { color: #667eea; font-weight: bold; }
-        @media (max-width: 600px) {
-            .container { padding: 20px; }
-            .title { font-size: 1.8em; }
-            .options { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worksheet 3 M4 (A1): Giving Advice</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 900px;
+margin: 0 auto;
+background: white;
+border-radius: 20px;
+padding: 40px;
+box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.header { text-align: center; margin-bottom: 30px; }
+.title { font-size: 2.5em; color: #667eea; margin: 10px 0; }
+.subtitle { font-size: 1.1em; color: #666; margin: 10px 0; }
+.info-banner {
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+padding: 15px;
+border-radius: 10px;
+margin-bottom: 20px;
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+gap: 10px;
+font-weight: bold;
+}
+.info-item { display: flex; align-items: center; gap: 8px; }
+.form-section {
+background: #f8f9fa;
+padding: 25px;
+border-radius: 15px;
+margin-bottom: 25px;
+border: 2px solid #667eea;
+}
+.form-section h3 { color: #667eea; margin-bottom: 15px; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: bold; }
+.form-group input, .form-group select {
+width: 100%;
+padding: 12px;
+border: 2px solid #ddd;
+border-radius: 8px;
+font-size: 1em;
+}
+.form-group input:focus, .form-group select:focus {
+outline: none;
+border-color: #667eea;
+box-shadow: 0 0 10px rgba(102,126,234,0.3);
+}
+.warning { color: #e74c3c; font-size: 0.85em; margin-top: 5px; display: none; }
+button {
+width: 100%;
+padding: 12px;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+border: none;
+border-radius: 8px;
+font-weight: bold;
+cursor: pointer;
+transition: all 0.3s;
+font-size: 1em;
+}
+button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.3); }
+.attempts-tracker {
+background: #fff3cd;
+padding: 15px;
+border-radius: 8px;
+margin-bottom: 20px;
+border-left: 5px solid #ffc107;
+}
+.worksheet-locked {
+display: none;
+background: #ffebee;
+padding: 30px;
+border-radius: 15px;
+text-align: center;
+border: 2px solid #e74c3c;
+}
+.locked-message { font-size: 1.3em; color: #c41e3a; font-weight: bold; margin: 15px 0; }
+.worksheet-locked.show { display: block; }
+.questions-section { display: none; }
+.questions-section.show { display: block; }
+.question-card {
+background: #f8f9fa;
+padding: 20px;
+border-radius: 12px;
+margin-bottom: 20px;
+border: 2px solid #ddd;
+}
+.question-number {
+display: inline-block;
+background: #667eea;
+color: white;
+width: 35px;
+height: 35px;
+border-radius: 50%;
+text-align: center;
+line-height: 35px;
+font-weight: bold;
+margin-right: 10px;
+}
+.question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
+.image-placeholder { width: 100%; max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.option {
+background: white;
+border: 2px solid #ddd;
+padding: 12px;
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.3s;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.option:hover { border-color: #667eea; background: #f0f3ff; }
+.option input[type="radio"] { cursor: pointer; }
+.option label { cursor: pointer; flex: 1; margin: 0; }
+.button-group {
+display: flex;
+gap: 10px;
+margin-top: 25px;
+flex-wrap: wrap;
+justify-content: center;
+}
+.btn-submit { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); padding: 12px 30px; width: auto; }
+.btn-retry { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); padding: 12px 30px; width: auto; }
+.score-display {
+background: #e8f5e9;
+padding: 15px;
+border-radius: 8px;
+text-align: center;
+margin-top: 20px;
+border: 2px solid #4caf50;
+}
+.score-value { font-size: 2em; color: #2e7d32; font-weight: bold; }
+.score-status { font-size: 1.1em; color: #555; margin-top: 10px; }
+.status-pass { color: #4caf50; font-weight: bold; }
+.status-fail { color: #e74c3c; font-weight: bold; }
+.summary-section {
+background: #f8f9fa;
+padding: 20px;
+border-radius: 12px;
+margin-top: 25px;
+border: 2px solid #ddd;
+}
+.summary-item {
+display: flex;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid #ddd;
+}
+.summary-item:last-child { border-bottom: none; }
+.summary-label { font-weight: bold; color: #333; }
+.summary-value { color: #667eea; font-weight: bold; }
+@media (max-width: 600px) {
+.container { padding: 20px; }
+.title { font-size: 1.8em; }
+.options { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
 <div class="container">
 
-    <div class="header">
-        <div class="title">💡 WORKSHEET 3 🤝</div>
-        <div class="subtitle">Giving Advice</div>
-        <div class="subtitle">M4 (A1) - Grade 10 | Sections 1–9</div>
-    </div>
+<div class="header">
+<div class="title">💡 WORKSHEET 3 🤝</div>
+<div class="subtitle">Giving Advice</div>
+<div class="subtitle">M4 (A1) - Grade 10 | Sections 1–9</div>
+</div>
 
-    <div class="info-banner">
-        <div class="info-item"><span>📖</span><span>Multiple Choice</span></div>
-        <div class="info-item"><span>⭐</span><span>Passing Score: 8/10</span></div>
-        <div class="info-item"><span>🔒</span><span>Max 3 Attempts</span></div>
-        <div class="info-item"><span>🎉</span><span>Have Fun!</span></div>
-    </div>
+<div class="info-banner">
+<div class="info-item"><span>📖</span><span>Multiple Choice</span></div>
+<div class="info-item"><span>⭐</span><span>Passing Score: 8/10</span></div>
+<div class="info-item"><span>🔒</span><span>Max 3 Attempts</span></div>
+<div class="info-item"><span>🎉</span><span>Have Fun!</span></div>
+</div>
 
-    <div class="form-section">
-        <h3>📋 Before You Start</h3>
-        <div class="form-group">
-            <label>🌸 1. English Nickname</label>
-            <input type="text" id="nickname" placeholder="Enter your English nickname">
-            <div class="warning" id="nicknameWarning">⚠️ Please enter your nickname.</div>
-        </div>
-        <div class="form-group">
-            <label>🔢 2. Student ID (5 Digits)</label>
-            <input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5">
-            <div class="warning" id="idWarning">⚠️ Please enter a valid 5-digit ID.</div>
-        </div>
-        <div class="form-group">
-            <label>📅 3. Date</label>
-            <input type="date" id="date">
-            <div class="warning" id="dateWarning">⚠️ Please select today's date.</div>
-        </div>
-        <div class="form-group">
-            <label>🏫 4. Your Class (M4/1–M4/9)</label>
-            <select id="section">
-                <option value="">— Select your class —</option>
-                <option value="M4/1">M4/1</option>
-                <option value="M4/2">M4/2</option>
-                <option value="M4/3">M4/3</option>
-                <option value="M4/4">M4/4</option>
-                <option value="M4/5">M4/5</option>
-                <option value="M4/6">M4/6</option>
-                <option value="M4/7">M4/7</option>
-                <option value="M4/8">M4/8</option>
-                <option value="M4/9">M4/9</option>
-            </select>
-            <div class="warning" id="sectionWarning">⚠️ Please select your class.</div>
-        </div>
-        <button onclick="startWorksheet()">▶ Start Worksheet 🚀</button>
-    </div>
+<div class="form-section">
+<h3>📋 Before You Start</h3>
+<div class="form-group">
+<label>🌸 1. English Nickname</label>
+<input type="text" id="nickname" placeholder="Enter your English nickname">
+<div class="warning" id="nicknameWarning">⚠️ Please enter your nickname.</div>
+</div>
+<div class="form-group">
+<label>🔢 2. Student ID (5 Digits)</label>
+<input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5">
+<div class="warning" id="idWarning">⚠️ Please enter a valid 5-digit ID.</div>
+</div>
+<div class="form-group">
+<label>📅 3. Date</label>
+<input type="date" id="date">
+<div class="warning" id="dateWarning">⚠️ Please select today's date.</div>
+</div>
+<div class="form-group">
+<label>🏫 4. Your Class (M4/1–M4/9)</label>
+<select id="section">
+<option value="">— Select your class —</option>
+<option value="M4/1">M4/1</option>
+<option value="M4/2">M4/2</option>
+<option value="M4/3">M4/3</option>
+<option value="M4/4">M4/4</option>
+<option value="M4/5">M4/5</option>
+<option value="M4/6">M4/6</option>
+<option value="M4/7">M4/7</option>
+<option value="M4/8">M4/8</option>
+<option value="M4/9">M4/9</option>
+</select>
+<div class="warning" id="sectionWarning">⚠️ Please select your class.</div>
+</div>
+<button onclick="startWorksheet()">▶ Start Worksheet 🚀</button>
+</div>
 
-    <div class="attempts-tracker">
-        <h4>📊 Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
-        <p id="attemptsMessage" style="color:#666; margin:0;"></p>
-    </div>
+<div class="attempts-tracker">
+<h4>📊 Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
+<p id="attemptsMessage" style="color:#666; margin:0;"></p>
+</div>
 
-    <div class="worksheet-locked" id="lockedMessage">
-        <div style="font-size:3em; margin-bottom:10px;">🔒</div>
-        <div class="locked-message">Worksheet Locked</div>
-        <p>🔒 จบการทำแบบฝึกหัดแล้วครับ</p>
-        <p>กรุณาไปพบครูเพื่อรับคำแนะนำ</p>
-        <p>เรื่องคะแนนของคุณค่ะ</p>
-    </div>
+<div class="worksheet-locked" id="lockedMessage">
+<div style="font-size:3em; margin-bottom:10px;">🔒</div>
+<div class="locked-message">Worksheet Locked</div>
+<p>🔒 จบการทำแบบฝึกหัดแล้วครับ</p>
+<p>กรุณาไปพบครูเพื่อรับคำแนะนำ</p>
+<p>เรื่องคะแนนของคุณค่ะ</p>
+</div>
 
-    <div class="questions-section" id="questionsSection">
-        <h3 style="color:#667eea; margin-bottom:20px;">💡 Giving Advice (A1)</h3>
-        <div id="questionsContainer"></div>
-        <div class="button-group">
-            <button class="btn-submit" onclick="submitAnswers()">✔ Submit Answers 🎯</button>
-            <button class="btn-retry" onclick="resetForm()">↻ Try Again 💪</button>
-        </div>
-    </div>
+<div class="questions-section" id="questionsSection">
+<h3 style="color:#667eea; margin-bottom:20px;">💡 Giving Advice (A1)</h3>
+<div id="questionsContainer"></div>
+<div class="button-group">
+<button class="btn-submit" onclick="submitAnswers()">✔ Submit Answers 🎯</button>
+<button class="btn-retry" onclick="resetForm()">↻ Try Again 💪</button>
+</div>
+</div>
 
-    <div id="scoreDisplay" style="display:none;">
-        <div class="score-display">
-            <div>Your Score</div>
-            <div class="score-value" id="scoreValue">0/10</div>
-            <div class="score-status" id="scoreStatus"></div>
-        </div>
-        <div class="summary-section">
-            <h4 style="margin-bottom:15px;">📋 Summary</h4>
-            <div class="summary-item">
-                <span class="summary-label">🌸 Nickname</span>
-                <span class="summary-value" id="summaryNickname">—</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">🔢 Student ID</span>
-                <span class="summary-value" id="summaryId">—</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">📅 Date</span>
-                <span class="summary-value" id="summaryDate">—</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">🏫 Class</span>
-                <span class="summary-value" id="summarySection">—</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">⭐ Score</span>
-                <span class="summary-value" id="summaryScore">—</span>
-            </div>
-            <div class="summary-item">
-                <span class="summary-label">🕐 Submitted</span>
-                <span class="summary-value" id="summaryTime">—</span>
-            </div>
-        </div>
-        <p style="text-align:center; margin-top:20px; color:#666;">
-            📸 Take a screenshot and send it to your teacher on Line or Google Classroom.
-        </p>
-    </div>
+<div id="scoreDisplay" style="display:none;">
+<div class="score-display">
+<div>Your Score</div>
+<div class="score-value" id="scoreValue">0/10</div>
+<div class="score-status" id="scoreStatus"></div>
+</div>
+<div class="summary-section">
+<h4 style="margin-bottom:15px;">📋 Summary</h4>
+<div class="summary-item">
+<span class="summary-label">🌸 Nickname</span>
+<span class="summary-value" id="summaryNickname">—</span>
+</div>
+<div class="summary-item">
+<span class="summary-label">🔢 Student ID</span>
+<span class="summary-value" id="summaryId">—</span>
+</div>
+<div class="summary-item">
+<span class="summary-label">📅 Date</span>
+<span class="summary-value" id="summaryDate">—</span>
+</div>
+<div class="summary-item">
+<span class="summary-label">🏫 Class</span>
+<span class="summary-value" id="summarySection">—</span>
+</div>
+<div class="summary-item">
+<span class="summary-label">⭐ Score</span>
+<span class="summary-value" id="summaryScore">—</span>
+</div>
+<div class="summary-item">
+<span class="summary-label">🕐 Submitted</span>
+<span class="summary-value" id="summaryTime">—</span>
+</div>
+</div>
+<p style="text-align:center; margin-top:20px; color:#666;">
+📸 Take a screenshot and send it to your teacher on Line or Google Classroom.
+</p>
+</div>
 
 </div>
 
 <script>
-    // Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
-    // Q1:D(3) Q2:B(1) Q3:A(0) Q4:C(2) Q5:D(3) Q6:A(0) Q7:C(2) Q8:B(1) Q9:D(3) Q10:B(1)
+// Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
+// Q1:D(3) Q2:B(1) Q3:A(0) Q4:C(2) Q5:D(3) Q6:A(0) Q7:C(2) Q8:B(1) Q9:D(3) Q10:B(1)
 
-    const questions = [
-        {
-            id: 1,
-            text: "Your friend has a bad headache. What advice do you give?",
-            options: [
-                { text: "A) You should eat more.", correct: false },
-                { text: "B) You should sleep more.", correct: false },
-                { text: "C) You should play games.", correct: false },
-                { text: "D) You should take some medicine and rest.", correct: true }
-            ]
-        },
-        {
-            id: 2,
-            text: "Which sentence is correct advice using 'should'?",
-            options: [
-                { text: "A) You should to study hard.", correct: false },
-                { text: "B) You should study hard.", correct: true },
-                { text: "C) You should studied hard.", correct: false },
-                { text: "D) You should studying hard.", correct: false }
-            ]
-        },
-        {
-            id: 3,
-            text: "Your classmate is always late to school. What do you say?",
-            options: [
-                { text: "A) You should wake up early.", correct: true },
-                { text: "B) You should sleep more.", correct: false },
-                { text: "C) You should skip school.", correct: false },
-                { text: "D) You should walk slower.", correct: false }
-            ]
-        },
-        {
-            id: 4,
-            text: "What does 'You shouldn't eat too much junk food' mean?",
-            options: [
-                { text: "A) You should eat junk food every day.", correct: false },
-                { text: "B) Junk food is good for you.", correct: false },
-                { text: "C) It is not a good to eat too much junk food.", correct: true },
-                { text: "D) You must not eat any food.", correct: false }
-            ]
-        },
-        {
-            id: 5,
-            text: "Your friend uses their phone until midnight. What advice do you give?",
-            options: [
-                { text: "A) You should play more games at night.", correct: false },
-                { text: "B) You should read more books.", correct: false },
-                { text: "C) You should eat a snack first.", correct: false },
-                { text: "D) You shouldn't use your phone so late — you need enough sleep.", correct: true }
-            ]
-        },
-        {
-            id: 6,
-            text: "Your friend has a cold. Which is the best advice?",
-            options: [
-                { text: "A) You should drink lots of water and rest.", correct: true },
-                { text: "B) You should go playing in the rain.", correct: false },
-                { text: "C) You should eat spicy food every day.", correct: false },
-                { text: "D) You should run a marathon.", correct: false }
-            ]
-        },
-        {
-            id: 7,
-            text: "Which advice helps you study better?",
-            options: [
-                { text: "A) You should watch TV all night before the exam.", correct: false },
-                { text: "B) You should forget about studying.", correct: false },
-                { text: "C) You should make a study plan and review your notes.", correct: true },
-                { text: "D) You should only study one minute a day.", correct: false }
-            ]
-        },
-        {
-            id: 8,
-            text: "Your friend is shy and has no friends. What do you say?",
-            options: [
-                { text: "A) You should stay at home always.", correct: false },
-                { text: "B) You should try to smile and say hello to others around you.", correct: true },
-                { text: "C) You should ignore everyone around you.", correct: false },
-                { text: "D) You should be quiet and never talk.", correct: false }
-            ]
-        },
-        {
-            id: 9,
-            text: "Your friend is very stressed about exams. Which BEST advice would you give?",
-            options: [
-                { text: "A) You should panic and worry all day.", correct: false },
-                { text: "B) You should skip the exam.", correct: false },
-                { text: "C) You should ask your friends to cheat.", correct: false },
-                { text: "D) You should try to relax, you will do just fine.", correct: true }
-            ]
-        },
-        {
-            id: 10,
-            text: "Your friend never eats vegetables. What advice do you give?",
-            options: [
-                { text: "A) You should eat more fast food.", correct: false },
-                { text: "B) You should try to eat more vegetables they are good for your health.", correct: true },
-                { text: "C) Vegetables are not important at all.", correct: false },
-                { text: "D) You should drink more soda instead.", correct: false }
-            ]
-        }
-    ];
+const canvaImages = [
+"WS3M4A1Q1.png","WS3M4A1Q2.png","WS3M4A1Q3.png","WS3M4A1Q4.png","WS3M4A1Q5.png",
+"WS3M4A1Q6.png","WS3M4A1Q7.png","WS3M4A1Q8.png","WS3M4A1Q9.png","WS3M4A1Q10.png"
+];
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
+const questions = [
+{
+id: 1,
+image: canvaImages[0],
+text: "Your friend has a bad headache. What advice do you give?",
+options: [
+{ text: "A) You should eat more.", correct: false },
+{ text: "B) You should sleep more.", correct: false },
+{ text: "C) You should play games.", correct: false },
+{ text: "D) You should take some medicine and rest.", correct: true }
+]
+},
+{
+id: 2,
+image: canvaImages[1],
+text: "Which sentence is correct advice using 'should'?",
+options: [
+{ text: "A) You should to study hard.", correct: false },
+{ text: "B) You should study hard.", correct: true },
+{ text: "C) You should studied hard.", correct: false },
+{ text: "D) You should studying hard.", correct: false }
+]
+},
+{
+id: 3,
+image: canvaImages[2],
+text: "Your classmate is always late to school. What do you say?",
+options: [
+{ text: "A) You should wake up early.", correct: true },
+{ text: "B) You should sleep more.", correct: false },
+{ text: "C) You should skip school.", correct: false },
+{ text: "D) You should walk slower.", correct: false }
+]
+},
+{
+id: 4,
+image: canvaImages[3],
+text: "What does 'You shouldn't eat too much junk food' mean?",
+options: [
+{ text: "A) You should eat junk food every day.", correct: false },
+{ text: "B) Junk food is good for you.", correct: false },
+{ text: "C) It is not a good to eat too much junk food.", correct: true },
+{ text: "D) You must not eat any food.", correct: false }
+]
+},
+{
+id: 5,
+image: canvaImages[4],
+text: "Your friend uses their phone until midnight. What advice do you give?",
+options: [
+{ text: "A) You should play more games at night.", correct: false },
+{ text: "B) You should read more books.", correct: false },
+{ text: "C) You should eat a snack first.", correct: false },
+{ text: "D) You shouldn't use your phone so late — you need enough sleep.", correct: true }
+]
+},
+{
+id: 6,
+image: canvaImages[5],
+text: "Your friend has a cold. Which is the best advice?",
+options: [
+{ text: "A) You should drink lots of water and rest.", correct: true },
+{ text: "B) You should go playing in the rain.", correct: false },
+{ text: "C) You should eat spicy food every day.", correct: false },
+{ text: "D) You should run a marathon.", correct: false }
+]
+},
+{
+id: 7,
+image: canvaImages[6],
+text: "Which advice helps you study better?",
+options: [
+{ text: "A) You should watch TV all night before the exam.", correct: false },
+{ text: "B) You should forget about studying.", correct: false },
+{ text: "C) You should make a study plan and review your notes.", correct: true },
+{ text: "D) You should only study one minute a day.", correct: false }
+]
+},
+{
+id: 8,
+image: canvaImages[7],
+text: "Your friend is shy and has no friends. What do you say?",
+options: [
+{ text: "A) You should stay at home always.", correct: false },
+{ text: "B) You should try to smile and say hello to others around you.", correct: true },
+{ text: "C) You should ignore everyone around you.", correct: false },
+{ text: "D) You should be quiet and never talk.", correct: false }
+]
+},
+{
+id: 9,
+image: canvaImages[8],
+text: "Your friend is very stressed about exams. Which BEST advice would you give?",
+options: [
+{ text: "A) You should panic and worry all day.", correct: false },
+{ text: "B) You should skip the exam.", correct: false },
+{ text: "C) You should ask your friends to cheat.", correct: false },
+{ text: "D) You should try to relax, you will do just fine.", correct: true }
+]
+},
+{
+id: 10,
+image: canvaImages[9],
+text: "Your friend never eats vegetables. What advice do you give?",
+options: [
+{ text: "A) You should eat more fast food.", correct: false },
+{ text: "B) You should try to eat more vegetables they are good for your health.", correct: true },
+{ text: "C) Vegetables are not important at all.", correct: false },
+{ text: "D) You should drink more soda instead.", correct: false }
+]
+}
+];
 
-    let userAnswers = {};
-    let attempts = 0;
-    let allAttemptScores = [];
-    const TEST_STUDENT_IDS = ['54565'];
-        const maxAttempts = 3;
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
 
-    document.getElementById('date').valueAsDate = new Date();
+let userAnswers = {};
+let attempts = 0;
+let allAttemptScores = [];
+const TEST_STUDENT_IDS = ['54565'];
+const maxAttempts = 3;
 
-    function startWorksheet() {
-        const nickname = document.getElementById('nickname').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-        const date = document.getElementById('date').value;
-        const section = document.getElementById('section').value;
+document.getElementById('date').valueAsDate = new Date();
 
-        let isValid = true;
-        document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
-        if (!nickname) isValid = false;
+function startWorksheet() {
+const nickname = document.getElementById('nickname').value.trim();
+const studentId = document.getElementById('studentId').value.trim();
+const date = document.getElementById('date').value;
+const section = document.getElementById('section').value;
 
-        document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
-        if (!studentId || studentId.length !== 5) isValid = false;
+let isValid = true;
+document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
+if (!nickname) isValid = false;
 
-        document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
-        if (!date) isValid = false;
+document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
+if (!studentId || studentId.length !== 5) isValid = false;
 
-        document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
-        if (!section) isValid = false;
+document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
+if (!date) isValid = false;
 
-        if (!isValid) return;
+document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
+if (!section) isValid = false;
 
-        const storageKey = `ws3_m4_a1_${studentId}_${section}`;
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
-        attempts = savedData.attempts || 0;
-        allAttemptScores = savedData.scores || [];
+if (!isValid) return;
 
-        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
-            document.querySelector('.form-section').style.display = 'none';
-            document.getElementById('questionsSection').classList.remove('show');
-            document.getElementById('lockedMessage').classList.add('show');
-            document.getElementById('scoreDisplay').style.display = 'none';
-            updateAttemptsDisplay();
-            return;
-        }
+const storageKey = `ws3_m4_a1_${studentId}_${section}`;
+const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+attempts = savedData.attempts || 0;
+allAttemptScores = savedData.scores || [];
 
-        document.querySelector('.form-section').style.display = 'none';
-        document.getElementById('questionsSection').classList.add('show');
-        renderQuestions();
-        userAnswers = {};
-    }
+if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
+document.querySelector('.form-section').style.display = 'none';
+document.getElementById('questionsSection').classList.remove('show');
+document.getElementById('lockedMessage').classList.add('show');
+document.getElementById('scoreDisplay').style.display = 'none';
+updateAttemptsDisplay();
+return;
+}
 
-    function renderQuestions() {
-        const container = document.getElementById('questionsContainer');
-        container.innerHTML = '';
-        questions.forEach(q => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.id = `question-${q.id}`;
-            const optionsHtml = q.options.map((opt, idx) => `
-                <label class="option">
-                    <input type="radio" name="q${q.id}" value="${idx}">
-                    <span>${opt.text}</span>
-                </label>
-            `).join('');
-            card.innerHTML = `
-                <div>
-                    <span class="question-number">${q.id}</span>
-                    <span class="question-text">${q.text}</span>
-                </div>
-                <div class="options" style="margin-top:15px;">${optionsHtml}</div>
-            `;
-            card.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    userAnswers[q.id] = parseInt(this.value);
-                });
-            });
-            container.appendChild(card);
-        });
-    }
+document.querySelector('.form-section').style.display = 'none';
+document.getElementById('questionsSection').classList.add('show');
+renderQuestions();
+userAnswers = {};
+}
 
-    function submitAnswers() {
-        let score = 0;
-        questions.forEach(q => {
-            if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
-        });
+function renderQuestions() {
+const container = document.getElementById('questionsContainer');
+container.innerHTML = '';
+questions.forEach(q => {
+const card = document.createElement('div');
+card.className = 'question-card';
+card.id = `question-${q.id}`;
+const optionsHtml = q.options.map((opt, idx) => `
+<label class="option">
+<input type="radio" name="q${q.id}" value="${idx}">
+<span>${opt.text}</span>
+</label>
+`).join('');
+const imageHtml = `<img src="${q.image}" alt="Question image" class="image-placeholder">`;
+card.innerHTML = `
+<div>
+<span class="question-number">${q.id}</span>
+<span class="question-text">${q.text}</span>
+</div>
+${imageHtml}
+<div class="options" style="margin-top:15px;">${optionsHtml}</div>
+`;
+card.querySelectorAll('input[type="radio"]').forEach(radio => {
+radio.addEventListener('change', function() {
+userAnswers[q.id] = parseInt(this.value);
+});
+});
+container.appendChild(card);
+});
+}
 
-        const nickname = document.getElementById('nickname').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-        const section = document.getElementById('section').value;
-        const storageKey = `ws3_m4_a1_${studentId}_${section}`;
-        const isPassed = score >= 8;
+function submitAnswers() {
+let score = 0;
+questions.forEach(q => {
+if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
+});
 
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
-        savedData.attempts = (savedData.attempts || 0) + 1;
-        if (!savedData.scores) savedData.scores = [];
-        savedData.scores.push(score);
-        attempts = savedData.attempts;
-        allAttemptScores = savedData.scores;
-        localStorage.setItem(storageKey, JSON.stringify(savedData));
+const nickname = document.getElementById('nickname').value.trim();
+const studentId = document.getElementById('studentId').value.trim();
+const section = document.getElementById('section').value;
+const storageKey = `ws3_m4_a1_${studentId}_${section}`;
+const isPassed = score >= 8;
 
-        document.getElementById('questionsSection').classList.remove('show');
-        document.getElementById('scoreDisplay').style.display = 'block';
-        document.getElementById('scoreValue').textContent = `${score}/10`;
+const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+savedData.attempts = (savedData.attempts || 0) + 1;
+if (!savedData.scores) savedData.scores = [];
+savedData.scores.push(score);
+attempts = savedData.attempts;
+allAttemptScores = savedData.scores;
+localStorage.setItem(storageKey, JSON.stringify(savedData));
 
-        const statusEl = document.getElementById('scoreStatus');
-        if (isPassed) {
-            submitToSheet(studentId, nickname, section, score, 'PASSED');
-            statusEl.innerHTML = `<span class="status-pass">
-                ✅ ยินดีด้วยครับ! 🎉<br>
-                ผ่านแบบฝึกหัด 3 แล้ว<br>
-                ทำได้ดีมากนะครับ
-            </span>`;
-        } else {
-            if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
-                const highest = Math.max(...allAttemptScores);
-                submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
-                statusEl.innerHTML = `<span class="status-fail">
-                    ❌ ยังไม่ผ่านค่ะ<br>
-                    กรุณาลองใหม่อีกครั้ง<br>
-                    คะแนนผ่าน: 8, 9, 10<br>
-                    โอกาสเหลือ: 0 ครั้ง
-                </span>`;
-            } else {
-                const remaining = maxAttempts - attempts;
-                statusEl.innerHTML = `<span class="status-fail">
-                    ❌ ยังไม่ผ่านค่ะ<br>
-                    กรุณาลองใหม่อีกครั้ง<br>
-                    คะแนนผ่าน: 8, 9, 10<br>
-                    โอกาสเหลือ: ${remaining} ครั้ง
-                </span>`;
-            }
-        }
+document.getElementById('questionsSection').classList.remove('show');
+document.getElementById('scoreDisplay').style.display = 'block';
+document.getElementById('scoreValue').textContent = `${score}/10`;
 
-        const dateVal = document.getElementById('date').value;
-        document.getElementById('summaryNickname').textContent = nickname;
-        document.getElementById('summaryId').textContent = studentId;
-        document.getElementById('summaryDate').textContent = dateVal;
-        document.getElementById('summarySection').textContent = section;
-        document.getElementById('summaryScore').textContent = `${score}/10`;
-        document.getElementById('summaryTime').textContent = new Date().toLocaleString();
-        updateAttemptsDisplay();
-    }
+const statusEl = document.getElementById('scoreStatus');
+if (isPassed) {
+submitToSheet(studentId, nickname, section, score, 'PASSED');
+statusEl.innerHTML = `<span class="status-pass">
+✅ ยินดีด้วยครับ! 🎉<br>
+ผ่านแบบฝึกหัด 3 แล้ว<br>
+ทำได้ดีมากนะครับ
+</span>`;
+} else {
+if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
+const highest = Math.max(...allAttemptScores);
+submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
+statusEl.innerHTML = `<span class="status-fail">
+❌ ยังไม่ผ่านค่ะ<br>
+กรุณาลองใหม่อีกครั้ง<br>
+คะแนนผ่าน: 8, 9, 10<br>
+โอกาสเหลือ: 0 ครั้ง
+</span>`;
+} else {
+const remaining = maxAttempts - attempts;
+statusEl.innerHTML = `<span class="status-fail">
+❌ ยังไม่ผ่านค่ะ<br>
+กรุณาลองใหม่อีกครั้ง<br>
+คะแนนผ่าน: 8, 9, 10<br>
+โอกาสเหลือ: ${remaining} ครั้ง
+</span>`;
+}
+}
 
-    function submitToSheet(studentId, nickname, section, score, status) {
-        const data = { studentId, nickname, section, score, worksheet: 'WS3', date: new Date().toISOString(), status };
-        const params = new URLSearchParams(data);
-        fetch(SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
-    }
+const dateVal = document.getElementById('date').value;
+document.getElementById('summaryNickname').textContent = nickname;
+document.getElementById('summaryId').textContent = studentId;
+document.getElementById('summaryDate').textContent = dateVal;
+document.getElementById('summarySection').textContent = section;
+document.getElementById('summaryScore').textContent = `${score}/10`;
+document.getElementById('summaryTime').textContent = new Date().toLocaleString();
+updateAttemptsDisplay();
+}
 
-    function resetForm() {
-        userAnswers = {};
-        document.getElementById('questionsSection').classList.remove('show');
-        document.getElementById('scoreDisplay').style.display = 'none';
-        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
-            document.getElementById('lockedMessage').classList.add('show');
-        } else {
-            document.querySelector('.form-section').style.display = 'block';
-            document.getElementById('nickname').value = '';
-            document.getElementById('studentId').value = '';
-            document.getElementById('section').value = '';
-            document.getElementById('date').valueAsDate = new Date();
-        }
-    }
+function submitToSheet(studentId, nickname, section, score, status) {
+const data = { studentId, nickname, section, score, worksheet: 'WS3', date: new Date().toISOString(), status };
+const params = new URLSearchParams(data);
+fetch(SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+}
 
-    function updateAttemptsDisplay() {
-        document.getElementById('attemptsUsed').textContent = attempts;
-        const msg = document.getElementById('attemptsMessage');
-        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
-            msg.textContent = '🔒 จบการทำแบบฝึกหัดแล้ว';
-            msg.style.color = '#c41e3a';
-        } else {
-            msg.textContent = `โอกาสเหลือ: ${maxAttempts - attempts} ครั้ง`;
-            msg.style.color = '#666';
-        }
-    }
+function resetForm() {
+userAnswers = {};
+document.getElementById('questionsSection').classList.remove('show');
+document.getElementById('scoreDisplay').style.display = 'none';
+if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
+document.getElementById('lockedMessage').classList.add('show');
+} else {
+document.querySelector('.form-section').style.display = 'block';
+document.getElementById('nickname').value = '';
+document.getElementById('studentId').value = '';
+document.getElementById('section').value = '';
+document.getElementById('date').valueAsDate = new Date();
+}
+}
 
-    updateAttemptsDisplay();
+function updateAttemptsDisplay() {
+document.getElementById('attemptsUsed').textContent = attempts;
+const msg = document.getElementById('attemptsMessage');
+if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
+msg.textContent = '🔒 จบการทำแบบฝึกหัดแล้ว';
+msg.style.color = '#c41e3a';
+} else {
+msg.textContent = `โอกาสเหลือ: ${maxAttempts - attempts} ครั้ง`;
+msg.style.color = '#666';
+}
+}
+
+updateAttemptsDisplay();
 </script>
 </body>
 </html>
