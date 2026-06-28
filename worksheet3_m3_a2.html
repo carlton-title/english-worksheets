@@ -545,7 +545,8 @@
 
     function submitToSheet(studentId, nickname, section, score, status) {
         const data = { studentId, nickname, section, score, worksheet: 'WS3', date: new Date().toISOString(), status };
-        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(() => {});
+        const params = new URLSearchParams(data);
+        fetch(SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
     }
 
     function resetForm() {
