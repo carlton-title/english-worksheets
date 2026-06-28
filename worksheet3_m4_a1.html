@@ -396,7 +396,8 @@
     let userAnswers = {};
     let attempts = 0;
     let allAttemptScores = [];
-    const maxAttempts = 3;
+    const TEST_STUDENT_IDS = ['54565'];
+        const maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
 
@@ -426,7 +427,7 @@
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
 
-        if (attempts >= maxAttempts) {
+        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
             document.querySelector('.form-section').style.display = 'none';
             document.getElementById('questionsSection').classList.remove('show');
             document.getElementById('lockedMessage').classList.add('show');
@@ -503,7 +504,7 @@
                 ทำได้ดีมากนะครับ
             </span>`;
         } else {
-            if (attempts >= maxAttempts) {
+            if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
                 const highest = Math.max(...allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = `<span class="status-fail">
@@ -543,7 +544,7 @@
         userAnswers = {};
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'none';
-        if (attempts >= maxAttempts) {
+        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
             document.getElementById('lockedMessage').classList.add('show');
         } else {
             document.querySelector('.form-section').style.display = 'block';
@@ -557,7 +558,7 @@
     function updateAttemptsDisplay() {
         document.getElementById('attemptsUsed').textContent = attempts;
         const msg = document.getElementById('attemptsMessage');
-        if (attempts >= maxAttempts) {
+        if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
             msg.textContent = '🔒 จบการทำแบบฝึกหัดแล้ว';
             msg.style.color = '#c41e3a';
         } else {
