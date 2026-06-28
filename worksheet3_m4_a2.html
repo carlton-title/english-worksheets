@@ -111,6 +111,7 @@
             margin-right: 10px;
         }
         .question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
+        .image-placeholder { width: 100%; max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px; }
         .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .option {
             background: white;
@@ -283,9 +284,15 @@
     // Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
     // Q1:C(2) Q2:A(0) Q3:D(3) Q4:D(3) Q5:A(0) Q6:C(2) Q7:D(3) Q8:B(1) Q9:C(2) Q10:B(1)
 
+    const canvaImages = [
+        "WS3M4A2Q1.png","WS3M4A2Q2.png","WS3M4A2Q3.png","WS3M4A2Q4.png","WS3M4A2Q5.png",
+        "WS3M4A2Q6.png","WS3M4A2Q7.png","WS3M4A2Q8.png","WS3M4A2Q9.png","WS3M4A2Q10.png"
+    ];
+
     const questions = [
         {
             id: 1,
+            image: canvaImages[0],
             text: "Your friend keeps failing exams. Which advice uses the best expression?",
             options: [
                 { text: "A) You should study more.", correct: false },
@@ -296,6 +303,7 @@
         },
         {
             id: 2,
+            image: canvaImages[1],
             text: "Which sentence gives advice in the most polite and natural way?",
             options: [
                 { text: "A) Have you considered talking to your teacher about it?", correct: true },
@@ -306,6 +314,7 @@
         },
         {
             id: 3,
+            image: canvaImages[2],
             text: "Your friend is nervous about speaking in front of the class. What do you advice him?",
             options: [
                 { text: "A) Just don't do it.", correct: false },
@@ -316,6 +325,7 @@
         },
         {
             id: 4,
+            image: canvaImages[3],
             text: "Which sentence correctly uses 'It would be a good idea to...'?",
             options: [
                 { text: "A) It would be a good idea studying every day.", correct: false },
@@ -326,6 +336,7 @@
         },
         {
             id: 5,
+            image: canvaImages[4],
             text: "What does 'If you study consistently, you will improve.' mean?",
             options: [
                 { text: "A) Regular studying leads to improvement.", correct: true },
@@ -336,6 +347,7 @@
         },
         {
             id: 6,
+            image: canvaImages[5],
             text: "Your friend eats unhealthy food and feels tired all the time. What is the best advice you can give?",
             options: [
                 { text: "A) Just sleep more hours.", correct: false },
@@ -346,6 +358,7 @@
         },
         {
             id: 7,
+            image: canvaImages[6],
             text: "Which expression is used to give advice politely?",
             options: [
                 { text: "A) Do it now!", correct: false },
@@ -356,6 +369,7 @@
         },
         {
             id: 8,
+            image: canvaImages[7],
             text: "Your friend is arguing with their parents a lot. What advice do you give?",
             options: [
                 { text: "A) You should shout louder.", correct: false },
@@ -366,6 +380,7 @@
         },
         {
             id: 9,
+            image: canvaImages[8],
             text: "What does 'You might want to reconsider your decision' mean?",
             options: [
                 { text: "A) Your decision is perfect.", correct: false },
@@ -376,6 +391,7 @@
         },
         {
             id: 10,
+            image: canvaImages[9],
             text: "Which sentence best gives advice using a conditional structure?",
             options: [
                 { text: "A) If you exercises every day, you will feel better.", correct: false },
@@ -392,7 +408,7 @@
     let attempts = 0;
     let allAttemptScores = [];
     const TEST_STUDENT_IDS = ['54565'];
-        const maxAttempts = 3;
+    const maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
 
@@ -445,18 +461,18 @@
             card.className = 'question-card';
             card.id = `question-${q.id}`;
             const optionsHtml = q.options.map((opt, idx) => `
-                <label class="option">
-                    <input type="radio" name="q${q.id}" value="${idx}">
-                    <span>${opt.text}</span>
-                </label>
-            `).join('');
+<button type="radio" name="q${q.id}" value="${idx}">
+<span>${opt.text}</span>
+</label>
+`).join('');
             card.innerHTML = `
-                <div>
-                    <span class="question-number">${q.id}</span>
-                    <span class="question-text">${q.text}</span>
-                </div>
-                <div class="options" style="margin-top:15px;">${optionsHtml}</div>
-            `;
+<img src="${q.image}" alt="Question image" class="image-placeholder">
+<div>
+<span class="question-number">${q.id}</span>
+<span class="question-text">${q.text}</span>
+</div>
+<div class="options" style="margin-top:15px;">${optionsHtml}</div>
+`;
             card.querySelectorAll('input[type="radio"]').forEach(radio => {
                 radio.addEventListener('change', function() {
                     userAnswers[q.id] = parseInt(this.value);
@@ -494,28 +510,28 @@
         if (isPassed) {
             submitToSheet(studentId, nickname, section, score, 'PASSED');
             statusEl.innerHTML = `<span class="status-pass">
-                ✅ ยินดีด้วยครับ! 🎉<br>
-                ผ่านแบบฝึกหัด 3 แล้ว<br>
-                ทำได้ดีมากนะครับ
-            </span>`;
+✡ ยินดีด้วยครับ! 🏉<br>
+ผ่านแบบฝึกหัด  3 แล้ว<br>
+ทำได้ดีมากนะครับ
+</span>`;
         } else {
             if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
                 const highest = Math.max(...allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = `<span class="status-fail">
-                    ❌ ยังไม่ผ่านค่ะ<br>
-                    กรุณาลองใหม่อีกครั้ง<br>
-                    คะแนนผ่าน: 8, 9, 10<br>
-                    โอกาสเหลือ: 0 ครั้ง
-                </span>`;
+❌ ยังไม่ผ่านค่ะ<br>
+กรุณาลองใหม่อีกครั้ง<br>
+คะแนนผ่าน: 8, 9, 10<br>
+โอกาสเหลือ: 0 ครั้ง
+</span>`;
             } else {
                 const remaining = maxAttempts - attempts;
                 statusEl.innerHTML = `<span class="status-fail">
-                    ❌ ยังไม่ผ่านค่ะ<br>
-                    กรุณาลองใหม่อีกครั้ง<br>
-                    คะแนนผ่าน: 8, 9, 10<br>
-                    โอกาสเหลือ: ${remaining} ครั้ง
-                </span>`;
+❌ ยังไม่ผ่านค่ะ<br>
+กรุณาลองใหม่อีกครั้ง<br>
+คะแนนผ่าน: 8, 9, 10<br>
+โอกาสเหลือ: ${remaining} ครั้ง
+</span>`;
             }
         }
 
