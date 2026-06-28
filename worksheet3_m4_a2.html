@@ -175,68 +175,68 @@
 <div class="container">
 
     <div class="header">
-        <div class="title">💡 WORKSHEET 3 🤝</div>
+        <div class="title">&#x1F4A1; WORKSHEET 3 &#x1F91D;</div>
         <div class="subtitle">Giving Advice</div>
-        <div class="subtitle">M4 (A2) - Grade 10 | Sections 10–13</div>
+        <div class="subtitle">M4 (A2) - Grade 10 | Sections 10&#x2013;13</div>
     </div>
 
     <div class="info-banner">
-        <div class="info-item"><span>📖</span><span>Multiple Choice</span></div>
-        <div class="info-item"><span>⭐</span><span>Passing Score: 8/10</span></div>
-        <div class="info-item"><span>🔒</span><span>Max 3 Attempts</span></div>
-        <div class="info-item"><span>🎉</span><span>Have Fun!</span></div>
+        <div class="info-item"><span>&#x1F4D6;</span><span>Multiple Choice</span></div>
+        <div class="info-item"><span>&#x2B50;</span><span>Passing Score: 8/10</span></div>
+        <div class="info-item"><span>&#x1F512;</span><span>Max 3 Attempts</span></div>
+        <div class="info-item"><span>&#x1F389;</span><span>Have Fun!</span></div>
     </div>
 
     <div class="form-section">
-        <h3>📋 Before You Start</h3>
+        <h3>&#x1F4CB; Before You Start</h3>
         <div class="form-group">
-            <label>🌸 1. English Nickname</label>
+            <label>&#x1F338; 1. English Nickname</label>
             <input type="text" id="nickname" placeholder="Enter your English nickname">
-            <div class="warning" id="nicknameWarning">⚠️ Please enter your nickname.</div>
+            <div class="warning" id="nicknameWarning">&#x26A0;&#xFE0F; Please enter your nickname.</div>
         </div>
         <div class="form-group">
-            <label>🔢 2. Student ID (5 Digits)</label>
+            <label>&#x1F522; 2. Student ID (5 Digits)</label>
             <input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5">
-            <div class="warning" id="idWarning">⚠️ Please enter a valid 5-digit ID.</div>
+            <div class="warning" id="idWarning">&#x26A0;&#xFE0F; Please enter a valid 5-digit ID.</div>
         </div>
         <div class="form-group">
-            <label>📅 3. Date</label>
+            <label>&#x1F4C5; 3. Date</label>
             <input type="date" id="date">
-            <div class="warning" id="dateWarning">⚠️ Please select today's date.</div>
+            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today's date.</div>
         </div>
         <div class="form-group">
-            <label>🏫 4. Your Class (M4/10–M4/13)</label>
+            <label>&#x1F3EB; 4. Your Class (M4/10&#x2013;M4/13)</label>
             <select id="section">
-                <option value="">— Select your class —</option>
+                <option value="">&#x2014; Select your class &#x2014;</option>
                 <option value="M4/10">M4/10</option>
                 <option value="M4/11">M4/11</option>
                 <option value="M4/12">M4/12</option>
                 <option value="M4/13">M4/13</option>
             </select>
-            <div class="warning" id="sectionWarning">⚠️ Please select your class.</div>
+            <div class="warning" id="sectionWarning">&#x26A0;&#xFE0F; Please select your class.</div>
         </div>
-        <button onclick="startWorksheet()">▶ Start Worksheet 🚀</button>
+        <button onclick="startWorksheet()">&#x25B6; Start Worksheet &#x1F680;</button>
     </div>
 
     <div class="attempts-tracker">
-        <h4>📊 Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
+        <h4>&#x1F4CA; Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
         <p id="attemptsMessage" style="color:#666; margin:0;"></p>
     </div>
 
     <div class="worksheet-locked" id="lockedMessage">
-        <div style="font-size:3em; margin-bottom:10px;">🔒</div>
+        <div style="font-size:3em; margin-bottom:10px;">&#x1F512;</div>
         <div class="locked-message">Worksheet Locked</div>
-        <p>🔒 จบการทำแบบฝึกหัดแล้วครับ</p>
-        <p>กรุณาไปพบครูเพื่อรับคำแนะนำ</p>
-        <p>เรื่องคะแนนของคุณค่ะ</p>
+        <p>&#x1F512; &#xE08;&#xE1A;&#xE01;&#xE32;&#xE23;&#xE17;&#xE33;&#xE41;&#xE1A;&#xE1A;&#xE1D;&#xE36;&#xE01;&#xE2B;&#xE31;&#xE14;&#xE41;&#xE25;&#xE49;&#xE27;&#xE04;&#xE23;&#xE31;&#xE1A;</p>
+        <p>&#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE44;&#xE1B;&#xE1E;&#xE1A;&#xE04;&#xE23;&#xE39;&#xE40;&#xE1E;&#xE37;&#xE48;&#xE2D;&#xE23;&#xE31;&#xE1A;&#xE04;&#xE33;&#xE41;&#xE19;&#xE30;&#xE19;&#xE33;</p>
+        <p>&#xE40;&#xE23;&#xE37;&#xE48;&#xE2D;&#xE07;&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE02;&#xE2D;&#xE07;&#xE04;&#xE38;&#xE13;&#xE04;&#xE48;&#xE30;</p>
     </div>
 
     <div class="questions-section" id="questionsSection">
-        <h3 style="color:#667eea; margin-bottom:20px;">💡 Giving Advice (A2)</h3>
+        <h3 style="color:#667eea; margin-bottom:20px;">&#x1F4A1; Giving Advice (A2)</h3>
         <div id="questionsContainer"></div>
         <div class="button-group">
-            <button class="btn-submit" onclick="submitAnswers()">✔ Submit Answers 🎯</button>
-            <button class="btn-retry" onclick="resetForm()">↻ Try Again 💪</button>
+            <button class="btn-submit" onclick="submitAnswers()">&#x2714; Submit Answers &#x1F3AF;</button>
+            <button class="btn-retry" onclick="resetForm()">&#x21BB; Try Again &#x1F4AA;</button>
         </div>
     </div>
 
@@ -247,34 +247,34 @@
             <div class="score-status" id="scoreStatus"></div>
         </div>
         <div class="summary-section">
-            <h4 style="margin-bottom:15px;">📋 Summary</h4>
+            <h4 style="margin-bottom:15px;">&#x1F4CB; Summary</h4>
             <div class="summary-item">
-                <span class="summary-label">🌸 Nickname</span>
-                <span class="summary-value" id="summaryNickname">—</span>
+                <span class="summary-label">&#x1F338; Nickname</span>
+                <span class="summary-value" id="summaryNickname">&#x2014;</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">🔢 Student ID</span>
-                <span class="summary-value" id="summaryId">—</span>
+                <span class="summary-label">&#x1F522; Student ID</span>
+                <span class="summary-value" id="summaryId">&#x2014;</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">📅 Date</span>
-                <span class="summary-value" id="summaryDate">—</span>
+                <span class="summary-label">&#x1F4C5; Date</span>
+                <span class="summary-value" id="summaryDate">&#x2014;</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">🏫 Class</span>
-                <span class="summary-value" id="summarySection">—</span>
+                <span class="summary-label">&#x1F3EB; Class</span>
+                <span class="summary-value" id="summarySection">&#x2014;</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">⭐ Score</span>
-                <span class="summary-value" id="summaryScore">—</span>
+                <span class="summary-label">&#x2B50; Score</span>
+                <span class="summary-value" id="summaryScore">&#x2014;</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">🕐 Submitted</span>
-                <span class="summary-value" id="summaryTime">—</span>
+                <span class="summary-label">&#x1F550; Submitted</span>
+                <span class="summary-value" id="summaryTime">&#x2014;</span>
             </div>
         </div>
         <p style="text-align:center; margin-top:20px; color:#666;">
-            📸 Take a screenshot and send it to your teacher on Line or Google Classroom.
+            &#x1F4F8; Take a screenshot and send it to your teacher on Line or Google Classroom.
         </p>
     </div>
 
@@ -511,26 +511,27 @@
         if (isPassed) {
             submitToSheet(studentId, nickname, section, score, 'PASSED');
             statusEl.innerHTML = `<span class="status-pass">
-✅ ยินดีด้วยครับ! 🎉<br>
-ผ่านแบบฝึกหัด 3 แล้ว<br>
-ทำได้ดีมากนะครับ*</span>`;
+&#x2705; &#xE22;&#xE34;&#xE19;&#xE14;&#xE35;&#xE14;&#xE49;&#xE27;&#xE22;&#xE04;&#xE23;&#xE31;&#xE1A;! &#x1F389;<br>
+&#xE1C;&#xE48;&#xE32;&#xE19;&#xE41;&#xE1A;&#xE1A;&#xE1D;&#xE36;&#xE01;&#xE2B;&#xE31;&#xE14; 3 &#xE41;&#xE25;&#xE49;&#xE27;<br>
+&#xE17;&#xE33;&#xE44;&#xE14;&#xE49;&#xE14;&#xE35;&#xE21;&#xE32;&#xE01;&#xE19;&#xE30;&#xE04;&#xE23;&#xE31;&#xE1A;
+</span>`;
         } else {
             if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
                 const highest = Math.max(...allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = `<span class="status-fail">
-❌ ยังไม่ผ่านค่ะ<br>
-กรุณาลองใหม่อีกครั้ง<br>
-คะแนนผ่าน: 8, 9, 10<br>
-โอกาสเหลือ: 0 ครั้ง
+&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
+&#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE25;&#xE2D;&#xE07;&#xE43;&#xE2B;&#xE21;&#xE48;&#xE2D;&#xE35;&#xE01;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;<br>
+&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE1C;&#xE48;&#xE32;&#xE19;: 8, 9, 10<br>
+&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: 0 &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
 </span>`;
             } else {
                 const remaining = maxAttempts - attempts;
                 statusEl.innerHTML = `<span class="status-fail">
-❌ ยังไม่ผ่านค่ะ<br>
-กรุณาลองใหม่อีกครั้ง<br>
-คะแนนผ่าน: 8, 9, 10<br>
-โอกาสเหลือ: ${remaining} ครั้ง
+&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
+&#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE25;&#xE2D;&#xE07;&#xE43;&#xE2B;&#xE21;&#xE48;&#xE2D;&#xE35;&#xE01;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;<br>
+&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE1C;&#xE48;&#xE32;&#xE19;: 8, 9, 10<br>
+&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${remaining} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
 </span>`;
             }
         }
@@ -570,10 +571,10 @@
         document.getElementById('attemptsUsed').textContent = attempts;
         const msg = document.getElementById('attemptsMessage');
         if ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId)))) {
-            msg.textContent = '🔒 จบการทำแบบฝึกหัดแล้ว';
+            msg.textContent = '&#x1F512; &#xE08;&#xE1A;&#xE01;&#xE32;&#xE23;&#xE17;&#xE33;&#xE41;&#xE1A;&#xE1A;&#xE1D;&#xE36;&#xE01;&#xE2B;&#xE31;&#xE14;&#xE41;&#xE25;&#xE49;&#xE27;';
             msg.style.color = '#c41e3a';
         } else {
-            msg.textContent = `โอกาสเหลือ: ${maxAttempts - attempts} ครั้ง`;
+            msg.textContent = `&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${maxAttempts - attempts} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;`;
             msg.style.color = '#666';
         }
     }
