@@ -58,6 +58,11 @@
             border-color: #667eea;
             box-shadow: 0 0 10px rgba(102,126,234,0.3);
         }
+        .form-group input[readonly] {
+            background: #f0f0f0;
+            color: #555;
+            cursor: default;
+        }
         .warning { color: #e74c3c; font-size: 0.85em; margin-top: 5px; display: none; }
         button {
             width: 100%;
@@ -190,29 +195,34 @@
     <div class="form-section">
         <h3>&#x1F4CB; Before You Start</h3>
         <div class="form-group">
-            <label>&#x1F338; 1. English Nickname</label>
-            <input type="text" id="nickname" placeholder="Enter your English nickname">
-            <div class="warning" id="nicknameWarning">&#x26A0;&#xFE0F; Please enter your nickname.</div>
-        </div>
-        <div class="form-group">
-            <label>&#x1F522; 2. Student ID (5 Digits)</label>
-            <input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5">
-            <div class="warning" id="idWarning">&#x26A0;&#xFE0F; Please enter a valid 5-digit ID.</div>
-        </div>
-        <div class="form-group">
-            <label>&#x1F4C5; 3. Date</label>
-            <input type="date" id="date">
-            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today's date.</div>
-        </div>
-        <div class="form-group">
-            <label>&#x1F3EB; 4. Your Class (M3/2, M3/4 or M3/6)</label>
-            <select id="section">
+            <label>&#x1F3EB; 1. Your Class</label>
+            <select id="section" onchange="loadThaiNames()">
                 <option value="">&#x2014; Select your class &#x2014;</option>
                 <option value="M3/2">M3/2</option>
                 <option value="M3/4">M3/4</option>
                 <option value="M3/6">M3/6</option>
             </select>
             <div class="warning" id="sectionWarning">&#x26A0;&#xFE0F; Please select your class.</div>
+        </div>
+        <div class="form-group" id="thaiNameGroup" style="display:none;">
+            <label>&#x1F1F9;&#x1F1ED; 2. Your Thai Name</label>
+            <select id="thaiName" onchange="autoFillStudent()">
+                <option value="">&#x2014; Select your name &#x2014;</option>
+            </select>
+            <div class="warning" id="thaiNameWarning">&#x26A0;&#xFE0F; Please select your name from the list.</div>
+        </div>
+        <div class="form-group">
+            <label>&#x1F338; 3. Nickname (auto-filled)</label>
+            <input type="text" id="nickname" placeholder="Will be filled when you select your name" readonly>
+        </div>
+        <div class="form-group">
+            <label>&#x1F522; 4. Student ID (auto-filled)</label>
+            <input type="text" id="studentId" placeholder="Will be filled when you select your name" readonly>
+        </div>
+        <div class="form-group">
+            <label>&#x1F4C5; 5. Date</label>
+            <input type="date" id="date">
+            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today's date.</div>
         </div>
         <button onclick="startWorksheet()">&#x25B6; Start Worksheet &#x1F680;</button>
     </div>
@@ -225,8 +235,8 @@
     <div class="worksheet-locked" id="lockedMessage">
         <div style="font-size:3em; margin-bottom:10px;">&#x1F512;</div>
         <div class="locked-message">Worksheet Locked</div>
-        <p>&#x1F512; &#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;</p>
-        <p>&#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE15;&#xE34;&#xE14;&#xE15;&#xE48;&#xE2D;&#xE04;&#xE23;&#xE39;&#xE40;&#xE1E;&#xE37;&#xE48;&#xE2D;&#xE02;&#xE2D;&#xE04;&#xE33;&#xE41;&#xE19;&#xE30;&#xE19;&#xE33;</p>
+        <p>&#x1F512; à¸à¸¸à¸à¹à¸à¹à¸à¸£à¸à¸à¸³à¸à¸§à¸à¸à¸£à¸±à¹à¸à¸à¸µà¹à¸­à¸à¸¸à¸à¸²à¸à¹à¸¥à¹à¸§</p>
+        <p>à¸à¸£à¸¸à¸à¸²à¸à¸´à¸à¸à¹à¸­à¸à¸£à¸¹à¹à¸à¸·à¹à¸­à¸à¸­à¸à¸³à¹à¸à¸°à¸à¸³</p>
     </div>
 
     <div class="questions-section" id="questionsSection">
@@ -283,63 +293,270 @@
 </div>
 
 <script>
-    const canvaImages = [
+    // ===================== STUDENT DATA =====================
+    var studentData = {
+        'M3/2': [
+            {id:'37581',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸¤à¸©à¸à¸° à¸à¸±à¸à¸à¸£à¹à¸à¸¡à¸à¸·à¹à¸',nick:'Q'},
+            {id:'37582',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸±à¸à¸£à¸ à¸±à¸à¸£ à¹à¸­à¸µà¹à¸¢à¸à¸à¸­à¸',nick:'Premium'},
+            {id:'37583',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸¥à¸à¸£ à¸¥à¸·à¹à¸à¸à¸¥à¸²à¸',nick:'Mos'},
+            {id:'37584',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸ à¸±à¸à¸£ à¹à¸«à¸¥à¸²à¹à¸à¸¢',nick:'Tang'},
+            {id:'37585',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸§à¸à¸à¸¡à¸¥ à¹à¸à¹à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Aom'},
+            {id:'37586',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¹à¸à¸à¸´à¸ à¹à¸à¸µà¸¢à¸à¸à¸±à¸à¸à¸¶à¸',nick:'First'},
+            {id:'37587',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¹à¸à¸à¸´à¸à¸à¹ à¹à¸à¹à¸ªà¸¹à¸à¹à¸à¸´à¸',nick:'Techin'},
+            {id:'37588',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¹à¸à¸ à¸¤à¸à¸à¸´à¸à¸¸à¸¥',nick:'Oat'},
+            {id:'37589',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¸ à¸±à¸à¸£ à¸à¸¹à¸à¸ªà¸¹à¸à¹à¸à¸´à¸',nick:'Phat'},
+            {id:'37590',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸±à¸à¸à¸à¸à¸¨à¹ à¹à¸à¸µà¸¢à¸à¸à¸­à¸',nick:'Guy'},
+            {id:'37591',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸£à¸°à¹à¸ªà¸£à¸´à¸ à¹à¸à¸µà¸¢à¸à¹à¸²à¸¢',nick:'Jay'},
+            {id:'37592',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸´à¸¢à¸§à¸±à¸à¸à¹ à¸­à¸³à¸ à¸²à¸§à¹',nick:'Zee'},
+            {id:'37593',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¸£à¸à¸¥ à¹à¸à¸à¸²à¸à¸µ',nick:'Poom'},
+            {id:'37594',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸²à¸à¸´à¸ à¸ªà¸¸à¸à¸à¸£à¸°à¹à¸à¸',nick:'Dew'},
+            {id:'37596',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸¹à¸£à¸´à¸à¸±à¸à¸à¹ à¹à¸«à¸¥à¸¡à¸à¸±à¸à¸à¸¶à¸',nick:'Phum 2'},
+            {id:'37597',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸¡à¸²à¸à¸°à¸¨à¸±à¸à¸à¸´à¹ à¹à¸¢à¸µà¹à¸¢à¸¡à¸à¸±à¸à¸à¸¶à¸',nick:'Water'},
+            {id:'37598',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸£à¸±à¸à¸à¸¥ à¹à¸à¸¥à¹à¸à¸ªà¸±à¸à¹à¸à¸µà¸¢à¸°',nick:'Phum 1'},
+            {id:'37599',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸£à¸±à¸à¸¨à¸²à¸ªà¸à¸£à¹ à¸à¸£à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Kawjao'},
+            {id:'37600',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸§à¸´à¸¨à¸£à¸¸à¸ à¸à¸¸à¹à¸¡à¸à¸±à¸à¸à¸¶à¸',nick:'Tae'},
+            {id:'37601',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ªà¸¸à¸à¸¤à¸©à¸à¸´à¹ à¸ªà¸¸à¸à¸à¸à¹à¸à¸à¸£',nick:'Palm'},
+            {id:'37602',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸­à¸à¸´à¹à¸à¸ à¸à¸±à¸à¸à¸£à¹à¸à¹à¸­à¸',nick:'Auto'},
+            {id:'37603',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸²à¸¥à¸±à¸à¸©à¸à¹ à¸¡à¸¹à¸¥à¸¨à¸´à¸£à¸´',nick:'Ploy'},
+            {id:'37604',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸à¸²à¸ à¸² à¹à¸à¹à¸§à¸à¸¥à¸¶à¸',nick:'Temduang'},
+            {id:'37606',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸²à¸ à¸² à¹à¸à¸·à¸­à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Yaya'},
+            {id:'37607',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸²à¸à¸¸à¸ à¸à¸±à¸à¸à¸±à¸à¸à¸¶à¸',nick:'L'},
+            {id:'37608',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸´à¸à¸à¸² à¹à¸­à¹à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Khao'},
+            {id:'37609',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸´à¸¡à¸² à¸à¸¥à¸à¸´à¸¡à¸à¸¥à¸µ',nick:'Na'},
+            {id:'37611',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸ à¸±à¸ªà¸ªà¸£ à¸à¸±à¸à¸à¸',nick:'Kam1'},
+            {id:'37615',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ à¸±à¸à¸à¸´à¸£à¸² à¹à¸à¹à¸§à¸¡à¸µà¸¨à¸£à¸µ',nick:'Kam2'},
+            {id:'37618',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸§à¸£à¸´à¸¢à¸² à¸à¸¹à¸à¸±à¸à¸à¸¸à¸',nick:'Kib'},
+            {id:'37620',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸¸à¸à¸²à¸£à¸±à¸à¸à¹ à¸¡à¸´à¹à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Maysa'},
+            {id:'37621',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸ à¸´à¸à¸à¸² à¹à¸à¹à¸²à¹à¸à¹à¸§',nick:'Fasai'},
+            {id:'37622',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸ à¸´à¸ªà¸£à¸² à¸à¸­à¸­à¸³à¹à¸à¸£',nick:'Fanta'},
+            {id:'39688',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸¡à¸ à¸¨à¸´à¸£à¸´à¸à¸±à¸à¸à¸£',nick:'Wawa'},
+            {id:'33680',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ à¸¸à¸à¸à¸²à¸£à¸±à¸ à¸à¹à¸²à¸¢à¸ªà¸à¸à¸£à¸²à¸¡',nick:'Pang'},
+            {id:'54565',name:'Test Student',nick:'Kyle'}
+        ],
+        'M3/4': [
+            {id:'37667',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸±à¸à¸£à¸ à¸±à¸à¸£ à¸à¸¥à¸¶à¸à¸ªà¸¹à¸à¹à¸à¸´à¸',nick:'Fiw'},
+            {id:'37668',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸µà¸£à¸¨à¸±à¸à¸à¸´à¹ à¸à¸­à¸à¸£à¸­à¸',nick:'Kaow'},
+            {id:'37669',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸±à¸à¸à¸à¸£ à¸à¸¥à¸­à¸à¸à¸¥à¸²à¸',nick:'Tolap'},
+            {id:'37670',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸§à¸µà¸­à¸¡à¸£ à¸¨à¸£à¸µà¸­à¸³à¸à¸¥',nick:'Drift'},
+            {id:'37671',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸´à¸à¸ à¸±à¸à¸£ à¹à¸à¸¥à¸´à¹à¸¡à¸à¸£à¸°à¹à¸à¸',nick:'Fakhram'},
+            {id:'37674',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸¡à¸à¸à¸¥ à¸£à¸±à¸à¸à¸à¸à¸¨à¹à¸à¸£',nick:'Tee'},
+            {id:'37675',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸§à¸à¸´à¸£à¸§à¸´à¸à¸à¹ à¸à¸à¸¡à¹à¸à¸',nick:'Angpan'},
+            {id:'37676',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸­à¸ à¸´à¸à¸² à¸à¸¹à¸à¸±à¸à¸à¸¶à¸',nick:'Eik'},
+            {id:'37677',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸à¸§à¸£à¸£à¸ à¸§à¸±à¸à¸à¸²à¸à¸¥à¸²à¸',nick:'Pai'},
+            {id:'37678',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸²à¸à¸±à¸ à¹à¸à¸µà¹à¸¢à¸à¸ªà¸±à¸à¹à¸à¸µà¸¢à¸°',nick:'Wine'},
+            {id:'37679',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸²à¸à¸±à¸ à¸à¸³à¸à¸£à¸´à¸',nick:'Peem'},
+            {id:'37680',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸¥à¸à¸£à¸´à¸¢à¸² à¸à¸´à¸¡à¸à¹à¸§à¸±à¸',nick:'Garfield'},
+            {id:'37681',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸²à¸à¸´à¸©à¸à¹ à¸à¸à¸§à¸´à¹à¸£à¸à¸à¹',nick:'Bellda'},
+            {id:'37682',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸²à¸ à¸² à¹à¸à¸ªà¸±à¸à¹à¸à¸µà¸¢à¸°',nick:'Nooyim'},
+            {id:'37683',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸à¸´à¸à¸²à¸à¸à¸à¹ à¹à¸à¸¢à¹à¸à¸¥à¸´à¸¡',nick:'Pakwan'},
+            {id:'37684',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸´à¸à¸² à¹à¸à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Fahsai'},
+            {id:'37685',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸²à¸ à¸±à¸à¸£ à¸à¸µà¸à¸¸à¸£à¸µ',nick:'Foam'},
+            {id:'37686',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸´à¸à¸²à¸ à¸£à¸à¹ à¸à¸´à¸¡à¸à¹à¸à¸¥à¸²à¸',nick:'Thadcha'},
+            {id:'37687',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸ à¸£à¸à¹ à¹à¸à¹à¸¥à¸µà¹',nick:'Rak'},
+            {id:'37688',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸¥à¸±à¸à¸©à¸à¹ à¸à¸§à¸à¸¡à¸à¸µà¹à¸à¸à¸´',nick:'Play'},
+            {id:'37689',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸´à¸à¸à¸² à¹à¸£à¸·à¸­à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Jiw'},
+            {id:'37690',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸²à¸£à¸±à¸à¸à¹ à¸à¸´à¸à¹à¸',nick:'Fern'},
+            {id:'37691',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸à¸±à¸à¸à¹ à¸ªà¸à¸à¸¸à¸à¸à¸',nick:'Omyim'},
+            {id:'37692',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸à¸à¸²à¸à¸² à¹à¸à¹à¸§à¹à¸à¸à¸´à¹à¸à¸¥à¸²à¸',nick:'Ice'},
+            {id:'37693',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸à¸à¸£à¸±à¸ªà¸¡à¸´à¹ à¸à¸à¸°à¸à¸²à¸¡',nick:'Apo'},
+            {id:'37694',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¥à¸­à¸¢à¸à¸¡à¸à¸¹ à¸à¸¸à¹à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Ploy'},
+            {id:'37695',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸£à¸à¸£ à¸à¸²à¸à¸±à¸à¸à¸¶à¸',nick:'Pakkad'},
+            {id:'37697',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸²à¸­à¸£ à¹à¸à¸ªà¸¸à¸¡',nick:'Moved'},
+            {id:'37698',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸¡à¸à¹à¸£à¸à¸² à¸§à¸à¸¨à¹à¸à¸£à¸°à¸à¸¸à¸¡',nick:'Jenny'},
+            {id:'37700',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ à¸à¸à¸£ à¸ªà¸¸à¸à¸¥',nick:'Bonus'},
+            {id:'37701',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ à¸£à¸à¹à¸à¸à¸ à¸à¸¥à¸¥à¸²à¸ ',nick:'Veeta'},
+            {id:'37702',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸£à¸´à¸à¸£à¸à¸² à¹à¸à¸°à¸¡à¸°à¸à¸±à¸',nick:'Aing'},
+            {id:'37703',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸£à¸¸à¸à¸´à¸ªà¸² à¸¨à¸²à¸ªà¸à¸£à¹à¸à¸³à¸£à¸à¸à¹',nick:'Ongfong'},
+            {id:'37704',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸´à¸£à¸²à¸§à¸£à¸£à¸ à¹à¸ªà¸à¹à¸à¹à¸à¸£',nick:'Am'},
+            {id:'37705',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸¸à¸à¸²à¸à¸´à¸à¸¢à¹ à¸à¸¸à¸à¸à¸±à¸¢à¸ªà¸',nick:'Fangkhaw'},
+            {id:'37706',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸¸à¸£à¸µà¸£à¸±à¸à¸à¹ à¸à¸°à¸à¸°à¸¨à¸´à¸¥à¸²',nick:'Meena'},
+            {id:'37707',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸£à¸à¸£à¸£à¸ à¸­à¸²à¸¡à¸²à¸à¸£à¹',nick:'Earth'},
+            {id:'39678',name:'à¸à¸à¸à¸§à¸±à¸à¸à¹ à¸à¸±à¸à¸à¸¸à¸ªà¸¸à¸à¸à¸£',nick:'Non'}
+        ],
+        'M3/6': [
+            {id:'37750',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸¤à¸©à¸à¸à¸±à¸ à¸£à¸±à¸à¸©à¹à¸à¸±à¸à¸à¸¶à¸',nick:'Pepper'},
+            {id:'37751',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸±à¸à¸à¸à¸£à¸à¹ à¸à¸´à¸¥à¸à¸³à¹à¸«à¸',nick:'Model'},
+            {id:'37752',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¸à¸¤à¸ à¸ªà¸¸à¸à¸£à¸£à¸à¸à¸¥à¸²à¸',nick:'Fuas'},
+            {id:'37753',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¸à¸¤à¸ à¸ªà¸¸à¸à¸£à¸£à¸à¸à¸¥à¸²à¸',nick:'Guitar'},
+            {id:'37754',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸µà¸£à¸ à¸±à¸à¸£ à¸à¸±à¸à¸ªà¸¹à¸à¹à¸à¸´à¸',nick:'Moss'},
+            {id:'37755',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸¤à¸à¸à¸µ à¹à¸à¹à¸¢à¸à¸³à¸ à¸¦',nick:'Namo'},
+            {id:'37756',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸§à¸à¸¥ à¸ªà¸±à¸à¸à¸²à¸à¸±à¸à¸à¹',nick:'Tle'},
+            {id:'37757',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸£à¸°à¸à¸±à¸à¸à¹ à¸à¸±à¸à¸à¸£à¹à¹à¸à¸¢',nick:'Earth'},
+            {id:'37758',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸à¸©à¹à¸¨à¸´à¸£à¸´à¸à¸±à¸à¸à¹ à¹à¸à¸´à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Aomsub'},
+            {id:'37759',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸´à¸à¸§à¸±à¸ª à¹à¸à¸·à¹à¸­à¸à¸à¸´à¸¡à¸²à¸¢',nick:'Ninja'},
+            {id:'37760',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸à¸µà¸£à¸à¸±à¸à¸à¹ à¸à¸³à¸à¹à¸­à¸',nick:'PP'},
+            {id:'37761',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸à¸à¸£à¸£à¸¡ à¸ªà¸¸à¸à¸«à¸²',nick:'Porch'},
+            {id:'37762',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸²à¸à¸´à¸ à¸à¸à¸§à¸´à¸à¸±à¸¢',nick:'Sand'},
+            {id:'37763',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸²à¸à¸´à¸ à¸à¸­à¸à¸à¸­à¸',nick:'Folk'},
+            {id:'37764',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸¹à¸§à¸à¸¥ à¸¡à¸²à¸ªà¸¸à¸',nick:'Phu'},
+            {id:'37765',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸ à¸¹à¸§à¸´à¸ªà¸´à¸à¸à¸¸à¸¥ à¸ à¸¹à¸à¸§à¸',nick:'Pooh'},
+            {id:'37766',name:'à¹à¸à¹à¸à¸à¸²à¸¢à¸­à¸à¸¸à¸à¸±à¸¨à¸à¹ à¹à¸à¸§à¸à¸±à¸à¸à¸¶à¸',nick:'Toomtam'},
+            {id:'37767',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¡à¸¥à¸à¸´à¸à¸à¹ à¹à¸à¸µà¸¢à¸à¸£à¸³à¸¥à¸¶à¸',nick:'Shisha'},
+            {id:'37768',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸§à¸´à¸ªà¸£à¸² à¸ªà¸µà¸à¸§à¸¥',nick:'Idea'},
+            {id:'37769',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸à¸²à¸ à¸² à¸ªà¸¸à¸à¸ªà¸¹à¸à¹à¸à¸´à¸',nick:'Pan'},
+            {id:'37770',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸²à¸ à¸£à¸à¹ à¸à¸±à¸à¸à¸³à¸à¸£',nick:'Cartoon'},
+            {id:'37771',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸à¸´à¸¡à¸¥ à¸§à¸±à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Pang'},
+            {id:'37772',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸à¸´à¸à¸² à¸à¹à¸­à¸¢à¸à¸',nick:'Noodee'},
+            {id:'37774',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¸à¸à¸à¸²à¸ à¸² à¹à¸à¹à¸§à¹à¸à¸à¸´à¹à¸à¸¥à¸²à¸',nick:'Ink'},
+            {id:'37775',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸à¸´à¸à¸² à¹à¸à¹à¸à¸±à¹à¸',nick:'Benz'},
+            {id:'37776',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸£à¸´à¸¢à¸²à¸à¸¸à¸ à¸à¸¥à¸à¸±à¸à¸à¸¶à¸',nick:'Pu'},
+            {id:'37777',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸¥à¸²à¸¢à¸à¹à¸² à¸à¸¥à¸¹à¸à¸±à¸à¸à¹',nick:'Playfa'},
+            {id:'37778',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸±à¸à¸£à¸à¸£ à¹à¸à¸¥à¹à¸§à¹à¸à¸¥à¹à¸²',nick:'Sushi'},
+            {id:'37780',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸à¸´à¸à¸à¸²à¸ à¸² à¸à¸à¹à¸¢à¹à¸',nick:'Pitchayapha'},
+            {id:'37781',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¹à¸à¹à¸à¸à¸´à¸à¸à¸² à¸à¸´à¸£à¸°à¸à¸¸à¸¥à¸à¹',nick:'Xiider'},
+            {id:'37782',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸£à¸´à¸à¸£à¸à¸² à¹à¸à¸à¸à¸±à¸à¸à¸¶à¸',nick:'Pam'},
+            {id:'37783',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸§à¸£à¸£à¸à¸ à¸² à¹à¸à¸²à¸à¸¸à¸à¸à¸',nick:'Somjeed'},
+            {id:'37784',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸§à¸£à¸´à¸¨à¸£à¸² à¸¡à¸µà¸§à¸±à¸',nick:'Gift'},
+            {id:'37785',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸¨à¸£à¸±à¸à¸¢à¹à¸à¸£ à¸ªà¸±à¸à¸¢à¹à¹à¸ª',nick:'Khawhom'},
+            {id:'37788',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸¸à¸à¸£à¸£à¸©à¸² à¸à¸±à¸¨à¸à¸²à¸¥à¸±à¸¢',nick:'Lukwa'},
+            {id:'37789',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸ªà¸¸à¸ à¸±à¸à¸à¸£à¸² à¸à¸¸à¸à¸¡à¸²',nick:'So'},
+            {id:'37790',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸à¸¸à¸à¸´à¸à¸² à¸¥à¸²à¸§à¸à¸µà¸à¸°à¹à¸à¸²',nick:'Fern'},
+            {id:'37791',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸²à¸£à¸´à¸©à¸² à¹à¸ªà¸à¸ªà¸¸à¸§à¸£à¸£à¸',nick:'Mai'},
+            {id:'37792',name:'à¹à¸à¹à¸à¸«à¸à¸´à¸à¸­à¸´à¸à¸à¸²à¸§ à¹à¸à¸à¸¸à¸à¹à¸²à¸à¸à¸¥à¸¹',nick:'Aingdaw'}
+        ]
+    };
+
+    // ===================== QUESTION DATA =====================
+    var canvaImages = [
         "WS4M3A1Q1.png","WS4M3A1Q2.png","WS4M3A1Q3.png","WS4M3A1Q4.png","WS4M3A1Q5.png",
         "WS4M3A1Q6.png","WS4M3A1Q7.png","WS4M3A1Q8.png","WS4M3A1Q9.png","WS4M3A1Q10.png"
     ];
 
-    const questions = [
-        { id:1, image:canvaImages[0], text:"My sister is _____ than me.",
-          options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}] },
-        { id:2, image:canvaImages[1], text:"Which sentence is correct?",
-          options:[{text:"A) This car is more fast than that one.",correct:false},{text:"B) This car is faster than that one.",correct:true},{text:"C) This car is fastest than that one.",correct:false},{text:"D) This car is most fast than that one.",correct:false}] },
-        { id:3, image:canvaImages[2], text:"Bangkok is _____ than Chiang Mai.",
-          options:[{text:"A) big",correct:false},{text:"B) biggest",correct:false},{text:"C) bigger",correct:true},{text:"D) more big",correct:false}] },
-        { id:4, image:canvaImages[3], text:"Which sentence uses the comparative correctly?",
-          options:[{text:"A) She is more tall than her friend.",correct:false},{text:"B) She is tallest than her friend.",correct:false},{text:"C) She is taller than her friend.",correct:true},{text:"D) She is the more tall than her friend.",correct:false}] },
-        { id:5, image:canvaImages[4], text:"An elephant is _____ than a cat.",
-          options:[{text:"A) heavier",correct:true},{text:"B) more heavy",correct:false},{text:"C) heaviest",correct:false},{text:"D) most heavy",correct:false}] },
-        { id:6, image:canvaImages[5], text:"Which word correctly fills the blank: \"Math is _____ than Art.\"?",
-          options:[{text:"A) difficulter",correct:false},{text:"B) most difficult",correct:false},{text:"C) more difficult",correct:true},{text:"D) difficultier",correct:false}] },
-        { id:7, image:canvaImages[6], text:"\"This pizza is _____ than that sandwich.\"",
-          options:[{text:"A) deliciouser",correct:false},{text:"B) most delicious",correct:false},{text:"C) more deliciously",correct:false},{text:"D) more delicious",correct:true}] },
-        { id:8, image:canvaImages[7], text:"Which sentence is correct?",
-          options:[{text:"A) Today is cold than yesterday.",correct:false},{text:"B) Today is colder than yesterday.",correct:true},{text:"C) Today is more cold than yesterday.",correct:false},{text:"D) Today is coldest than yesterday.",correct:false}] },
-        { id:9, image:canvaImages[8], text:"\"A dog is _____ than a fish.\"",
-          options:[{text:"A) more smart",correct:false},{text:"B) smartest",correct:false},{text:"C) smarter",correct:true},{text:"D) most smart",correct:false}] },
-        { id:10, image:canvaImages[9], text:"Which sentence correctly compares two things?",
-          options:[{text:"A) English is easy than Thai.",correct:false},{text:"B) English is more easy than Thai.",correct:false},{text:"C) English is easier than Thai.",correct:true},{text:"D) English is the most easy than Thai.",correct:false}] }
+    var questions = [
+        {id:1,image:canvaImages[0],text:"My sister is _____ than me.",
+         options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}]},
+        {id:2,image:canvaImages[1],text:"Which sentence is correct?",
+         options:[{text:"A) This car is more fast than that one.",correct:false},{text:"B) This car is faster than that one.",correct:true},{text:"C) This car is fastest than that one.",correct:false},{text:"D) This car is most fast than that one.",correct:false}]},
+        {id:3,image:canvaImages[2],text:"Bangkok is _____ than Chiang Mai.",
+         options:[{text:"A) big",correct:false},{text:"B) biggest",correct:false},{text:"C) bigger",correct:true},{text:"D) more big",correct:false}]},
+        {id:4,image:canvaImages[3],text:"Which sentence uses the comparative correctly?",
+         options:[{text:"A) She is more tall than her friend.",correct:false},{text:"B) She is tallest than her friend.",correct:false},{text:"C) She is taller than her friend.",correct:true},{text:"D) She is the more tall than her friend.",correct:false}]},
+        {id:5,image:canvaImages[4],text:"An elephant is _____ than a cat.",
+         options:[{text:"A) heavier",correct:true},{text:"B) more heavy",correct:false},{text:"C) heaviest",correct:false},{text:"D) most heavy",correct:false}]},
+        {id:6,image:canvaImages[5],text:'Which word correctly fills the blank: "Math is _____ than Art."?',
+         options:[{text:"A) difficulter",correct:false},{text:"B) most difficult",correct:false},{text:"C) more difficult",correct:true},{text:"D) difficultier",correct:false}]},
+        {id:7,image:canvaImages[6],text:'"This pizza is _____ than that sandwich."',
+         options:[{text:"A) deliciouser",correct:false},{text:"B) most delicious",correct:false},{text:"C) more deliciously",correct:false},{text:"D) more delicious",correct:true}]},
+        {id:8,image:canvaImages[7],text:"Which sentence is correct?",
+         options:[{text:"A) Today is cold than yesterday.",correct:false},{text:"B) Today is colder than yesterday.",correct:true},{text:"C) Today is more cold than yesterday.",correct:false},{text:"D) Today is coldest than yesterday.",correct:false}]},
+        {id:9,image:canvaImages[8],text:'"A dog is _____ than a fish."',
+         options:[{text:"A) more smart",correct:false},{text:"B) smartest",correct:false},{text:"C) smarter",correct:true},{text:"D) most smart",correct:false}]},
+        {id:10,image:canvaImages[9],text:"Which sentence correctly compares two things?",
+         options:[{text:"A) English is easy than Thai.",correct:false},{text:"B) English is more easy than Thai.",correct:false},{text:"C) English is easier than Thai.",correct:true},{text:"D) English is the most easy than Thai.",correct:false}]}
     ];
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+    // ===================== SEEDED RNG =====================
+    function seededRandom(seed) {
+        return function() {
+            seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+            var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+            t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+            return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        };
+    }
 
-    let userAnswers = {};
-    let attempts = 0;
-    let allAttemptScores = [];
-    const TEST_STUDENT_IDS = ['54565'];
-    const maxAttempts = 3;
+    function seededShuffle(arr, rng) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(rng() * (i + 1));
+            var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+        }
+        return a;
+    }
+
+    // displayQuestions holds the shuffled question+option order for the current session
+    var displayQuestions = questions.map(function(q) {
+        return Object.assign({}, q, {displayOptions: q.options.slice()});
+    });
+
+    function applySeededOrder(studentId) {
+        if (TEST_STUDENT_IDS.includes(String(studentId))) {
+            // Kyle gets original fixed order
+            displayQuestions = questions.map(function(q) {
+                return Object.assign({}, q, {displayOptions: q.options.slice()});
+            });
+            return;
+        }
+        var seed = parseInt(studentId) || 0;
+        var rng = seededRandom(seed);
+        var shuffledQs = seededShuffle(questions, rng);
+        displayQuestions = shuffledQs.map(function(q) {
+            return Object.assign({}, q, {displayOptions: seededShuffle(q.options, rng)});
+        });
+    }
+
+    // ===================== APP STATE =====================
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+    var userAnswers = {};
+    var attempts = 0;
+    var allAttemptScores = [];
+    var TEST_STUDENT_IDS = ['54565'];
+    var maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
 
-    function startWorksheet() {
-        const nickname = document.getElementById('nickname').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-        const date = document.getElementById('date').value;
-        const section = document.getElementById('section').value;
+    // ===================== FORM FUNCTIONS =====================
+    function loadThaiNames() {
+        var section = document.getElementById('section').value;
+        var thaiNameGroup = document.getElementById('thaiNameGroup');
+        var thaiNameSelect = document.getElementById('thaiName');
 
-        let isValid = true;
-        document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
-        if (!nickname) isValid = false;
-        document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
-        if (!studentId || studentId.length !== 5) isValid = false;
-        document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
-        if (!date) isValid = false;
+        // Clear auto-filled fields
+        document.getElementById('nickname').value = '';
+        document.getElementById('studentId').value = '';
+        thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+
+        if (!section) {
+            thaiNameGroup.style.display = 'none';
+            return;
+        }
+
+        var students = studentData[section] || [];
+        students.forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name + ' (' + s.nick + ')';
+            opt.dataset.nick = s.nick;
+            thaiNameSelect.appendChild(opt);
+        });
+        thaiNameGroup.style.display = 'block';
+    }
+
+    function autoFillStudent() {
+        var thaiNameSelect = document.getElementById('thaiName');
+        var selectedOpt = thaiNameSelect.options[thaiNameSelect.selectedIndex];
+        if (!selectedOpt || !selectedOpt.value) {
+            document.getElementById('nickname').value = '';
+            document.getElementById('studentId').value = '';
+            return;
+        }
+        document.getElementById('studentId').value = selectedOpt.value;
+        document.getElementById('nickname').value = selectedOpt.dataset.nick;
+    }
+
+    // ===================== WORKSHEET FLOW =====================
+    function startWorksheet() {
+        var nickname = document.getElementById('nickname').value.trim();
+        var studentId = document.getElementById('studentId').value.trim();
+        var date = document.getElementById('date').value;
+        var section = document.getElementById('section').value;
+        var thaiName = document.getElementById('thaiName').value;
+
+        var isValid = true;
         document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
         if (!section) isValid = false;
+        var thaiNameWarning = document.getElementById('thaiNameWarning');
+        if (thaiNameWarning) thaiNameWarning.style.display = thaiName ? 'none' : 'block';
+        if (!thaiName) isValid = false;
+        document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
+        if (!date) isValid = false;
         if (!isValid) return;
 
-        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        // Apply seeded randomization based on student ID
+        applySeededOrder(studentId);
+
+        var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
 
@@ -359,27 +576,25 @@
     }
 
     function renderQuestions() {
-        const container = document.getElementById('questionsContainer');
+        var container = document.getElementById('questionsContainer');
         container.innerHTML = '';
-        questions.forEach(q => {
-            const card = document.createElement('div');
+        displayQuestions.forEach(function(q, posIdx) {
+            var card = document.createElement('div');
             card.className = 'question-card';
-            card.id = `question-${q.id}`;
-            const optionsHtml = q.options.map((opt, idx) => `
-<label class="option">
-<input type="radio" name="q${q.id}" value="${idx}">
-<span>${opt.text}</span>
-</label>
-`).join('');
-            card.innerHTML = `
-<img src="${q.image}" alt="Question image" class="image-placeholder">
-<div>
-<span class="question-number">${q.id}</span>
-<span class="question-text">${q.text}</span>
-</div>
-<div class="options" style="margin-top:15px;">${optionsHtml}</div>
-`;
-            card.querySelectorAll('input[type="radio"]').forEach(radio => {
+            card.id = 'question-' + q.id;
+            // Use original-array index as radio value so scoring stays correct
+            var optionsHtml = q.displayOptions.map(function(opt) {
+                var origIdx = q.options.indexOf(opt);
+                return '<label class="option">'
+                    + '<input type="radio" name="q' + q.id + '" value="' + origIdx + '">'
+                    + '<span>' + opt.text + '</span>'
+                    + '</label>';
+            }).join('');
+            card.innerHTML = '<img src="' + q.image + '" alt="Question image" class="image-placeholder">'
+                + '<div><span class="question-number">' + (posIdx + 1) + '</span>'
+                + '<span class="question-text">' + q.text + '</span></div>'
+                + '<div class="options" style="margin-top:15px;">' + optionsHtml + '</div>';
+            card.querySelectorAll('input[type="radio"]').forEach(function(radio) {
                 radio.addEventListener('change', function() {
                     userAnswers[q.id] = parseInt(this.value);
                 });
@@ -389,18 +604,18 @@
     }
 
     function submitAnswers() {
-        let score = 0;
-        questions.forEach(q => {
+        var score = 0;
+        questions.forEach(function(q) {
             if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
         });
 
-        const nickname = document.getElementById('nickname').value.trim();
-        const studentId = document.getElementById('studentId').value.trim();
-        const section = document.getElementById('section').value;
-        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
-        const isPassed = score >= 8;
+        var nickname = document.getElementById('nickname').value.trim();
+        var studentId = document.getElementById('studentId').value.trim();
+        var section = document.getElementById('section').value;
+        var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
+        var isPassed = score >= 8;
 
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
         if (!savedData.scores) savedData.scores = [];
         savedData.scores.push(score);
@@ -421,58 +636,58 @@
 
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'block';
-        document.getElementById('scoreValue').textContent = `${score}/10`;
+        document.getElementById('scoreValue').textContent = score + '/10';
 
-        const statusEl = document.getElementById('scoreStatus');
+        var statusEl = document.getElementById('scoreStatus');
         if (isPassed) {
             submitToSheet(studentId, nickname, section, score, 'PASSED');
-            statusEl.innerHTML = `<span class="status-pass">
-&#x2705; &#xE22;&#xE34;&#xE19;&#xE14;&#xE35;&#xE14;&#xE49;&#xE27;&#xE22;&#xE04;&#xE38;&#xE13;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE41;&#xE25;&#xE49;&#xE27;! &#x1F389;<br>
-&#xE1C;&#xE48;&#xE32;&#xE19;&#xE41;&#xE25;&#xE49;&#xE27;&#xE41;&#xE1B;&#xE25;&#xE01;&#xE27;&#xE48;&#xE32; 3 &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;<br>
-&#xE44;&#xE14;&#xE49;&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE2A;&#xE39;&#xE07;&#xE2A;&#xE38;&#xE14;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE19;&#xE35;&#xE49;
-</span>`;
+            statusEl.innerHTML = '<span class="status-pass">'
+                + '&#x2705; à¸¢à¸´à¸à¸à¸µà¸à¹à¸§à¸¢à¸à¸¸à¸à¸à¹à¸²à¸à¹à¸¥à¹à¸§! &#x1F389;<br>'
+                + 'à¸à¹à¸²à¸à¹à¸¥à¹à¸§à¹à¸à¸¥à¸à¸§à¹à¸² 3 à¸à¸£à¸±à¹à¸<br>'
+                + 'à¹à¸à¹à¸à¸°à¹à¸à¸à¸ªà¸¹à¸à¸ªà¸¸à¸à¸à¸£à¸±à¹à¸à¸à¸µà¹'
+                + '</span>';
         } else {
             if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-                const highest = Math.max(...allAttemptScores);
+                var highest = Math.max.apply(null, allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
-                statusEl.innerHTML = `<span class="status-fail">
-&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
-&#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;<br>
-&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE17;&#xE35;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE01;&#xE32;&#xE23;: 8, 9, 10<br>
-&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: 0 &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
-</span>`;
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; à¸¢à¸±à¸à¹à¸¡à¹à¸à¹à¸²à¸à¸à¹à¸°<br>'
+                    + 'à¸à¸¸à¸à¹à¸à¹à¸à¸£à¸à¸à¸³à¸à¸§à¸à¸à¸£à¸±à¹à¸à¸à¸µà¹à¸­à¸à¸¸à¸à¸²à¸à¹à¸¥à¹à¸§<br>'
+                    + 'à¸à¸°à¹à¸à¸à¸à¸µà¹à¸à¹à¸­à¸à¸à¸²à¸£: 8, 9, 10<br>'
+                    + 'à¹à¸­à¸à¸²à¸ªà¹à¸«à¸¥à¸·à¸­: 0 à¸à¸£à¸±à¹à¸'
+                    + '</span>';
             } else {
-                const remaining = maxAttempts - attempts;
-                statusEl.innerHTML = `<span class="status-fail">
-&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
-&#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;<br>
-&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE17;&#xE35;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE01;&#xE32;&#xE23;: 8, 9, 10<br>
-&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${remaining} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
-</span>`;
+                var remaining = maxAttempts - attempts;
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; à¸¢à¸±à¸à¹à¸¡à¹à¸à¹à¸²à¸à¸à¹à¸°<br>'
+                    + 'à¸à¸¸à¸à¹à¸à¹à¸à¸£à¸à¸à¸³à¸à¸§à¸à¸à¸£à¸±à¹à¸à¸à¸µà¹à¸­à¸à¸¸à¸à¸²à¸à¹à¸¥à¹à¸§<br>'
+                    + 'à¸à¸°à¹à¸à¸à¸à¸µà¹à¸à¹à¸­à¸à¸à¸²à¸£: 8, 9, 10<br>'
+                    + 'à¹à¸­à¸à¸²à¸ªà¹à¸«à¸¥à¸·à¸­: ' + remaining + ' à¸à¸£à¸±à¹à¸'
+                    + '</span>';
             }
         }
 
-        const dateVal = document.getElementById('date').value;
+        var dateVal = document.getElementById('date').value;
         document.getElementById('summaryNickname').textContent = nickname;
         document.getElementById('summaryId').textContent = studentId;
         document.getElementById('summaryDate').textContent = dateVal;
         document.getElementById('summarySection').textContent = section;
-        document.getElementById('summaryScore').textContent = `${score}/10`;
+        document.getElementById('summaryScore').textContent = score + '/10';
         document.getElementById('summaryTime').textContent = new Date().toLocaleString();
         updateAttemptsDisplay();
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
-        const data = { studentId, nickname, section, score, worksheet: 'WS4', date: new Date().toISOString(), status };
-        const params = new URLSearchParams(data);
-        fetch(SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+        var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS4', date:new Date().toISOString(), status:status};
+        var params = new URLSearchParams(data);
+        fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
     }
 
     function resetForm() {
         userAnswers = {};
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'none';
-        const studentId = document.getElementById('studentId').value.trim();
+        var studentId = document.getElementById('studentId').value.trim();
         if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
             document.getElementById('lockedMessage').classList.add('show');
         } else {
@@ -480,38 +695,40 @@
             document.getElementById('nickname').value = '';
             document.getElementById('studentId').value = '';
             document.getElementById('section').value = '';
+            document.getElementById('thaiName').innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            document.getElementById('thaiNameGroup').style.display = 'none';
             document.getElementById('date').valueAsDate = new Date();
         }
     }
 
     function printWorksheet() {
-        const studentId = document.getElementById('studentId').value.trim();
-        const section = document.getElementById('section').value;
-        const nickname = document.getElementById('nickname').value.trim();
-        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
-        const history = savedData.attemptHistory || [];
+        var studentId = document.getElementById('studentId').value.trim();
+        var section = document.getElementById('section').value;
+        var nickname = document.getElementById('nickname').value.trim();
+        var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        var history = savedData.attemptHistory || [];
 
-        let attemptsHtml = '';
+        var attemptsHtml = '';
         if (history.length === 0) {
             attemptsHtml = '<p style="color:#999;text-align:center;">No attempt records found.</p>';
         } else {
             history.forEach(function(attempt) {
-                const isPassed = attempt.status === 'PASSED';
-                const statusIcon = isPassed ? '&#x2705;' : '&#x274C;';
-                const statusLabel = isPassed ? 'PASSED' : 'FAILED';
-                const statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
-                const statusColor = isPassed ? '#1b5e20' : '#b71c1c';
+                var isPassed = attempt.status === 'PASSED';
+                var statusIcon = isPassed ? '&#x2705;' : '&#x274C;';
+                var statusLabel = isPassed ? 'PASSED' : 'FAILED';
+                var statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
+                var statusColor = isPassed ? '#1b5e20' : '#b71c1c';
 
-                let questionsHtml = '';
+                var questionsHtml = '';
                 questions.forEach(function(q) {
-                    const studentAns = attempt.answers[q.id];
-                    let optionsHtml = '';
+                    var studentAns = attempt.answers[q.id];
+                    var optionsHtml = '';
                     q.options.forEach(function(opt, idx) {
-                        const isSelected = studentAns === idx;
-                        const isCorrect = opt.correct;
-                        let style = 'padding:5px 10px;margin:3px 0;border-radius:4px;border:1px solid #ddd;font-size:0.9em;';
-                        let marker = '';
+                        var isSelected = studentAns === idx;
+                        var isCorrect = opt.correct;
+                        var style = 'padding:5px 10px;margin:3px 0;border-radius:4px;border:1px solid #ddd;font-size:0.9em;';
+                        var marker = '';
                         if (isSelected && isCorrect) {
                             style += 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;';
                             marker = ' &#x2705;';
@@ -544,11 +761,11 @@
             });
         }
 
-        const allScores = savedData.scores || [];
-        const highest = allScores.length ? Math.max.apply(null, allScores) : 0;
-        const hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
+        var allScores = savedData.scores || [];
+        var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
+        var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
 
-        const printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+        var printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
             + '<title>WS4 Record - ' + nickname + ' (' + studentId + ')</title>'
             + '<style>'
             + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
@@ -576,20 +793,20 @@
             + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
             + '</body></html>';
 
-        const pw = window.open('', '_blank', 'width=950,height=750');
+        var pw = window.open('', '_blank', 'width=950,height=750');
         if (pw) { pw.document.write(printHTML); pw.document.close(); }
         else { alert('Please allow pop-ups for this page to print your record.'); }
     }
 
     function updateAttemptsDisplay() {
         document.getElementById('attemptsUsed').textContent = attempts;
-        const msg = document.getElementById('attemptsMessage');
-        const studentId = document.getElementById('studentId').value.trim();
+        var msg = document.getElementById('attemptsMessage');
+        var studentId = document.getElementById('studentId').value.trim();
         if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-            msg.innerHTML = '&#x1F512; &#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;';
+            msg.innerHTML = '&#x1F512; à¸à¸¸à¸à¹à¸à¹à¸à¸£à¸à¸à¸³à¸à¸§à¸à¸à¸£à¸±à¹à¸à¸à¸µà¹à¸­à¸à¸¸à¸à¸²à¸à¹à¸¥à¹à¸§';
             msg.style.color = '#c41e3a';
         } else {
-            msg.innerHTML = '&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ' + (maxAttempts - attempts) + ' &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;';
+            msg.innerHTML = 'à¹à¸­à¸à¸²à¸ªà¹à¸«à¸¥à¸·à¸­: ' + (maxAttempts - attempts) + ' à¸à¸£à¸±à¹à¸';
             msg.style.color = '#666';
         }
     }
