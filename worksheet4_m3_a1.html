@@ -135,6 +135,7 @@
         }
         .btn-submit { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); padding: 12px 30px; width: auto; }
         .btn-retry { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); padding: 12px 30px; width: auto; }
+        .btn-print { background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%); padding: 12px 30px; width: auto; }
         .score-display {
             background: #e8f5e9;
             padding: 15px;
@@ -273,130 +274,41 @@
         <p style="text-align:center; margin-top:20px; color:#666;">
             &#x1F4F8; Take a screenshot and send it to your teacher on Line or Google Classroom.
         </p>
+        <div class="button-group" style="margin-top:15px;">
+            <button class="btn-print" onclick="printWorksheet()">&#x1F5A8; Print My Record</button>
+            <button class="btn-retry" onclick="resetForm()">&#x21BB; Try Again &#x1F4AA;</button>
+        </div>
     </div>
 
 </div>
 
 <script>
-    // Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
-    // Q1:B(1) Q2:B(1) Q3:C(2) Q4:C(2) Q5:A(0) Q6:C(2) Q7:D(3) Q8:B(1) Q9:C(2) Q10:C(2)
-
     const canvaImages = [
         "WS4M3A1Q1.png","WS4M3A1Q2.png","WS4M3A1Q3.png","WS4M3A1Q4.png","WS4M3A1Q5.png",
         "WS4M3A1Q6.png","WS4M3A1Q7.png","WS4M3A1Q8.png","WS4M3A1Q9.png","WS4M3A1Q10.png"
     ];
 
     const questions = [
-        {
-            id: 1,
-            image: canvaImages[0],
-            text: "My sister is _____ than me.",
-            options: [
-                { text: "A) tall", correct: false },
-                { text: "B) taller", correct: true },
-                { text: "C) tallest", correct: false },
-                { text: "D) more taller", correct: false }
-            ]
-        },
-        {
-            id: 2,
-            image: canvaImages[1],
-            text: "Which sentence is correct?",
-            options: [
-                { text: "A) This car is more fast than that one.", correct: false },
-                { text: "B) This car is faster than that one.", correct: true },
-                { text: "C) This car is fastest than that one.", correct: false },
-                { text: "D) This car is most fast than that one.", correct: false }
-            ]
-        },
-        {
-            id: 3,
-            image: canvaImages[2],
-            text: "Bangkok is _____ than Chiang Mai.",
-            options: [
-                { text: "A) big", correct: false },
-                { text: "B) biggest", correct: false },
-                { text: "C) bigger", correct: true },
-                { text: "D) more big", correct: false }
-            ]
-        },
-        {
-            id: 4,
-            image: canvaImages[3],
-            text: "Which sentence uses the comparative correctly?",
-            options: [
-                { text: "A) She is more tall than her friend.", correct: false },
-                { text: "B) She is tallest than her friend.", correct: false },
-                { text: "C) She is taller than her friend.", correct: true },
-                { text: "D) She is the more tall than her friend.", correct: false }
-            ]
-        },
-        {
-            id: 5,
-            image: canvaImages[4],
-            text: "An elephant is _____ than a cat.",
-            options: [
-                { text: "A) heavier", correct: true },
-                { text: "B) more heavy", correct: false },
-                { text: "C) heaviest", correct: false },
-                { text: "D) most heavy", correct: false }
-            ]
-        },
-        {
-            id: 6,
-            image: canvaImages[5],
-            text: "Which word correctly fills the blank: \"Math is _____ than Art.\"?",
-            options: [
-                { text: "A) difficulter", correct: false },
-                { text: "B) most difficult", correct: false },
-                { text: "C) more difficult", correct: true },
-                { text: "D) difficultier", correct: false }
-            ]
-        },
-        {
-            id: 7,
-            image: canvaImages[6],
-            text: "\"This pizza is _____ than that sandwich.\"",
-            options: [
-                { text: "A) deliciouser", correct: false },
-                { text: "B) most delicious", correct: false },
-                { text: "C) more deliciously", correct: false },
-                { text: "D) more delicious", correct: true }
-            ]
-        },
-        {
-            id: 8,
-            image: canvaImages[7],
-            text: "Which sentence is correct?",
-            options: [
-                { text: "A) Today is cold than yesterday.", correct: false },
-                { text: "B) Today is colder than yesterday.", correct: true },
-                { text: "C) Today is more cold than yesterday.", correct: false },
-                { text: "D) Today is coldest than yesterday.", correct: false }
-            ]
-        },
-        {
-            id: 9,
-            image: canvaImages[8],
-            text: "\"A dog is _____ than a fish.\"",
-            options: [
-                { text: "A) more smart", correct: false },
-                { text: "B) smartest", correct: false },
-                { text: "C) smarter", correct: true },
-                { text: "D) most smart", correct: false }
-            ]
-        },
-        {
-            id: 10,
-            image: canvaImages[9],
-            text: "Which sentence correctly compares two things?",
-            options: [
-                { text: "A) English is easy than Thai.", correct: false },
-                { text: "B) English is more easy than Thai.", correct: false },
-                { text: "C) English is easier than Thai.", correct: true },
-                { text: "D) English is the most easy than Thai.", correct: false }
-            ]
-        }
+        { id:1, image:canvaImages[0], text:"My sister is _____ than me.",
+          options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}] },
+        { id:2, image:canvaImages[1], text:"Which sentence is correct?",
+          options:[{text:"A) This car is more fast than that one.",correct:false},{text:"B) This car is faster than that one.",correct:true},{text:"C) This car is fastest than that one.",correct:false},{text:"D) This car is most fast than that one.",correct:false}] },
+        { id:3, image:canvaImages[2], text:"Bangkok is _____ than Chiang Mai.",
+          options:[{text:"A) big",correct:false},{text:"B) biggest",correct:false},{text:"C) bigger",correct:true},{text:"D) more big",correct:false}] },
+        { id:4, image:canvaImages[3], text:"Which sentence uses the comparative correctly?",
+          options:[{text:"A) She is more tall than her friend.",correct:false},{text:"B) She is tallest than her friend.",correct:false},{text:"C) She is taller than her friend.",correct:true},{text:"D) She is the more tall than her friend.",correct:false}] },
+        { id:5, image:canvaImages[4], text:"An elephant is _____ than a cat.",
+          options:[{text:"A) heavier",correct:true},{text:"B) more heavy",correct:false},{text:"C) heaviest",correct:false},{text:"D) most heavy",correct:false}] },
+        { id:6, image:canvaImages[5], text:"Which word correctly fills the blank: \"Math is _____ than Art.\"?",
+          options:[{text:"A) difficulter",correct:false},{text:"B) most difficult",correct:false},{text:"C) more difficult",correct:true},{text:"D) difficultier",correct:false}] },
+        { id:7, image:canvaImages[6], text:"\"This pizza is _____ than that sandwich.\"",
+          options:[{text:"A) deliciouser",correct:false},{text:"B) most delicious",correct:false},{text:"C) more deliciously",correct:false},{text:"D) more delicious",correct:true}] },
+        { id:8, image:canvaImages[7], text:"Which sentence is correct?",
+          options:[{text:"A) Today is cold than yesterday.",correct:false},{text:"B) Today is colder than yesterday.",correct:true},{text:"C) Today is more cold than yesterday.",correct:false},{text:"D) Today is coldest than yesterday.",correct:false}] },
+        { id:9, image:canvaImages[8], text:"\"A dog is _____ than a fish.\"",
+          options:[{text:"A) more smart",correct:false},{text:"B) smartest",correct:false},{text:"C) smarter",correct:true},{text:"D) most smart",correct:false}] },
+        { id:10, image:canvaImages[9], text:"Which sentence correctly compares two things?",
+          options:[{text:"A) English is easy than Thai.",correct:false},{text:"B) English is more easy than Thai.",correct:false},{text:"C) English is easier than Thai.",correct:true},{text:"D) English is the most easy than Thai.",correct:false}] }
     ];
 
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
@@ -418,20 +330,16 @@
         let isValid = true;
         document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
         if (!nickname) isValid = false;
-
         document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
         if (!studentId || studentId.length !== 5) isValid = false;
-
         document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
         if (!date) isValid = false;
-
         document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
         if (!section) isValid = false;
-
         if (!isValid) return;
 
         const storageKey = `ws4_m3_a1_${studentId}_${section}`;
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
 
@@ -492,10 +400,21 @@
         const storageKey = `ws4_m3_a1_${studentId}_${section}`;
         const isPassed = score >= 8;
 
-        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
         if (!savedData.scores) savedData.scores = [];
         savedData.scores.push(score);
+        if (!savedData.attemptHistory) savedData.attemptHistory = [];
+        savedData.attemptHistory.push({
+            attemptNum: savedData.attempts,
+            score: score,
+            answers: Object.assign({}, userAnswers),
+            date: new Date().toLocaleString(),
+            nickname: nickname,
+            studentId: studentId,
+            section: section,
+            status: isPassed ? 'PASSED' : 'FAILED'
+        });
         attempts = savedData.attempts;
         allAttemptScores = savedData.scores;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
@@ -565,6 +484,103 @@
         }
     }
 
+    function printWorksheet() {
+        const studentId = document.getElementById('studentId').value.trim();
+        const section = document.getElementById('section').value;
+        const nickname = document.getElementById('nickname').value.trim();
+        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
+        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        const history = savedData.attemptHistory || [];
+
+        let attemptsHtml = '';
+        if (history.length === 0) {
+            attemptsHtml = '<p style="color:#999;text-align:center;">No attempt records found.</p>';
+        } else {
+            history.forEach(function(attempt) {
+                const isPassed = attempt.status === 'PASSED';
+                const statusIcon = isPassed ? '&#x2705;' : '&#x274C;';
+                const statusLabel = isPassed ? 'PASSED' : 'FAILED';
+                const statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
+                const statusColor = isPassed ? '#1b5e20' : '#b71c1c';
+
+                let questionsHtml = '';
+                questions.forEach(function(q) {
+                    const studentAns = attempt.answers[q.id];
+                    let optionsHtml = '';
+                    q.options.forEach(function(opt, idx) {
+                        const isSelected = studentAns === idx;
+                        const isCorrect = opt.correct;
+                        let style = 'padding:5px 10px;margin:3px 0;border-radius:4px;border:1px solid #ddd;font-size:0.9em;';
+                        let marker = '';
+                        if (isSelected && isCorrect) {
+                            style += 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;';
+                            marker = ' &#x2705;';
+                        } else if (isSelected && !isCorrect) {
+                            style += 'background:#ffcdd2;border-color:#f44336;font-weight:bold;';
+                            marker = ' &#x274C;';
+                        } else if (!isSelected && isCorrect) {
+                            style += 'background:#e8f5e9;border-color:#81c784;color:#2e7d32;';
+                            marker = ' &larr; correct answer';
+                        } else {
+                            style += 'background:#fafafa;color:#999;';
+                        }
+                        optionsHtml += '<div style="' + style + '">' + opt.text + marker + '</div>';
+                    });
+                    questionsHtml += '<div style="margin-bottom:12px;padding:10px;background:#f8f9fa;border-radius:6px;border-left:3px solid #667eea;">'
+                        + '<p style="font-weight:bold;margin-bottom:6px;color:#333;font-size:0.95em;">Q' + q.id + '. ' + q.text + '</p>'
+                        + '<div>' + optionsHtml + '</div>'
+                        + '</div>';
+                });
+
+                attemptsHtml += '<div style="margin-bottom:25px;border:2px solid #ddd;border-radius:10px;overflow:hidden;page-break-inside:avoid;">'
+                    + '<div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">'
+                    + '<span><b>Attempt ' + attempt.attemptNum + '</b></span>'
+                    + '<span>Score: <b>' + attempt.score + '/10</b></span>'
+                    + '<span style="background:' + statusBg + ';color:' + statusColor + ';padding:3px 10px;border-radius:12px;font-weight:bold;font-size:0.9em;">' + statusIcon + ' ' + statusLabel + '</span>'
+                    + '<span style="font-size:0.85em;opacity:0.9;">' + attempt.date + '</span>'
+                    + '</div>'
+                    + '<div style="padding:15px;">' + questionsHtml + '</div>'
+                    + '</div>';
+            });
+        }
+
+        const allScores = savedData.scores || [];
+        const highest = allScores.length ? Math.max.apply(null, allScores) : 0;
+        const hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
+
+        const printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+            + '<title>WS4 Record - ' + nickname + ' (' + studentId + ')</title>'
+            + '<style>'
+            + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
+            + 'h1{text-align:center;color:#667eea;font-size:1.6em;margin-bottom:4px;}'
+            + 'h2{text-align:center;color:#555;font-size:1em;font-weight:normal;margin-bottom:15px;}'
+            + 'table{border-collapse:collapse;}'
+            + 'td{border:1px solid #ddd;padding:7px 12px;}'
+            + '.it td:first-child{background:#f0f3ff;font-weight:bold;width:130px;}'
+            + '@media print{@page{margin:12mm;}}'
+            + '</style></head><body>'
+            + '<h1>&#x1F4DA; WORKSHEET 4 &#x1F4CA;</h1>'
+            + '<h2>Comparative Information (A1) &bull; M3 - Grade 9 | Sections 2, 4 &amp; 6</h2>'
+            + '<hr style="border:1px solid #667eea;margin-bottom:15px;">'
+            + '<table class="it" style="max-width:520px;margin:0 auto 20px;">'
+            + '<tr><td>Nickname</td><td><b>' + nickname + '</b></td><td>Student ID</td><td><b>' + studentId + '</b></td></tr>'
+            + '<tr><td>Class</td><td><b>' + section + '</b></td><td>Total Attempts</td><td><b>' + history.length + ' / 3</b></td></tr>'
+            + '<tr><td>All Scores</td><td><b>' + (allScores.join(', ') || '-') + '</b></td><td>Highest</td><td><b>' + highest + '/10</b></td></tr>'
+            + '<tr><td>Final Status</td><td colspan="3"><b style="color:' + (hasPassed ? '#2e7d32' : '#c62828') + '">' + (hasPassed ? '&#x2705; PASSED' : '&#x274C; NOT YET PASSED') + '</b></td></tr>'
+            + '<tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr>'
+            + '</table>'
+            + '<hr style="margin-bottom:20px;">'
+            + '<h3 style="text-align:center;color:#667eea;margin-bottom:15px;">&#x1F4CB; All Submission Records</h3>'
+            + attemptsHtml
+            + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">M3 English Worksheet 4 &bull; Comparative Information &bull; carlton-title.github.io</p>'
+            + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
+            + '</body></html>';
+
+        const pw = window.open('', '_blank', 'width=950,height=750');
+        if (pw) { pw.document.write(printHTML); pw.document.close(); }
+        else { alert('Please allow pop-ups for this page to print your record.'); }
+    }
+
     function updateAttemptsDisplay() {
         document.getElementById('attemptsUsed').textContent = attempts;
         const msg = document.getElementById('attemptsMessage');
@@ -573,7 +589,7 @@
             msg.innerHTML = '&#x1F512; &#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;';
             msg.style.color = '#c41e3a';
         } else {
-            msg.innerHTML = `&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${maxAttempts - attempts} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;`;
+            msg.innerHTML = '&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ' + (maxAttempts - attempts) + ' &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;';
             msg.style.color = '#666';
         }
     }
