@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 4 M3 (A1): Comparative Information</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .title { font-size: 2.5em; color: #667eea; margin: 10px 0; }
+        .subtitle { font-size: 1.1em; color: #666; margin: 10px 0; }
+        .info-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-weight: bold;
+        }
+        .info-item { display: flex; align-items: center; gap: 8px; }
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #667eea;
+        }
+        .form-section h3 { color: #667eea; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: bold; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102,126,234,0.3);
+        }
+        .warning { color: #e74c3c; font-size: 0.85em; margin-top: 5px; display: none; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.3); }
+        .attempts-tracker {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .worksheet-locked {
+            display: none;
+            background: #ffebee;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e74c3c;
+        }
+        .locked-message { font-size: 1.3em; color: #c41e3a; font-weight: bold; margin: 15px 0; }
+        .worksheet-locked.show { display: block; }
+        .questions-section { display: none; }
+        .questions-section.show { display: block; }
+        .question-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+        }
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
+        .image-placeholder { width: 100%; max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option:hover { border-color: #667eea; background: #f0f3ff; }
+        .option input[type="radio"] { cursor: pointer; }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-submit { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); padding: 12px 30px; width: auto; }
+        .btn-retry { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); padding: 12px 30px; width: auto; }
+        .score-display {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid #4caf50;
+        }
+        .score-value { font-size: 2em; color: #2e7d32; font-weight: bold; }
+        .score-status { font-size: 1.1em; color: #555; margin-top: 10px; }
+        .status-pass { color: #4caf50; font-weight: bold; }
+        .status-fail { color: #e74c3c; font-weight: bold; }
+        .summary-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 2px solid #ddd;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-label { font-weight: bold; color: #333; }
+        .summary-value { color: #667eea; font-weight: bold; }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .title { font-size: 1.8em; }
+            .options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div class="title">&#x1F4DA; WORKSHEET 4 &#x1F4CA;</div>
+        <div class="subtitle">Comparative Information</div>
+        <div class="subtitle">M3 (A1) - Grade 9 | Sections 2, 4 &amp; 6</div>
+    </div>
+
+    <div class="info-banner">
+        <div class="info-item"><span>&#x1F4DD;</span><span>Multiple Choice</span></div>
+        <div class="info-item"><span>&#x2B50;</span><span>Passing Score: 8/10</span></div>
+        <div class="info-item"><span>&#x1F512;</span><span>Max 3 Attempts</span></div>
+        <div class="info-item"><span>&#x1F389;</span><span>Have Fun!</span></div>
+    </div>
+
+    <div class="form-section">
+        <h3>&#x1F4CB; Before You Start</h3>
+        <div class="form-group">
+            <label>&#x1F338; 1. English Nickname</label>
+            <input type="text" id="nickname" placeholder="Enter your English nickname">
+            <div class="warning" id="nicknameWarning">&#x26A0;&#xFE0F; Please enter your nickname.</div>
+        </div>
+        <div class="form-group">
+            <label>&#x1F522; 2. Student ID (5 Digits)</label>
+            <input type="text" id="studentId" placeholder="Enter your 5-digit ID" maxlength="5">
+            <div class="warning" id="idWarning">&#x26A0;&#xFE0F; Please enter a valid 5-digit ID.</div>
+        </div>
+        <div class="form-group">
+            <label>&#x1F4C5; 3. Date</label>
+            <input type="date" id="date">
+            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today's date.</div>
+        </div>
+        <div class="form-group">
+            <label>&#x1F3EB; 4. Your Class (M3/2, M3/4 or M3/6)</label>
+            <select id="section">
+                <option value="">&#x2014; Select your class &#x2014;</option>
+                <option value="M3/2">M3/2</option>
+                <option value="M3/4">M3/4</option>
+                <option value="M3/6">M3/6</option>
+            </select>
+            <div class="warning" id="sectionWarning">&#x26A0;&#xFE0F; Please select your class.</div>
+        </div>
+        <button onclick="startWorksheet()">&#x25B6; Start Worksheet &#x1F680;</button>
+    </div>
+
+    <div class="attempts-tracker">
+        <h4>&#x1F4CA; Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
+        <p id="attemptsMessage" style="color:#666; margin:0;"></p>
+    </div>
+
+    <div class="worksheet-locked" id="lockedMessage">
+        <div style="font-size:3em; margin-bottom:10px;">&#x1F512;</div>
+        <div class="locked-message">Worksheet Locked</div>
+        <p>&#x1F512; &#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;</p>
+        <p>&#xE01;&#xE23;&#xE38;&#xE13;&#xE32;&#xE15;&#xE34;&#xE14;&#xE15;&#xE48;&#xE2D;&#xE04;&#xE23;&#xE39;&#xE40;&#xE1E;&#xE37;&#xE48;&#xE2D;&#xE02;&#xE2D;&#xE04;&#xE33;&#xE41;&#xE19;&#xE30;&#xE19;&#xE33;</p>
+    </div>
+
+    <div class="questions-section" id="questionsSection">
+        <h3 style="color:#667eea; margin-bottom:20px;">&#x1F4DA; Comparative Information (A1)</h3>
+        <div id="questionsContainer"></div>
+        <div class="button-group">
+            <button class="btn-submit" onclick="submitAnswers()">&#x2714; Submit Answers &#x1F3AF;</button>
+            <button class="btn-retry" onclick="resetForm()">&#x21BB; Try Again &#x1F4AA;</button>
+        </div>
+    </div>
+
+    <div id="scoreDisplay" style="display:none;">
+        <div class="score-display">
+            <div>Your Score</div>
+            <div class="score-value" id="scoreValue">0/10</div>
+            <div class="score-status" id="scoreStatus"></div>
+        </div>
+        <div class="summary-section">
+            <h4 style="margin-bottom:15px;">&#x1F4CB; Summary</h4>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F338; Nickname</span>
+                <span class="summary-value" id="summaryNickname">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F522; Student ID</span>
+                <span class="summary-value" id="summaryId">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F4C5; Date</span>
+                <span class="summary-value" id="summaryDate">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F3EB; Class</span>
+                <span class="summary-value" id="summarySection">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x2B50; Score</span>
+                <span class="summary-value" id="summaryScore">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F550; Submitted</span>
+                <span class="summary-value" id="summaryTime">&#x2014;</span>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:20px; color:#666;">
+            &#x1F4F8; Take a screenshot and send it to your teacher on Line or Google Classroom.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // Answer key (correct option index, 0=A, 1=B, 2=C, 3=D):
+    // Q1:B(1) Q2:B(1) Q3:C(2) Q4:C(2) Q5:A(0) Q6:C(2) Q7:D(3) Q8:B(1) Q9:C(2) Q10:C(2)
+
+    const canvaImages = [
+        "WS4M3A1Q1.png","WS4M3A1Q2.png","WS4M3A1Q3.png","WS4M3A1Q4.png","WS4M3A1Q5.png",
+        "WS4M3A1Q6.png","WS4M3A1Q7.png","WS4M3A1Q8.png","WS4M3A1Q9.png","WS4M3A1Q10.png"
+    ];
+
+    const questions = [
+        {
+            id: 1,
+            image: canvaImages[0],
+            text: "My sister is _____ than me.",
+            options: [
+                { text: "A) tall", correct: false },
+                { text: "B) taller", correct: true },
+                { text: "C) tallest", correct: false },
+                { text: "D) more taller", correct: false }
+            ]
+        },
+        {
+            id: 2,
+            image: canvaImages[1],
+            text: "Which sentence is correct?",
+            options: [
+                { text: "A) This car is more fast than that one.", correct: false },
+                { text: "B) This car is faster than that one.", correct: true },
+                { text: "C) This car is fastest than that one.", correct: false },
+                { text: "D) This car is most fast than that one.", correct: false }
+            ]
+        },
+        {
+            id: 3,
+            image: canvaImages[2],
+            text: "Bangkok is _____ than Chiang Mai.",
+            options: [
+                { text: "A) big", correct: false },
+                { text: "B) biggest", correct: false },
+                { text: "C) bigger", correct: true },
+                { text: "D) more big", correct: false }
+            ]
+        },
+        {
+            id: 4,
+            image: canvaImages[3],
+            text: "Which sentence uses the comparative correctly?",
+            options: [
+                { text: "A) She is more tall than her friend.", correct: false },
+                { text: "B) She is tallest than her friend.", correct: false },
+                { text: "C) She is taller than her friend.", correct: true },
+                { text: "D) She is the more tall than her friend.", correct: false }
+            ]
+        },
+        {
+            id: 5,
+            image: canvaImages[4],
+            text: "An elephant is _____ than a cat.",
+            options: [
+                { text: "A) heavier", correct: true },
+                { text: "B) more heavy", correct: false },
+                { text: "C) heaviest", correct: false },
+                { text: "D) most heavy", correct: false }
+            ]
+        },
+        {
+            id: 6,
+            image: canvaImages[5],
+            text: "Which word correctly fills the blank: \"Math is _____ than Art.\"?",
+            options: [
+                { text: "A) difficulter", correct: false },
+                { text: "B) most difficult", correct: false },
+                { text: "C) more difficult", correct: true },
+                { text: "D) difficultier", correct: false }
+            ]
+        },
+        {
+            id: 7,
+            image: canvaImages[6],
+            text: "\"This pizza is _____ than that sandwich.\"",
+            options: [
+                { text: "A) deliciouser", correct: false },
+                { text: "B) most delicious", correct: false },
+                { text: "C) more deliciously", correct: false },
+                { text: "D) more delicious", correct: true }
+            ]
+        },
+        {
+            id: 8,
+            image: canvaImages[7],
+            text: "Which sentence is correct?",
+            options: [
+                { text: "A) Today is cold than yesterday.", correct: false },
+                { text: "B) Today is colder than yesterday.", correct: true },
+                { text: "C) Today is more cold than yesterday.", correct: false },
+                { text: "D) Today is coldest than yesterday.", correct: false }
+            ]
+        },
+        {
+            id: 9,
+            image: canvaImages[8],
+            text: "\"A dog is _____ than a fish.\"",
+            options: [
+                { text: "A) more smart", correct: false },
+                { text: "B) smartest", correct: false },
+                { text: "C) smarter", correct: true },
+                { text: "D) most smart", correct: false }
+            ]
+        },
+        {
+            id: 10,
+            image: canvaImages[9],
+            text: "Which sentence correctly compares two things?",
+            options: [
+                { text: "A) English is easy than Thai.", correct: false },
+                { text: "B) English is more easy than Thai.", correct: false },
+                { text: "C) English is easier than Thai.", correct: true },
+                { text: "D) English is the most easy than Thai.", correct: false }
+            ]
+        }
+    ];
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+
+    let userAnswers = {};
+    let attempts = 0;
+    let allAttemptScores = [];
+    const TEST_STUDENT_IDS = ['54565'];
+    const maxAttempts = 3;
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    function startWorksheet() {
+        const nickname = document.getElementById('nickname').value.trim();
+        const studentId = document.getElementById('studentId').value.trim();
+        const date = document.getElementById('date').value;
+        const section = document.getElementById('section').value;
+
+        let isValid = true;
+        document.getElementById('nicknameWarning').style.display = nickname ? 'none' : 'block';
+        if (!nickname) isValid = false;
+
+        document.getElementById('idWarning').style.display = (studentId && studentId.length === 5) ? 'none' : 'block';
+        if (!studentId || studentId.length !== 5) isValid = false;
+
+        document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
+        if (!date) isValid = false;
+
+        document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
+        if (!section) isValid = false;
+
+        if (!isValid) return;
+
+        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
+        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+        attempts = savedData.attempts || 0;
+        allAttemptScores = savedData.scores || [];
+
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            document.querySelector('.form-section').style.display = 'none';
+            document.getElementById('questionsSection').classList.remove('show');
+            document.getElementById('lockedMessage').classList.add('show');
+            document.getElementById('scoreDisplay').style.display = 'none';
+            updateAttemptsDisplay();
+            return;
+        }
+
+        document.querySelector('.form-section').style.display = 'none';
+        document.getElementById('questionsSection').classList.add('show');
+        renderQuestions();
+        userAnswers = {};
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        questions.forEach(q => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `question-${q.id}`;
+            const optionsHtml = q.options.map((opt, idx) => `
+<label class="option">
+<input type="radio" name="q${q.id}" value="${idx}">
+<span>${opt.text}</span>
+</label>
+`).join('');
+            card.innerHTML = `
+<img src="${q.image}" alt="Question image" class="image-placeholder">
+<div>
+<span class="question-number">${q.id}</span>
+<span class="question-text">${q.text}</span>
+</div>
+<div class="options" style="margin-top:15px;">${optionsHtml}</div>
+`;
+            card.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    userAnswers[q.id] = parseInt(this.value);
+                });
+            });
+            container.appendChild(card);
+        });
+    }
+
+    function submitAnswers() {
+        let score = 0;
+        questions.forEach(q => {
+            if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
+        });
+
+        const nickname = document.getElementById('nickname').value.trim();
+        const studentId = document.getElementById('studentId').value.trim();
+        const section = document.getElementById('section').value;
+        const storageKey = `ws4_m3_a1_${studentId}_${section}`;
+        const isPassed = score >= 8;
+
+        const savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[]}');
+        savedData.attempts = (savedData.attempts || 0) + 1;
+        if (!savedData.scores) savedData.scores = [];
+        savedData.scores.push(score);
+        attempts = savedData.attempts;
+        allAttemptScores = savedData.scores;
+        localStorage.setItem(storageKey, JSON.stringify(savedData));
+
+        document.getElementById('questionsSection').classList.remove('show');
+        document.getElementById('scoreDisplay').style.display = 'block';
+        document.getElementById('scoreValue').textContent = `${score}/10`;
+
+        const statusEl = document.getElementById('scoreStatus');
+        if (isPassed) {
+            submitToSheet(studentId, nickname, section, score, 'PASSED');
+            statusEl.innerHTML = `<span class="status-pass">
+&#x2705; &#xE22;&#xE34;&#xE19;&#xE14;&#xE35;&#xE14;&#xE49;&#xE27;&#xE22;&#xE04;&#xE38;&#xE13;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE41;&#xE25;&#xE49;&#xE27;! &#x1F389;<br>
+&#xE1C;&#xE48;&#xE32;&#xE19;&#xE41;&#xE25;&#xE49;&#xE27;&#xE41;&#xE1B;&#xE25;&#xE01;&#xE27;&#xE48;&#xE32; 3 &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;<br>
+&#xE44;&#xE14;&#xE49;&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE2A;&#xE39;&#xE07;&#xE2A;&#xE38;&#xE14;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE19;&#xE35;&#xE49;
+</span>`;
+        } else {
+            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+                const highest = Math.max(...allAttemptScores);
+                submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
+                statusEl.innerHTML = `<span class="status-fail">
+&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
+&#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;<br>
+&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE17;&#xE35;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE01;&#xE32;&#xE23;: 8, 9, 10<br>
+&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: 0 &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
+</span>`;
+            } else {
+                const remaining = maxAttempts - attempts;
+                statusEl.innerHTML = `<span class="status-fail">
+&#x274C; &#xE22;&#xE31;&#xE07;&#xE44;&#xE21;&#xE48;&#xE1C;&#xE48;&#xE32;&#xE19;&#xE04;&#xE48;&#xE30;<br>
+&#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;<br>
+&#xE04;&#xE30;&#xE41;&#xE19;&#xE19;&#xE17;&#xE35;&#xE48;&#xE15;&#xE49;&#xE2D;&#xE07;&#xE01;&#xE32;&#xE23;: 8, 9, 10<br>
+&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${remaining} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;
+</span>`;
+            }
+        }
+
+        const dateVal = document.getElementById('date').value;
+        document.getElementById('summaryNickname').textContent = nickname;
+        document.getElementById('summaryId').textContent = studentId;
+        document.getElementById('summaryDate').textContent = dateVal;
+        document.getElementById('summarySection').textContent = section;
+        document.getElementById('summaryScore').textContent = `${score}/10`;
+        document.getElementById('summaryTime').textContent = new Date().toLocaleString();
+        updateAttemptsDisplay();
+    }
+
+    function submitToSheet(studentId, nickname, section, score, status) {
+        const data = { studentId, nickname, section, score, worksheet: 'WS4', date: new Date().toISOString(), status };
+        const params = new URLSearchParams(data);
+        fetch(SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+    }
+
+    function resetForm() {
+        userAnswers = {};
+        document.getElementById('questionsSection').classList.remove('show');
+        document.getElementById('scoreDisplay').style.display = 'none';
+        const studentId = document.getElementById('studentId').value.trim();
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            document.getElementById('lockedMessage').classList.add('show');
+        } else {
+            document.querySelector('.form-section').style.display = 'block';
+            document.getElementById('nickname').value = '';
+            document.getElementById('studentId').value = '';
+            document.getElementById('section').value = '';
+            document.getElementById('date').valueAsDate = new Date();
+        }
+    }
+
+    function updateAttemptsDisplay() {
+        document.getElementById('attemptsUsed').textContent = attempts;
+        const msg = document.getElementById('attemptsMessage');
+        const studentId = document.getElementById('studentId').value.trim();
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            msg.innerHTML = '&#x1F512; &#xE04;&#xE38;&#xE13;&#xE43;&#xE0A;&#xE49;&#xE04;&#xE23;&#xE1A;&#xE08;&#xE33;&#xE19;&#xE27;&#xE19;&#xE04;&#xE23;&#xE31;&#xE49;&#xE07;&#xE17;&#xE35;&#xE48;&#xE2D;&#xE19;&#xE38;&#xE0D;&#xE32;&#xE15;&#xE41;&#xE25;&#xE49;&#xE27;';
+            msg.style.color = '#c41e3a';
+        } else {
+            msg.innerHTML = `&#xE42;&#xE2D;&#xE01;&#xE32;&#xE2A;&#xE40;&#xE2B;&#xE25;&#xE37;&#xE2D;: ${maxAttempts - attempts} &#xE04;&#xE23;&#xE31;&#xE49;&#xE07;`;
+            msg.style.color = '#666';
+        }
+    }
+
+    updateAttemptsDisplay();
+</script>
+</body>
+</html>
