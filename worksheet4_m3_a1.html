@@ -487,6 +487,8 @@
 
     // ===================== APP STATE =====================
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+    var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
     var userAnswers = {};
     var attempts = 0;
     var allAttemptScores = [];
@@ -612,8 +614,12 @@
         var nickname = document.getElementById('nickname').value.trim();
         var studentId = document.getElementById('studentId').value.trim();
         var section = document.getElementById('section').value;
+        var thaiNameSelect = document.getElementById('thaiName');
+        var thaiNameText = thaiNameSelect.selectedIndex > 0 ? thaiNameSelect.options[thaiNameSelect.selectedIndex].textContent.split('(')[0].trim() : '';
         var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
         var isPassed = score >= 8;
+        var attemptStatus = isPassed ? 'PASSED' : 'FAILED';
+        submitToSupabase(studentId, nickname, thaiNameText, section, score, attemptStatus);
 
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
@@ -681,6 +687,45 @@
         var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS4', date:new Date().toISOString(), status:status};
         var params = new URLSearchParams(data);
         fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
+    }
+
+    function submitToSupabase(studentId, nickname, thaiName, section, score, status) {
+        var answersData = questions.map(function(q) {
+            var selectedIdx = userAnswers[q.id];
+            var selectedOpt = selectedIdx !== undefined ? q.options[selectedIdx] : null;
+            var correctOpt = q.options.find(function(o) { return o.correct; });
+            return {
+                question_id: q.id,
+                question_text: q.text,
+                question_image: q.image,
+                selected_option: selectedOpt ? selectedOpt.text : null,
+                selected_option_index: selectedIdx !== undefined ? selectedIdx : null,
+                is_correct: selectedOpt ? selectedOpt.correct : false,
+                correct_option: correctOpt ? correctOpt.text : null
+            };
+        });
+        var payload = {
+            student_id: studentId,
+            student_name: nickname,
+            thai_name: thaiName,
+            section: section,
+            worksheet: 'WS4',
+            score: score,
+            total_questions: 10,
+            status: status,
+            submitted_at: new Date().toISOString(),
+            answers: answersData
+        };
+        fetch(SUPABASE_URL + '/rest/v1/worksheet_submissions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+        }).catch(function(){});
     }
 
     function resetForm() {

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal — English Worksheets</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        /* ── Login ── */
+        #loginScreen {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; padding: 20px;
+        }
+        .login-box {
+            background: white; border-radius: 20px; padding: 50px 40px;
+            max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .login-box h1 { color: #1a237e; font-size: 1.8em; margin-bottom: 6px; }
+        .login-box p { color: #777; margin-bottom: 30px; font-size: 0.95em; }
+        .login-box input {
+            width: 100%; padding: 14px 16px; border: 2px solid #ddd;
+            border-radius: 10px; font-size: 1em; margin-bottom: 16px;
+            outline: none; transition: border 0.2s;
+        }
+        .login-box input:focus { border-color: #1a237e; }
+        .btn-login {
+            width: 100%; padding: 14px; background: linear-gradient(135deg,#1a237e,#4a148c);
+            color: white; border: none; border-radius: 10px; font-size: 1.05em;
+            cursor: pointer; font-weight: bold; transition: opacity 0.2s;
+        }
+        .btn-login:hover { opacity: 0.9; }
+        .login-error { color: #c62828; font-size: 0.9em; margin-top: 10px; display: none; }
+
+        /* ── Main Portal ── */
+        #portal { display: none; }
+        .top-bar {
+            background: white; border-radius: 14px; padding: 16px 24px;
+            margin-bottom: 20px; display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .top-bar h1 { color: #1a237e; font-size: 1.4em; }
+        .top-bar span { color: #777; font-size: 0.9em; }
+        .btn-logout {
+            background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px;
+            padding: 8px 16px; cursor: pointer; font-size: 0.9em; color: #555;
+            transition: background 0.2s;
+        }
+        .btn-logout:hover { background: #ffe0e0; border-color: #f44336; color: #c62828; }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+        .card {
+            background: white; border-radius: 16px; padding: 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin-bottom: 20px;
+        }
+        .card h2 { color: #1a237e; margin-bottom: 18px; font-size: 1.15em; }
+
+        /* Search & Filters */
+        .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+        .filters input, .filters select {
+            padding: 10px 14px; border: 2px solid #ddd; border-radius: 10px;
+            font-size: 0.95em; outline: none; transition: border 0.2s; flex: 1; min-width: 150px;
+        }
+        .filters input:focus, .filters select:focus { border-color: #1a237e; }
+        .btn-search {
+            padding: 10px 24px; background: linear-gradient(135deg,#1a237e,#4a148c);
+            color: white; border: none; border-radius: 10px; font-size: 0.95em;
+            cursor: pointer; font-weight: bold; white-space: nowrap;
+        }
+        .btn-search:hover { opacity: 0.9; }
+
+        /* Table */
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.93em; }
+        th { background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
+             padding: 12px 14px; text-align: left; white-space: nowrap; }
+        td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+        tr:hover td { background: #f5f7ff; }
+        .badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 0.82em; font-weight: bold;
+        }
+        .badge-pass { background: #c8e6c9; color: #1b5e20; }
+        .badge-fail { background: #ffcdd2; color: #b71c1c; }
+        .badge-ws { background: #e3f2fd; color: #0d47a1; }
+
+        .btn-view {
+            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
+            border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer;
+            font-size: 0.85em; font-weight: bold; transition: opacity 0.2s;
+        }
+        .btn-view:hover { opacity: 0.85; }
+
+        .empty-state { text-align: center; color: #aaa; padding: 40px; font-size: 0.95em; }
+        .loading { text-align: center; color: #777; padding: 30px; font-size: 0.95em; }
+
+        /* Stats row */
+        .stats-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+        .stat-box {
+            flex: 1; min-width: 140px; background: white; border-radius: 14px;
+            padding: 18px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;
+        }
+        .stat-box .num { font-size: 2em; font-weight: bold; color: #1a237e; }
+        .stat-box .lbl { color: #777; font-size: 0.85em; margin-top: 4px; }
+
+        /* Print modal */
+        #printModal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6); z-index: 999;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        #printModal.open { display: flex; }
+        .modal-box {
+            background: white; border-radius: 20px; padding: 32px;
+            max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+        }
+        .modal-header h2 { color: #1a237e; font-size: 1.2em; }
+        .modal-actions { display: flex; gap: 10px; }
+        .btn-print-pdf {
+            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
+            border: none; border-radius: 10px; padding: 10px 22px; cursor: pointer;
+            font-size: 0.95em; font-weight: bold;
+        }
+        .btn-close-modal {
+            background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px;
+            padding: 10px 18px; cursor: pointer; font-size: 0.95em; color: #555;
+        }
+        .btn-close-modal:hover { background: #ffe0e0; color: #c62828; }
+
+        /* Submission detail */
+        .sub-info-table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        .sub-info-table td { padding: 8px 12px; border: 1px solid #ddd; font-size: 0.93em; }
+        .sub-info-table td:first-child { background: #f0f3ff; font-weight: bold; width: 130px; }
+
+        .q-card {
+            border: 1px solid #e0e0e0; border-radius: 10px; margin-bottom: 14px;
+            overflow: hidden;
+        }
+        .q-card-header {
+            background: #f0f3ff; padding: 10px 14px; font-weight: bold;
+            color: #1a237e; font-size: 0.93em; border-bottom: 1px solid #e0e0e0;
+            display: flex; gap: 10px; align-items: center;
+        }
+        .q-card-header .qnum {
+            background: #1a237e; color: white; border-radius: 50%;
+            width: 26px; height: 26px; display: flex; align-items: center;
+            justify-content: center; font-size: 0.85em; flex-shrink: 0;
+        }
+        .q-card-img { width: 100%; max-height: 200px; object-fit: cover; }
+        .q-card-body { padding: 14px; }
+        .opt-row {
+            padding: 7px 12px; border-radius: 6px; margin-bottom: 5px;
+            font-size: 0.9em; border: 1px solid #eee; display: flex;
+            align-items: center; gap: 8px;
+        }
+        .opt-selected-correct { background: #c8e6c9; border-color: #4caf50; font-weight: bold; }
+        .opt-selected-wrong   { background: #ffcdd2; border-color: #f44336; font-weight: bold; }
+        .opt-correct-missed   { background: #e8f5e9; border-color: #81c784; color: #2e7d32; }
+        .opt-plain            { background: #fafafa; color: #999; }
+        .opt-icon { font-size: 1em; }
+        .no-answer { color: #999; font-style: italic; font-size: 0.88em; padding: 6px 0; }
+
+        .attempt-banner {
+            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
+            border-radius: 10px; padding: 12px 18px; margin-bottom: 14px;
+            display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+            font-size: 0.92em;
+        }
+        .attempt-banner b { font-size: 1.05em; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            #loginScreen, #portal { display: none !important; }
+            #printContent { display: block !important; }
+            .no-print { display: none !important; }
+            @page { margin: 12mm; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+    <div class="login-box">
+        <h1>🏫 Teacher Portal</h1>
+        <p>English Worksheets — carlton-title.github.io</p>
+        <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off">
+        <button class="btn-login" onclick="doLogin()">Login</button>
+        <div class="login-error" id="loginError">❌ Incorrect password. Try again.</div>
+    </div>
+</div>
+
+<!-- MAIN PORTAL -->
+<div id="portal">
+    <div class="container">
+
+        <!-- Top bar -->
+        <div class="top-bar">
+            <h1>🏫 Teacher Portal — Worksheet Submissions</h1>
+            <div style="display:flex;align-items:center;gap:14px;">
+                <span id="lastUpdated"></span>
+                <button class="btn-logout" onclick="doLogout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-box"><div class="num" id="statTotal">—</div><div class="lbl">Total Submissions</div></div>
+            <div class="stat-box"><div class="num" id="statPassed">—</div><div class="lbl">Passed</div></div>
+            <div class="stat-box"><div class="num" id="statFailed">—</div><div class="lbl">Failed</div></div>
+            <div class="stat-box"><div class="num" id="statStudents">—</div><div class="lbl">Unique Students</div></div>
+        </div>
+
+        <!-- Search & filter -->
+        <div class="card">
+            <h2>🔍 Search Submissions</h2>
+            <div class="filters">
+                <input type="text" id="searchName" placeholder="Student name or ID…" oninput="applyFilters()">
+                <select id="filterSection" onchange="applyFilters()">
+                    <option value="">All Sections</option>
+                    <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                    <option>M3/10</option><option>M3/12</option>
+                    <option>M4/10</option><option>M4/12</option>
+                </select>
+                <select id="filterWorksheet" onchange="applyFilters()">
+                    <option value="">All Worksheets</option>
+                    <option value="WS4">Worksheet 4</option>
+                    <option value="WS5">Worksheet 5</option>
+                    <option value="WS6">Worksheet 6</option>
+                </select>
+                <select id="filterStatus" onchange="applyFilters()">
+                    <option value="">All Status</option>
+                    <option value="PASSED">Passed</option>
+                    <option value="FAILED">Failed</option>
+                </select>
+                <button class="btn-search" onclick="loadData()">↻ Refresh</button>
+            </div>
+
+            <div class="table-wrap">
+                <table id="submissionsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Thai Name</th>
+                            <th>Section</th>
+                            <th>Worksheet</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsBody">
+                        <tr><td colspan="10" class="loading">Loading submissions…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- PRINT MODAL -->
+<div id="printModal">
+    <div class="modal-box">
+        <div class="modal-header no-print">
+            <h2 id="modalTitle">Submission Detail</h2>
+            <div class="modal-actions">
+                <button class="btn-print-pdf" onclick="doPrint()">🖨️ Print / Save PDF</button>
+                <button class="btn-close-modal" onclick="closeModal()">✕ Close</button>
+            </div>
+        </div>
+        <div id="printContent"></div>
+    </div>
+</div>
+
+<script>
+    var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+    var TEACHER_PASSWORD = 'Carlton2026!';
+    var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
+
+    var allSubmissions = [];
+    var filteredSubmissions = [];
+
+    // ── Auth ──
+    function doLogin() {
+        var pw = document.getElementById('pwInput').value;
+        if (pw === TEACHER_PASSWORD) {
+            sessionStorage.setItem('teacher_auth', '1');
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('portal').style.display = 'block';
+            loadData();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+            document.getElementById('pwInput').value = '';
+        }
+    }
+
+    document.getElementById('pwInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') doLogin();
+    });
+
+    function doLogout() {
+        sessionStorage.removeItem('teacher_auth');
+        document.getElementById('portal').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('pwInput').value = '';
+    }
+
+    if (sessionStorage.getItem('teacher_auth') === '1') {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('portal').style.display = 'block';
+        loadData();
+    }
+
+    // ── Data ──
+    async function loadData() {
+        document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="10" class="loading">Loading…</td></tr>';
+        try {
+            var res = await fetch(
+                SUPABASE_URL + '/rest/v1/worksheet_submissions?select=*&order=submitted_at.desc&limit=2000',
+                { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+            );
+            allSubmissions = await res.json();
+            document.getElementById('lastUpdated').textContent = 'Updated: ' + new Date().toLocaleTimeString();
+            updateStats();
+            applyFilters();
+        } catch(e) {
+            document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="10" class="empty-state">⚠️ Failed to load data. Check connection.</td></tr>';
+        }
+    }
+
+    function updateStats() {
+        var unique = new Set(allSubmissions.map(function(s){ return s.student_id; })).size;
+        var passed = allSubmissions.filter(function(s){ return s.status === 'PASSED'; }).length;
+        document.getElementById('statTotal').textContent = allSubmissions.length;
+        document.getElementById('statPassed').textContent = passed;
+        document.getElementById('statFailed').textContent = allSubmissions.length - passed;
+        document.getElementById('statStudents').textContent = unique;
+    }
+
+    function applyFilters() {
+        var search = document.getElementById('searchName').value.toLowerCase();
+        var section = document.getElementById('filterSection').value;
+        var worksheet = document.getElementById('filterWorksheet').value;
+        var status = document.getElementById('filterStatus').value;
+
+        filteredSubmissions = allSubmissions.filter(function(s) {
+            var matchSearch = !search ||
+                (s.student_id || '').toLowerCase().includes(search) ||
+                (s.student_name || '').toLowerCase().includes(search) ||
+                (s.thai_name || '').toLowerCase().includes(search);
+            var matchSection = !section || s.section === section;
+            var matchWs = !worksheet || s.worksheet === worksheet;
+            var matchStatus = !status || s.status === status;
+            return matchSearch && matchSection && matchWs && matchStatus;
+        });
+        renderTable();
+    }
+
+    function renderTable() {
+        var tbody = document.getElementById('submissionsBody');
+        if (filteredSubmissions.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10" class="empty-state">No submissions found.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = filteredSubmissions.map(function(s, i) {
+            var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+            var isPassed = s.status === 'PASSED';
+            var wsLabel = (s.worksheet || '').replace('WS','Worksheet ');
+            return '<tr>'
+                + '<td>' + (i+1) + '</td>'
+                + '<td><b>' + (s.student_id || '—') + '</b></td>'
+                + '<td>' + (s.student_name || '—') + '</td>'
+                + '<td>' + (s.thai_name || '—') + '</td>'
+                + '<td>' + (s.section || '—') + '</td>'
+                + '<td><span class="badge badge-ws">' + wsLabel + '</span></td>'
+                + '<td><b>' + s.score + '/' + (s.total_questions || 10) + '</b></td>'
+                + '<td><span class="badge ' + (isPassed ? 'badge-pass' : 'badge-fail') + '">'
+                    + (isPassed ? '✅ PASSED' : '❌ FAILED') + '</span></td>'
+                + '<td style="font-size:0.88em;color:#666;">' + dt + '</td>'
+                + '<td><button class="btn-view" onclick="viewSubmission(' + s.id + ')">View & Print</button></td>'
+                + '</tr>';
+        }).join('');
+    }
+
+    // ── Print Modal ──
+    function viewSubmission(id) {
+        var s = allSubmissions.find(function(x){ return x.id === id; });
+        if (!s) return;
+
+        document.getElementById('modalTitle').textContent =
+            'Worksheet ' + (s.worksheet||'').replace('WS','') + ' — ' + (s.student_name || s.student_id);
+
+        var isPassed = s.status === 'PASSED';
+        var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+        var wsLabel = (s.worksheet || '').replace('WS','Worksheet ');
+        var answers = s.answers || [];
+
+        // Build question cards
+        var questionsHtml = answers.map(function(a, idx) {
+            var imgSrc = a.question_image ? IMAGE_BASE + a.question_image : '';
+            var imgHtml = imgSrc ? '<img src="' + imgSrc + '" class="q-card-img" alt="Q image">' : '';
+
+            var opts = [];
+            // We'll reconstruct options display from the answer data
+            // The answer stores: selected_option, correct_option, is_correct
+            if (a.selected_option === null) {
+                opts.push('<div class="no-answer">⚠️ No answer selected</div>');
+            } else {
+                var answered = a.selected_option;
+                var correct = a.correct_option;
+                if (answered === correct) {
+                    // Correct
+                    opts.push('<div class="opt-row opt-selected-correct"><span class="opt-icon">✅</span><span>' + answered + ' — correct answer</span></div>');
+                } else {
+                    // Wrong
+                    opts.push('<div class="opt-row opt-selected-wrong"><span class="opt-icon">❌</span><span>Student selected: ' + answered + '</span></div>');
+                    opts.push('<div class="opt-row opt-correct-missed"><span class="opt-icon">→</span><span>Correct answer: ' + correct + '</span></div>');
+                }
+            }
+
+            return '<div class="q-card">'
+                + imgHtml
+                + '<div class="q-card-header"><div class="qnum">' + (idx+1) + '</div><span>' + (a.question_text || '') + '</span></div>'
+                + '<div class="q-card-body">' + opts.join('') + '</div>'
+                + '</div>';
+        }).join('');
+
+        var html = ''
+            + '<div class="attempt-banner">'
+            + '<span>📋 <b>' + wsLabel + '</b></span>'
+            + '<span>👤 <b>' + (s.student_name || '—') + '</b> (' + (s.thai_name || '—') + ')</span>'
+            + '<span>🆔 ' + (s.student_id || '—') + '</span>'
+            + '<span>🏫 ' + (s.section || '—') + '</span>'
+            + '<span>📅 ' + dt + '</span>'
+            + '</div>'
+
+            + '<table class="sub-info-table" style="margin-bottom:20px;">'
+            + '<tr><td>Student Name</td><td><b>' + (s.student_name || '—') + '</b></td><td>Student ID</td><td><b>' + (s.student_id || '—') + '</b></td></tr>'
+            + '<tr><td>Thai Name</td><td><b>' + (s.thai_name || '—') + '</b></td><td>Section</td><td><b>' + (s.section || '—') + '</b></td></tr>'
+            + '<tr><td>Worksheet</td><td><b>' + wsLabel + '</b></td><td>Score</td><td><b>' + s.score + '/' + (s.total_questions || 10) + '</b></td></tr>'
+            + '<tr><td>Status</td><td colspan="3"><b style="color:' + (isPassed ? '#1b5e20' : '#b71c1c') + '">' + (isPassed ? '✅ PASSED' : '❌ FAILED') + '</b></td></tr>'
+            + '<tr><td>Submitted</td><td colspan="3">' + dt + '</td></tr>'
+            + '<tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr>'
+            + '</table>'
+
+            + '<h3 style="color:#1a237e;margin-bottom:14px;font-size:1em;">📝 Questions & Answers</h3>'
+            + questionsHtml
+            + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
+
+        document.getElementById('printContent').innerHTML = html;
+        document.getElementById('printModal').classList.add('open');
+    }
+
+    function closeModal() {
+        document.getElementById('printModal').classList.remove('open');
+    }
+
+    function doPrint() {
+        var content = document.getElementById('printContent').innerHTML;
+        var pw = window.open('', '_blank', 'width=960,height=750');
+        if (!pw) { alert('Please allow pop-ups to print.'); return; }
+        pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">'
+            + '<title>Worksheet Submission</title>'
+            + '<style>'
+            + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:13px;}'
+            + '.attempt-banner{background:linear-gradient(135deg,#1a237e,#4a148c);color:white;border-radius:10px;padding:12px 18px;margin-bottom:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:0.9em;}'
+            + '.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:18px;}'
+            + '.sub-info-table td{padding:7px 11px;border:1px solid #ddd;font-size:0.9em;}'
+            + '.sub-info-table td:first-child{background:#f0f3ff;font-weight:bold;width:120px;}'
+            + '.q-card{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;}'
+            + '.q-card-img{width:100%;max-height:180px;object-fit:cover;}'
+            + '.q-card-header{background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:0.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:center;}'
+            + '.qnum{background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;}'
+            + '.q-card-body{padding:10px 13px;}'
+            + '.opt-row{padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:0.88em;border:1px solid #eee;display:flex;align-items:center;gap:6px;}'
+            + '.opt-selected-correct{background:#c8e6c9;border-color:#4caf50;font-weight:bold;}'
+            + '.opt-selected-wrong{background:#ffcdd2;border-color:#f44336;font-weight:bold;}'
+            + '.opt-correct-missed{background:#e8f5e9;border-color:#81c784;color:#2e7d32;}'
+            + '.no-answer{color:#999;font-style:italic;font-size:0.85em;padding:4px 0;}'
+            + '@page{margin:12mm;}'
+            + '</style></head><body>'
+            + '<h2 style="text-align:center;color:#1a237e;margin-bottom:4px;">📚 English Worksheet Submission Record</h2>'
+            + '<hr style="border:1px solid #1a237e;margin-bottom:16px;">'
+            + content
+            + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
+            + '</body></html>');
+        pw.document.close();
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('printModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+</script>
+</body>
+</html>
