@@ -7,6 +7,7 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%);min-height:100vh;padding:20px}
+    /* ── LOGIN ── */
     #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
     .login-box{background:#fff;border-radius:20px;padding:50px 40px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
     .login-box h1{color:#1a237e;font-size:1.8em;margin-bottom:6px}
@@ -15,6 +16,7 @@
     .login-box input:focus{border-color:#1a237e}
     .btn-login{width:100%;padding:14px;background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:10px;font-size:1.05em;cursor:pointer;font-weight:bold}
     .login-error{color:#c62828;font-size:.9em;margin-top:10px;display:none}
+    /* ── PORTAL ── */
     #portal{display:none}
     .top-bar{background:#fff;border-radius:14px;padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.15)}
     .top-bar h1{color:#1a237e;font-size:1.3em}
@@ -33,6 +35,7 @@
     select:disabled,input:disabled{background:#f5f5f5;color:#999}
     .btn-search{width:100%;padding:14px;background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:10px;font-size:1.05em;cursor:pointer;font-weight:bold;margin-top:4px}
     .btn-search:hover{opacity:.9}
+    /* ── RESULTS ── */
     #resultsSection{display:none}
     .result-card{border:2px solid #e8eaf6;border-radius:14px;margin-bottom:16px;overflow:hidden}
     .result-header{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
@@ -51,10 +54,20 @@
     td{padding:10px 13px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     tr:last-child td{border-bottom:none}
     tr:hover td{background:#f8f9ff}
+    .ans-correct{color:#2e7d32;font-weight:bold}
+    .ans-wrong{color:#c62828}
+    .q-img{max-width:180px;border-radius:6px;border:1px solid #eee}
+    /* ── TEST MODE ── */
+    .test-link{display:flex;align-items:center;justify-content:center;padding:14px 20px;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;color:#856404;font-weight:bold;text-decoration:none;font-size:.95em;transition:background .2s}
+    .test-link:hover{background:#ffe082;border-color:#f9a825}
+    /* ── PRINT ── */
     @media print{
       body{background:#fff;padding:0}
+      #printArea{display:block!important}
       .no-print{display:none!important}
+      .print-page{page-break-after:always}
     }
+    #printArea{display:none}
   </style>
 </head>
 <body>
@@ -81,6 +94,7 @@
   </div>
 
   <div class="container">
+    <!-- SEARCH CARD -->
     <div class="card no-print">
       <h2>🔍 Student Worksheet Search</h2>
       <div class="search-grid">
@@ -133,6 +147,18 @@
       </div>
     </div>
 
+    <!-- TEST MODE CARD -->
+    <div class="card no-print">
+      <h2>🧪 Test Mode — Worksheet Links</h2>
+      <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;margin-bottom:16px;color:#856404;font-size:.88em;">
+        ⚠️ Teacher use only. These links reveal <strong>Kyle (Test Student)</strong> in the student dropdown for troubleshooting. Do not share with students.
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+        <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=true" target="_blank" class="test-link">🧪 Worksheet 4 — Test Mode</a>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
     <div id="resultsSection">
       <div class="card">
         <h2 id="resultsTitle">Results</h2>
@@ -142,12 +168,16 @@
   </div>
 </div>
 
+<!-- PRINT AREA -->
+<div id="printArea"></div>
+
 <script>
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
 
+// ── AUTH ──────────────────────────────────────────────────────────────────────
 function doLogin() {
   var pw = document.getElementById('pwInput').value;
   if (pw === TEACHER_PASSWORD) {
@@ -158,7 +188,6 @@ function doLogin() {
     document.getElementById('loginError').style.display = 'block';
   }
 }
-
 function doLogout() {
   document.getElementById('portal').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
@@ -170,6 +199,7 @@ function doLogout() {
   document.getElementById('selWorksheet').value = '';
 }
 
+// ── SECTION → STUDENT DROPDOWN ────────────────────────────────────────────────
 function onSectionChange() {
   var section = document.getElementById('selSection').value;
   var sel = document.getElementById('selStudent');
@@ -182,7 +212,10 @@ function onSectionChange() {
   }
   var url = SUPABASE_URL + '/rest/v1/students?select=student_id,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&order=thai_name.asc';
   fetch(url, {
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY
+    }
   })
   .then(function(r){ return r.json(); })
   .then(function(data) {
@@ -208,25 +241,37 @@ function onSectionChange() {
   });
 }
 
+// ── SEARCH ────────────────────────────────────────────────────────────────────
 function doSearch() {
-  var section   = document.getElementById('selSection').value;
+  var section  = document.getElementById('selSection').value;
   var studentId = document.getElementById('selStudent').value;
-  var ws        = document.getElementById('selWorksheet').value;
+  var ws       = document.getElementById('selWorksheet').value;
+
   if (!section || !studentId || !ws) {
     alert('Please select a section, student, and worksheet.');
     return;
   }
+
   var resultsSection = document.getElementById('resultsSection');
   var resultsBody    = document.getElementById('resultsBody');
   var resultsTitle   = document.getElementById('resultsTitle');
+
   resultsSection.style.display = 'block';
   resultsBody.innerHTML = '<div class="loading-msg">Loading results...</div>';
+
+  // Get student name for display
   var selEl = document.getElementById('selStudent');
   var studentLabel = selEl.options[selEl.selectedIndex].text;
+
   resultsTitle.textContent = 'Results for ' + studentLabel + ' — Worksheet ' + ws;
+
   var url = SUPABASE_URL + '/rest/v1/worksheet_submissions?select=*&student_id=eq.' + encodeURIComponent(studentId) + '&worksheet=eq.' + encodeURIComponent(ws) + '&order=submitted_at.desc';
+
   fetch(url, {
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY
+    }
   })
   .then(function(r){ return r.json(); })
   .then(function(data) {
@@ -242,72 +287,129 @@ function doSearch() {
   });
 }
 
+// ── RENDER RESULTS ────────────────────────────────────────────────────────────
 function renderResults(submissions, studentLabel, ws, section) {
   var resultsBody = document.getElementById('resultsBody');
   var html = '';
+
   submissions.forEach(function(sub, idx) {
-    var score   = sub.score != null ? sub.score : '—';
-    var total   = sub.total != null ? sub.total : '—';
-    var pct     = (sub.score != null && sub.total) ? Math.round(sub.score / sub.total * 100) : null;
-    var pass    = pct != null ? (pct >= 50) : null;
-    var dateStr = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'}) : '—';
-    var badgeHtml = pass != null ? '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+(pass?'✅ Pass':'❌ Fail')+'</span>' : '';
+    var score    = sub.score != null ? sub.score : '—';
+    var total    = sub.total != null ? sub.total : '—';
+    var pct      = (sub.score != null && sub.total) ? Math.round(sub.score / sub.total * 100) : null;
+    var pass     = pct != null ? (pct >= 50) : null;
+    var dateStr  = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB', {dateStyle:'medium', timeStyle:'short'}) : '—';
+    var badgeHtml = pass != null ? ('<span class="badge ' + (pass ? 'badge-pass' : 'badge-fail') + '">' + (pass ? '✅ Pass' : '❌ Fail') + '</span>') : '';
+
     html += '<div class="result-card">';
     html += '<div class="result-header">';
-    html += '<div><div class="score">Score: '+score+' / '+total+(pct!=null?' ('+pct+'%)':'')+'</div>';
-    html += '<div class="meta">📅 '+dateStr+' &nbsp;|&nbsp; Section: '+section+'</div></div>';
-    html += '<div>'+badgeHtml+'</div></div>';
+    html += '<div><div class="score">Score: ' + score + ' / ' + total + (pct != null ? ' (' + pct + '%)' : '') + '</div>';
+    html += '<div class="meta">📅 ' + dateStr + ' &nbsp;|&nbsp; Section: ' + section + '</div></div>';
+    html += '<div>' + badgeHtml + '</div>';
+    html += '</div>';
     html += '<div class="result-body">';
-    html += '<div style="font-size:.9em;color:#555">Attempt #'+(submissions.length-idx)+'</div>';
-    html += '<button class="btn-pdf" onclick="doPrint('+idx+')">🖨️ Download PDF Copy</button>';
+    html += '<div style="font-size:.9em;color:#555">Attempt #' + (submissions.length - idx) + '</div>';
+    html += '<button class="btn-pdf" onclick="doPrint(' + idx + ')">🖨️ Download PDF Copy</button>';
     html += '</div></div>';
   });
+
   resultsBody.innerHTML = html;
+
+  // Store submissions for printing
   window._currentSubmissions = submissions;
   window._currentLabel = studentLabel;
   window._currentWS = ws;
   window._currentSection = section;
 }
 
+// ── PRINT / PDF ───────────────────────────────────────────────────────────────
 function doPrint(idx) {
   var sub = window._currentSubmissions[idx];
   var studentLabel = window._currentLabel;
   var ws  = window._currentWS;
   var section = window._currentSection;
-  var dateStr = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB',{dateStyle:'long',timeStyle:'short'}) : '—';
+  var dateStr = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB', {dateStyle:'long', timeStyle:'short'}) : '—';
   var score = sub.score != null ? sub.score : '—';
   var total = sub.total != null ? sub.total : '—';
-  var pct   = (sub.score != null && sub.total) ? Math.round(sub.score/sub.total*100) : null;
+  var pct   = (sub.score != null && sub.total) ? Math.round(sub.score / sub.total * 100) : null;
   var pass  = pct != null ? (pct >= 50) : null;
+
+  // Build answers table
   var answers = sub.answers;
   if (typeof answers === 'string') { try { answers = JSON.parse(answers); } catch(e) { answers = null; } }
   var answersHtml = '';
   if (answers && Array.isArray(answers)) {
-    answersHtml = '<table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:.9em"><thead><tr style="background:#1a237e;color:#fff"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:left">Question</th><th style="padding:8px 12px;text-align:left">Student Answer</th><th style="padding:8px 12px;text-align:left">Correct Answer</th><th style="padding:8px 12px;text-align:left">Result</th></tr></thead><tbody>';
-    answers.forEach(function(a,i) {
+    answersHtml = '<table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:.9em">';
+    answersHtml += '<thead><tr style="background:#1a237e;color:#fff"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:left">Question</th><th style="padding:8px 12px;text-align:left">Student Answer</th><th style="padding:8px 12px;text-align:left">Correct Answer</th><th style="padding:8px 12px;text-align:left">Result</th></tr></thead><tbody>';
+    answers.forEach(function(a, i) {
       var correct = a.correct || a.correctAnswer || '';
       var student_ans = a.selected || a.studentAnswer || a.answer || '';
       var isCorrect = (student_ans === correct);
       var rowColor = isCorrect ? '#f1f8e9' : '#ffebee';
+      var resultText = isCorrect ? '✅ Correct' : '❌ Wrong';
+      answersHtml += '<tr style="background:' + rowColor + '">';
+      answersHtml += '<td style="padding:8px 12px;font-weight:bold">' + (i+1) + '</td>';
+      // Question text or image
       var qText = a.question || a.questionText || '';
       var qImg  = a.image || a.questionImage || '';
       var qCell = '';
-      if (qImg) qCell += '<img src="'+IMAGE_BASE+qImg+'" style="max-width:160px;border-radius:4px;display:block;margin-bottom:4px">';
+      if (qImg) qCell += '<img src="' + IMAGE_BASE + qImg + '" style="max-width:160px;border-radius:4px;display:block;margin-bottom:4px">';
       if (qText) qCell += qText;
-      if (!qCell) qCell = 'Question '+(i+1);
-      answersHtml += '<tr style="background:'+rowColor+'"><td style="padding:8px 12px;font-weight:bold">'+(i+1)+'</td><td style="padding:8px 12px">'+qCell+'</td><td style="padding:8px 12px;font-weight:bold;color:'+(isCorrect?'#2e7d32':'#c62828')+'">'+( student_ans||'—')+'</td><td style="padding:8px 12px;font-weight:bold;color:#1a237e">'+(correct||'—')+'</td><td style="padding:8px 12px">'+(isCorrect?'✅ Correct':'❌ Wrong')+'</td></tr>';
+      if (!qCell) qCell = 'Question ' + (i+1);
+      answersHtml += '<td style="padding:8px 12px">' + qCell + '</td>';
+      answersHtml += '<td style="padding:8px 12px;font-weight:bold;color:' + (isCorrect ? '#2e7d32' : '#c62828') + '">' + (student_ans || '—') + '</td>';
+      answersHtml += '<td style="padding:8px 12px;font-weight:bold;color:#1a237e">' + (correct || '—') + '</td>';
+      answersHtml += '<td style="padding:8px 12px">' + resultText + '</td>';
+      answersHtml += '</tr>';
+    });
+    answersHtml += '</tbody></table>';
+  } else if (answers && typeof answers === 'object') {
+    // Object format fallback
+    answersHtml = '<table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:.9em">';
+    answersHtml += '<thead><tr style="background:#1a237e;color:#fff"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:left">Question</th><th style="padding:8px 12px;text-align:left">Student Answer</th></tr></thead><tbody>';
+    var keys = Object.keys(answers);
+    keys.forEach(function(k, i) {
+      answersHtml += '<tr style="background:' + (i%2===0?'#fff':'#f5f5f5') + '">';
+      answersHtml += '<td style="padding:8px 12px">' + (i+1) + '</td>';
+      answersHtml += '<td style="padding:8px 12px">' + k + '</td>';
+      answersHtml += '<td style="padding:8px 12px">' + answers[k] + '</td>';
+      answersHtml += '</tr>';
     });
     answersHtml += '</tbody></table>';
   }
-  var printWin = window.open('','_blank');
-  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Worksheet '+ws+' — '+studentLabel+'</title>');
-  printWin.document.write('<style>body{font-family:Arial,sans-serif;padding:30px;color:#222;max-width:900px;margin:0 auto}h1{color:#1a237e;font-size:1.4em;margin-bottom:4px}h2{color:#1a237e;font-size:1.1em;margin:20px 0 8px}.school{color:#555;font-size:.9em;margin-bottom:20px}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;background:#f5f5f5;padding:14px 18px;border-radius:8px;margin-bottom:20px;font-size:.95em}.info-grid strong{color:#1a237e}.score-box{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:16px 22px;border-radius:10px;text-align:center;margin-bottom:20px}.score-box .big{font-size:2em;font-weight:bold}.score-box .small{font-size:.9em;opacity:.85}.pass{background:#2e7d32}@media print{button{display:none}}</style></head><body>');
+
+  var printWin = window.open('', '_blank');
+  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">');
+  printWin.document.write('<title>Worksheet ' + ws + ' — ' + studentLabel + '</title>');
+  printWin.document.write('<style>');
+  printWin.document.write('body{font-family:Arial,sans-serif;padding:30px;color:#222;max-width:900px;margin:0 auto}');
+  printWin.document.write('h1{color:#1a237e;font-size:1.4em;margin-bottom:4px}');
+  printWin.document.write('h2{color:#1a237e;font-size:1.1em;margin:20px 0 8px}');
+  printWin.document.write('.school{color:#555;font-size:.9em;margin-bottom:20px}');
+  printWin.document.write('.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;background:#f5f5f5;padding:14px 18px;border-radius:8px;margin-bottom:20px;font-size:.95em}');
+  printWin.document.write('.info-grid strong{color:#1a237e}');
+  printWin.document.write('.score-box{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:16px 22px;border-radius:10px;text-align:center;margin-bottom:20px}');
+  printWin.document.write('.score-box .big{font-size:2em;font-weight:bold}');
+  printWin.document.write('.score-box .small{font-size:.9em;opacity:.85}');
+  printWin.document.write('.pass{background:#2e7d32}');
+  printWin.document.write('@media print{button{display:none}}');
+  printWin.document.write('</style></head><body>');
   printWin.document.write('<h1>🏫 Sikhio Sawadphadung Wittaya School</h1>');
   printWin.document.write('<div class="school">Nakhon Ratchasima 30140 Thailand &nbsp;|&nbsp; Teacher Dashboard — Worksheet Report</div>');
   printWin.document.write('<hr style="border:none;border-top:2px solid #1a237e;margin:12px 0 20px">');
-  printWin.document.write('<div class="info-grid"><div><strong>Student:</strong> '+studentLabel+'</div><div><strong>Section:</strong> '+section+'</div><div><strong>Worksheet:</strong> '+ws+'</div><div><strong>Submitted:</strong> '+dateStr+'</div></div>');
-  printWin.document.write('<div class="score-box'+(pass?' pass':'')+'" ><div class="big">Score: '+score+' / '+total+(pct!=null?' ('+pct+'%)':'')+'</div><div class="small">'+(pass!=null?(pass?'✅ PASSED':'❌ FAILED'):'')+'</div></div>');
-  if (answersHtml) printWin.document.write('<h2>Answer Details</h2>'+answersHtml);
+  printWin.document.write('<div class="info-grid">');
+  printWin.document.write('<div><strong>Student:</strong> ' + studentLabel + '</div>');
+  printWin.document.write('<div><strong>Section:</strong> ' + section + '</div>');
+  printWin.document.write('<div><strong>Worksheet:</strong> ' + ws + '</div>');
+  printWin.document.write('<div><strong>Submitted:</strong> ' + dateStr + '</div>');
+  printWin.document.write('</div>');
+  printWin.document.write('<div class="score-box' + (pass ? ' pass' : '') + '">');
+  printWin.document.write('<div class="big">Score: ' + score + ' / ' + total + (pct != null ? ' (' + pct + '%)' : '') + '</div>');
+  printWin.document.write('<div class="small">' + (pass != null ? (pass ? '✅ PASSED' : '❌ FAILED') : '') + '</div>');
+  printWin.document.write('</div>');
+  if (answersHtml) {
+    printWin.document.write('<h2>Answer Details</h2>');
+    printWin.document.write(answersHtml);
+  }
   printWin.document.write('<br><button onclick="window.print()" style="padding:12px 28px;background:#1a237e;color:#fff;border:none;border-radius:8px;font-size:1em;cursor:pointer;margin-top:20px">🖨️ Print / Save as PDF</button>');
   printWin.document.write('</body></html>');
   printWin.document.close();
