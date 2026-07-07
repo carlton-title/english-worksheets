@@ -5,282 +5,201 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Portal — English Worksheets</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        /* ── Login ── */
-        #loginScreen {
-            display: flex; align-items: center; justify-content: center;
-            min-height: 100vh; padding: 20px;
-        }
-        .login-box {
-            background: white; border-radius: 20px; padding: 50px 40px;
-            max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            text-align: center;
-        }
-        .login-box h1 { color: #1a237e; font-size: 1.8em; margin-bottom: 6px; }
-        .login-box p { color: #777; margin-bottom: 30px; font-size: 0.95em; }
-        .login-box input {
-            width: 100%; padding: 14px 16px; border: 2px solid #ddd;
-            border-radius: 10px; font-size: 1em; margin-bottom: 16px;
-            outline: none; transition: border 0.2s;
-        }
-        .login-box input:focus { border-color: #1a237e; }
-        .btn-login {
-            width: 100%; padding: 14px; background: linear-gradient(135deg,#1a237e,#4a148c);
-            color: white; border: none; border-radius: 10px; font-size: 1.05em;
-            cursor: pointer; font-weight: bold; transition: opacity 0.2s;
-        }
-        .btn-login:hover { opacity: 0.9; }
-        .login-error { color: #c62828; font-size: 0.9em; margin-top: 10px; display: none; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%); min-height:100vh; padding:20px; }
 
-        /* ── Main Portal ── */
-        #portal { display: none; }
-        .top-bar {
-            background: white; border-radius: 14px; padding: 16px 24px;
-            margin-bottom: 20px; display: flex; align-items: center;
-            justify-content: space-between; flex-wrap: wrap; gap: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-        .top-bar h1 { color: #1a237e; font-size: 1.4em; }
-        .top-bar span { color: #777; font-size: 0.9em; }
-        .btn-logout {
-            background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px;
-            padding: 8px 16px; cursor: pointer; font-size: 0.9em; color: #555;
-            transition: background 0.2s;
-        }
-        .btn-logout:hover { background: #ffe0e0; border-color: #f44336; color: #c62828; }
+        /* LOGIN */
+        #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+        .login-box { background:white; border-radius:20px; padding:50px 40px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; }
+        .login-box h1 { color:#1a237e; font-size:1.8em; margin-bottom:6px; }
+        .login-box p { color:#777; margin-bottom:30px; font-size:.95em; }
+        .login-box input { width:100%; padding:14px 16px; border:2px solid #ddd; border-radius:10px; font-size:1em; margin-bottom:16px; outline:none; }
+        .login-box input:focus { border-color:#1a237e; }
+        .btn-login { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; }
+        .login-error { color:#c62828; font-size:.9em; margin-top:10px; display:none; }
 
-        .container { max-width: 1100px; margin: 0 auto; }
-        .card {
-            background: white; border-radius: 16px; padding: 28px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12); margin-bottom: 20px;
-        }
-        .card h2 { color: #1a237e; margin-bottom: 18px; font-size: 1.15em; }
+        /* PORTAL */
+        #portal { display:none; }
+        .top-bar { background:white; border-radius:14px; padding:16px 24px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 20px rgba(0,0,0,.15); }
+        .top-bar h1 { color:#1a237e; font-size:1.4em; }
+        .btn-logout { background:#f5f5f5; border:1px solid #ddd; border-radius:8px; padding:8px 16px; cursor:pointer; font-size:.9em; color:#555; }
+        .btn-logout:hover { background:#ffe0e0; color:#c62828; }
 
-        /* Search & Filters */
-        .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-        .filters input, .filters select {
-            padding: 10px 14px; border: 2px solid #ddd; border-radius: 10px;
-            font-size: 0.95em; outline: none; transition: border 0.2s; flex: 1; min-width: 150px;
-        }
-        .filters input:focus, .filters select:focus { border-color: #1a237e; }
-        .btn-search {
-            padding: 10px 24px; background: linear-gradient(135deg,#1a237e,#4a148c);
-            color: white; border: none; border-radius: 10px; font-size: 0.95em;
-            cursor: pointer; font-weight: bold; white-space: nowrap;
-        }
-        .btn-search:hover { opacity: 0.9; }
+        .container { max-width:1000px; margin:0 auto; }
+        .card { background:white; border-radius:16px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,.12); margin-bottom:20px; }
+        .card h2 { color:#1a237e; margin-bottom:20px; font-size:1.15em; }
 
-        /* Table */
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.93em; }
-        th { background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
-             padding: 12px 14px; text-align: left; white-space: nowrap; }
-        td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-        tr:hover td { background: #f5f7ff; }
-        .badge {
-            display: inline-block; padding: 3px 10px; border-radius: 12px;
-            font-size: 0.82em; font-weight: bold;
+        /* SEARCH FORM */
+        .search-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+        @media(max-width:600px){ .search-grid { grid-template-columns:1fr; } }
+        .form-group { display:flex; flex-direction:column; gap:6px; }
+        .form-group label { font-weight:bold; color:#444; font-size:.9em; }
+        .form-group select, .form-group input {
+            padding:11px 14px; border:2px solid #ddd; border-radius:10px;
+            font-size:.95em; outline:none; width:100%; background:white;
         }
-        .badge-pass { background: #c8e6c9; color: #1b5e20; }
-        .badge-fail { background: #ffcdd2; color: #b71c1c; }
-        .badge-ws { background: #e3f2fd; color: #0d47a1; }
+        .form-group select:focus, .form-group input:focus { border-color:#1a237e; }
+        select:disabled, input:disabled { background:#f5f5f5; color:#999; }
 
-        .btn-view {
-            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
-            border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer;
-            font-size: 0.85em; font-weight: bold; transition: opacity 0.2s;
-        }
-        .btn-view:hover { opacity: 0.85; }
+        .btn-search { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; margin-top:4px; }
+        .btn-search:hover { opacity:.9; }
+        .btn-search:disabled { opacity:.5; cursor:not-allowed; }
 
-        .empty-state { text-align: center; color: #aaa; padding: 40px; font-size: 0.95em; }
-        .loading { text-align: center; color: #777; padding: 30px; font-size: 0.95em; }
+        /* RESULTS */
+        #resultsSection { display:none; }
+        .result-card { border:2px solid #e8eaf6; border-radius:14px; margin-bottom:16px; overflow:hidden; }
+        .result-header { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .result-header .score { font-size:1.4em; font-weight:bold; }
+        .result-header .meta { font-size:.88em; opacity:.9; }
+        .badge { display:inline-block; padding:4px 12px; border-radius:12px; font-size:.82em; font-weight:bold; }
+        .badge-pass { background:#c8e6c9; color:#1b5e20; }
+        .badge-fail { background:#ffcdd2; color:#b71c1c; }
+        .result-body { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+        .result-info { font-size:.92em; color:#555; }
+        .btn-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:.95em; font-weight:bold; white-space:nowrap; }
+        .btn-pdf:hover { opacity:.88; }
 
-        /* Stats row */
-        .stats-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
-        .stat-box {
-            flex: 1; min-width: 140px; background: white; border-radius: 14px;
-            padding: 18px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;
-        }
-        .stat-box .num { font-size: 2em; font-weight: bold; color: #1a237e; }
-        .stat-box .lbl { color: #777; font-size: 0.85em; margin-top: 4px; }
+        .no-result { text-align:center; padding:30px; color:#999; font-size:.95em; }
+        .loading-msg { text-align:center; padding:20px; color:#777; }
 
-        /* Print modal */
-        #printModal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.6); z-index: 999;
-            align-items: center; justify-content: center; padding: 20px;
-        }
-        #printModal.open { display: flex; }
-        .modal-box {
-            background: white; border-radius: 20px; padding: 32px;
-            max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
-        }
-        .modal-header h2 { color: #1a237e; font-size: 1.2em; }
-        .modal-actions { display: flex; gap: 10px; }
-        .btn-print-pdf {
-            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
-            border: none; border-radius: 10px; padding: 10px 22px; cursor: pointer;
-            font-size: 0.95em; font-weight: bold;
-        }
-        .btn-close-modal {
-            background: #f5f5f5; border: 1px solid #ddd; border-radius: 10px;
-            padding: 10px 18px; cursor: pointer; font-size: 0.95em; color: #555;
-        }
-        .btn-close-modal:hover { background: #ffe0e0; color: #c62828; }
+        /* ALL SUBMISSIONS TABLE */
+        .table-wrap { overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; font-size:.9em; }
+        th { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:11px 13px; text-align:left; white-space:nowrap; }
+        td { padding:10px 13px; border-bottom:1px solid #f0f0f0; vertical-align:middle; }
+        tr:hover td { background:#f5f7ff; }
+        .badge-ws { background:#e3f2fd; color:#0d47a1; }
+        .btn-view-sm { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:7px; padding:5px 13px; cursor:pointer; font-size:.82em; font-weight:bold; }
 
-        /* Submission detail */
-        .sub-info-table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-        .sub-info-table td { padding: 8px 12px; border: 1px solid #ddd; font-size: 0.93em; }
-        .sub-info-table td:first-child { background: #f0f3ff; font-weight: bold; width: 130px; }
+        /* PRINT MODAL */
+        #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
+        #printModal.open { display:flex; }
+        .modal-box { background:white; border-radius:20px; padding:30px; max-width:880px; width:100%; max-height:90vh; overflow-y:auto; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+        .modal-header h2 { color:#1a237e; font-size:1.15em; }
+        .btn-print-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 20px; cursor:pointer; font-size:.93em; font-weight:bold; }
+        .btn-close-modal { background:#f5f5f5; border:1px solid #ddd; border-radius:10px; padding:10px 16px; cursor:pointer; color:#555; }
 
-        .q-card {
-            border: 1px solid #e0e0e0; border-radius: 10px; margin-bottom: 14px;
-            overflow: hidden;
-        }
-        .q-card-header {
-            background: #f0f3ff; padding: 10px 14px; font-weight: bold;
-            color: #1a237e; font-size: 0.93em; border-bottom: 1px solid #e0e0e0;
-            display: flex; gap: 10px; align-items: center;
-        }
-        .q-card-header .qnum {
-            background: #1a237e; color: white; border-radius: 50%;
-            width: 26px; height: 26px; display: flex; align-items: center;
-            justify-content: center; font-size: 0.85em; flex-shrink: 0;
-        }
-        .q-card-img { width: 100%; max-height: 200px; object-fit: cover; }
-        .q-card-body { padding: 14px; }
-        .opt-row {
-            padding: 7px 12px; border-radius: 6px; margin-bottom: 5px;
-            font-size: 0.9em; border: 1px solid #eee; display: flex;
-            align-items: center; gap: 8px;
-        }
-        .opt-selected-correct { background: #c8e6c9; border-color: #4caf50; font-weight: bold; }
-        .opt-selected-wrong   { background: #ffcdd2; border-color: #f44336; font-weight: bold; }
-        .opt-correct-missed   { background: #e8f5e9; border-color: #81c784; color: #2e7d32; }
-        .opt-plain            { background: #fafafa; color: #999; }
-        .opt-icon { font-size: 1em; }
-        .no-answer { color: #999; font-style: italic; font-size: 0.88em; padding: 6px 0; }
-
-        .attempt-banner {
-            background: linear-gradient(135deg,#1a237e,#4a148c); color: white;
-            border-radius: 10px; padding: 12px 18px; margin-bottom: 14px;
-            display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
-            font-size: 0.92em;
-        }
-        .attempt-banner b { font-size: 1.05em; }
-
-        @media print {
-            body { background: white; padding: 0; }
-            #loginScreen, #portal { display: none !important; }
-            #printContent { display: block !important; }
-            .no-print { display: none !important; }
-            @page { margin: 12mm; }
-        }
+        .sub-info-table { border-collapse:collapse; width:100%; margin-bottom:18px; }
+        .sub-info-table td { padding:8px 11px; border:1px solid #ddd; font-size:.9em; }
+        .sub-info-table td:first-child { background:#f0f3ff; font-weight:bold; width:120px; }
+        .q-card { border:1px solid #e0e0e0; border-radius:10px; margin-bottom:12px; overflow:hidden; }
+        .q-card-img { width:100%; max-height:200px; object-fit:cover; }
+        .q-header { background:#f0f3ff; padding:10px 14px; font-weight:bold; color:#1a237e; font-size:.9em; border-bottom:1px solid #e0e0e0; display:flex; gap:8px; align-items:flex-start; }
+        .qnum { background:#1a237e; color:white; border-radius:50%; width:24px; height:24px; min-width:24px; display:flex; align-items:center; justify-content:center; font-size:.8em; }
+        .q-body { padding:12px 14px; }
+        .opt-row { padding:6px 11px; border-radius:6px; margin-bottom:4px; font-size:.88em; border:1px solid #eee; display:flex; align-items:center; gap:8px; }
+        .opt-sc { background:#c8e6c9; border-color:#4caf50; font-weight:bold; }
+        .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
+        .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
+        .opt-plain { background:#fafafa; color:#aaa; }
+        .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="loginScreen">
     <div class="login-box">
         <h1>🏫 Teacher Portal</h1>
         <p>English Worksheets — carlton-title.github.io</p>
-        <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off">
-        <button class="btn-login" onclick="doLogin()">Login</button>
-        <div class="login-error" id="loginError">❌ Incorrect password. Try again.</div>
+        <input type="password" id="pwInput" placeholder="Enter teacher password" autocomplete="off">
+        <button class="btn-login" onclick="doLogin()">🔐 Login</button>
+        <div class="login-error" id="loginError">❌ Incorrect password.</div>
     </div>
 </div>
 
-<!-- MAIN PORTAL -->
+<!-- PORTAL -->
 <div id="portal">
-    <div class="container">
+<div class="container">
 
-        <!-- Top bar -->
-        <div class="top-bar">
-            <h1>🏫 Teacher Portal — Worksheet Submissions</h1>
-            <div style="display:flex;align-items:center;gap:14px;">
-                <span id="lastUpdated"></span>
-                <button class="btn-logout" onclick="doLogout()">Logout</button>
-            </div>
-        </div>
+    <div class="top-bar">
+        <h1>🏫 Teacher Portal — Worksheet Submissions</h1>
+        <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
 
-        <!-- Stats -->
-        <div class="stats-row">
-            <div class="stat-box"><div class="num" id="statTotal">—</div><div class="lbl">Total Submissions</div></div>
-            <div class="stat-box"><div class="num" id="statPassed">—</div><div class="lbl">Passed</div></div>
-            <div class="stat-box"><div class="num" id="statFailed">—</div><div class="lbl">Failed</div></div>
-            <div class="stat-box"><div class="num" id="statStudents">—</div><div class="lbl">Unique Students</div></div>
-        </div>
-
-        <!-- Search & filter -->
-        <div class="card">
-            <h2>🔍 Search Submissions</h2>
-            <div class="filters">
-                <input type="text" id="searchName" placeholder="Student name or ID…" oninput="applyFilters()">
-                <select id="filterSection" onchange="applyFilters()">
-                    <option value="">All Sections</option>
-                    <option>M3/2</option><option>M3/4</option><option>M3/6</option>
-                    <option>M3/10</option><option>M3/12</option>
-                    <option>M4/10</option><option>M4/12</option>
+    <!-- SEARCH CARD -->
+    <div class="card">
+        <h2>🔍 Find Student Worksheet</h2>
+        <div class="search-grid">
+            <div class="form-group">
+                <label>Class / Section</label>
+                <select id="selSection" onchange="onSectionChange()">
+                    <option value="">— Select Section —</option>
+                    <optgroup label="M3">
+                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                        <option>M3/10</option><option>M3/12</option>
+                    </optgroup>
+                    <optgroup label="M4">
+                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
+                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
+                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
+                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
+                        <option>M4/13</option>
+                    </optgroup>
                 </select>
-                <select id="filterWorksheet" onchange="applyFilters()">
-                    <option value="">All Worksheets</option>
+            </div>
+            <div class="form-group">
+                <label>Student Name</label>
+                <select id="selStudent" onchange="onStudentChange()" disabled>
+                    <option value="">— Select Section First —</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Student ID (auto-filled)</label>
+                <input type="text" id="inputStudentId" placeholder="Auto-filled from name selection" disabled>
+            </div>
+            <div class="form-group">
+                <label>Worksheet Number</label>
+                <select id="selWorksheet">
+                    <option value="">— Select Worksheet —</option>
+                    <option value="WS1">Worksheet 1</option>
+                    <option value="WS2">Worksheet 2</option>
+                    <option value="WS3">Worksheet 3</option>
                     <option value="WS4">Worksheet 4</option>
                     <option value="WS5">Worksheet 5</option>
                     <option value="WS6">Worksheet 6</option>
                 </select>
-                <select id="filterStatus" onchange="applyFilters()">
-                    <option value="">All Status</option>
-                    <option value="PASSED">Passed</option>
-                    <option value="FAILED">Failed</option>
-                </select>
-                <button class="btn-search" onclick="loadData()">↻ Refresh</button>
-            </div>
-
-            <div class="table-wrap">
-                <table id="submissionsTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Student ID</th>
-                            <th>Name</th>
-                            <th>Thai Name</th>
-                            <th>Section</th>
-                            <th>Worksheet</th>
-                            <th>Score</th>
-                            <th>Status</th>
-                            <th>Submitted</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="submissionsBody">
-                        <tr><td colspan="10" class="loading">Loading submissions…</td></tr>
-                    </tbody>
-                </table>
             </div>
         </div>
-
+        <button class="btn-search" id="btnSearch" onclick="doSearch()">🔎 Search</button>
     </div>
+
+    <!-- RESULTS -->
+    <div id="resultsSection">
+        <div class="card">
+            <h2 id="resultsTitle">Search Results</h2>
+            <div id="resultsBody"></div>
+        </div>
+    </div>
+
+    <!-- ALL SUBMISSIONS -->
+    <div class="card">
+        <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;"></span>
+            <button onclick="loadAll()" style="float:right;background:#f0f3ff;border:1px solid #c5cae9;border-radius:8px;padding:6px 14px;cursor:pointer;color:#1a237e;font-size:.82em;font-weight:bold;">↻ Refresh</button>
+        </h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr>
+                    <th>#</th><th>ID</th><th>Name</th><th>Thai Name</th>
+                    <th>Section</th><th>Worksheet</th><th>Score</th>
+                    <th>Status</th><th>Submitted</th><th></th>
+                </tr></thead>
+                <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
 </div>
 
 <!-- PRINT MODAL -->
 <div id="printModal">
     <div class="modal-box">
-        <div class="modal-header no-print">
+        <div class="modal-header">
             <h2 id="modalTitle">Submission Detail</h2>
-            <div class="modal-actions">
-                <button class="btn-print-pdf" onclick="doPrint()">🖨️ Print / Save PDF</button>
+            <div style="display:flex;gap:10px;">
+                <button class="btn-print-pdf" onclick="doPrint()">📥 Download PDF Copy</button>
                 <button class="btn-close-modal" onclick="closeModal()">✕ Close</button>
             </div>
         </div>
@@ -289,225 +208,397 @@
 </div>
 
 <script>
-    var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
-    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
-    var TEACHER_PASSWORD = 'Carlton2026!';
-    var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
+var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+var TEACHER_PASSWORD = 'Carlton2026!';
+var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
+var allSubmissions = [];
 
-    var allSubmissions = [];
-    var filteredSubmissions = [];
+// ── Student data ──
+var studentData = {
+    'M3/2': [
+        {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
+        {id:'37582',name:'เด็กชายจักรภัทร เอี้ยงทอง',nick:'Premium'},
+        {id:'37583',name:'เด็กชายชลกร ลื่นกลาง',nick:'Mos'},
+        {id:'37584',name:'เด็กชายณภัทร เหลาไชย',nick:'Tang'},
+        {id:'37585',name:'เด็กหญิงดวงกมล เจ๊กจันทึก',nick:'Aom'},
+        {id:'37586',name:'เด็กชายเตชิต เตียนจันทึก',nick:'First'},
+        {id:'37587',name:'เด็กชายเตชินท์ แท้สูงเนิน',nick:'Techin'},
+        {id:'37588',name:'เด็กชายธนเทพ ฤทธิกุล',nick:'Oat'},
+        {id:'37589',name:'เด็กชายธนภัทร ธูปสูงเนิน',nick:'Phat'},
+        {id:'37590',name:'เด็กชายนัทธพงศ์ เทียนทอง',nick:'Guy'},
+        {id:'37591',name:'เด็กชายประเสริฐ เพียซ้าย',nick:'Jay'},
+        {id:'37592',name:'เด็กชายปิยวัฒน์ อำภาว์',nick:'Zee'},
+        {id:'37593',name:'เด็กชายพชรพล ไทธานี',nick:'Poom'},
+        {id:'37594',name:'เด็กชายภาคิน สุขประโคน',nick:'Dew'},
+        {id:'37596',name:'เด็กชายภูริพัฒน์ แหลมจันทึก',nick:'Phum 2'},
+        {id:'37597',name:'เด็กชายมานะศักดิ์ เยี่ยมจันทึก',nick:'Water'},
+        {id:'37598',name:'เด็กชายรัฐพล เปล่งสันเทียะ',nick:'Phum 1'},
+        {id:'37599',name:'เด็กชายรัฐศาสตร์ ตรงจันทึก',nick:'Kawjao'},
+        {id:'37600',name:'เด็กชายวิศรุต คุ้มจันทึก',nick:'Tae'},
+        {id:'37601',name:'เด็กชายสุกฤษฎิ์ สุคนธ์ขจร',nick:'Palm'},
+        {id:'37602',name:'เด็กชายอติเทพ จันทร์ผ่อง',nick:'Auto'},
+        {id:'37603',name:'เด็กหญิงกัญญาลักษณ์ มูลศิริ',nick:'Ploy'},
+        {id:'37604',name:'เด็กหญิงจินดาภา แก้วผลึก',nick:'Temduang'},
+        {id:'37606',name:'เด็กหญิงชญาภา เผือดจันทึก',nick:'Yaya'},
+        {id:'37607',name:'เด็กหญิงชัญญานุช พันจันทึก',nick:'L'},
+        {id:'37608',name:'เด็กหญิงฐิติชญา เอ็นจันทึก',nick:'Khao'},
+        {id:'37609',name:'เด็กหญิงฐิติมา พลฉิมพลี',nick:'Na'},
+        {id:'37611',name:'เด็กหญิงนภัสสร จันกง',nick:'Kam1'},
+        {id:'37615',name:'เด็กหญิงภัคจิรา แก้วมีศรี',nick:'Kam2'},
+        {id:'37618',name:'เด็กหญิงวริยา คูพันดุง',nick:'Kib'},
+        {id:'37620',name:'เด็กหญิงสุดารัตน์ มิ่งจันทึก',nick:'Maysa'},
+        {id:'37621',name:'เด็กหญิงอภิญญา เค้าแก้ว',nick:'Fasai'},
+        {id:'37622',name:'เด็กหญิงอภิสรา กออำไพร',nick:'Fanta'},
+        {id:'39688',name:'เด็กหญิงณฐมน ศิริพันดร',nick:'Wawa'},
+        {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'},
+        {id:'54565',name:'Test Student',nick:'Kyle'}
+    ],
+    'M3/4': [
+        {id:'37667',name:'เด็กชายจักรภัทร กลึงสูงเนิน',nick:'Fiw'},
+        {id:'37668',name:'เด็กชายจีรศักดิ์ ทองรอด',nick:'Kaow'},
+        {id:'37669',name:'เด็กชายชัชชพร กลองกลาง',nick:'Tolap'},
+        {id:'37670',name:'เด็กชายทวีอมร ศรีอำพล',nick:'Drift'},
+        {id:'37671',name:'เด็กชายทินภัทร เคลิ้มกระโทก',nick:'Fakhram'},
+        {id:'37674',name:'เด็กชายมงคล รัตนพงศ์พร',nick:'Tee'},
+        {id:'37675',name:'เด็กชายวชิรวิชญ์ พนมเขต',nick:'Angpao'},
+        {id:'37676',name:'เด็กชายอภิชา จูจันทึก',nick:'Eik'},
+        {id:'37677',name:'เด็กหญิงกนกวรรณ วัฒนากลาง',nick:'Pai'},
+        {id:'37678',name:'เด็กหญิงกัญญาณัฐ เที่ยงสันเทียะ',nick:'Wine'},
+        {id:'37679',name:'เด็กหญิงกัญญาณัฐ คำจริง',nick:'Peem'},
+        {id:'37680',name:'เด็กหญิงกุลปริยา พิมพ์วัน',nick:'Garfield'},
+        {id:'37681',name:'เด็กหญิงชญานิษฐ์ คงวิโรจน์',nick:'Bellda'},
+        {id:'37682',name:'เด็กหญิงชนาภา เดสันเทียะ',nick:'Nooyim'},
+        {id:'37683',name:'เด็กหญิงชุติกาญจน์ ไชยเฉลิม',nick:'Pakwan'},
+        {id:'37684',name:'เด็กหญิงณัฐณิชา แดงจันทึก',nick:'Fahsai'},
+        {id:'37685',name:'เด็กหญิงณิชาภัทร ดีบุรี',nick:'Foam'},
+        {id:'37686',name:'เด็กหญิงทัดพิชาภรณ์ พิมพ์กลาง',nick:'Thadcha'},
+        {id:'37687',name:'เด็กหญิงธนภรณ์ แซ่ลี้',nick:'Rak'},
+        {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play'},
+        {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
+        {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
+        {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
+        {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
+        {id:'37693',name:'เด็กหญิงปุญชรัสมิ์ คณะขาม',nick:'Apo'},
+        {id:'37694',name:'เด็กหญิงพลอยชมพู บุ่นจันทึก',nick:'Ploy'},
+        {id:'37695',name:'เด็กหญิงพัชรพร งาจันทึก',nick:'Pakkad'},
+        {id:'37697',name:'เด็กหญิงพิฌาอร โกสุม',nick:'Moved'},
+        {id:'37698',name:'เด็กหญิงพิมพ์รดา วงศ์ประชุม',nick:'Jenny'},
+        {id:'37700',name:'เด็กหญิงภคพร สุพล',nick:'Bonus'},
+        {id:'37701',name:'เด็กหญิงภรณ์ชนก พลลาภ',nick:'Veeta'},
+        {id:'37702',name:'เด็กหญิงรินรดา แคะมะดัน',nick:'Aing'},
+        {id:'37703',name:'เด็กหญิงรุจิสา ศาสตร์ดำรงค์',nick:'Ongfong'},
+        {id:'37704',name:'เด็กหญิงสิราวรรณ แสงเพ็ชร',nick:'Am'},
+        {id:'37705',name:'เด็กหญิงสุดาทิพย์ บุญทัยสง',nick:'Fangkhaw'},
+        {id:'37706',name:'เด็กหญิงสุรีรัตน์ กะตะศิลา',nick:'Meena'},
+        {id:'37707',name:'เด็กหญิงอรพรรณ อามาตร์',nick:'Earth'},
+        {id:'39678',name:'นนทวัฒน์ พันธุสุนทร',nick:'Non'}
+    ],
+    'M3/6': [
+        {id:'37750',name:'เด็กชายกฤษณทัต รักษ์จันทึก',nick:'Pepper'},
+        {id:'37751',name:'เด็กชายณัฐปกรณ์ นิลกำแหง',nick:'Model'},
+        {id:'37752',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Fuas'},
+        {id:'37753',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Guitar'},
+        {id:'37754',name:'เด็กชายธีรภัทร ฟักสูงเนิน',nick:'Moss'},
+        {id:'37755',name:'เด็กชายนฤบดี เป่ยคำภา',nick:'Namo'},
+        {id:'37756',name:'เด็กชายนวพล สัญชานันท์',nick:'Tle'},
+        {id:'37757',name:'เด็กชายประพัฒน์ จันทร์ไทย',nick:'Earth'},
+        {id:'37758',name:'เด็กชายพงษ์ศิริพัฒน์ เทิบจันทึก',nick:'Aomsub'},
+        {id:'37759',name:'เด็กชายพิทวัส เงื่อนพิมาย',nick:'Ninja'},
+        {id:'37760',name:'เด็กชายพีรพัฒน์ คำป้อง',nick:'PP'},
+        {id:'37761',name:'เด็กชายภพธรรม สุดหา',nick:'Porch'},
+        {id:'37762',name:'เด็กชายภาคิน ธงวิชัย',nick:'Sand'},
+        {id:'37763',name:'เด็กชายภาณิญ ทองนอก',nick:'Folk'},
+        {id:'37764',name:'เด็กชายภูวดล มาสุข',nick:'Phu'},
+        {id:'37765',name:'เด็กชายภูวิสิฐกุล ภูพวก',nick:'Pooh'},
+        {id:'37766',name:'เด็กชายอนุทัศน์ แซวจันทึก',nick:'Toomtam'},
+        {id:'37767',name:'เด็กหญิงกมลพิชญ์ เจียนรำลึก',nick:'Shisha'},
+        {id:'37768',name:'เด็กหญิงกวิสรา สีนวล',nick:'Idea'},
+        {id:'37769',name:'เด็กหญิงจิตตาภา สุขสูงเนิน',nick:'Pan'},
+        {id:'37770',name:'เด็กหญิงชญาภรณ์ จันคำจร',nick:'Cartoon'},
+        {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pang'},
+        {id:'37772',name:'เด็กหญิงณัฐณิชา ช้อยชด',nick:'Noodee'},
+        {id:'37774',name:'เด็กหญิงบุญญาภา แก้วโพธิ์กลาง',nick:'Ink'},
+        {id:'37775',name:'เด็กหญิงปณิตา แซ่ตั้น',nick:'Benz'},
+        {id:'37776',name:'เด็กหญิงปริยานุช พลจันทึก',nick:'Pu'},
+        {id:'37777',name:'เด็กหญิงปลายฟ้า ฉลูพันธ์',nick:'Playfa'},
+        {id:'37778',name:'เด็กหญิงพัชรพร แกล้วเกล้า',nick:'Sushi'},
+        {id:'37780',name:'เด็กหญิงพิชญาภา ดงเย็น',nick:'Pitchayapha'},
+        {id:'37781',name:'เด็กหญิงเพ็ญพิชชา จิระกุลน์',nick:'Xiider'},
+        {id:'37782',name:'เด็กหญิงรินรดา เกตจันทึก',nick:'Pam'},
+        {id:'37783',name:'เด็กหญิงวรรณภา เขาขุนทด',nick:'Somjeed'},
+        {id:'37784',name:'เด็กหญิงวริศรา มีวัน',nick:'Gift'},
+        {id:'37785',name:'เด็กหญิงศรัณย์พร สัตย์โส',nick:'Khawhom'},
+        {id:'37788',name:'เด็กหญิงสุพรรษา ทัศนาลัย',nick:'Lukwa'},
+        {id:'37789',name:'เด็กหญิงสุภัคตรา บุญมา',nick:'So'},
+        {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
+        {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
+        {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
+    ]
+    // M3/10, M3/12, M4/1–M4/13: loaded dynamically from Supabase submissions
+};
 
-    // ── Auth ──
-    function doLogin() {
-        var pw = document.getElementById('pwInput').value;
-        if (pw === TEACHER_PASSWORD) {
-            sessionStorage.setItem('teacher_auth', '1');
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('portal').style.display = 'block';
-            loadData();
-        } else {
-            document.getElementById('loginError').style.display = 'block';
-            document.getElementById('pwInput').value = '';
-        }
-    }
-
-    document.getElementById('pwInput').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') doLogin();
-    });
-
-    function doLogout() {
-        sessionStorage.removeItem('teacher_auth');
-        document.getElementById('portal').style.display = 'none';
-        document.getElementById('loginScreen').style.display = 'flex';
-        document.getElementById('pwInput').value = '';
-    }
-
-    if (sessionStorage.getItem('teacher_auth') === '1') {
+// ── Auth ──
+function doLogin() {
+    if (document.getElementById('pwInput').value === TEACHER_PASSWORD) {
+        sessionStorage.setItem('t_auth','1');
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('portal').style.display = 'block';
-        loadData();
+        loadAll();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('pwInput').value = '';
     }
+}
+document.getElementById('pwInput').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+function doLogout() {
+    sessionStorage.removeItem('t_auth');
+    document.getElementById('portal').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+}
+if (sessionStorage.getItem('t_auth')==='1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+    loadAll();
+}
 
-    // ── Data ──
-    async function loadData() {
-        document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="10" class="loading">Loading…</td></tr>';
+// ── Section / Student dropdowns ──
+async function onSectionChange() {
+    var section = document.getElementById('selSection').value;
+    var sel = document.getElementById('selStudent');
+    var idInput = document.getElementById('inputStudentId');
+    sel.innerHTML = '<option value="">Loading…</option>';
+    sel.disabled = true;
+    idInput.value = '';
+
+    if (!section) { sel.innerHTML='<option value="">— Select Section First —</option>'; return; }
+
+    var students = studentData[section];
+    if (!students) {
+        // Load from Supabase submissions for this section
         try {
             var res = await fetch(
-                SUPABASE_URL + '/rest/v1/worksheet_submissions?select=*&order=submitted_at.desc&limit=2000',
-                { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+                SUPABASE_URL+'/rest/v1/worksheet_submissions?select=student_id,student_name,thai_name&section=eq.'+encodeURIComponent(section),
+                {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
             );
-            allSubmissions = await res.json();
-            document.getElementById('lastUpdated').textContent = 'Updated: ' + new Date().toLocaleTimeString();
-            updateStats();
-            applyFilters();
-        } catch(e) {
-            document.getElementById('submissionsBody').innerHTML = '<tr><td colspan="10" class="empty-state">⚠️ Failed to load data. Check connection.</td></tr>';
-        }
+            var rows = await res.json();
+            // Deduplicate by student_id
+            var seen = {}; students = [];
+            rows.forEach(function(r){
+                if (!seen[r.student_id]) {
+                    seen[r.student_id] = true;
+                    students.push({id:r.student_id, name:r.thai_name||'', nick:r.student_name||''});
+                }
+            });
+        } catch(e) { students = []; }
     }
 
-    function updateStats() {
-        var unique = new Set(allSubmissions.map(function(s){ return s.student_id; })).size;
-        var passed = allSubmissions.filter(function(s){ return s.status === 'PASSED'; }).length;
-        document.getElementById('statTotal').textContent = allSubmissions.length;
-        document.getElementById('statPassed').textContent = passed;
-        document.getElementById('statFailed').textContent = allSubmissions.length - passed;
-        document.getElementById('statStudents').textContent = unique;
+    if (!students || students.length === 0) {
+        sel.innerHTML = '<option value="">No students found for this section yet</option>';
+        sel.disabled = true;
+        return;
     }
 
-    function applyFilters() {
-        var search = document.getElementById('searchName').value.toLowerCase();
-        var section = document.getElementById('filterSection').value;
-        var worksheet = document.getElementById('filterWorksheet').value;
-        var status = document.getElementById('filterStatus').value;
-
-        filteredSubmissions = allSubmissions.filter(function(s) {
-            var matchSearch = !search ||
-                (s.student_id || '').toLowerCase().includes(search) ||
-                (s.student_name || '').toLowerCase().includes(search) ||
-                (s.thai_name || '').toLowerCase().includes(search);
-            var matchSection = !section || s.section === section;
-            var matchWs = !worksheet || s.worksheet === worksheet;
-            var matchStatus = !status || s.status === status;
-            return matchSearch && matchSection && matchWs && matchStatus;
-        });
-        renderTable();
-    }
-
-    function renderTable() {
-        var tbody = document.getElementById('submissionsBody');
-        if (filteredSubmissions.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="10" class="empty-state">No submissions found.</td></tr>';
-            return;
-        }
-        tbody.innerHTML = filteredSubmissions.map(function(s, i) {
-            var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
-            var isPassed = s.status === 'PASSED';
-            var wsLabel = (s.worksheet || '').replace('WS','Worksheet ');
-            return '<tr>'
-                + '<td>' + (i+1) + '</td>'
-                + '<td><b>' + (s.student_id || '—') + '</b></td>'
-                + '<td>' + (s.student_name || '—') + '</td>'
-                + '<td>' + (s.thai_name || '—') + '</td>'
-                + '<td>' + (s.section || '—') + '</td>'
-                + '<td><span class="badge badge-ws">' + wsLabel + '</span></td>'
-                + '<td><b>' + s.score + '/' + (s.total_questions || 10) + '</b></td>'
-                + '<td><span class="badge ' + (isPassed ? 'badge-pass' : 'badge-fail') + '">'
-                    + (isPassed ? '✅ PASSED' : '❌ FAILED') + '</span></td>'
-                + '<td style="font-size:0.88em;color:#666;">' + dt + '</td>'
-                + '<td><button class="btn-view" onclick="viewSubmission(' + s.id + ')">View & Print</button></td>'
-                + '</tr>';
+    sel.innerHTML = '<option value="">— Select Student —</option>'
+        + students.map(function(s){
+            return '<option value="'+s.id+'" data-name="'+s.name+'" data-nick="'+s.nick+'">'
+                + s.name + ' ('+s.nick+') — ID: '+s.id+'</option>';
         }).join('');
+    sel.disabled = false;
+}
+
+function onStudentChange() {
+    var sel = document.getElementById('selStudent');
+    var opt = sel.options[sel.selectedIndex];
+    document.getElementById('inputStudentId').value = opt && opt.value ? opt.value : '';
+}
+
+// ── Search ──
+async function doSearch() {
+    var section = document.getElementById('selSection').value;
+    var studentId = document.getElementById('inputStudentId').value.trim();
+    var worksheet = document.getElementById('selWorksheet').value;
+
+    if (!section || !studentId || !worksheet) {
+        alert('Please select Section, Student, and Worksheet Number.');
+        return;
     }
 
-    // ── Print Modal ──
-    function viewSubmission(id) {
-        var s = allSubmissions.find(function(x){ return x.id === id; });
-        if (!s) return;
+    var btn = document.getElementById('btnSearch');
+    btn.disabled = true; btn.textContent = 'Searching…';
 
-        document.getElementById('modalTitle').textContent =
-            'Worksheet ' + (s.worksheet||'').replace('WS','') + ' — ' + (s.student_name || s.student_id);
+    try {
+        var url = SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*'
+            +'&student_id=eq.'+encodeURIComponent(studentId)
+            +'&worksheet=eq.'+encodeURIComponent(worksheet)
+            +'&order=submitted_at.desc';
+        var res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+        var results = await res.json();
+        renderResults(results, studentId, worksheet);
+    } catch(e) {
+        document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
+    }
+    btn.disabled = false; btn.textContent = '🔎 Search';
+}
 
+function renderResults(results, studentId, worksheet) {
+    var sec = document.getElementById('resultsSection');
+    sec.style.display = 'block';
+    var wsLabel = worksheet.replace('WS','Worksheet ');
+    document.getElementById('resultsTitle').textContent =
+        '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+
+    if (!results || results.length === 0) {
+        document.getElementById('resultsBody').innerHTML =
+            '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
+        return;
+    }
+
+    document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
         var isPassed = s.status === 'PASSED';
         var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
-        var wsLabel = (s.worksheet || '').replace('WS','Worksheet ');
-        var answers = s.answers || [];
+        return '<div class="result-card">'
+            +'<div class="result-header">'
+            +'<span><b>Attempt '+(i+1)+'</b></span>'
+            +'<span class="score">'+s.score+'/'+(s.total_questions||10)+'</span>'
+            +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
+            +'<span class="meta">'+dt+'</span>'
+            +'</div>'
+            +'<div class="result-body">'
+            +'<div class="result-info">👤 <b>'+(s.student_name||'—')+'</b>'
+            +(s.thai_name?' ('+s.thai_name+')':'')
+            +' &nbsp;|&nbsp; 🏫 '+(s.section||'—')+'</div>'
+            +'<button class="btn-pdf" onclick="viewSubmission('+s.id+')">📥 Download PDF Copy of This Worksheet</button>'
+            +'</div></div>';
+    }).join('');
+}
 
-        // Build question cards
-        var questionsHtml = answers.map(function(a, idx) {
-            var imgSrc = a.question_image ? IMAGE_BASE + a.question_image : '';
-            var imgHtml = imgSrc ? '<img src="' + imgSrc + '" class="q-card-img" alt="Q image">' : '';
-
-            var opts = [];
-            // We'll reconstruct options display from the answer data
-            // The answer stores: selected_option, correct_option, is_correct
-            if (a.selected_option === null) {
-                opts.push('<div class="no-answer">⚠️ No answer selected</div>');
-            } else {
-                var answered = a.selected_option;
-                var correct = a.correct_option;
-                if (answered === correct) {
-                    // Correct
-                    opts.push('<div class="opt-row opt-selected-correct"><span class="opt-icon">✅</span><span>' + answered + ' — correct answer</span></div>');
-                } else {
-                    // Wrong
-                    opts.push('<div class="opt-row opt-selected-wrong"><span class="opt-icon">❌</span><span>Student selected: ' + answered + '</span></div>');
-                    opts.push('<div class="opt-row opt-correct-missed"><span class="opt-icon">→</span><span>Correct answer: ' + correct + '</span></div>');
-                }
-            }
-
-            return '<div class="q-card">'
-                + imgHtml
-                + '<div class="q-card-header"><div class="qnum">' + (idx+1) + '</div><span>' + (a.question_text || '') + '</span></div>'
-                + '<div class="q-card-body">' + opts.join('') + '</div>'
-                + '</div>';
+// ── All Submissions ──
+async function loadAll() {
+    try {
+        var res = await fetch(
+            SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*&order=submitted_at.desc&limit=2000',
+            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
+        );
+        allSubmissions = await res.json();
+        document.getElementById('allCount').textContent = '('+allSubmissions.length+' total)';
+        var tbody = document.getElementById('allBody');
+        if (!allSubmissions.length) {
+            tbody.innerHTML = '<tr><td colspan="10" class="loading-msg">No submissions yet.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = allSubmissions.map(function(s,i) {
+            var isPassed = s.status==='PASSED';
+            var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+            return '<tr>'
+                +'<td>'+(i+1)+'</td>'
+                +'<td><b>'+(s.student_id||'—')+'</b></td>'
+                +'<td>'+(s.student_name||'—')+'</td>'
+                +'<td style="font-size:.85em;">'+(s.thai_name||'—')+'</td>'
+                +'<td>'+(s.section||'—')+'</td>'
+                +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
+                +'<td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td>'
+                +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
+                +'<td style="font-size:.82em;color:#666;">'+dt+'</td>'
+                +'<td><button class="btn-view-sm" onclick="viewSubmission('+s.id+')">View</button></td>'
+                +'</tr>';
         }).join('');
-
-        var html = ''
-            + '<div class="attempt-banner">'
-            + '<span>📋 <b>' + wsLabel + '</b></span>'
-            + '<span>👤 <b>' + (s.student_name || '—') + '</b> (' + (s.thai_name || '—') + ')</span>'
-            + '<span>🆔 ' + (s.student_id || '—') + '</span>'
-            + '<span>🏫 ' + (s.section || '—') + '</span>'
-            + '<span>📅 ' + dt + '</span>'
-            + '</div>'
-
-            + '<table class="sub-info-table" style="margin-bottom:20px;">'
-            + '<tr><td>Student Name</td><td><b>' + (s.student_name || '—') + '</b></td><td>Student ID</td><td><b>' + (s.student_id || '—') + '</b></td></tr>'
-            + '<tr><td>Thai Name</td><td><b>' + (s.thai_name || '—') + '</b></td><td>Section</td><td><b>' + (s.section || '—') + '</b></td></tr>'
-            + '<tr><td>Worksheet</td><td><b>' + wsLabel + '</b></td><td>Score</td><td><b>' + s.score + '/' + (s.total_questions || 10) + '</b></td></tr>'
-            + '<tr><td>Status</td><td colspan="3"><b style="color:' + (isPassed ? '#1b5e20' : '#b71c1c') + '">' + (isPassed ? '✅ PASSED' : '❌ FAILED') + '</b></td></tr>'
-            + '<tr><td>Submitted</td><td colspan="3">' + dt + '</td></tr>'
-            + '<tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr>'
-            + '</table>'
-
-            + '<h3 style="color:#1a237e;margin-bottom:14px;font-size:1em;">📝 Questions & Answers</h3>'
-            + questionsHtml
-            + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
-
-        document.getElementById('printContent').innerHTML = html;
-        document.getElementById('printModal').classList.add('open');
+    } catch(e) {
+        document.getElementById('allBody').innerHTML = '<tr><td colspan="10" class="loading-msg">⚠️ Failed to load.</td></tr>';
     }
+}
 
-    function closeModal() {
-        document.getElementById('printModal').classList.remove('open');
+// ── Print Modal ──
+function viewSubmission(id) {
+    var s = allSubmissions.find(function(x){ return x.id===id; });
+    // If not in allSubmissions (came from search), fetch it
+    if (!s) {
+        fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions?id=eq.'+id,
+            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}})
+        .then(function(r){return r.json();})
+        .then(function(rows){ if(rows[0]) { allSubmissions.push(rows[0]); buildModal(rows[0]); } });
+        return;
     }
+    buildModal(s);
+}
 
-    function doPrint() {
-        var content = document.getElementById('printContent').innerHTML;
-        var pw = window.open('', '_blank', 'width=960,height=750');
-        if (!pw) { alert('Please allow pop-ups to print.'); return; }
-        pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">'
-            + '<title>Worksheet Submission</title>'
-            + '<style>'
-            + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:13px;}'
-            + '.attempt-banner{background:linear-gradient(135deg,#1a237e,#4a148c);color:white;border-radius:10px;padding:12px 18px;margin-bottom:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:0.9em;}'
-            + '.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:18px;}'
-            + '.sub-info-table td{padding:7px 11px;border:1px solid #ddd;font-size:0.9em;}'
-            + '.sub-info-table td:first-child{background:#f0f3ff;font-weight:bold;width:120px;}'
-            + '.q-card{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:12px;overflow:hidden;page-break-inside:avoid;}'
-            + '.q-card-img{width:100%;max-height:180px;object-fit:cover;}'
-            + '.q-card-header{background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:0.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:center;}'
-            + '.qnum{background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.8em;flex-shrink:0;}'
-            + '.q-card-body{padding:10px 13px;}'
-            + '.opt-row{padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:0.88em;border:1px solid #eee;display:flex;align-items:center;gap:6px;}'
-            + '.opt-selected-correct{background:#c8e6c9;border-color:#4caf50;font-weight:bold;}'
-            + '.opt-selected-wrong{background:#ffcdd2;border-color:#f44336;font-weight:bold;}'
-            + '.opt-correct-missed{background:#e8f5e9;border-color:#81c784;color:#2e7d32;}'
-            + '.no-answer{color:#999;font-style:italic;font-size:0.85em;padding:4px 0;}'
-            + '@page{margin:12mm;}'
-            + '</style></head><body>'
-            + '<h2 style="text-align:center;color:#1a237e;margin-bottom:4px;">📚 English Worksheet Submission Record</h2>'
-            + '<hr style="border:1px solid #1a237e;margin-bottom:16px;">'
-            + content
-            + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
-            + '</body></html>');
-        pw.document.close();
-    }
+function buildModal(s) {
+    var isPassed = s.status==='PASSED';
+    var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+    var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
+    var answers = s.answers || [];
 
-    // Close modal on backdrop click
-    document.getElementById('printModal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
+    document.getElementById('modalTitle').textContent =
+        wsLabel+' — '+(s.student_name||s.student_id);
+
+    var qHtml = answers.map(function(a,idx){
+        var imgHtml = a.question_image
+            ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
+        var optHtml = '';
+        if (a.selected_option === null || a.selected_option === undefined) {
+            optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+        } else if (a.selected_option === a.correct_option) {
+            optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
+        } else {
+            optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
+                    + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
+        }
+        return '<div class="q-card">'
+            +imgHtml
+            +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
+            +'<div class="q-body">'+optHtml+'</div>'
+            +'</div>';
+    }).join('');
+
+    document.getElementById('printContent').innerHTML =
+        '<table class="sub-info-table">'
+        +'<tr><td>Student Name</td><td><b>'+(s.student_name||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
+        +'<tr><td>Thai Name</td><td><b>'+(s.thai_name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
+        +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td></tr>'
+        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#1b5e20':'#b71c1c')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
+        +'<tr><td>Submitted</td><td colspan="3">'+dt+'</td></tr>'
+        +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
+        +'</table>'
+        +'<h3 style="color:#1a237e;margin:16px 0 12px;font-size:1em;">📝 Questions & Answers</h3>'
+        +qHtml
+        +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
+
+    document.getElementById('printModal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('printModal').classList.remove('open'); }
+
+function doPrint() {
+    var content = document.getElementById('printContent').innerHTML;
+    var pw = window.open('','_blank','width=960,height=750');
+    if (!pw) { alert('Please allow pop-ups to print/download PDF.'); return; }
+    pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Worksheet Record</title>'
+        +'<style>'
+        +'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:13px;}'
+        +'.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:18px;}'
+        +'.sub-info-table td{padding:7px 11px;border:1px solid #ddd;font-size:.9em;}'
+        +'.sub-info-table td:first-child{background:#f0f3ff;font-weight:bold;width:120px;}'
+        +'.q-card{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:10px;overflow:hidden;page-break-inside:avoid;}'
+        +'.q-card-img{width:100%;max-height:170px;object-fit:cover;}'
+        +'.q-header{background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-start;}'
+        +'.qnum{background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;min-width:22px;display:flex;align-items:center;justify-content:center;font-size:.8em;}'
+        +'.q-body{padding:10px 13px;}'
+        +'.opt-row{padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:.87em;border:1px solid #eee;}'
+        +'.opt-sc{background:#c8e6c9;border-color:#4caf50;font-weight:bold;}'
+        +'.opt-sw{background:#ffcdd2;border-color:#f44336;font-weight:bold;}'
+        +'.opt-cm{background:#e8f5e9;border-color:#81c784;color:#2e7d32;}'
+        +'.no-ans{color:#aaa;font-style:italic;font-size:.85em;}'
+        +'@page{margin:12mm;}'
+        +'</style></head><body>'
+        +'<h2 style="text-align:center;color:#1a237e;margin-bottom:4px;">📚 English Worksheet — Submission Record</h2>'
+        +'<hr style="border:1px solid #1a237e;margin-bottom:16px;">'
+        +content
+        +'<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},500);});<\/script>'
+        +'</body></html>');
+    pw.document.close();
+}
+
+document.getElementById('printModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 </script>
 </body>
 </html>
