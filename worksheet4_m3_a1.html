@@ -294,6 +294,8 @@
 
 <script>
     // ===================== STUDENT DATA =====================
+    // NOTE: Kyle (Test Student, ID 54565) is intentionally NOT in any section list.
+    // To access Kyle for troubleshooting, open this page with ?testmode=true (teacher use only).
     var studentData = {
         'M3/2': [
             {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
@@ -330,8 +332,7 @@
             {id:'37621',name:'เด็กหญิงอภิญญา เค้าแก้ว',nick:'Fasai'},
             {id:'37622',name:'เด็กหญิงอภิสรา กออำไพร',nick:'Fanta'},
             {id:'39688',name:'เด็กหญิงณฐมน ศิริพันดร',nick:'Wawa'},
-            {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'},
-            {id:'54565',name:'Test Student',nick:'Kyle'}
+            {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'}
         ],
         'M3/4': [
             {id:'37667',name:'เด็กชายจักรภัทร กลึงสูงเนิน',nick:'Fiw'},
@@ -418,22 +419,22 @@
 
     // ===================== QUESTION DATA =====================
     var canvaImages = [
-        "W4M3A1Q1.png","W4M3A1Q2.png","W4M3A1Q3.png","W4M3A1Q4.png","W4M3A1Q5.png",
-        "W4M3A1Q6.png","W4M3A1Q7.png","W4M3A1Q8.png","W4M3A1Q9.png","W4M3A1Q10.png"
+        "WS4M3A1Q1.png","WS4M3A1Q2.png","WS4M3A1Q3.png","WS4M3A1Q4.png","WS4M3A1Q5.png",
+        "WS4M3A1Q6.png","WS4M3A1Q7.png","WS4M3A1Q8.png","WS4M3A1Q9.png","WS4M3A1Q10.png"
     ];
 
     var questions = [
         {id:1,image:canvaImages[0],text:"My sister is _____ than me.",
          options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}]},
         {id:2,image:canvaImages[1],text:"Which sentence is correct?",
-         options:[{text:"A) My father's sports car is more fast than my uncle's.",correct:false},{text:"B) My father's sports car is faster than my uncle's.",correct:true},{text:"C) My father's sports car is fastest than my uncle's.",correct:false},{text:"D) My father's sports car is most fast than my uncle's.",correct:false}]},
+         options:[{text:"A) This car is more fast than that one.",correct:false},{text:"B) This car is faster than that one.",correct:true},{text:"C) This car is fastest than that one.",correct:false},{text:"D) This car is most fast than that one.",correct:false}]},
         {id:3,image:canvaImages[2],text:"Bangkok is _____ than Chiang Mai.",
          options:[{text:"A) big",correct:false},{text:"B) biggest",correct:false},{text:"C) bigger",correct:true},{text:"D) more big",correct:false}]},
         {id:4,image:canvaImages[3],text:"Which sentence uses the comparative correctly?",
-         options:[{text:"A) These basketball shoes are more cheap than those ones.",correct:false},{text:"B) These basketball shoes are cheapest than those ones.",correct:false},{text:"C) These basketball shoes are cheaper than those ones.",correct:true},{text:"D) These basketball shoes are the more cheap than those ones.",correct:false}]},
-        {id:5,image:canvaImages[4],text:"An elephant is _____ than a deer.",
+         options:[{text:"A) She is more tall than her friend.",correct:false},{text:"B) She is tallest than her friend.",correct:false},{text:"C) She is taller than her friend.",correct:true},{text:"D) She is the more tall than her friend.",correct:false}]},
+        {id:5,image:canvaImages[4],text:"An elephant is _____ than a cat.",
          options:[{text:"A) heavier",correct:true},{text:"B) more heavy",correct:false},{text:"C) heaviest",correct:false},{text:"D) most heavy",correct:false}]},
-        {id:6,image:canvaImages[5],text:'Which word correctly fills the blank: "Math is _____ than Foreign Language."?',
+        {id:6,image:canvaImages[5],text:'Which word correctly fills the blank: "Math is _____ than Art."?',
          options:[{text:"A) difficulter",correct:false},{text:"B) most difficult",correct:false},{text:"C) more difficult",correct:true},{text:"D) difficultier",correct:false}]},
         {id:7,image:canvaImages[6],text:'"This pizza is _____ than that sandwich."',
          options:[{text:"A) deliciouser",correct:false},{text:"B) most delicious",correct:false},{text:"C) more deliciously",correct:false},{text:"D) more delicious",correct:true}]},
@@ -442,7 +443,7 @@
         {id:9,image:canvaImages[8],text:'"A dog is _____ than a fish."',
          options:[{text:"A) more smart",correct:false},{text:"B) smartest",correct:false},{text:"C) smarter",correct:true},{text:"D) most smart",correct:false}]},
         {id:10,image:canvaImages[9],text:"Which sentence correctly compares two things?",
-         options:[{text:"A) Cotton is soft than a sofa.",correct:false},{text:"B) Cotton is softest than a sofa.",correct:false},{text:"C) Cotton is softer than a sofa.",correct:true},{text:"D) Cotton is more softer than a sofa.",correct:false}]}
+         options:[{text:"A) English is easy than Thai.",correct:false},{text:"B) English is more easy than Thai.",correct:false},{text:"C) English is easier than Thai.",correct:true},{text:"D) English is the most easy than Thai.",correct:false}]}
     ];
 
     // ===================== SEEDED RNG =====================
@@ -464,14 +465,12 @@
         return a;
     }
 
-    // displayQuestions holds the shuffled question+option order for the current session
     var displayQuestions = questions.map(function(q) {
         return Object.assign({}, q, {displayOptions: q.options.slice()});
     });
 
     function applySeededOrder(studentId) {
         if (TEST_STUDENT_IDS.includes(String(studentId))) {
-            // Kyle gets original fixed order
             displayQuestions = questions.map(function(q) {
                 return Object.assign({}, q, {displayOptions: q.options.slice()});
             });
@@ -487,13 +486,14 @@
 
     // ===================== APP STATE =====================
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
-    var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
-    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
     var userAnswers = {};
     var attempts = 0;
     var allAttemptScores = [];
     var TEST_STUDENT_IDS = ['54565'];
     var maxAttempts = 3;
+    // Test mode: teacher opens with ?testmode=true to access Kyle for troubleshooting.
+    // Regular students never see Kyle in their dropdown.
+    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'true';
 
     document.getElementById('date').valueAsDate = new Date();
 
@@ -503,7 +503,6 @@
         var thaiNameGroup = document.getElementById('thaiNameGroup');
         var thaiNameSelect = document.getElementById('thaiName');
 
-        // Clear auto-filled fields
         document.getElementById('nickname').value = '';
         document.getElementById('studentId').value = '';
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
@@ -522,6 +521,24 @@
             thaiNameSelect.appendChild(opt);
         });
         thaiNameGroup.style.display = 'block';
+
+        // TEST MODE ONLY: append Kyle when ?testmode=true (teacher troubleshooting — never visible to students)
+        if (isTestMode) {
+            var testBanner = document.getElementById('testModeBanner');
+            if (!testBanner) {
+                testBanner = document.createElement('div');
+                testBanner.id = 'testModeBanner';
+                testBanner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin-bottom:16px;font-weight:bold;color:#856404;text-align:center;font-size:.95em;';
+                testBanner.innerHTML = '&#x1F9EA; TEST MODE ACTIVE — Kyle (Test Student) is visible. This URL is for teacher troubleshooting only.';
+                var formSection = document.querySelector('.form-section');
+                formSection.insertBefore(testBanner, formSection.querySelector('h3').nextSibling);
+            }
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = '&#x1F9EA; Test Student (Kyle) — 54565';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+        }
     }
 
     function autoFillStudent() {
@@ -554,7 +571,6 @@
         if (!date) isValid = false;
         if (!isValid) return;
 
-        // Apply seeded randomization based on student ID
         applySeededOrder(studentId);
 
         var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
@@ -584,7 +600,6 @@
             var card = document.createElement('div');
             card.className = 'question-card';
             card.id = 'question-' + q.id;
-            // Use original-array index as radio value so scoring stays correct
             var optionsHtml = q.displayOptions.map(function(opt) {
                 var origIdx = q.options.indexOf(opt);
                 return '<label class="option">'
@@ -614,12 +629,8 @@
         var nickname = document.getElementById('nickname').value.trim();
         var studentId = document.getElementById('studentId').value.trim();
         var section = document.getElementById('section').value;
-        var thaiNameSelect = document.getElementById('thaiName');
-        var thaiNameText = thaiNameSelect.selectedIndex > 0 ? thaiNameSelect.options[thaiNameSelect.selectedIndex].textContent.split('(')[0].trim() : '';
         var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
         var isPassed = score >= 8;
-        var attemptStatus = isPassed ? 'PASSED' : 'FAILED';
-        submitToSupabase(studentId, nickname, thaiNameText, section, score, attemptStatus);
 
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
@@ -687,45 +698,6 @@
         var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS4', date:new Date().toISOString(), status:status};
         var params = new URLSearchParams(data);
         fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
-    }
-
-    function submitToSupabase(studentId, nickname, thaiName, section, score, status) {
-        var answersData = questions.map(function(q) {
-            var selectedIdx = userAnswers[q.id];
-            var selectedOpt = selectedIdx !== undefined ? q.options[selectedIdx] : null;
-            var correctOpt = q.options.find(function(o) { return o.correct; });
-            return {
-                question_id: q.id,
-                question_text: q.text,
-                question_image: q.image,
-                selected_option: selectedOpt ? selectedOpt.text : null,
-                selected_option_index: selectedIdx !== undefined ? selectedIdx : null,
-                is_correct: selectedOpt ? selectedOpt.correct : false,
-                correct_option: correctOpt ? correctOpt.text : null
-            };
-        });
-        var payload = {
-            student_id: studentId,
-            student_name: nickname,
-            thai_name: thaiName,
-            section: section,
-            worksheet: 'WS4',
-            score: score,
-            total_questions: 10,
-            status: status,
-            submitted_at: new Date().toISOString(),
-            answers: answersData
-        };
-        fetch(SUPABASE_URL + '/rest/v1/worksheet_submissions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'apikey': SUPABASE_KEY,
-                'Authorization': 'Bearer ' + SUPABASE_KEY,
-                'Prefer': 'return=minimal'
-            },
-            body: JSON.stringify(payload)
-        }).catch(function(){});
     }
 
     function resetForm() {
