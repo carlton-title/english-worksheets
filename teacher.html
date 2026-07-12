@@ -60,6 +60,25 @@
     /* ── TEST MODE ── */
     .test-link{display:flex;align-items:center;justify-content:center;padding:14px 20px;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;color:#856404;font-weight:bold;text-decoration:none;font-size:.95em;transition:background .2s}
     .test-link:hover{background:#ffe082;border-color:#f9a825}
+    /* ── WORKSHEET LINKS ── */
+    .ws-links-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .ws-row{border:2px solid #e8eaf6;border-radius:12px;overflow:hidden}
+    .ws-row-header{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:10px 16px;font-weight:bold;font-size:.95em}
+    .ws-row-body{padding:0}
+    .ws-variant{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap}
+    .ws-variant:last-child{border-bottom:none}
+    .ws-variant-label{min-width:90px;font-weight:bold;color:#1a237e;font-size:.88em}
+    .ws-variant-classes{min-width:120px;color:#555;font-size:.85em}
+    .ws-variant-url{flex:1;font-size:.8em;color:#999;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+    .ws-variant-url.active{color:#1a237e}
+    .ws-variant-actions{display:flex;gap:8px;flex-shrink:0}
+    .btn-ws-open{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:7px;padding:7px 14px;cursor:pointer;font-size:.83em;font-weight:bold;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+    .btn-ws-open:hover{opacity:.85}
+    .btn-ws-copy{background:#f0f4ff;color:#1a237e;border:1px solid #c5cae9;border-radius:7px;padding:7px 14px;cursor:pointer;font-size:.83em;font-weight:bold;white-space:nowrap}
+    .btn-ws-copy:hover{background:#e8eaf6}
+    .btn-ws-copy.copied{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
+    .ws-inactive-label{color:#bbb;font-style:italic;font-size:.85em}
+    .ws-number-badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 8px;margin-left:6px;font-size:.82em}
     /* ── PRINT ── */
     @media print{
       body{background:#fff;padding:0}
@@ -158,6 +177,146 @@
       </div>
     </div>
 
+    <!-- WORKSHEET LINKS CARD -->
+    <div class="card no-print">
+      <h2>📋 Student Worksheet Links</h2>
+      <p style="color:#666;font-size:.88em;margin-bottom:16px;">Click <strong>Open</strong> to preview in a new tab, or <strong>Copy Link</strong> to copy the URL to share with your students.</p>
+      <div class="ws-links-grid">
+
+        <!-- WORKSHEET 1 -->
+        <div class="ws-row">
+          <div class="ws-row-header">Worksheet 1 <span class="ws-number-badge">WS1</span></div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">A1</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">A2</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKSHEET 2 -->
+        <div class="ws-row">
+          <div class="ws-row-header">Worksheet 2 <span class="ws-number-badge">WS2</span></div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">A1</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">A2</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKSHEET 3 -->
+        <div class="ws-row">
+          <div class="ws-row-header">Worksheet 3 <span class="ws-number-badge">WS3</span></div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">A1</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">A2</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKSHEET 4 — ACTIVE -->
+        <div class="ws-row" style="border-color:#1a237e;">
+          <div class="ws-row-header" style="background:linear-gradient(135deg,#1565c0,#6a1b9a);">
+            Worksheet 4 — Health &amp; Weather
+            <span class="ws-number-badge">WS4 · ACTIVE</span>
+          </div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">M3 A1</span>
+              <span class="ws-variant-classes">M3/2, M3/4, M3/6</span>
+              <span class="ws-variant-url active" id="url_ws4_m3_a1">https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html</span>
+              <div class="ws-variant-actions">
+                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html" target="_blank" class="btn-ws-open">🔗 Open</a>
+                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html', this)">📋 Copy</button>
+              </div>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">M3 A2</span>
+              <span class="ws-variant-classes">M3/10, M3/12</span>
+              <span class="ws-variant-url active" id="url_ws4_m3_a2">https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html</span>
+              <div class="ws-variant-actions">
+                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html" target="_blank" class="btn-ws-open">🔗 Open</a>
+                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html', this)">📋 Copy</button>
+              </div>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">M4 A1</span>
+              <span class="ws-variant-classes">M4/1 – M4/9</span>
+              <span class="ws-variant-url active" id="url_ws4_m4_a1">https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html</span>
+              <div class="ws-variant-actions">
+                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html" target="_blank" class="btn-ws-open">🔗 Open</a>
+                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html', this)">📋 Copy</button>
+              </div>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">M4 A2</span>
+              <span class="ws-variant-classes">M4/10 – M4/13</span>
+              <span class="ws-variant-url active" id="url_ws4_m4_a2">https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html</span>
+              <div class="ws-variant-actions">
+                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html" target="_blank" class="btn-ws-open">🔗 Open</a>
+                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html', this)">📋 Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKSHEET 5 -->
+        <div class="ws-row">
+          <div class="ws-row-header">Worksheet 5 <span class="ws-number-badge">WS5</span></div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">A1</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">A2</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WORKSHEET 6 -->
+        <div class="ws-row">
+          <div class="ws-row-header">Worksheet 6 <span class="ws-number-badge">WS6</span></div>
+          <div class="ws-row-body">
+            <div class="ws-variant">
+              <span class="ws-variant-label">A1</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+            <div class="ws-variant">
+              <span class="ws-variant-label">A2</span>
+              <span class="ws-variant-classes">—</span>
+              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end ws-links-grid -->
+    </div><!-- end worksheet links card -->
+
     <!-- RESULTS -->
     <div id="resultsSection">
       <div class="card">
@@ -176,6 +335,36 @@ var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
+
+// ── COPY LINK ─────────────────────────────────────────────────────────────────
+function copyLink(url, btn) {
+  navigator.clipboard.writeText(url).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    // fallback for older browsers
+    var ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    var orig = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 function doLogin() {
