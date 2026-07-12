@@ -296,126 +296,10 @@
     // ===================== STUDENT DATA =====================
     // NOTE: Kyle (Test Student, ID 54565) is intentionally NOT in any section list.
     // To access Kyle for troubleshooting, open this page with ?testmode=true (teacher use only).
-    var studentData = {
-        'M3/2': [
-            {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
-            {id:'37582',name:'เด็กชายจักรภัทร เอี้ยงทอง',nick:'Premium'},
-            {id:'37583',name:'เด็กชายชลกร ลื่นกลาง',nick:'Mos'},
-            {id:'37584',name:'เด็กชายณภัทร เหลาไชย',nick:'Tang'},
-            {id:'37585',name:'เด็กหญิงดวงกมล เจ๊กจันทึก',nick:'Aom'},
-            {id:'37586',name:'เด็กชายเตชิต เตียนจันทึก',nick:'First'},
-            {id:'37587',name:'เด็กชายเตชินท์ แท้สูงเนิน',nick:'Techin'},
-            {id:'37588',name:'เด็กชายธนเทพ ฤทธิกุล',nick:'Oat'},
-            {id:'37589',name:'เด็กชายธนภัทร ธูปสูงเนิน',nick:'Phat'},
-            {id:'37590',name:'เด็กชายนัทธพงศ์ เทียนทอง',nick:'Guy'},
-            {id:'37591',name:'เด็กชายประเสริฐ เพียซ้าย',nick:'Jay'},
-            {id:'37592',name:'เด็กชายปิยวัฒน์ อำภาว์',nick:'Zee'},
-            {id:'37593',name:'เด็กชายพชรพล ไทธานี',nick:'Poom'},
-            {id:'37594',name:'เด็กชายภาคิน สุขประโคน',nick:'Dew'},
-            {id:'37596',name:'เด็กชายภูริพัฒน์ แหลมจันทึก',nick:'Phum 2'},
-            {id:'37597',name:'เด็กชายมานะศักดิ์ เยี่ยมจันทึก',nick:'Water'},
-            {id:'37598',name:'เด็กชายรัฐพล เปล่งสันเทียะ',nick:'Phum 1'},
-            {id:'37599',name:'เด็กชายรัฐศาสตร์ ตรงจันทึก',nick:'Kawjao'},
-            {id:'37600',name:'เด็กชายวิศรุต คุ้มจันทึก',nick:'Tae'},
-            {id:'37601',name:'เด็กชายสุกฤษฎิ์ สุคนธ์ขจร',nick:'Palm'},
-            {id:'37602',name:'เด็กชายอติเทพ จันทร์ผ่อง',nick:'Auto'},
-            {id:'37603',name:'เด็กหญิงกัญญาลักษณ์ มูลศิริ',nick:'Ploy'},
-            {id:'37604',name:'เด็กหญิงจินดาภา แก้วผลึก',nick:'Temduang'},
-            {id:'37606',name:'เด็กหญิงชญาภา เผือดจันทึก',nick:'Yaya'},
-            {id:'37607',name:'เด็กหญิงชัญญานุช พันจันทึก',nick:'L'},
-            {id:'37608',name:'เด็กหญิงฐิติชญา เอ็นจันทึก',nick:'Khao'},
-            {id:'37609',name:'เด็กหญิงฐิติมา พลฉิมพลี',nick:'Na'},
-            {id:'37611',name:'เด็กหญิงนภัสสร จันกง',nick:'Kam1'},
-            {id:'37615',name:'เด็กหญิงภัคจิรา แก้วมีศรี',nick:'Kam2'},
-            {id:'37618',name:'เด็กหญิงวริยา คูพันดุง',nick:'Kib'},
-            {id:'37620',name:'เด็กหญิงสุดารัตน์ มิ่งจันทึก',nick:'Maysa'},
-            {id:'37621',name:'เด็กหญิงอภิญญา เค้าแก้ว',nick:'Fasai'},
-            {id:'37622',name:'เด็กหญิงอภิสรา กออำไพร',nick:'Fanta'},
-            {id:'39688',name:'เด็กหญิงณฐมน ศิริพันดร',nick:'Wawa'},
-            {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'}
-        ],
-        'M3/4': [
-            {id:'37667',name:'เด็กชายจักรภัทร กลึงสูงเนิน',nick:'Fiw'},
-            {id:'37668',name:'เด็กชายจีรศักดิ์ ทองรอด',nick:'Kaow'},
-            {id:'37669',name:'เด็กชายชัชชพร กลองกลาง',nick:'Tolap'},
-            {id:'37670',name:'เด็กชายทวีอมร ศรีอำพล',nick:'Drift'},
-            {id:'37671',name:'เด็กชายทินภัทร เคลิ้มกระโทก',nick:'Fakhram'},
-            {id:'37674',name:'เด็กชายมงคล รัตนพงศ์พร',nick:'Tee'},
-            {id:'37675',name:'เด็กชายวชิรวิชญ์ พนมเขต',nick:'Angpao'},
-            {id:'37676',name:'เด็กชายอภิชา จูจันทึก',nick:'Eik'},
-            {id:'37677',name:'เด็กหญิงกนกวรรณ วัฒนากลาง',nick:'Pai'},
-            {id:'37678',name:'เด็กหญิงกัญญาณัฐ เที่ยงสันเทียะ',nick:'Wine'},
-            {id:'37679',name:'เด็กหญิงกัญญาณัฐ คำจริง',nick:'Peem'},
-            {id:'37680',name:'เด็กหญิงกุลปริยา พิมพ์วัน',nick:'Garfield'},
-            {id:'37681',name:'เด็กหญิงชญานิษฐ์ คงวิโรจน์',nick:'Bellda'},
-            {id:'37682',name:'เด็กหญิงชนาภา เดสันเทียะ',nick:'Nooyim'},
-            {id:'37683',name:'เด็กหญิงชุติกาญจน์ ไชยเฉลิม',nick:'Pakwan'},
-            {id:'37684',name:'เด็กหญิงณัฐณิชา แดงจันทึก',nick:'Fahsai'},
-            {id:'37685',name:'เด็กหญิงณิชาภัทร ดีบุรี',nick:'Foam'},
-            {id:'37686',name:'เด็กหญิงทัดพิชาภรณ์ พิมพ์กลาง',nick:'Thadcha'},
-            {id:'37687',name:'เด็กหญิงธนภรณ์ แซ่ลี้',nick:'Rak'},
-            {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play'},
-            {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
-            {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
-            {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
-            {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
-            {id:'37693',name:'เด็กหญิงปุญชรัสมิ์ คณะขาม',nick:'Apo'},
-            {id:'37694',name:'เด็กหญิงพลอยชมพู บุ่นจันทึก',nick:'Ploy'},
-            {id:'37695',name:'เด็กหญิงพัชรพร งาจันทึก',nick:'Pakkad'},
-            {id:'37697',name:'เด็กหญิงพิฌาอร โกสุม',nick:'Moved'},
-            {id:'37698',name:'เด็กหญิงพิมพ์รดา วงศ์ประชุม',nick:'Jenny'},
-            {id:'37700',name:'เด็กหญิงภคพร สุพล',nick:'Bonus'},
-            {id:'37701',name:'เด็กหญิงภรณ์ชนก พลลาภ',nick:'Veeta'},
-            {id:'37702',name:'เด็กหญิงรินรดา แคะมะดัน',nick:'Aing'},
-            {id:'37703',name:'เด็กหญิงรุจิสา ศาสตร์ดำรงค์',nick:'Ongfong'},
-            {id:'37704',name:'เด็กหญิงสิราวรรณ แสงเพ็ชร',nick:'Am'},
-            {id:'37705',name:'เด็กหญิงสุดาทิพย์ บุญทัยสง',nick:'Fangkhaw'},
-            {id:'37706',name:'เด็กหญิงสุรีรัตน์ กะตะศิลา',nick:'Meena'},
-            {id:'37707',name:'เด็กหญิงอรพรรณ อามาตร์',nick:'Earth'},
-            {id:'39678',name:'นนทวัฒน์ พันธุสุนทร',nick:'Non'}
-        ],
-        'M3/6': [
-            {id:'37750',name:'เด็กชายกฤษณทัต รักษ์จันทึก',nick:'Pepper'},
-            {id:'37751',name:'เด็กชายณัฐปกรณ์ นิลกำแหง',nick:'Model'},
-            {id:'37752',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Fuas'},
-            {id:'37753',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Guitar'},
-            {id:'37754',name:'เด็กชายธีรภัทร ฟักสูงเนิน',nick:'Moss'},
-            {id:'37755',name:'เด็กชายนฤบดี เป่ยคำภา',nick:'Namo'},
-            {id:'37756',name:'เด็กชายนวพล สัญชานันท์',nick:'Tle'},
-            {id:'37757',name:'เด็กชายประพัฒน์ จันทร์ไทย',nick:'Earth'},
-            {id:'37758',name:'เด็กชายพงษ์ศิริพัฒน์ เทิบจันทึก',nick:'Aomsub'},
-            {id:'37759',name:'เด็กชายพิทวัส เงื่อนพิมาย',nick:'Ninja'},
-            {id:'37760',name:'เด็กชายพีรพัฒน์ คำป้อง',nick:'PP'},
-            {id:'37761',name:'เด็กชายภพธรรม สุดหา',nick:'Porch'},
-            {id:'37762',name:'เด็กชายภาคิน ธงวิชัย',nick:'Sand'},
-            {id:'37763',name:'เด็กชายภาณิญ ทองนอก',nick:'Folk'},
-            {id:'37764',name:'เด็กชายภูวดล มาสุข',nick:'Phu'},
-            {id:'37765',name:'เด็กชายภูวิสิฐกุล ภูพวก',nick:'Pooh'},
-            {id:'37766',name:'เด็กชายอนุทัศน์ แซวจันทึก',nick:'Toomtam'},
-            {id:'37767',name:'เด็กหญิงกมลพิชญ์ เจียนรำลึก',nick:'Shisha'},
-            {id:'37768',name:'เด็กหญิงกวิสรา สีนวล',nick:'Idea'},
-            {id:'37769',name:'เด็กหญิงจิตตาภา สุขสูงเนิน',nick:'Pan'},
-            {id:'37770',name:'เด็กหญิงชญาภรณ์ จันคำจร',nick:'Cartoon'},
-            {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pang'},
-            {id:'37772',name:'เด็กหญิงณัฐณิชา ช้อยชด',nick:'Noodee'},
-            {id:'37774',name:'เด็กหญิงบุญญาภา แก้วโพธิ์กลาง',nick:'Ink'},
-            {id:'37775',name:'เด็กหญิงปณิตา แซ่ตั้น',nick:'Benz'},
-            {id:'37776',name:'เด็กหญิงปริยานุช พลจันทึก',nick:'Pu'},
-            {id:'37777',name:'เด็กหญิงปลายฟ้า ฉลูพันธ์',nick:'Playfa'},
-            {id:'37778',name:'เด็กหญิงพัชรพร แกล้วเกล้า',nick:'Sushi'},
-            {id:'37780',name:'เด็กหญิงพิชญาภา ดงเย็น',nick:'Pitchayapha'},
-            {id:'37781',name:'เด็กหญิงเพ็ญพิชชา จิระกุลน์',nick:'Xiider'},
-            {id:'37782',name:'เด็กหญิงรินรดา เกตจันทึก',nick:'Pam'},
-            {id:'37783',name:'เด็กหญิงวรรณภา เขาขุนทด',nick:'Somjeed'},
-            {id:'37784',name:'เด็กหญิงวริศรา มีวัน',nick:'Gift'},
-            {id:'37785',name:'เด็กหญิงศรัณย์พร สัตย์โส',nick:'Khawhom'},
-            {id:'37788',name:'เด็กหญิงสุพรรษา ทัศนาลัย',nick:'Lukwa'},
-            {id:'37789',name:'เด็กหญิงสุภัคตรา บุญมา',nick:'So'},
-            {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
-            {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
-            {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
-        ]
-    };
+    // ===================== SUPABASE CONFIG =====================
+        var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+        var studentData = {};
 
     // ===================== QUESTION DATA =====================
     var canvaImages = [
@@ -498,48 +382,37 @@
     document.getElementById('date').valueAsDate = new Date();
 
     // ===================== FORM FUNCTIONS =====================
-    function loadThaiNames() {
-        var section = document.getElementById('section').value;
-        var thaiNameGroup = document.getElementById('thaiNameGroup');
-        var thaiNameSelect = document.getElementById('thaiName');
-
-        document.getElementById('nickname').value = '';
-        document.getElementById('studentId').value = '';
-        thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
-
-        if (!section) {
-            thaiNameGroup.style.display = 'none';
-            return;
-        }
-
-        var students = studentData[section] || [];
-        students.forEach(function(s) {
-            var opt = document.createElement('option');
-            opt.value = s.id;
-            opt.textContent = s.name + ' (' + s.nick + ')';
-            opt.dataset.nick = s.nick;
-            thaiNameSelect.appendChild(opt);
-        });
-        thaiNameGroup.style.display = 'block';
-
-        // TEST MODE ONLY: append Kyle when ?testmode=true (teacher troubleshooting — never visible to students)
-        if (isTestMode) {
-            var testBanner = document.getElementById('testModeBanner');
-            if (!testBanner) {
-                testBanner = document.createElement('div');
-                testBanner.id = 'testModeBanner';
-                testBanner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin-bottom:16px;font-weight:bold;color:#856404;text-align:center;font-size:.95em;';
-                testBanner.innerHTML = '&#x1F9EA; TEST MODE ACTIVE — Kyle (Test Student) is visible. This URL is for teacher troubleshooting only.';
-                var formSection = document.querySelector('.form-section');
-                formSection.insertBefore(testBanner, formSection.querySelector('h3').nextSibling);
+    async function loadThaiNames() {
+            var section = document.getElementById('section').value;
+            var thaiSelect = document.getElementById('thaiName');
+            thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
+            if (!section) {
+                thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
+                return;
             }
-            var kyleOpt = document.createElement('option');
-            kyleOpt.value = '54565';
-            kyleOpt.textContent = '🧪 Test Student (Kyle) — 54565';
-            kyleOpt.dataset.nick = 'Kyle';
-            thaiNameSelect.appendChild(kyleOpt);
+            try {
+                var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
+                var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
+                var students = await resp.json();
+                var isTest = new URLSearchParams(window.location.search).get('testmode') === 'true';
+                thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
+                if (isTest) {
+                    var kyleOpt = document.createElement('option');
+                    kyleOpt.value = '54565';
+                    kyleOpt.text = 'Kyle (Test Student)';
+                    thaiSelect.appendChild(kyleOpt);
+                }
+                students.forEach(function(s) {
+                    var opt = document.createElement('option');
+                    opt.value = s.student_id;
+                    opt.text = s.name + (s.nickname ? ' (' + s.nickname + ')' : '');
+                    thaiSelect.appendChild(opt);
+                });
+            } catch(e) {
+                thaiSelect.innerHTML = '<option value="">-- Error loading students --</option>';
+                console.error('Supabase error:', e);
+            }
         }
-    }
 
     function autoFillStudent() {
         var thaiNameSelect = document.getElementById('thaiName');
