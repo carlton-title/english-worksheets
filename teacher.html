@@ -261,7 +261,7 @@
             </div>
             <div class="ws-variant">
               <span class="ws-variant-label">M4 A1</span>
-              <span class="ws-variant-classes">M4/1 – M4/9</span>
+              <span class="ws-variant-classes">M4/1 �3 M4/9</span>
               <span class="ws-variant-url active" id="url_ws4_m4_a1">https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html</span>
               <div class="ws-variant-actions">
                 <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html" target="_blank" class="btn-ws-open">🔗 Open</a>
@@ -452,7 +452,7 @@ function doSearch() {
   var selEl = document.getElementById('selStudent');
   var studentLabel = selEl.options[selEl.selectedIndex].text;
 
-  resultsTitle.textContent = 'Results for ' + studentLabel + ' — Worksheet ' + ws;
+  resultsTitle.textContent = 'Results for ' + studentLabel + ' – Worksheet ' + ws;
 
   var url = SUPABASE_URL + '/rest/v1/worksheet_submissions?select=*&student_id=eq.' + encodeURIComponent(studentId) + '&worksheet=eq.' + encodeURIComponent(ws) + '&order=submitted_at.desc';
 
