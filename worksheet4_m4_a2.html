@@ -532,6 +532,7 @@
     var userAnswers = {};
     var attempts = 0;
     var allAttemptScores = [];
+    var TEST_STUDENT_IDS = ['54565']; // Kyle test student
     var maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
@@ -597,7 +598,7 @@
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
 
-        if (attempts >= maxAttempts) {
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
             document.querySelector('.form-section').style.display = 'none';
             document.getElementById('questionsSection').classList.remove('show');
             document.getElementById('lockedMessage').classList.add('show');
@@ -685,7 +686,7 @@
                 + 'ได้คะแนน ' + score + '/10 &#x1F31F;'
                 + '</span>';
         } else {
-            if (attempts >= maxAttempts) {
+            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
                 var highest = Math.max.apply(null, allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = '<span class="status-fail">'
@@ -724,7 +725,7 @@
         userAnswers = {};
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'none';
-        if (attempts >= maxAttempts) {
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
             document.getElementById('lockedMessage').classList.add('show');
         } else {
             document.querySelector('.form-section').style.display = 'block';
@@ -837,7 +838,7 @@
     function updateAttemptsDisplay() {
         document.getElementById('attemptsUsed').textContent = attempts;
         var msg = document.getElementById('attemptsMessage');
-        if (attempts >= maxAttempts) {
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
             msg.innerHTML = '&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว';
             msg.style.color = '#c41e3a';
         } else {
