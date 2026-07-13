@@ -449,7 +449,7 @@
                     var opt = document.createElement('option');
                     opt.value = s.student_id;
                     opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
-        opt.dataset.nick = student.nickname;
+        opt.dataset.nick = s.nickname;
                     thaiSelect.appendChild(opt);
                 });
             } catch(e) {
