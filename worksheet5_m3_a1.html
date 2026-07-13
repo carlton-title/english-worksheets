@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Worksheet 5 M3 (A1): Comparative Information</title>
-    <style> { margin: 0 0; box-sizing: bord        body {
-            f:Verdana, sans-serif;
-  backnear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -220,7 +222,7 @@
         <div class="form-group">
             <label>&#x1F4C5; 5. Date</label>
             <input type="date" id="date">
-            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today&#x27;s date.</div>
+            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today's date.</div>
         </div>
         <button onclick="startWorksheet()">&#x25B6; Start Worksheet &#x1F680;</button>
     </div>
@@ -354,7 +356,7 @@
             {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play'},
             {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
             {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
-            {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
+            {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนดร',nick:'Omyim'},
             {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
             {id:'37693',name:'เด็กหญิงปุญชรัสมิ์ คณะขาม',nick:'Apo'},
             {id:'37694',name:'เด็กหญิงพลอยชมพู บุ่นจันทึก',nick:'Ploy'},
@@ -415,7 +417,7 @@
     };
 
     // ===================== QUESTION DATA =====================
-    // Images will be added later — upload as WS5M3A1Q*.png when ready
+    // Images will be added later — update filenames to WS5M3A1Q*.png when uploaded
     var questions = [
         {id:1,image:"W4M3A1Q1.png",text:"My sister is _____ than me.",
          options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}]},
@@ -492,10 +494,16 @@
         var section = document.getElementById('section').value;
         var thaiNameGroup = document.getElementById('thaiNameGroup');
         var thaiNameSelect = document.getElementById('thaiName');
+
         document.getElementById('nickname').value = '';
         document.getElementById('studentId').value = '';
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
-        if (!section) { thaiNameGroup.style.display = 'none'; return; }
+
+        if (!section) {
+            thaiNameGroup.style.display = 'none';
+            return;
+        }
+
         var students = studentData[section] || [];
         students.forEach(function(s) {
             var opt = document.createElement('option');
@@ -526,6 +534,7 @@
         var date = document.getElementById('date').value;
         var section = document.getElementById('section').value;
         var thaiName = document.getElementById('thaiName').value;
+
         var isValid = true;
         document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
         if (!section) isValid = false;
@@ -535,11 +544,14 @@
         document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
         if (!date) isValid = false;
         if (!isValid) return;
+
         applySeededOrder(studentId);
+
         var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
+
         if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
             document.querySelector('.form-section').style.display = 'none';
             document.getElementById('questionsSection').classList.remove('show');
@@ -548,6 +560,7 @@
             updateAttemptsDisplay();
             return;
         }
+
         document.querySelector('.form-section').style.display = 'none';
         document.getElementById('questionsSection').classList.add('show');
         renderQuestions();
@@ -563,14 +576,19 @@
             card.id = 'question-' + q.id;
             var optionsHtml = q.displayOptions.map(function(opt) {
                 var origIdx = q.options.indexOf(opt);
-                return '<label class="option"><input type="radio" name="q' + q.id + '" value="' + origIdx + '"><span>' + opt.text + '</span></label>';
+                return '<label class="option">'
+                    + '<input type="radio" name="q' + q.id + '" value="' + origIdx + '">'
+                    + '<span>' + opt.text + '</span>'
+                    + '</label>';
             }).join('');
             card.innerHTML = (q.image ? '<img src="' + q.image + '" alt="Question image" class="image-placeholder">' : '')
                 + '<div><span class="question-number">' + (posIdx + 1) + '</span>'
                 + '<span class="question-text">' + q.text + '</span></div>'
                 + '<div class="options" style="margin-top:15px;">' + optionsHtml + '</div>';
             card.querySelectorAll('input[type="radio"]').forEach(function(radio) {
-                radio.addEventListener('change', function() { userAnswers[q.id] = parseInt(this.value); });
+                radio.addEventListener('change', function() {
+                    userAnswers[q.id] = parseInt(this.value);
+                });
             });
             container.appendChild(card);
         });
@@ -581,37 +599,65 @@
         questions.forEach(function(q) {
             if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
         });
+
         var nickname = document.getElementById('nickname').value.trim();
         var studentId = document.getElementById('studentId').value.trim();
         var section = document.getElementById('section').value;
         var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
         var isPassed = score >= 8;
+
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
         if (!savedData.scores) savedData.scores = [];
         savedData.scores.push(score);
         if (!savedData.attemptHistory) savedData.attemptHistory = [];
-        savedData.attemptHistory.push({attemptNum:savedData.attempts,score:score,answers:Object.assign({},userAnswers),date:new Date().toLocaleString(),nickname:nickname,studentId:studentId,section:section,status:isPassed?'PASSED':'FAILED'});
+        savedData.attemptHistory.push({
+            attemptNum: savedData.attempts,
+            score: score,
+            answers: Object.assign({}, userAnswers),
+            date: new Date().toLocaleString(),
+            nickname: nickname,
+            studentId: studentId,
+            section: section,
+            status: isPassed ? 'PASSED' : 'FAILED'
+        });
         attempts = savedData.attempts;
         allAttemptScores = savedData.scores;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
+
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'block';
         document.getElementById('scoreValue').textContent = score + '/10';
+
         var statusEl = document.getElementById('scoreStatus');
         if (isPassed) {
             submitToSheet(studentId, nickname, section, score, 'PASSED');
-            statusEl.innerHTML = '<span class="status-pass">&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>ผ่านแล้วแปลกว่า 3 ครั้ง<br>ได้คะแนนสูงสุดครั้งนี้</span>';
+            statusEl.innerHTML = '<span class="status-pass">'
+                + '&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>'
+                + 'ผ่านแล้วแปลกว่า 3 ครั้ง<br>'
+                + 'ได้คะแนนสูงสุดครั้งนี้'
+                + '</span>';
         } else {
             if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
                 var highest = Math.max.apply(null, allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
-                statusEl.innerHTML = '<span class="status-fail">&#x274C; ยังไม่ผ่านค่ะ<br>คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>คะแนนที่ต้องการ: 8, 9, 10<br>โอกาสเหลือ: 0 ครั้ง</span>';
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
+                    + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
+                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
+                    + 'โอกาสเหลือ: 0 ครั้ง'
+                    + '</span>';
             } else {
                 var remaining = maxAttempts - attempts;
-                statusEl.innerHTML = '<span class="status-fail">&#x274C; ยังไม่ผ่านค่ะ<br>คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>คะแนนที่ต้องการ: 8, 9, 10<br>โอกาสเหลือ: ' + remaining + ' ครั้ง</span>';
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
+                    + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
+                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
+                    + 'โอกาสเหลือ: ' + remaining + ' ครั้ง'
+                    + '</span>';
             }
         }
+
         var dateVal = document.getElementById('date').value;
         document.getElementById('summaryNickname').textContent = nickname;
         document.getElementById('summaryId').textContent = studentId;
@@ -623,7 +669,7 @@
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
-        var data = {studentId:studentId,nickname:nickname,section:section,score:score,worksheet:'WS5',date:new Date().toISOString(),status:status};
+        var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS5', date:new Date().toISOString(), status:status};
         var params = new URLSearchParams(data);
         fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
     }
@@ -653,6 +699,7 @@
         var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         var history = savedData.attemptHistory || [];
+
         var attemptsHtml = '';
         if (history.length === 0) {
             attemptsHtml = '<p style="color:#999;text-align:center;">No attempt records found.</p>';
@@ -663,6 +710,7 @@
                 var statusLabel = isPassed ? 'PASSED' : 'FAILED';
                 var statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
                 var statusColor = isPassed ? '#1b5e20' : '#b71c1c';
+
                 var questionsHtml = '';
                 questions.forEach(function(q) {
                     var studentAns = attempt.answers[q.id];
@@ -672,21 +720,70 @@
                         var isCorrect = opt.correct;
                         var style = 'padding:5px 10px;margin:3px 0;border-radius:4px;border:1px solid #ddd;font-size:0.9em;';
                         var marker = '';
-                        if (isSelected && isCorrect) { style += 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;'; marker = ' &#x2705;'; }
-                        else if (isSelected && !isCorrect) { style += 'background:#ffcdd2;border-color:#f44336;font-weight:bold;'; marker = ' &#x274C;'; }
-                        else if (!isSelected && isCorrect) { style += 'background:#e8f5e9;border-color:#81c784;color:#2e7d32;'; marker = ' &larr; correct answer'; }
-                        else { style += 'background:#fafafa;color:#999;'; }
+                        if (isSelected && isCorrect) {
+                            style += 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;';
+                            marker = ' &#x2705;';
+                        } else if (isSelected && !isCorrect) {
+                            style += 'background:#ffcdd2;border-color:#f44336;font-weight:bold;';
+                            marker = ' &#x274C;';
+                        } else if (!isSelected && isCorrect) {
+                            style += 'background:#e8f5e9;border-color:#81c784;color:#2e7d32;';
+                            marker = ' &larr; correct answer';
+                        } else {
+                            style += 'background:#fafafa;color:#999;';
+                        }
                         optionsHtml += '<div style="' + style + '">' + opt.text + marker + '</div>';
                     });
-                    questionsHtml += '<div style="margin-bottom:12px;padding:10px;background:#f8f9fa;border-radius:6px;border-left:3px solid #667eea;"><p style="font-weight:bold;margin-bottom:6px;color:#333;font-size:0.95em;">Q' + q.id + '. ' + q.text + '</p><div>' + optionsHtml + '</div></div>';
+                    questionsHtml += '<div style="margin-bottom:12px;padding:10px;background:#f8f9fa;border-radius:6px;border-left:3px solid #667eea;">'
+                        + '<p style="font-weight:bold;margin-bottom:6px;color:#333;font-size:0.95em;">Q' + q.id + '. ' + q.text + '</p>'
+                        + '<div>' + optionsHtml + '</div>'
+                        + '</div>';
                 });
-                attemptsHtml += '<div style="margin-bottom:25px;border:2px solid #ddd;border-radius:10px;overflow:hidden;page-break-inside:avoid;"><div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span><b>Attempt ' + attempt.attemptNum + '</b></span><span>Score: <b>' + attempt.score + '/10</b></span><span style="background:' + statusBg + ';color:' + statusColor + ';padding:3px 10px;border-radius:12px;font-weight:bold;font-size:0.9em;">' + statusIcon + ' ' + statusLabel + '</span><span style="font-size:0.85em;opacity:0.9;">' + attempt.date + '</span></div><div style="padding:15px;">' + questionsHtml + '</div></div>';
+
+                attemptsHtml += '<div style="margin-bottom:25px;border:2px solid #ddd;border-radius:10px;overflow:hidden;page-break-inside:avoid;">'
+                    + '<div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">'
+                    + '<span><b>Attempt ' + attempt.attemptNum + '</b></span>'
+                    + '<span>Score: <b>' + attempt.score + '/10</b></span>'
+                    + '<span style="background:' + statusBg + ';color:' + statusColor + ';padding:3px 10px;border-radius:12px;font-weight:bold;font-size:0.9em;">' + statusIcon + ' ' + statusLabel + '</span>'
+                    + '<span style="font-size:0.85em;opacity:0.9;">' + attempt.date + '</span>'
+                    + '</div>'
+                    + '<div style="padding:15px;">' + questionsHtml + '</div>'
+                    + '</div>';
             });
         }
+
         var allScores = savedData.scores || [];
         var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
         var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
-        var printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>WS5 Record - ' + nickname + ' (' + studentId + ')</title><style>body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}h1{text-align:center;color:#667eea;font-size:1.6em;margin-bottom:4px;}h2{text-align:center;color:#555;font-size:1em;font-weight:normal;margin-bottom:15px;}table{border-collapse:collapse;}td{border:1px solid #ddd;padding:7px 12px;}.it td:first-child{background:#f0f3ff;font-weight:bold;width:130px;}@media print{@page{margin:12mm;}}</style></head><body><h1>&#x1F4DA; WORKSHEET 5 &#x1F4CA;</h1><h2>Comparative Information (A1) &bull; M3 - Grade 9 | Sections 2, 4 &amp; 6</h2><hr style="border:1px solid #667eea;margin-bottom:15px;"><table class="it" style="max-width:520px;margin:0 auto 20px;"><tr><td>Nickname</td><td><b>' + nickname + '</b></td><td>Student ID</td><td><b>' + studentId + '</b></td></tr><tr><td>Class</td><td><b>' + section + '</b></td><td>Total Attempts</td><td><b>' + history.length + ' / 3</b></td></tr><tr><td>All Scores</td><td><b>' + (allScores.join(', ') || '-') + '</b></td><td>Highest</td><td><b>' + highest + '/10</b></td></tr><tr><td>Final Status</td><td colspan="3"><b style="color:' + (hasPassed ? '#2e7d32' : '#c62828') + '">' + (hasPassed ? '&#x2705; PASSED' : '&#x274C; NOT YET PASSED') + '</b></td></tr><tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr></table><hr style="margin-bottom:20px;"><h3 style="text-align:center;color:#667eea;margin-bottom:15px;">&#x1F4CB; All Submission Records</h3>' + attemptsHtml + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">M3 English Worksheet 5 &bull; Comparative Information &bull; carlton-title.github.io</p><script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script></body></html>';
+
+        var printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+            + '<title>WS5 Record - ' + nickname + ' (' + studentId + ')</title>'
+            + '<style>'
+            + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
+            + 'h1{text-align:center;color:#667eea;font-size:1.6em;margin-bottom:4px;}'
+            + 'h2{text-align:center;color:#555;font-size:1em;font-weight:normal;margin-bottom:15px;}'
+            + 'table{border-collapse:collapse;}'
+            + 'td{border:1px solid #ddd;padding:7px 12px;}'
+            + '.it td:first-child{background:#f0f3ff;font-weight:bold;width:130px;}'
+            + '@media print{@page{margin:12mm;}}'
+            + '</style></head><body>'
+            + '<h1>&#x1F4DA; WORKSHEET 5 &#x1F4CA;</h1>'
+            + '<h2>Comparative Information (A1) &bull; M3 - Grade 9 | Sections 2, 4 &amp; 6</h2>'
+            + '<hr style="border:1px solid #667eea;margin-bottom:15px;">'
+            + '<table class="it" style="max-width:520px;margin:0 auto 20px;">'
+            + '<tr><td>Nickname</td><td><b>' + nickname + '</b></td><td>Student ID</td><td><b>' + studentId + '</b></td></tr>'
+            + '<tr><td>Class</td><td><b>' + section + '</b></td><td>Total Attempts</td><td><b>' + history.length + ' / 3</b></td></tr>'
+            + '<tr><td>All Scores</td><td><b>' + (allScores.join(', ') || '-') + '</b></td><td>Highest</td><td><b>' + highest + '/10</b></td></tr>'
+            + '<tr><td>Final Status</td><td colspan="3"><b style="color:' + (hasPassed ? '#2e7d32' : '#c62828') + '">' + (hasPassed ? '&#x2705; PASSED' : '&#x274C; NOT YET PASSED') + '</b></td></tr>'
+            + '<tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr>'
+            + '</table>'
+            + '<hr style="margin-bottom:20px;">'
+            + '<h3 style="text-align:center;color:#667eea;margin-bottom:15px;">&#x1F4CB; All Submission Records</h3>'
+            + attemptsHtml
+            + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">M3 English Worksheet 5 &bull; Comparative Information &bull; carlton-title.github.io</p>'
+            + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
+            + '</body></html>';
+
         var pw = window.open('', '_blank', 'width=950,height=750');
         if (pw) { pw.document.write(printHTML); pw.document.close(); }
         else { alert('Please allow pop-ups for this page to print your record.'); }
