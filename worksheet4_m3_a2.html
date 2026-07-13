@@ -307,7 +307,7 @@
             });
             var rows = await resp.json();
             studentData[section] = rows.map(function(r) {
-                return {id: r.student_id, name: r.name || r.nickname, nick: r.nickname};
+                return {id: r.student_id, name: r.name || r.nickname, nickname: r.nickname};
             });
         } catch(e) {
             studentData[section] = [];
