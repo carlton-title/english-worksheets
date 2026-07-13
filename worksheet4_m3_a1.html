@@ -392,7 +392,7 @@
             if (thaiGroup) thaiGroup.style.display = 'block';
             thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
             try {
-                var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
+                var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
                 var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
                 var students = await resp.json();
                 var isTest = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
@@ -406,7 +406,7 @@
                 students.forEach(function(s) {
                     var opt = document.createElement('option');
                     opt.value = s.student_id;
-                    opt.text = s.name + (s.nickname ? ' (' + s.nickname + ')' : '');
+                    opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
                     thaiSelect.appendChild(opt);
                 });
             } catch(e) {
