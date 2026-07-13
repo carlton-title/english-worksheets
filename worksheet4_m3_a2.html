@@ -301,7 +301,7 @@
 
     async function loadStudentsFromSupabase(section) {
         try {
-            var url = SUPABASE_URL + '/rest/v1/students?section=eq.' + encodeURIComponent(section) + '&is_test=neq.true&select=student_id,nickname,name&order=nickname';
+            var url = SUPABASE_URL + '/rest/v1/students?section=eq.' + encodeURIComponent(section) + '&is_test=neq.true&select=student_id,name,thai_name,nickname,name&order=nickname';
             var resp = await fetch(url, {
                 headers: {'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY}
             });
@@ -416,7 +416,7 @@
         students.forEach(function(s) {
             var opt = document.createElement('option');
             opt.value = s.id;
-            opt.textContent = s.name + ' (' + s.nick + ')';
+            opt.textContent = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
             opt.dataset.nick = s.nick;
             thaiNameSelect.appendChild(opt);
         });
