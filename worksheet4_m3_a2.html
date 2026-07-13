@@ -294,7 +294,7 @@
 <script>
     // ===================== STUDENT DATA =====================
     // NOTE: Kyle (Test Student, ID 54565) is intentionally NOT in any section list.
-    // To access Kyle for troubleshooting, open this page with ?testmode=true (teacher use only).
+    // To access Kyle for troubleshooting, open this page with ?testmode=Carlton2026 (teacher use only).
     var studentData = {};
     var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
     var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
@@ -388,9 +388,9 @@
     var allAttemptScores = [];
     var TEST_STUDENT_IDS = ['54565'];
     var maxAttempts = 3;
-    // Test mode: teacher opens with ?testmode=true to access Kyle for troubleshooting.
+    // Test mode: teacher opens with ?testmode=Carlton2026 to access Kyle for troubleshooting.
     // Regular students never see Kyle in their dropdown.
-    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'true';
+    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
 
     document.getElementById('date').valueAsDate = new Date();
 
@@ -422,7 +422,7 @@
         });
         thaiNameGroup.style.display = 'block';
 
-        // TEST MODE ONLY: append Kyle when ?testmode=true (teacher troubleshooting — never visible to students)
+        // TEST MODE ONLY: append Kyle when ?testmode=Carlton2026 (teacher troubleshooting — never visible to students)
         if (isTestMode) {
             var testBanner = document.getElementById('testModeBanner');
             if (!testBanner) {
