@@ -295,7 +295,7 @@
 <script>
     // ===================== STUDENT DATA =====================
     // NOTE: Kyle (Test Student, ID 54565) is intentionally NOT in any section list.
-    // To access Kyle for troubleshooting, open this page with ?testmode=true (teacher use only).
+    // To access Kyle for troubleshooting, open this page with ?testmode=Carlton2026 (teacher use only).
     // ===================== SUPABASE CONFIG =====================
         var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
@@ -375,9 +375,9 @@
     var allAttemptScores = [];
     var TEST_STUDENT_IDS = ['54565'];
     var maxAttempts = 3;
-    // Test mode: teacher opens with ?testmode=true to access Kyle for troubleshooting.
+    // Test mode: teacher opens with ?testmode=Carlton2026 to access Kyle for troubleshooting.
     // Regular students never see Kyle in their dropdown.
-    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'true';
+    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
 
     document.getElementById('date').valueAsDate = new Date();
 
@@ -395,7 +395,7 @@
                 var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
                 var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
                 var students = await resp.json();
-                var isTest = new URLSearchParams(window.location.search).get('testmode') === 'true';
+                var isTest = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
                 thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
                 if (isTest) {
                     var kyleOpt = document.createElement('option');
