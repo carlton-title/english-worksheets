@@ -417,7 +417,7 @@
             var opt = document.createElement('option');
             opt.value = s.id;
             opt.textContent = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
-            opt.dataset.nick = s.nick;
+            opt.dataset.nick = s.nickname || '';
             thaiNameSelect.appendChild(opt);
         });
         thaiNameGroup.style.display = 'block';
@@ -450,7 +450,7 @@
             return;
         }
         document.getElementById('studentId').value = selectedOpt.value;
-        document.getElementById('nickname').value = selectedOpt.dataset.nick;
+        document.getElementById('nickname').value = selectedOpt.dataset.nick || '';
     }
 
     // ===================== WORKSHEET FLOW =====================
