@@ -766,6 +766,18 @@
           const sidEl  = document.getElementById('studentId');
           if (nickEl) nickEl.value = 'Kyle';
           if (sidEl)  sidEl.value  = '54565';
+
+          // Patch autoFillStudent — Kyle always gets nickname='Kyle' even after section change
+          const _origAutoFill = typeof autoFillStudent === 'function' ? autoFillStudent : null;
+          window.autoFillStudent = function() {
+            const sel = document.getElementById('thaiName');
+            if (sel && sel.value === '54565') {
+              document.getElementById('nickname').value = 'Kyle';
+              document.getElementById('studentId').value = '54565';
+              return;
+            }
+            if (_origAutoFill) _origAutoFill.apply(this, arguments);
+          };
         })();
 
 </script>
