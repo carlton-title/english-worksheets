@@ -401,12 +401,14 @@
                     var kyleOpt = document.createElement('option');
                     kyleOpt.value = '54565';
                     kyleOpt.text = 'Kyle (Test Student)';
+                    kyleOpt.dataset.nick = 'Kyle';
                     thaiSelect.appendChild(kyleOpt);
                 }
                 students.forEach(function(s) {
                     var opt = document.createElement('option');
                     opt.value = s.student_id;
                     opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
+                    opt.dataset.nick = s.nickname || '';
                     thaiSelect.appendChild(opt);
                 });
             } catch(e) {
@@ -424,7 +426,7 @@
             return;
         }
         document.getElementById('studentId').value = selectedOpt.value;
-        document.getElementById('nickname').value = selectedOpt.dataset.nick;
+        document.getElementById('nickname').value = selectedOpt.dataset.nick || '';
     }
 
     // ===================== WORKSHEET FLOW =====================
