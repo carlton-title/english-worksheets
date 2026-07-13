@@ -385,11 +385,12 @@
     async function loadThaiNames() {
             var section = document.getElementById('section').value;
             var thaiSelect = document.getElementById('thaiName');
+            var thaiGroup = document.getElementById('thaiNameGroup');
+            if (thaiGroup) thaiGroup.style.display = 'none';
+            thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
+            if (!section) return;
+            if (thaiGroup) thaiGroup.style.display = 'block';
             thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
-            if (!section) {
-                thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
-                return;
-            }
             try {
                 var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
                 var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
