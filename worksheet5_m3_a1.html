@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worksheet 5 M3 (A1): Comparative Information</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header { text-align: center; margin-bottom: 30px; }
+        .title { font-size: 2.5em; color: #667eea; margin: 10px 0; }
+        .subtitle { font-size: 1.1em; color: #666; margin: 10px 0; }
+        .info-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-weight: bold;
+        }
+        .info-item { display: flex; align-items: center; gap: 8px; }
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 2px solid #667eea;
+        }
+        .form-section h3 { color: #667eea; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: bold; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102,126,234,0.3);
+        }
+        .form-group input[readonly] {
+            background: #f0f0f0;
+            color: #555;
+            cursor: default;
+        }
+        .warning { color: #e74c3c; font-size: 0.85em; margin-top: 5px; display: none; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102,126,234,0.3); }
+        .attempts-tracker {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .worksheet-locked {
+            display: none;
+            background: #ffebee;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e74c3c;
+        }
+        .locked-message { font-size: 1.3em; color: #c41e3a; font-weight: bold; margin: 15px 0; }
+        .worksheet-locked.show { display: block; }
+        .questions-section { display: none; }
+        .questions-section.show { display: block; }
+        .question-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+        }
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .question-text { font-size: 1.05em; color: #333; margin-bottom: 15px; font-weight: bold; }
+        .image-placeholder { width: 100%; max-width: 300px; height: auto; border-radius: 10px; margin-bottom: 15px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option:hover { border-color: #667eea; background: #f0f3ff; }
+        .option input[type="radio"] { cursor: pointer; }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-submit { background: linear-gradient(135deg, #4caf50 0%, #45a049 100%); padding: 12px 30px; width: auto; }
+        .btn-retry { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); padding: 12px 30px; width: auto; }
+        .btn-print { background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%); padding: 12px 30px; width: auto; }
+        .score-display {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid #4caf50;
+        }
+        .score-value { font-size: 2em; color: #2e7d32; font-weight: bold; }
+        .score-status { font-size: 1.1em; color: #555; margin-top: 10px; }
+        .status-pass { color: #4caf50; font-weight: bold; }
+        .status-fail { color: #e74c3c; font-weight: bold; }
+        .summary-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 2px solid #ddd;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-label { font-weight: bold; color: #333; }
+        .summary-value { color: #667eea; font-weight: bold; }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .title { font-size: 1.8em; }
+            .options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div class="title">&#x1F4DA; WORKSHEET 5 &#x1F4CA;</div>
+        <div class="subtitle">Comparative Information</div>
+        <div class="subtitle">M3 (A1) - Grade 9 | Sections 2, 4 &amp; 6</div>
+    </div>
+
+    <div class="info-banner">
+        <div class="info-item"><span>&#x1F4DD;</span><span>Multiple Choice</span></div>
+        <div class="info-item"><span>&#x2B50;</span><span>Passing Score: 8/10</span></div>
+        <div class="info-item"><span>&#x1F512;</span><span>Max 3 Attempts</span></div>
+        <div class="info-item"><span>&#x1F389;</span><span>Have Fun!</span></div>
+    </div>
+
+    <div class="form-section">
+        <h3>&#x1F4CB; Before You Start</h3>
+        <div class="form-group">
+            <label>&#x1F3EB; 1. Your Class</label>
+            <select id="section" onchange="loadThaiNames()">
+                <option value="">&#x2014; Select your class &#x2014;</option>
+                <option value="M3/2">M3/2</option>
+                <option value="M3/4">M3/4</option>
+                <option value="M3/6">M3/6</option>
+            </select>
+            <div class="warning" id="sectionWarning">&#x26A0;&#xFE0F; Please select your class.</div>
+        </div>
+        <div class="form-group" id="thaiNameGroup" style="display:none;">
+            <label>&#x1F1F9;&#x1F1ED; 2. Your Thai Name</label>
+            <select id="thaiName" onchange="autoFillStudent()">
+                <option value="">&#x2014; Select your name &#x2014;</option>
+            </select>
+            <div class="warning" id="thaiNameWarning">&#x26A0;&#xFE0F; Please select your name from the list.</div>
+        </div>
+        <div class="form-group">
+            <label>&#x1F338; 3. Nickname (auto-filled)</label>
+            <input type="text" id="nickname" placeholder="Will be filled when you select your name" readonly>
+        </div>
+        <div class="form-group">
+            <label>&#x1F522; 4. Student ID (auto-filled)</label>
+            <input type="text" id="studentId" placeholder="Will be filled when you select your name" readonly>
+        </div>
+        <div class="form-group">
+            <label>&#x1F4C5; 5. Date</label>
+            <input type="date" id="date">
+            <div class="warning" id="dateWarning">&#x26A0;&#xFE0F; Please select today&#x27;s date.</div>
+        </div>
+        <button onclick="startWorksheet()">&#x25B6; Start Worksheet &#x1F680;</button>
+    </div>
+
+    <div class="attempts-tracker">
+        <h4>&#x1F4CA; Attempts Used: <span id="attemptsUsed">0</span> / 3</h4>
+        <p id="attemptsMessage" style="color:#666; margin:0;"></p>
+    </div>
+
+    <div class="worksheet-locked" id="lockedMessage">
+        <div style="font-size:3em; margin-bottom:10px;">&#x1F512;</div>
+        <div class="locked-message">Worksheet Locked</div>
+        <p>&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว</p>
+        <p>กรุณาติดต่อครูเพื่อขอคำแนะนำ</p>
+    </div>
+
+    <div class="questions-section" id="questionsSection">
+        <h3 style="color:#667eea; margin-bottom:20px;">&#x1F4DA; Comparative Information (A1)</h3>
+        <div id="questionsContainer"></div>
+        <div class="button-group">
+            <button class="btn-submit" onclick="submitAnswers()">&#x2714; Submit Answers &#x1F3AF;</button>
+            <button class="btn-retry" onclick="resetForm()">&#x21BB; Try Again &#x1F4AA;</button>
+        </div>
+    </div>
+
+    <div id="scoreDisplay" style="display:none;">
+        <div class="score-display">
+            <div>Your Score</div>
+            <div class="score-value" id="scoreValue">0/10</div>
+            <div class="score-status" id="scoreStatus"></div>
+        </div>
+        <div class="summary-section">
+            <h4 style="margin-bottom:15px;">&#x1F4CB; Summary</h4>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F338; Nickname</span>
+                <span class="summary-value" id="summaryNickname">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F522; Student ID</span>
+                <span class="summary-value" id="summaryId">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F4C5; Date</span>
+                <span class="summary-value" id="summaryDate">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F3EB; Class</span>
+                <span class="summary-value" id="summarySection">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x2B50; Score</span>
+                <span class="summary-value" id="summaryScore">&#x2014;</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">&#x1F550; Submitted</span>
+                <span class="summary-value" id="summaryTime">&#x2014;</span>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:20px; color:#666;">
+            &#x1F4F8; Take a screenshot and send it to your teacher on Line or Google Classroom.
+        </p>
+        <div class="button-group" style="margin-top:15px;">
+            <button class="btn-print" onclick="printWorksheet()">&#x1F5A8; Print My Record</button>
+            <button class="btn-retry" onclick="resetForm()">&#x21BB; Try Again &#x1F4AA;</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // ===================== STUDENT DATA =====================
+    var studentData = {
+        'M3/2': [
+            {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
+            {id:'37582',name:'เด็กชายจักรภัทร เอี้ยงทอง',nick:'Premium'},
+            {id:'37583',name:'เด็กชายชลกร ลื่นกลาง',nick:'Mos'},
+            {id:'37584',name:'เด็กชายณภัทร เหลาไชย',nick:'Tang'},
+            {id:'37585',name:'เด็กหญิงดวงกมล เจ๊กจันทึก',nick:'Aom'},
+            {id:'37586',name:'เด็กชายเตชิต เตียนจันทึก',nick:'First'},
+            {id:'37587',name:'เด็กชายเตชินท์ แท้สูงเนิน',nick:'Techin'},
+            {id:'37588',name:'เด็กชายธนเทพ ฤทธิกุล',nick:'Oat'},
+            {id:'37589',name:'เด็กชายธนภัทร ธูปสูงเนิน',nick:'Phat'},
+            {id:'37590',name:'เด็กชายนัทธพงศ์ เทียนทอง',nick:'Guy'},
+            {id:'37591',name:'เด็กชายประเสริฐ เพียซ้าย',nick:'Jay'},
+            {id:'37592',name:'เด็กชายปิยวัฒน์ อำภาว์',nick:'Zee'},
+            {id:'37593',name:'เด็กชายพชรพล ไทธานี',nick:'Poom'},
+            {id:'37594',name:'เด็กชายภาคิน สุขประโคน',nick:'Dew'},
+            {id:'37596',name:'เด็กชายภูริพัฒน์ แหลมจันทึก',nick:'Phum 2'},
+            {id:'37597',name:'เด็กชายมานะศักดิ์ เยี่ยมจันทึก',nick:'Water'},
+            {id:'37598',name:'เด็กชายรัฐพล เปล่งสันเทียะ',nick:'Phum 1'},
+            {id:'37599',name:'เด็กชายรัฐศาสตร์ ตรงจันทึก',nick:'Kawjao'},
+            {id:'37600',name:'เด็กชายวิศรุต คุ้มจันทึก',nick:'Tae'},
+            {id:'37601',name:'เด็กชายสุกฤษฎิ์ สุคนธ์ขจร',nick:'Palm'},
+            {id:'37602',name:'เด็กชายอติเทพ จันทร์ผ่อง',nick:'Auto'},
+            {id:'37603',name:'เด็กหญิงกัญญาลักษณ์ มูลศิริ',nick:'Ploy'},
+            {id:'37604',name:'เด็กหญิงจินดาภา แก้วผลึก',nick:'Temduang'},
+            {id:'37606',name:'เด็กหญิงชญาภา เผือดจันทึก',nick:'Yaya'},
+            {id:'37607',name:'เด็กหญิงชัญญานุช พันจันทึก',nick:'L'},
+            {id:'37608',name:'เด็กหญิงฐิติชญา เอ็นจันทึก',nick:'Khao'},
+            {id:'37609',name:'เด็กหญิงฐิติมา พลฉิมพลี',nick:'Na'},
+            {id:'37611',name:'เด็กหญิงนภัสสร จันกง',nick:'Kam1'},
+            {id:'37615',name:'เด็กหญิงภัคจิรา แก้วมีศรี',nick:'Kam2'},
+            {id:'37618',name:'เด็กหญิงวริยา คูพันดุง',nick:'Kib'},
+            {id:'37620',name:'เด็กหญิงสุดารัตน์ มิ่งจันทึก',nick:'Maysa'},
+            {id:'37621',name:'เด็กหญิงอภิญญา เค้าแก้ว',nick:'Fasai'},
+            {id:'37622',name:'เด็กหญิงอภิสรา กออำไพร',nick:'Fanta'},
+            {id:'39688',name:'เด็กหญิงณฐมน ศิริพันดร',nick:'Wawa'},
+            {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'},
+            {id:'54565',name:'Test Student',nick:'Kyle'}
+        ],
+        'M3/4': [
+            {id:'37667',name:'เด็กชายจักรภัทร กลึงสูงเนิน',nick:'Fiw'},
+            {id:'37668',name:'เด็กชายจีรศักดิ์ ทองรอด',nick:'Kaow'},
+            {id:'37669',name:'เด็กชายชัชชพร กลองกลาง',nick:'Tolap'},
+            {id:'37670',name:'เด็กชายทวีอมร ศรีอำพล',nick:'Drift'},
+            {id:'37671',name:'เด็กชายทินภัทร เคลิ้มกระโทก',nick:'Fakhram'},
+            {id:'37674',name:'เด็กชายมงคล รัตนพงศ์พร',nick:'Tee'},
+            {id:'37675',name:'เด็กชายวชิรวิชญ์ พนมเขต',nick:'Angpao'},
+            {id:'37676',name:'เด็กชายอภิชา จูจันทึก',nick:'Eik'},
+            {id:'37677',name:'เด็กหญิงกนกวรรณ วัฒนากลาง',nick:'Pai'},
+            {id:'37678',name:'เด็กหญิงกัญญาณัฐ เที่ยงสันเทียะ',nick:'Wine'},
+            {id:'37679',name:'เด็กหญิงกัญญาณัฐ คำจริง',nick:'Peem'},
+            {id:'37680',name:'เด็กหญิงกุลปริยา พิมพ์วัน',nick:'Garfield'},
+            {id:'37681',name:'เด็กหญิงชญานิษฐ์ คงวิโรจน์',nick:'Bellda'},
+            {id:'37682',name:'เด็กหญิงชนาภา เดสันเทียะ',nick:'Nooyim'},
+            {id:'37683',name:'เด็กหญิงชุติกาญจน์ ไชยเฉลิม',nick:'Pakwan'},
+            {id:'37684',name:'เด็กหญิงณัฐณิชา แดงจันทึก',nick:'Fahsai'},
+            {id:'37685',name:'เด็กหญิงณิชาภัทร ดีบุรี',nick:'Foam'},
+            {id:'37686',name:'เด็กหญิงทัดพิชาภรณ์ พิมพ์กลาง',nick:'Thadcha'},
+            {id:'37687',name:'เด็กหญิงธนภรณ์ แซ่ลี้',nick:'Rak'},
+            {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play'},
+            {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
+            {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
+            {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
+            {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
+            {id:'37693',name:'เด็กหญิงปุญชรัสมิ์ คณะขาม',nick:'Apo'},
+            {id:'37694',name:'เด็กหญิงพลอยชมพู บุ่นจันทึก',nick:'Ploy'},
+            {id:'37695',name:'เด็กหญิงพัชรพร งาจันทึก',nick:'Pakkad'},
+            {id:'37697',name:'เด็กหญิงพิฌาอร โกสุม',nick:'Moved'},
+            {id:'37698',name:'เด็กหญิงพิมพ์รดา วงศ์ประชุม',nick:'Jenny'},
+            {id:'37700',name:'เด็กหญิงภคพร สุพล',nick:'Bonus'},
+            {id:'37701',name:'เด็กหญิงภรณ์ชนก พลลาภ',nick:'Veeta'},
+            {id:'37702',name:'เด็กหญิงรินรดา แคะมะดัน',nick:'Aing'},
+            {id:'37703',name:'เด็กหญิงรุจิสา ศาสตร์ดำรงค์',nick:'Ongfong'},
+            {id:'37704',name:'เด็กหญิงสิราวรรณ แสงเพ็ชร',nick:'Am'},
+            {id:'37705',name:'เด็กหญิงสุดาทิพย์ บุญทัยสง',nick:'Fangkhaw'},
+            {id:'37706',name:'เด็กหญิงสุรีรัตน์ กะตะศิลา',nick:'Meena'},
+            {id:'37707',name:'เด็กหญิงอรพรรณ อามาตร์',nick:'Earth'},
+            {id:'39678',name:'นนทวัฒน์ พันธุสุนทร',nick:'Non'}
+        ],
+        'M3/6': [
+            {id:'37750',name:'เด็กชายกฤษณทัต รักษ์จันทึก',nick:'Pepper'},
+            {id:'37751',name:'เด็กชายณัฐปกรณ์ นิลกำแหง',nick:'Model'},
+            {id:'37752',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Fuas'},
+            {id:'37753',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Guitar'},
+            {id:'37754',name:'เด็กชายธีรภัทร ฟักสูงเนิน',nick:'Moss'},
+            {id:'37755',name:'เด็กชายนฤบดี เป่ยคำภา',nick:'Namo'},
+            {id:'37756',name:'เด็กชายนวพล สัญชานันท์',nick:'Tle'},
+            {id:'37757',name:'เด็กชายประพัฒน์ จันทร์ไทย',nick:'Earth'},
+            {id:'37758',name:'เด็กชายพงษ์ศิริพัฒน์ เทิบจันทึก',nick:'Aomsub'},
+            {id:'37759',name:'เด็กชายพิทวัส เงื่อนพิมาย',nick:'Ninja'},
+            {id:'37760',name:'เด็กชายพีรพัฒน์ คำป้อง',nick:'PP'},
+            {id:'37761',name:'เด็กชายภพธรรม สุดหา',nick:'Porch'},
+            {id:'37762',name:'เด็กชายภาคิน ธงวิชัย',nick:'Sand'},
+            {id:'37763',name:'เด็กชายภาณิญ ทองนอก',nick:'Folk'},
+            {id:'37764',name:'เด็กชายภูวดล มาสุข',nick:'Phu'},
+            {id:'37765',name:'เด็กชายภูวิสิฐกุล ภูพวก',nick:'Pooh'},
+            {id:'37766',name:'เด็กชายอนุทัศน์ แซวจันทึก',nick:'Toomtam'},
+            {id:'37767',name:'เด็กหญิงกมลพิชญ์ เจียนรำลึก',nick:'Shisha'},
+            {id:'37768',name:'เด็กหญิงกวิสรา สีนวล',nick:'Idea'},
+            {id:'37769',name:'เด็กหญิงจิตตาภา สุขสูงเนิน',nick:'Pan'},
+            {id:'37770',name:'เด็กหญิงชญาภรณ์ จันคำจร',nick:'Cartoon'},
+            {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pang'},
+            {id:'37772',name:'เด็กหญิงณัฐณิชา ช้อยชด',nick:'Noodee'},
+            {id:'37774',name:'เด็กหญิงบุญญาภา แก้วโพธิ์กลาง',nick:'Ink'},
+            {id:'37775',name:'เด็กหญิงปณิตา แซ่ตั้น',nick:'Benz'},
+            {id:'37776',name:'เด็กหญิงปริยานุช พลจันทึก',nick:'Pu'},
+            {id:'37777',name:'เด็กหญิงปลายฟ้า ฉลูพันธ์',nick:'Playfa'},
+            {id:'37778',name:'เด็กหญิงพัชรพร แกล้วเกล้า',nick:'Sushi'},
+            {id:'37780',name:'เด็กหญิงพิชญาภา ดงเย็น',nick:'Pitchayapha'},
+            {id:'37781',name:'เด็กหญิงเพ็ญพิชชา จิระกุลน์',nick:'Xiider'},
+            {id:'37782',name:'เด็กหญิงรินรดา เกตจันทึก',nick:'Pam'},
+            {id:'37783',name:'เด็กหญิงวรรณภา เขาขุนทด',nick:'Somjeed'},
+            {id:'37784',name:'เด็กหญิงวริศรา มีวัน',nick:'Gift'},
+            {id:'37785',name:'เด็กหญิงศรัณย์พร สัตย์โส',nick:'Khawhom'},
+            {id:'37788',name:'เด็กหญิงสุพรรษา ทัศนาลัย',nick:'Lukwa'},
+            {id:'37789',name:'เด็กหญิงสุภัคตรา บุญมา',nick:'So'},
+            {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
+            {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
+            {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
+        ]
+    };
+
+    // ===================== QUESTION DATA =====================
+    // Images will be added later — upload as WS5M3A1Q*.png when ready
+    var questions = [
+        {id:1,image:null,text:"My sister is _____ than me.",
+         options:[{text:"A) tall",correct:false},{text:"B) taller",correct:true},{text:"C) tallest",correct:false},{text:"D) more taller",correct:false}]},
+        {id:2,image:null,text:"Which sentence is correct?",
+         options:[{text:"A) This car is more fast than that one.",correct:false},{text:"B) This car is faster than that one.",correct:true},{text:"C) This car is fastest than that one.",correct:false},{text:"D) This car is most fast than that one.",correct:false}]},
+        {id:3,image:null,text:"Bangkok is _____ than Chiang Mai.",
+         options:[{text:"A) big",correct:false},{text:"B) biggest",correct:false},{text:"C) bigger",correct:true},{text:"D) more big",correct:false}]},
+        {id:4,image:null,text:"Which sentence uses the comparative correctly?",
+         options:[{text:"A) She is more tall than her friend.",correct:false},{text:"B) She is tallest than her friend.",correct:false},{text:"C) She is taller than her friend.",correct:true},{text:"D) She is the more tall than her friend.",correct:false}]},
+        {id:5,image:null,text:"An elephant is _____ than a cat.",
+         options:[{text:"A) heavier",correct:true},{text:"B) more heavy",correct:false},{text:"C) heaviest",correct:false},{text:"D) most heavy",correct:false}]},
+        {id:6,image:null,text:'Which word correctly fills the blank: "Math is _____ than Art."?',
+         options:[{text:"A) difficulter",correct:false},{text:"B) most difficult",correct:false},{text:"C) more difficult",correct:true},{text:"D) difficultier",correct:false}]},
+        {id:7,image:null,text:'"This pizza is _____ than that sandwich."',
+         options:[{text:"A) deliciouser",correct:false},{text:"B) most delicious",correct:false},{text:"C) more deliciously",correct:false},{text:"D) more delicious",correct:true}]},
+        {id:8,image:null,text:"Which sentence is correct?",
+         options:[{text:"A) Today is cold than yesterday.",correct:false},{text:"B) Today is colder than yesterday.",correct:true},{text:"C) Today is more cold than yesterday.",correct:false},{text:"D) Today is coldest than yesterday.",correct:false}]},
+        {id:9,image:null,text:'"A dog is _____ than a fish."',
+         options:[{text:"A) more smart",correct:false},{text:"B) smartest",correct:false},{text:"C) smarter",correct:true},{text:"D) most smart",correct:false}]},
+        {id:10,image:null,text:"Which sentence correctly compares two things?",
+         options:[{text:"A) English is easy than Thai.",correct:false},{text:"B) English is more easy than Thai.",correct:false},{text:"C) English is easier than Thai.",correct:true},{text:"D) English is the most easy than Thai.",correct:false}]}
+    ];
+
+    // ===================== SEEDED RNG =====================
+    function seededRandom(seed) {
+        return function() {
+            seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+            var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+            t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+            return ((t ^ t >>> 14) >>> 0) / 4294967296;
+        };
+    }
+
+    function seededShuffle(arr, rng) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(rng() * (i + 1));
+            var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+        }
+        return a;
+    }
+
+    var displayQuestions = questions.map(function(q) {
+        return Object.assign({}, q, {displayOptions: q.options.slice()});
+    });
+
+    function applySeededOrder(studentId) {
+        if (TEST_STUDENT_IDS.includes(String(studentId))) {
+            displayQuestions = questions.map(function(q) {
+                return Object.assign({}, q, {displayOptions: q.options.slice()});
+            });
+            return;
+        }
+        var seed = parseInt(studentId) || 0;
+        var rng = seededRandom(seed);
+        var shuffledQs = seededShuffle(questions, rng);
+        displayQuestions = shuffledQs.map(function(q) {
+            return Object.assign({}, q, {displayOptions: seededShuffle(q.options, rng)});
+        });
+    }
+
+    // ===================== APP STATE =====================
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+    var userAnswers = {};
+    var attempts = 0;
+    var allAttemptScores = [];
+    var TEST_STUDENT_IDS = ['54565'];
+    var maxAttempts = 3;
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    // ===================== FORM FUNCTIONS =====================
+    function loadThaiNames() {
+        var section = document.getElementById('section').value;
+        var thaiNameGroup = document.getElementById('thaiNameGroup');
+        var thaiNameSelect = document.getElementById('thaiName');
+        document.getElementById('nickname').value = '';
+        document.getElementById('studentId').value = '';
+        thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+        if (!section) { thaiNameGroup.style.display = 'none'; return; }
+        var students = studentData[section] || [];
+        students.forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name + ' (' + s.nick + ')';
+            opt.dataset.nick = s.nick;
+            thaiNameSelect.appendChild(opt);
+        });
+        thaiNameGroup.style.display = 'block';
+    }
+
+    function autoFillStudent() {
+        var thaiNameSelect = document.getElementById('thaiName');
+        var selectedOpt = thaiNameSelect.options[thaiNameSelect.selectedIndex];
+        if (!selectedOpt || !selectedOpt.value) {
+            document.getElementById('nickname').value = '';
+            document.getElementById('studentId').value = '';
+            return;
+        }
+        document.getElementById('studentId').value = selectedOpt.value;
+        document.getElementById('nickname').value = selectedOpt.dataset.nick;
+    }
+
+    // ===================== WORKSHEET FLOW =====================
+    function startWorksheet() {
+        var nickname = document.getElementById('nickname').value.trim();
+        var studentId = document.getElementById('studentId').value.trim();
+        var date = document.getElementById('date').value;
+        var section = document.getElementById('section').value;
+        var thaiName = document.getElementById('thaiName').value;
+        var isValid = true;
+        document.getElementById('sectionWarning').style.display = section ? 'none' : 'block';
+        if (!section) isValid = false;
+        var thaiNameWarning = document.getElementById('thaiNameWarning');
+        if (thaiNameWarning) thaiNameWarning.style.display = thaiName ? 'none' : 'block';
+        if (!thaiName) isValid = false;
+        document.getElementById('dateWarning').style.display = date ? 'none' : 'block';
+        if (!date) isValid = false;
+        if (!isValid) return;
+        applySeededOrder(studentId);
+        var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        attempts = savedData.attempts || 0;
+        allAttemptScores = savedData.scores || [];
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            document.querySelector('.form-section').style.display = 'none';
+            document.getElementById('questionsSection').classList.remove('show');
+            document.getElementById('lockedMessage').classList.add('show');
+            document.getElementById('scoreDisplay').style.display = 'none';
+            updateAttemptsDisplay();
+            return;
+        }
+        document.querySelector('.form-section').style.display = 'none';
+        document.getElementById('questionsSection').classList.add('show');
+        renderQuestions();
+        userAnswers = {};
+    }
+
+    function renderQuestions() {
+        var container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+        displayQuestions.forEach(function(q, posIdx) {
+            var card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = 'question-' + q.id;
+            var optionsHtml = q.displayOptions.map(function(opt) {
+                var origIdx = q.options.indexOf(opt);
+                return '<label class="option"><input type="radio" name="q' + q.id + '" value="' + origIdx + '"><span>' + opt.text + '</span></label>';
+            }).join('');
+            card.innerHTML = (q.image ? '<img src="' + q.image + '" alt="Question image" class="image-placeholder">' : '')
+                + '<div><span class="question-number">' + (posIdx + 1) + '</span>'
+                + '<span class="question-text">' + q.text + '</span></div>'
+                + '<div class="options" style="margin-top:15px;">' + optionsHtml + '</div>';
+            card.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+                radio.addEventListener('change', function() { userAnswers[q.id] = parseInt(this.value); });
+            });
+            container.appendChild(card);
+        });
+    }
+
+    function submitAnswers() {
+        var score = 0;
+        questions.forEach(function(q) {
+            if (userAnswers[q.id] !== undefined && q.options[userAnswers[q.id]].correct) score++;
+        });
+        var nickname = document.getElementById('nickname').value.trim();
+        var studentId = document.getElementById('studentId').value.trim();
+        var section = document.getElementById('section').value;
+        var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
+        var isPassed = score >= 8;
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        savedData.attempts = (savedData.attempts || 0) + 1;
+        if (!savedData.scores) savedData.scores = [];
+        savedData.scores.push(score);
+        if (!savedData.attemptHistory) savedData.attemptHistory = [];
+        savedData.attemptHistory.push({attemptNum:savedData.attempts,score:score,answers:Object.assign({},userAnswers),date:new Date().toLocaleString(),nickname:nickname,studentId:studentId,section:section,status:isPassed?'PASSED':'FAILED'});
+        attempts = savedData.attempts;
+        allAttemptScores = savedData.scores;
+        localStorage.setItem(storageKey, JSON.stringify(savedData));
+        document.getElementById('questionsSection').classList.remove('show');
+        document.getElementById('scoreDisplay').style.display = 'block';
+        document.getElementById('scoreValue').textContent = score + '/10';
+        var statusEl = document.getElementById('scoreStatus');
+        if (isPassed) {
+            submitToSheet(studentId, nickname, section, score, 'PASSED');
+            statusEl.innerHTML = '<span class="status-pass">&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>ผ่านแล้วแปลกว่า 3 ครั้ง<br>ได้คะแนนสูงสุดครั้งนี้</span>';
+        } else {
+            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+                var highest = Math.max.apply(null, allAttemptScores);
+                submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
+                statusEl.innerHTML = '<span class="status-fail">&#x274C; ยังไม่ผ่านค่ะ<br>คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>คะแนนที่ต้องการ: 8, 9, 10<br>โอกาสเหลือ: 0 ครั้ง</span>';
+            } else {
+                var remaining = maxAttempts - attempts;
+                statusEl.innerHTML = '<span class="status-fail">&#x274C; ยังไม่ผ่านค่ะ<br>คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>คะแนนที่ต้องการ: 8, 9, 10<br>โอกาสเหลือ: ' + remaining + ' ครั้ง</span>';
+            }
+        }
+        var dateVal = document.getElementById('date').value;
+        document.getElementById('summaryNickname').textContent = nickname;
+        document.getElementById('summaryId').textContent = studentId;
+        document.getElementById('summaryDate').textContent = dateVal;
+        document.getElementById('summarySection').textContent = section;
+        document.getElementById('summaryScore').textContent = score + '/10';
+        document.getElementById('summaryTime').textContent = new Date().toLocaleString();
+        updateAttemptsDisplay();
+    }
+
+    function submitToSheet(studentId, nickname, section, score, status) {
+        var data = {studentId:studentId,nickname:nickname,section:section,score:score,worksheet:'WS5',date:new Date().toISOString(),status:status};
+        var params = new URLSearchParams(data);
+        fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
+    }
+
+    function resetForm() {
+        userAnswers = {};
+        document.getElementById('questionsSection').classList.remove('show');
+        document.getElementById('scoreDisplay').style.display = 'none';
+        var studentId = document.getElementById('studentId').value.trim();
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            document.getElementById('lockedMessage').classList.add('show');
+        } else {
+            document.querySelector('.form-section').style.display = 'block';
+            document.getElementById('nickname').value = '';
+            document.getElementById('studentId').value = '';
+            document.getElementById('section').value = '';
+            document.getElementById('thaiName').innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            document.getElementById('thaiNameGroup').style.display = 'none';
+            document.getElementById('date').valueAsDate = new Date();
+        }
+    }
+
+    function printWorksheet() {
+        var studentId = document.getElementById('studentId').value.trim();
+        var section = document.getElementById('section').value;
+        var nickname = document.getElementById('nickname').value.trim();
+        var storageKey = 'ws5_m3_a1_' + studentId + '_' + section;
+        var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
+        var history = savedData.attemptHistory || [];
+        var attemptsHtml = '';
+        if (history.length === 0) {
+            attemptsHtml = '<p style="color:#999;text-align:center;">No attempt records found.</p>';
+        } else {
+            history.forEach(function(attempt) {
+                var isPassed = attempt.status === 'PASSED';
+                var statusIcon = isPassed ? '&#x2705;' : '&#x274C;';
+                var statusLabel = isPassed ? 'PASSED' : 'FAILED';
+                var statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
+                var statusColor = isPassed ? '#1b5e20' : '#b71c1c';
+                var questionsHtml = '';
+                questions.forEach(function(q) {
+                    var studentAns = attempt.answers[q.id];
+                    var optionsHtml = '';
+                    q.options.forEach(function(opt, idx) {
+                        var isSelected = studentAns === idx;
+                        var isCorrect = opt.correct;
+                        var style = 'padding:5px 10px;margin:3px 0;border-radius:4px;border:1px solid #ddd;font-size:0.9em;';
+                        var marker = '';
+                        if (isSelected && isCorrect) { style += 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;'; marker = ' &#x2705;'; }
+                        else if (isSelected && !isCorrect) { style += 'background:#ffcdd2;border-color:#f44336;font-weight:bold;'; marker = ' &#x274C;'; }
+                        else if (!isSelected && isCorrect) { style += 'background:#e8f5e9;border-color:#81c784;color:#2e7d32;'; marker = ' &larr; correct answer'; }
+                        else { style += 'background:#fafafa;color:#999;'; }
+                        optionsHtml += '<div style="' + style + '">' + opt.text + marker + '</div>';
+                    });
+                    questionsHtml += '<div style="margin-bottom:12px;padding:10px;background:#f8f9fa;border-radius:6px;border-left:3px solid #667eea;"><p style="font-weight:bold;margin-bottom:6px;color:#333;font-size:0.95em;">Q' + q.id + '. ' + q.text + '</p><div>' + optionsHtml + '</div></div>';
+                });
+                attemptsHtml += '<div style="margin-bottom:25px;border:2px solid #ddd;border-radius:10px;overflow:hidden;page-break-inside:avoid;"><div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;"><span><b>Attempt ' + attempt.attemptNum + '</b></span><span>Score: <b>' + attempt.score + '/10</b></span><span style="background:' + statusBg + ';color:' + statusColor + ';padding:3px 10px;border-radius:12px;font-weight:bold;font-size:0.9em;">' + statusIcon + ' ' + statusLabel + '</span><span style="font-size:0.85em;opacity:0.9;">' + attempt.date + '</span></div><div style="padding:15px;">' + questionsHtml + '</div></div>';
+            });
+        }
+        var allScores = savedData.scores || [];
+        var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
+        var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
+        var printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>WS5 Record - ' + nickname + ' (' + studentId + ')</title><style>body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}h1{text-align:center;color:#667eea;font-size:1.6em;margin-bottom:4px;}h2{text-align:center;color:#555;font-size:1em;font-weight:normal;margin-bottom:15px;}table{border-collapse:collapse;}td{border:1px solid #ddd;padding:7px 12px;}.it td:first-child{background:#f0f3ff;font-weight:bold;width:130px;}@media print{@page{margin:12mm;}}</style></head><body><h1>&#x1F4DA; WORKSHEET 5 &#x1F4CA;</h1><h2>Comparative Information (A1) &bull; M3 - Grade 9 | Sections 2, 4 &amp; 6</h2><hr style="border:1px solid #667eea;margin-bottom:15px;"><table class="it" style="max-width:520px;margin:0 auto 20px;"><tr><td>Nickname</td><td><b>' + nickname + '</b></td><td>Student ID</td><td><b>' + studentId + '</b></td></tr><tr><td>Class</td><td><b>' + section + '</b></td><td>Total Attempts</td><td><b>' + history.length + ' / 3</b></td></tr><tr><td>All Scores</td><td><b>' + (allScores.join(', ') || '-') + '</b></td><td>Highest</td><td><b>' + highest + '/10</b></td></tr><tr><td>Final Status</td><td colspan="3"><b style="color:' + (hasPassed ? '#2e7d32' : '#c62828') + '">' + (hasPassed ? '&#x2705; PASSED' : '&#x274C; NOT YET PASSED') + '</b></td></tr><tr><td>Printed On</td><td colspan="3">' + new Date().toLocaleString() + '</td></tr></table><hr style="margin-bottom:20px;"><h3 style="text-align:center;color:#667eea;margin-bottom:15px;">&#x1F4CB; All Submission Records</h3>' + attemptsHtml + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">M3 English Worksheet 5 &bull; Comparative Information &bull; carlton-title.github.io</p><script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script></body></html>';
+        var pw = window.open('', '_blank', 'width=950,height=750');
+        if (pw) { pw.document.write(printHTML); pw.document.close(); }
+        else { alert('Please allow pop-ups for this page to print your record.'); }
+    }
+
+    function updateAttemptsDisplay() {
+        document.getElementById('attemptsUsed').textContent = attempts;
+        var msg = document.getElementById('attemptsMessage');
+        var studentId = document.getElementById('studentId').value.trim();
+        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            msg.innerHTML = '&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว';
+            msg.style.color = '#c41e3a';
+        } else {
+            msg.innerHTML = 'โอกาสเหลือ: ' + (maxAttempts - attempts) + ' ครั้ง';
+            msg.style.color = '#666';
+        }
+    }
+
+    updateAttemptsDisplay();
+</script>
+</body>
+</html>
