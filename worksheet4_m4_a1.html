@@ -757,6 +757,10 @@
           if (typeof seededShuffle === 'function') window.seededShuffle = arr => [...arr];
           if (typeof applySeededOrder === 'function') window.applySeededOrder = arr => arr;
 
+          // Show the Thai Name dropdown group (hidden by default, shown by loadThaiNames)
+          const thaiGroup = document.getElementById('thaiNameGroup');
+          if (thaiGroup) thaiGroup.style.display = 'block';
+
           // Populate thaiName dropdown with Kyle
           const thaiSel = document.getElementById('thaiName');
           if (thaiSel) {
