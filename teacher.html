@@ -1,675 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teacher Dashboard — Sikhio Sawadphadung Wittaya School</title>
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%);min-height:100vh;padding:20px}
-    /* ── LOGIN ── */
-    #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
-    .login-box{background:#fff;border-radius:20px;padding:50px 40px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
-    .login-box h1{color:#1a237e;font-size:1.8em;margin-bottom:6px}
-    .login-box p{color:#777;margin-bottom:30px;font-size:.95em}
-    .login-box input{width:100%;padding:14px 16px;border:2px solid #ddd;border-radius:10px;font-size:1em;margin-bottom:16px;outline:none}
-    .login-box input:focus{border-color:#1a237e}
-    .btn-login{width:100%;padding:14px;background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:10px;font-size:1.05em;cursor:pointer;font-weight:bold}
-    .login-error{color:#c62828;font-size:.9em;margin-top:10px;display:none}
-    /* ── PORTAL ── */
-    #portal{display:none}
-    .top-bar{background:#fff;border-radius:14px;padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.15)}
-    .top-bar h1{color:#1a237e;font-size:1.3em}
-    .top-bar p{color:#666;font-size:.85em;margin-top:2px}
-    .btn-logout{background:#f5f5f5;border:1px solid #ddd;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:.9em;color:#555}
-    .btn-logout:hover{background:#ffe0e0;color:#c62828}
-    .container{max-width:1000px;margin:0 auto}
-    .card{background:#fff;border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,.12);margin-bottom:20px}
-    .card h2{color:#1a237e;margin-bottom:20px;font-size:1.1em}
-    .search-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
-    @media(max-width:600px){.search-grid{grid-template-columns:1fr}}
-    .form-group{display:flex;flex-direction:column;gap:6px}
-    .form-group label{font-weight:bold;color:#444;font-size:.9em}
-    .form-group select,.form-group input{padding:11px 14px;border:2px solid #ddd;border-radius:10px;font-size:.95em;outline:none;width:100%;background:#fff}
-    .form-group select:focus,.form-group input:focus{border-color:#1a237e}
-    select:disabled,input:disabled{background:#f5f5f5;color:#999}
-    .btn-search{width:100%;padding:14px;background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:10px;font-size:1.05em;cursor:pointer;font-weight:bold;margin-top:4px}
-    .btn-search:hover{opacity:.9}
-    /* ── RESULTS ── */
-    #resultsSection{display:none}
-    .result-card{border:2px solid #e8eaf6;border-radius:14px;margin-bottom:16px;overflow:hidden}
-    .result-header{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-    .result-header .score{font-size:1.4em;font-weight:bold}
-    .result-header .meta{font-size:.88em;opacity:.9}
-    .badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:.82em;font-weight:bold}
-    .badge-pass{background:#c8e6c9;color:#1b5e20}
-    .badge-fail{background:#ffcdd2;color:#b71c1c}
-    .result-body{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .btn-pdf{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:10px;padding:10px 22px;cursor:pointer;font-size:.95em;font-weight:bold;white-space:nowrap}
-    .no-result{text-align:center;padding:30px;color:#999;font-size:.95em}
-    .loading-msg{text-align:center;padding:20px;color:#777}
-    .table-wrap{overflow-x:auto}
-    table{width:100%;border-collapse:collapse;font-size:.9em}
-    th{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:11px 13px;text-align:left;white-space:nowrap}
-    td{padding:10px 13px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
-    tr:last-child td{border-bottom:none}
-    tr:hover td{background:#f8f9ff}
-    .ans-correct{color:#2e7d32;font-weight:bold}
-    .ans-wrong{color:#c62828}
-    .q-img{max-width:180px;border-radius:6px;border:1px solid #eee}
-    /* ── TEST MODE ── */
-    .test-link{display:flex;align-items:center;justify-content:center;padding:14px 20px;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;color:#856404;font-weight:bold;text-decoration:none;font-size:.95em;transition:background .2s}
-    .test-link:hover{background:#ffe082;border-color:#f9a825}
-    /* ── WORKSHEET LINKS ── */
-    .ws-links-grid{display:grid;grid-template-columns:1fr;gap:12px}
-    .ws-row{border:2px solid #e8eaf6;border-radius:12px;overflow:hidden}
-    .ws-row-header{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:10px 16px;font-weight:bold;font-size:.95em}
-    .ws-row-body{padding:0}
-    .ws-variant{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap}
-    .ws-variant:last-child{border-bottom:none}
-    .ws-variant-label{min-width:90px;font-weight:bold;color:#1a237e;font-size:.88em}
-    .ws-variant-classes{min-width:120px;color:#555;font-size:.85em}
-    .ws-variant-url{flex:1;font-size:.8em;color:#999;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-    .ws-variant-url.active{color:#1a237e}
-    .ws-variant-actions{display:flex;gap:8px;flex-shrink:0}
-    .btn-ws-open{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;border:none;border-radius:7px;padding:7px 14px;cursor:pointer;font-size:.83em;font-weight:bold;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-    .btn-ws-open:hover{opacity:.85}
-    .btn-ws-copy{background:#f0f4ff;color:#1a237e;border:1px solid #c5cae9;border-radius:7px;padding:7px 14px;cursor:pointer;font-size:.83em;font-weight:bold;white-space:nowrap}
-    .btn-ws-copy:hover{background:#e8eaf6}
-    .btn-ws-copy.copied{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
-    .ws-inactive-label{color:#bbb;font-style:italic;font-size:.85em}
-    .ws-number-badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 8px;margin-left:6px;font-size:.82em}
-    /* ── PRINT ── */
-    @media print{
-      body{background:#fff;padding:0}
-      #printArea{display:block!important}
-      .no-print{display:none!important}
-      .print-page{page-break-after:always}
-    }
-    #printArea{display:none}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard — Sikhio Sawadphadung Wittaya School</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%); min-height:100vh; padding:20px; }
+
+        /* LOGIN */
+        #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+        .login-box { background:white; border-radius:20px; padding:50px 40px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; }
+        .login-box h1 { color:#1a237e; font-size:1.8em; margin-bottom:6px; }
+        .login-box p { color:#777; margin-bottom:30px; font-size:.95em; }
+        .login-box input { width:100%; padding:14px 16px; border:2px solid #ddd; border-radius:10px; font-size:1em; margin-bottom:16px; outline:none; }
+        .login-box input:focus { border-color:#1a237e; }
+        .btn-login { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; }
+        .login-error { color:#c62828; font-size:.9em; margin-top:10px; display:none; }
+
+        /* PORTAL */
+        #portal { display:none; }
+        .top-bar { background:white; border-radius:14px; padding:16px 24px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 20px rgba(0,0,0,.15); }
+        .top-bar h1 { color:#1a237e; font-size:1.4em; }
+        .btn-logout { background:#f5f5f5; border:1px solid #ddd; border-radius:8px; padding:8px 16px; cursor:pointer; font-size:.9em; color:#555; }
+        .btn-logout:hover { background:#ffe0e0; color:#c62828; }
+
+        .container { max-width:1000px; margin:0 auto; }
+        .card { background:white; border-radius:16px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,.12); margin-bottom:20px; }
+        .card h2 { color:#1a237e; margin-bottom:20px; font-size:1.15em; }
+
+        /* SEARCH FORM */
+        .search-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+        @media(max-width:600px){ .search-grid { grid-template-columns:1fr; } }
+        .form-group { display:flex; flex-direction:column; gap:6px; }
+        .form-group label { font-weight:bold; color:#444; font-size:.9em; }
+        .form-group select, .form-group input {
+            padding:11px 14px; border:2px solid #ddd; border-radius:10px;
+            font-size:.95em; outline:none; width:100%; background:white;
+        }
+        .form-group select:focus, .form-group input:focus { border-color:#1a237e; }
+        select:disabled, input:disabled { background:#f5f5f5; color:#999; }
+
+        .btn-search { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; margin-top:4px; }
+        .btn-search:hover { opacity:.9; }
+        .btn-search:disabled { opacity:.5; cursor:not-allowed; }
+
+        /* RESULTS */
+        #resultsSection { display:none; }
+        .result-card { border:2px solid #e8eaf6; border-radius:14px; margin-bottom:16px; overflow:hidden; }
+        .result-header { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .result-header .score { font-size:1.4em; font-weight:bold; }
+        .result-header .meta { font-size:.88em; opacity:.9; }
+        .badge { display:inline-block; padding:4px 12px; border-radius:12px; font-size:.82em; font-weight:bold; }
+        .badge-pass { background:#c8e6c9; color:#1b5e20; }
+        .badge-fail { background:#ffcdd2; color:#b71c1c; }
+        .result-body { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+        .result-info { font-size:.92em; color:#555; }
+        .btn-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:.95em; font-weight:bold; white-space:nowrap; }
+        .btn-pdf:hover { opacity:.88; }
+
+        .no-result { text-align:center; padding:30px; color:#999; font-size:.95em; }
+        .loading-msg { text-align:center; padding:20px; color:#777; }
+
+        /* ALL SUBMISSIONS TABLE */
+        .table-wrap { overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; font-size:.9em; }
+        th { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:11px 13px; text-align:left; white-space:nowrap; }
+        td { padding:10px 13px; border-bottom:1px solid #f0f0f0; vertical-align:middle; }
+        tr:hover td { background:#f5f7ff; }
+        .badge-ws { background:#e3f2fd; color:#0d47a1; }
+        .btn-view-sm { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:7px; padding:5px 13px; cursor:pointer; font-size:.82em; font-weight:bold; }
+
+        /* PRINT MODAL */
+        #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
+        #printModal.open { display:flex; }
+        .modal-box { background:white; border-radius:20px; padding:30px; max-width:880px; width:100%; max-height:90vh; overflow-y:auto; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+        .modal-header h2 { color:#1a237e; font-size:1.15em; }
+        .btn-print-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 20px; cursor:pointer; font-size:.93em; font-weight:bold; }
+        .btn-close-modal { background:#f5f5f5; border:1px solid #ddd; border-radius:10px; padding:10px 16px; cursor:pointer; color:#555; }
+
+        .sub-info-table { border-collapse:collapse; width:100%; margin-bottom:18px; }
+        .sub-info-table td { padding:8px 11px; border:1px solid #ddd; font-size:.9em; }
+        .sub-info-table td:first-child { background:#f0f3ff; font-weight:bold; width:120px; }
+        .q-card { border:1px solid #e0e0e0; border-radius:10px; margin-bottom:12px; overflow:hidden; }
+        .q-card-img { width:100%; max-height:200px; object-fit:cover; }
+        .q-header { background:#f0f3ff; padding:10px 14px; font-weight:bold; color:#1a237e; font-size:.9em; border-bottom:1px solid #e0e0e0; display:flex; gap:8px; align-items:flex-start; }
+        .qnum { background:#1a237e; color:white; border-radius:50%; width:24px; height:24px; min-width:24px; display:flex; align-items:center; justify-content:center; font-size:.8em; }
+        .q-body { padding:12px 14px; }
+        .opt-row { padding:6px 11px; border-radius:6px; margin-bottom:4px; font-size:.88em; border:1px solid #eee; display:flex; align-items:center; gap:8px; }
+        .opt-sc { background:#c8e6c9; border-color:#4caf50; font-weight:bold; }
+        .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
+        .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
+        .opt-plain { background:#fafafa; color:#aaa; }
+        .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
+        /* WORKSHEET LINKS CARD */
+        .ws-links-grid { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+        .ws-row { border:2px solid #e8eaf6; border-radius:12px; overflow:hidden; }
+        .ws-row-header { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:10px 18px; font-weight:bold; font-size:.95em; display:flex; align-items:center; gap:10px; }
+        .ws-number-badge { background:rgba(255,255,255,.22); border-radius:8px; padding:2px 10px; font-size:.82em; letter-spacing:.5px; }
+        .ws-row-body { padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px; }
+        .ws-variant { display:flex; align-items:center; gap:10px; padding:9px 14px; background:#f5f7ff; border-radius:10px; border:1px solid #e8eaf6; flex:1; min-width:260px; flex-wrap:wrap; }
+        .ws-variant-label { background:#1a237e; color:white; border-radius:6px; padding:2px 10px; font-size:.82em; font-weight:bold; white-space:nowrap; }
+        .ws-variant-classes { color:#555; font-size:.88em; white-space:nowrap; }
+        .ws-active-url { color:#1a237e; font-weight:bold; font-size:.88em; text-decoration:none; margin-left:auto; }
+        .ws-active-url:hover { text-decoration:underline; }
+        .ws-inactive-label { color:#bbb; font-size:.88em; font-style:italic; margin-left:auto; }
+        .kyle-test-section { margin-top:18px; padding:14px 18px; background:#fff8e1; border-radius:12px; border:2px dashed #ffb300; }
+        .kyle-test-section h3 { color:#e65100; font-size:.92em; margin-bottom:10px; }
+        .kyle-test-links { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+        .kyle-test-link { display:inline-block; background:#fff3e0; border:1px solid #ffb300; border-radius:8px; padding:7px 16px; color:#e65100; font-weight:bold; font-size:.88em; text-decoration:none; }
+        .kyle-test-link:hover { background:#ffe0b2; }
+        .kyle-note { color:#999; font-size:.8em; font-style:italic; }
+    </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="loginScreen">
-  <div class="login-box">
-    <h1>🏫 Teacher Dashboard</h1>
-    <p>Sikhio Sawadphadung Wittaya School<br>Nakhon Ratchasima 30140 Thailand</p>
-    <input type="password" id="pwInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn-login" onclick="doLogin()">Login</button>
-    <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
-  </div>
+    <div class="login-box">
+        <h1>🏫 Teacher Dashboard</h1>
+        <p>Sikhio Sawadphadung Wittaya School<br>Nakhon Ratchasima 30140 Thailand</p>
+        <input type="password" id="pwInput" placeholder="Enter teacher password" autocomplete="off">
+        <button class="btn-login" onclick="doLogin()">🔐 Login</button>
+        <div class="login-error" id="loginError">❌ Incorrect password.</div>
+    </div>
 </div>
 
 <!-- PORTAL -->
 <div id="portal">
-  <div class="top-bar no-print">
-    <div>
-      <h1>🏫 Teacher Dashboard</h1>
-      <p>Sikhio Sawadphadung Wittaya School · Nakhon Ratchasima 30140 Thailand</p>
-    </div>
-    <button class="btn-logout" onclick="doLogout()">Logout</button>
-  </div>
+<div class="container">
 
-  <div class="container">
+    <div class="top-bar">
+        <h1>🏫 Teacher Dashboard — Worksheet Submissions</h1>
+        <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
+
     <!-- SEARCH CARD -->
-    <div class="card no-print">
-      <h2>🔍 Student Worksheet Search</h2>
-      <div class="search-grid">
-        <div class="form-group">
-          <label>Class Section</label>
-          <select id="selSection" onchange="onSectionChange()">
-            <option value="">— Select Section —</option>
-            <option value="M3/2">M3/2</option>
-            <option value="M3/4">M3/4</option>
-            <option value="M3/6">M3/6</option>
-            <option value="M3/10">M3/10</option>
-            <option value="M3/12">M3/12</option>
-            <option value="M4/1">M4/1</option>
-            <option value="M4/2">M4/2</option>
-            <option value="M4/3">M4/3</option>
-            <option value="M4/4">M4/4</option>
-            <option value="M4/5">M4/5</option>
-            <option value="M4/6">M4/6</option>
-            <option value="M4/7">M4/7</option>
-            <option value="M4/8">M4/8</option>
-            <option value="M4/9">M4/9</option>
-            <option value="M4/10">M4/10</option>
-            <option value="M4/11">M4/11</option>
-            <option value="M4/12">M4/12</option>
-            <option value="M4/13">M4/13</option>
-          </select>
+    <div class="card">
+        <h2>🔍 Find Student Worksheet</h2>
+        <div class="search-grid">
+            <div class="form-group">
+                <label>Class / Section</label>
+                <select id="selSection" onchange="onSectionChange()">
+                    <option value="">— Select Section —</option>
+                    <optgroup label="M3">
+                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                        <option>M3/10</option><option>M3/12</option>
+                    </optgroup>
+                    <optgroup label="M4">
+                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
+                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
+                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
+                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
+                        <option>M4/13</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Student Name</label>
+                <select id="selStudent" onchange="onStudentChange()" disabled>
+                    <option value="">— Select Section First —</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Student ID (auto-filled)</label>
+                <input type="text" id="inputStudentId" placeholder="Auto-filled from name selection" disabled>
+            </div>
+            <div class="form-group">
+                <label>Worksheet Number</label>
+                <select id="selWorksheet">
+                    <option value="">— Select Worksheet —</option>
+                    <option value="WS1">Worksheet 1</option>
+                    <option value="WS2">Worksheet 2</option>
+                    <option value="WS3">Worksheet 3</option>
+                    <option value="WS4">Worksheet 4</option>
+                    <option value="WS5">Worksheet 5</option>
+                    <option value="WS6">Worksheet 6</option>
+                </select>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Student</label>
-          <select id="selStudent" disabled>
-            <option value="">— Select Section First —</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Worksheet</label>
-          <select id="selWorksheet">
-            <option value="">— Select Worksheet —</option>
-            <option value="1">Worksheet 1</option>
-            <option value="2">Worksheet 2</option>
-            <option value="3">Worksheet 3</option>
-            <option value="4">Worksheet 4</option>
-            <option value="5">Worksheet 5</option>
-            <option value="6">Worksheet 6</option>
-          </select>
-        </div>
-        <div class="form-group" style="justify-content:flex-end">
-          <label>&nbsp;</label>
-          <button class="btn-search" onclick="doSearch()">🔎 Search</button>
-        </div>
-      </div>
+        <button class="btn-search" id="btnSearch" onclick="doSearch()">🔎 Search</button>
     </div>
-
-    <!-- TEST MODE CARD -->
-    <div class="card no-print">
-      <h2>🧪 Test Mode — Worksheet Links</h2>
-      <div style="background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;margin-bottom:16px;color:#856404;font-size:.88em;">
-        ⚠️ Teacher use only. These links reveal <strong>Kyle (Test Student)</strong> in the student dropdown for troubleshooting. Do not share with students.
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
-        <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=Carlton2026" target="_blank" class="test-link">🧪 Worksheet 4 — Test Mode</a>
-        <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=Carlton2026" target="_blank" class="test-link">🧪 Worksheet 4 M3 A2 — Test Mode</a>
-                    <a href="worksheet4_m4_a1.html?testmode=Carlton2026&cb=1" target="_blank" class="test-link">🧪 Worksheet 4 M4 A1 — Test Mode</a>
-                    <a href="worksheet4_m4_a2.html?testmode=Carlton2026&cb=1" target="_blank" class="test-link">🧪 Worksheet 4 M4 A2 — Test Mode</a>
-                    <a href="worksheet5_m3_a1.html" target="_blank" class="test-link">🧪 Worksheet 5 M3 A1 — Test Mode</a>
-      </div>
-    </div>
-
-    <!-- WORKSHEET LINKS CARD -->
-    <div class="card no-print">
-      <h2>📋 Student Worksheet Links</h2>
-      <p style="color:#666;font-size:.88em;margin-bottom:16px;">Click <strong>Open</strong> to preview in a new tab, or <strong>Copy Link</strong> to copy the URL to share with your students.</p>
-      <div class="ws-links-grid">
-
-        <!-- WORKSHEET 1 -->
-        <div class="ws-row">
-          <div class="ws-row-header">Worksheet 1 <span class="ws-number-badge">WS1</span></div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">A1</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">A2</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- WORKSHEET 2 -->
-        <div class="ws-row">
-          <div class="ws-row-header">Worksheet 2 <span class="ws-number-badge">WS2</span></div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">A1</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">A2</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- WORKSHEET 3 -->
-        <div class="ws-row">
-          <div class="ws-row-header">Worksheet 3 <span class="ws-number-badge">WS3</span></div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">A1</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">A2</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- WORKSHEET 4 — ACTIVE -->
-        <div class="ws-row" style="border-color:#1a237e;">
-          <div class="ws-row-header" style="background:linear-gradient(135deg,#1565c0,#6a1b9a);">
-            Worksheet 4 — Health &amp; Weather
-            <span class="ws-number-badge">WS4 · ACTIVE</span>
-          </div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">M3 A1</span>
-              <span class="ws-variant-classes">M3/2, M3/4, M3/6</span>
-              <span class="ws-variant-url active" id="url_ws4_m3_a1">https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html</span>
-              <div class="ws-variant-actions">
-                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html" target="_blank" class="btn-ws-open">🔗 Open</a>
-                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html', this)">📋 Copy</button>
-              </div>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">M3 A2</span>
-              <span class="ws-variant-classes">M3/10, M3/12</span>
-              <span class="ws-variant-url active" id="url_ws4_m3_a2">https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html</span>
-              <div class="ws-variant-actions">
-                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html" target="_blank" class="btn-ws-open">🔗 Open</a>
-                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html', this)">📋 Copy</button>
-              </div>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">M4 A1</span>
-              <span class="ws-variant-classes">M4/1 �3 M4/9</span>
-              <span class="ws-variant-url active" id="url_ws4_m4_a1">https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html</span>
-              <div class="ws-variant-actions">
-                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html" target="_blank" class="btn-ws-open">🔗 Open</a>
-                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html', this)">📋 Copy</button>
-              </div>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">M4 A2</span>
-              <span class="ws-variant-classes">M4/10 – M4/13</span>
-              <span class="ws-variant-url active" id="url_ws4_m4_a2">https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html</span>
-              <div class="ws-variant-actions">
-                <a href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html" target="_blank" class="btn-ws-open">🔗 Open</a>
-                <button class="btn-ws-copy" onclick="copyLink('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html', this)">📋 Copy</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- WORKSHEET 5 -->
-        <div class="ws-row">
-          <div class="ws-row-header">Worksheet 5 <span class="ws-number-badge">WS5</span></div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">A1</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">A2</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- WORKSHEET 6 -->
-        <div class="ws-row">
-          <div class="ws-row-header">Worksheet 6 <span class="ws-number-badge">WS6</span></div>
-          <div class="ws-row-body">
-            <div class="ws-variant">
-              <span class="ws-variant-label">A1</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-            <div class="ws-variant">
-              <span class="ws-variant-label">A2</span>
-              <span class="ws-variant-classes">—</span>
-              <span class="ws-variant-url ws-inactive-label">Not yet assigned</span>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- end ws-links-grid -->
-    </div><!-- end worksheet links card -->
 
     <!-- RESULTS -->
     <div id="resultsSection">
-      <div class="card">
-        <h2 id="resultsTitle">Results</h2>
-        <div id="resultsBody"></div>
-      </div>
+        <div class="card">
+            <h2 id="resultsTitle">Search Results</h2>
+            <div id="resultsBody"></div>
+        </div>
     </div>
-  </div>
-<div style="background:#fff8f8;border:2px solid #c0392b;border-radius:12px;padding:24px;margin:24px 0">
-  <h2 style="color:#c0392b;margin-top:0">📋 No Submission Check</h2>
-  <p style="color:#666;font-size:.9em;margin-top:4px">Find students who have NOT submitted a worksheet. Worksheet 4 is pre-selected.</p>
-  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-top:16px">
-    <div>
-      <label style="font-weight:600;display:block;margin-bottom:4px;font-size:.9em">Class Section</label>
-      <select id="nsSection" style="padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:1em;min-width:150px">
-        <option value="">— Select Section —</option>
-        <option>M3/2</option><option>M3/4</option><option>M3/6</option><option>M3/10</option><option>M3/12</option>
-        <option>M4/1</option><option>M4/2</option><option>M4/3</option><option>M4/4</option><option>M4/5</option>
-        <option>M4/6</option><option>M4/7</option><option>M4/8</option><option>M4/9</option>
-        <option>M4/10</option><option>M4/11</option><option>M4/12</option><option>M4/13</option>
-      </select>
+
+    <!-- STUDENT WORKSHEET LINKS -->
+    <div class="card">
+        <h2>📋 Student Worksheet Links</h2>
+        <div class="ws-links-grid">
+
+            <!-- WS5 M3 A1 -->
+            <div class="ws-row">
+                <div class="ws-row-header">
+                    Worksheet 5 &nbsp;<span class="ws-number-badge">WS5</span>
+                </div>
+                <div class="ws-row-body">
+                    <div class="ws-variant">
+                        <span class="ws-variant-label">A1</span>
+                        <span class="ws-variant-classes">M3/2 &nbsp;·&nbsp; M3/4 &nbsp;·&nbsp; M3/6</span>
+                        <a class="ws-active-url" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">🔗 worksheet5_m3_a1.html</a>
+                    </div>
+                    <div class="ws-variant">
+                        <span class="ws-variant-label">A2</span>
+                        <span class="ws-variant-classes">—</span>
+                        <span class="ws-inactive-label">Not yet assigned</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Kyle Test Mode -->
+        <div class="kyle-test-section">
+            <h3>🧪 Kyle Test Mode &nbsp;<small style="font-weight:normal;color:#999;">— visible to teacher only, never shown to students</small></h3>
+            <div class="kyle-test-links">
+                <a class="kyle-test-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">🧪 Worksheet 5 M3 A1 — Test Student (Kyle · ID 54565)</a>
+            </div>
+            <p class="kyle-note">Select section M3/2 → Test Student / Kyle to activate test mode.</p>
+        </div>
     </div>
-    <div>
-      <label style="font-weight:600;display:block;margin-bottom:4px;font-size:.9em">Worksheet</label>
-      <select id="nsWorksheet" style="padding:8px 12px;border:1px solid #ccc;border-radius:6px;font-size:1em;min-width:150px">
-        <option value="4" selected>Worksheet 4</option>
-        <option value="1">Worksheet 1</option><option value="2">Worksheet 2</option>
-        <option value="3">Worksheet 3</option><option value="5">Worksheet 5</option><option value="6">Worksheet 6</option>
-      </select>
+
+    <!-- ALL SUBMISSIONS -->
+    <div class="card">
+        <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;"></span>
+            <button onclick="loadAll()" style="float:right;background:#f0f3ff;border:1px solid #c5cae9;border-radius:8px;padding:6px 14px;cursor:pointer;color:#1a237e;font-size:.82em;font-weight:bold;">↻ Refresh</button>
+        </h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr>
+                    <th>#</th><th>ID</th><th>Name</th><th>Thai Name</th>
+                    <th>Section</th><th>Worksheet</th><th>Score</th>
+                    <th>Status</th><th>Submitted</th><th></th>
+                </tr></thead>
+                <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
+            </table>
+        </div>
     </div>
-    <div>
-      <button onclick="checkNonSubmitters()" style="background:#c0392b;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:1em;cursor:pointer;font-weight:600">🔍 Check</button>
-    </div>
-  </div>
-  <div id="nsResults" style="margin-top:16px"></div>
-</div>
 
 </div>
+</div>
 
-<!-- PRINT AREA -->
-<div id="printArea"></div>
+<!-- PRINT MODAL -->
+<div id="printModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modalTitle">Submission Detail</h2>
+            <div style="display:flex;gap:10px;">
+                <button class="btn-print-pdf" onclick="doPrint()">📥 Download PDF Copy</button>
+                <button class="btn-close-modal" onclick="closeModal()">✕ Close</button>
+            </div>
+        </div>
+        <div id="printContent"></div>
+    </div>
+</div>
 
 <script>
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
+var allSubmissions = [];
 
-// ── COPY LINK ─────────────────────────────────────────────────────────────────
-function copyLink(url, btn) {
-  navigator.clipboard.writeText(url).then(function() {
-    var orig = btn.textContent;
-    btn.textContent = '✅ Copied!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = orig;
-      btn.classList.remove('copied');
-    }, 2000);
-  }).catch(function() {
-    // fallback for older browsers
-    var ta = document.createElement('textarea');
-    ta.value = url;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    var orig = btn.textContent;
-    btn.textContent = '✅ Copied!';
-    btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = orig;
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
+// ── Student data ──
+var studentData = {
+    'M3/2': [
+        {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
+        {id:'37582',name:'เด็กชายจักรภัทร เอี้ยงทอง',nick:'Premium'},
+        {id:'37583',name:'เด็กชายชลกร ลื่นกลาง',nick:'Mos'},
+        {id:'37584',name:'เด็กชายณภัทร เหลาไชย',nick:'Tang'},
+        {id:'37585',name:'เด็กหญิงดวงกมล เจ๊กจันทึก',nick:'Aom'},
+        {id:'37586',name:'เด็กชายเตชิต เตียนจันทึก',nick:'First'},
+        {id:'37587',name:'เด็กชายเตชินท์ แท้สูงเนิน',nick:'Techin'},
+        {id:'37588',name:'เด็กชายธนเทพ ฤทธิกุล',nick:'Oat'},
+        {id:'37589',name:'เด็กชายธนภัทร ธูปสูงเนิน',nick:'Phat'},
+        {id:'37590',name:'เด็กชายนัทธพงศ์ เทียนทอง',nick:'Guy'},
+        {id:'37591',name:'เด็กชายประเสริฐ เพียซ้าย',nick:'Jay'},
+        {id:'37592',name:'เด็กชายปิยวัฒน์ อำภาว์',nick:'Zee'},
+        {id:'37593',name:'เด็กชายพชรพล ไทธานี',nick:'Poom'},
+        {id:'37594',name:'เด็กชายภาคิน สุขประโคน',nick:'Dew'},
+        {id:'37596',name:'เด็กชายภูริพัฒน์ แหลมจันทึก',nick:'Phum 2'},
+        {id:'37597',name:'เด็กชายมานะศักดิ์ เยี่ยมจันทึก',nick:'Water'},
+        {id:'37598',name:'เด็กชายรัฐพล เปล่งสันเทียะ',nick:'Phum 1'},
+        {id:'37599',name:'เด็กชายรัฐศาสตร์ ตรงจันทึก',nick:'Kawjao'},
+        {id:'37600',name:'เด็กชายวิศรุต คุ้มจันทึก',nick:'Tae'},
+        {id:'37601',name:'เด็กชายสุกฤษฎิ์ สุคนธ์ขจร',nick:'Palm'},
+        {id:'37602',name:'เด็กชายอติเทพ จันทร์ผ่อง',nick:'Auto'},
+        {id:'37603',name:'เด็กหญิงกัญญาลักษณ์ มูลศิริ',nick:'Ploy'},
+        {id:'37604',name:'เด็กหญิงจินดาภา แก้วผลึก',nick:'Temduang'},
+        {id:'37606',name:'เด็กหญิงชญาภา เผือดจันทึก',nick:'Yaya'},
+        {id:'37607',name:'เด็กหญิงชัญญานุช พันจันทึก',nick:'L'},
+        {id:'37608',name:'เด็กหญิงฐิติชญา เอ็นจันทึก',nick:'Khao'},
+        {id:'37609',name:'เด็กหญิงฐิติมา พลฉิมพลี',nick:'Na'},
+        {id:'37611',name:'เด็กหญิงนภัสสร จันกง',nick:'Kam1'},
+        {id:'37615',name:'เด็กหญิงภัคจิรา แก้วมีศรี',nick:'Kam2'},
+        {id:'37618',name:'เด็กหญิงวริยา คูพันดุง',nick:'Kib'},
+        {id:'37620',name:'เด็กหญิงสุดารัตน์ มิ่งจันทึก',nick:'Maysa'},
+        {id:'37621',name:'เด็กหญิงอภิญญา เค้าแก้ว',nick:'Fasai'},
+        {id:'37622',name:'เด็กหญิงอภิสรา กออำไพร',nick:'Fanta'},
+        {id:'39688',name:'เด็กหญิงณฐมน ศิริพันดร',nick:'Wawa'},
+        {id:'33680',name:'เด็กหญิงภุชฌารัช ค่ายสงคราม',nick:'Pang'},
+        {id:'54565',name:'Test Student',nick:'Kyle'}
+    ],
+    'M3/4': [
+        {id:'37667',name:'เด็กชายจักรภัทร กลึงสูงเนิน',nick:'Fiw'},
+        {id:'37668',name:'เด็กชายจีรศักดิ์ ทองรอด',nick:'Kaow'},
+        {id:'37669',name:'เด็กชายชัชชพร กลองกลาง',nick:'Tolap'},
+        {id:'37670',name:'เด็กชายทวีอมร ศรีอำพล',nick:'Drift'},
+        {id:'37671',name:'เด็กชายทินภัทร เคลิ้มกระโทก',nick:'Fakhram'},
+        {id:'37674',name:'เด็กชายมงคล รัตนพงศ์พร',nick:'Tee'},
+        {id:'37675',name:'เด็กชายวชิรวิชญ์ พนมเขต',nick:'Angpao'},
+        {id:'37676',name:'เด็กชายอภิชา จูจันทึก',nick:'Eik'},
+        {id:'37677',name:'เด็กหญิงกนกวรรณ วัฒนากลาง',nick:'Pai'},
+        {id:'37678',name:'เด็กหญิงกัญญาณัฐ เที่ยงสันเทียะ',nick:'Wine'},
+        {id:'37679',name:'เด็กหญิงกัญญาณัฐ คำจริง',nick:'Peem'},
+        {id:'37680',name:'เด็กหญิงกุลปริยา พิมพ์วัน',nick:'Garfield'},
+        {id:'37681',name:'เด็กหญิงชญานิษฐ์ คงวิโรจน์',nick:'Bellda'},
+        {id:'37682',name:'เด็กหญิงชนาภา เดสันเทียะ',nick:'Nooyim'},
+        {id:'37683',name:'เด็กหญิงชุติกาญจน์ ไชยเฉลิม',nick:'Pakwan'},
+        {id:'37684',name:'เด็กหญิงณัฐณิชา แดงจันทึก',nick:'Fahsai'},
+        {id:'37685',name:'เด็กหญิงณิชาภัทร ดีบุรี',nick:'Foam'},
+        {id:'37686',name:'เด็กหญิงทัดพิชาภรณ์ พิมพ์กลาง',nick:'Thadcha'},
+        {id:'37687',name:'เด็กหญิงธนภรณ์ แซ่ลี้',nick:'Rak'},
+        {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play',1,        {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
+        {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
+        {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
+        {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
+        {id:'37693',name:'เด็กหญิงปุญชรัสมิ์ คณะขาม',nick:'Apo'},
+        {id:'37694',name:'เด็กหญิงพลอยชมพู บุ่นจันทึก',nick:'Ploy'},
+        {id:'37695',name:'เด็กหญิงพัชรพร งาจันทึก',nick:'Pakkad'},
+        {id:'37697',name:'เด็กหญิงพิฌาอร โกสุม',nick:'Moved'},
+        {id:'37698',name:'เด็กหญิงพิมพ์รดา วงศ์ประชุม',nick:'Jenny'},
+        {id:'37700',name:'เด็กหญิงภคพร สุพล',nick:'Bonus'},
+        {id:'37701',name:'เด็กหญิงภรณ์ชนก พลลาภ',nick:'Veeta'},
+        {id:'37702',name:'เด็กหญิงรินรดา แคะมะดัน',nick:'Aing'},
+        {id:'37703',name:'เด็กหญิงรุจิสา ศาสตร์ดำรงค์',nick:'Ongfong'},
+        {id:'37704',name:'เด็กหญิงสิราวรรณ แสงเพ็ชร',nick:'Am'},
+        {id:'37705',name:'เด็กหญิงสุดาทิพย์ บุญทัยสง',nick:'Fangkhaw'},
+        {id:'37706',name:'เด็กหญิงสุรีรัตน์ กะตะศิลา',nick:'Meena'},
+        {id:'37707',name:'เด็กหญิงอรพรรณ อามาตร์',nick:'Earth'},
+        {id:'39678',name:'นนทวัฒน์ พันธุสุนทร',nick:'Non'}
+    ],
+    'M3/6': [
+        {id:'37750',name:'เด็กชายกฤษณทัต รักษ์จันทึก',nick:'Pepper'},
+        {id:'37751',name:'เด็กชายณัฐปกรณ์ นิลกำแหง',nick:'Model'},
+        {id:'37752',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Fuas'},
+        {id:'37753',name:'เด็กชายธนกฤต สุพรรณกลาง',nick:'Guitar'},
+        {id:'37754',name:'เด็กชายธีรภัทร ฟักสูงเนิน',nick:'Moss'},
+        {id:'37755',name:'เด็กชายนฤบดี เป่ยคำภา',nick:'Namo'},
+        {id:'37756',name:'เด็กชายนวพล สัญชานันท์',nick:'Tle'},
+        {id:'37757',name:'เด็กชายประพัฒน์ จันทร์ไทย',nick:'Earth'},
+        {id:'37758',name:'เด็กชายพงษ์ศิริพัฒน์ เทิบจันทึก',nick:'Aomsub'},
+        {id:'37759',name:'เด็กชายพิทวัส เงื่อนพิมาย',nick:'Ninja'},
+        {id:'37760',name:'เด็กชายพีรพัฒน์ คำป้อง',nick:'PP'},
+        {id:'37761',name:'เด็กชายภพธรรม สุดหา',nick:'Porch'},
+        {id:'37762',name:'เด็กชายภาคิน ธงวิชัย',nick:'Sand'},
+        {id:'37763',name:'เด็กชายภาณิญ ทองนอก',nick:'Folk'},
+        {id:'37764',name:'เด็กชายภูวดล มาสุข',nick:'Phu'},
+        {id:'37765',name:'เด็กชายภูวิสิฐกุล ภูพวก',nick:'Pooh'},
+        {id:'37766',name:'เด็กชายอนุทัศน์ แซวจันทึก',nick:'Toomtam'},
+        {id:'37767',name:'เด็กหญิงกมลพิชญ์ เจียนรำลึก',nick:'Shisha'},
+        {id:'37768',name:'เด็กหญิงกวิสรา สีนวล',nick:'Idea'},
+        {id:'37769',name:'เด็กหญิงจิตตาภา สุขสูงเนิน',nick:'Pan'},
+        {id:'37770',name:'เด็กหญิงชญาภรณ์ จันคำจร',nick:'Cartoon'},
+        {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pang'},
+        {id:'37772',name:'เด็กหญิงณัฐณิชา ช้อยชด',nick:'Noodee'},
+        {id:'37774',name:'เด็กหญิงบุญญาภา แก้วโพธิ์กลาง',nick:'Ink'},
+        {id:'37775',name:'เด็กหญิงปณิตา แซ่ตั้น',nick:'Benz'},
+        {id:'37776',name:'เด็กหญิงปริยานุช พลจันทึก',nick:'Pu'},
+        {id:'37777',name:'เด็กหญิงปลายฟ้า ฉลูพันธ์',nick:'Playfa'},
+        {id:'37778',name:'เด็กหญิงพัชรพร แกล้วเกล้า',nick:'Sushi'},
+        {id:'37780',name:'เด็กหญิงพิชญาภา ดงเย็น',nick:'Pitchayapha'},
+        {id:'37781',name:'เด็กหญิงเพ็ญพิชชา จิระกุลน์',nick:'Xiider'},
+        {id:'37782',name:'เด็กหญิงรินรดา เกตจันทึก',nick:'Pam'},
+        {id:'37783',name:'เด็กหญิงวรรณภา เขาขุนทด',nick:'Somjeed'},
+        {id:'37784',name:'เด็กหญิงวริศรา มีวัน',nick:'Gift'},
+        {id:'37785',name:'เด็กหญิงศรัณย์พร สัตย์โส',nick:'Khawhom'},
+        {id:'37788',name:'เด็กหญิงสุพรรษา ทัศนาลัย',nick:'Lukwa'},
+        {id:'37789',name:'เด็กหญิงสุภัคตรา บุญมา',nick:'So'},
+        {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
+        {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
+        {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
+    ]
+        'M4/1':[{id:'36771',name:'นายทวีชัย ศรีจันทึก',nick:'Ton'},{id:'36788',name:'นางสาวกฤติยาณี ชัยสงคราม',nick:'Aoy'},{id:'36830',name:'นางสาวกัญญาภัค เร็วจันทึก',nick:'Ploy 1'},{id:'36835',name:'นางสาวธนัชชา ศรีหาวงษ์',nick:'Beer'},{id:'36838',name:'นางสาวพรรณิภา คงชัย',nick:'Palm'},{id:'36840',name:'นางสาวพิมพ์ลภัส ประพงศ์พันธุ์',nick:'Mean'},{id:'36845',name:'นางสาวศิริญากรณ์ บุญธรรม',nick:'Vermicelli'},{id:'36850',name:'นางสาวอาภรณ์รัตน์ เสือรักวงษ์',nick:'Fang 1'},{id:'36857',name:'นายพิชชากร เเสงเเก้ว',nick:'Bas'},{id:'36846',name:'นางสาวบัณฑิตา สารฤทธิ์',nick:'August'},{id:'36849',name:'นางสาวภาวินี สิงห์มหา',nick:'Ploy 2'},{id:'36905',name:'นางสาวเกวลิน อิสริยานนท์',nick:'Gew'},{id:'36934',name:'นายชานนท์ ฤทธิ์ชัยเจริญ',nick:'Cha'},{id:'36939',name:'นายนาฤทธิ์ ตรีมงคล',nick:'Tan'},{id:'36951',name:'นายศรัญยู ทองจันทึก',nick:'U'},{id:'36970',name:'นางสาววิไลลักษณ์ อังกรรัมย์',nick:'Farn'},{id:'36975',name:'นายกนต์ธีร์ สงโนนสูง',nick:'Korn'},{id:'36989',name:'นายศักดากร ทวีลาภ',nick:'Pai'},{id:'36991',name:'นายศุภกร สิงห์จันทึก',nick:'Mix'},{id:'36997',name:'นายอัครวินท์ บุญมา',nick:'Yo'},{id:'37013',name:'นางสาวศศิธร เพียงจันทึก',nick:'Mook'},{id:'37032',name:'นางสาวชญาดา บำรุงตา',nick:'Wan'},{id:'37044',name:'นางสาวพิชญธิดา โสจันทึก',nick:'Baitoey'},{id:'37063',name:'นายกัญจน์ ฉิมพลี',nick:'Jay'},{id:'37116',name:'นายพิชญุตม์ พันธ์งาม',nick:'Tawan'},{id:'37129',name:'นางสาวณัฐชวลี ปราณีตพลกรัง',nick:'Fang 2'},{id:'37140',name:'นางสาววรรณิสา พวกจันทึก',nick:'Mochi'},{id:'39503',name:'นางสาวทิตาธร สอจันทึก',nick:'Fang 3'},{id:'39504',name:'นางสาวสุภัสสรา รักษาสุวรรณ',nick:'Aum'},{id:'39505',name:'นางสาวคีตภัทร สีโท',nick:'Kito'},{id:'39506',name:'นายกิตติศักดิ์ เกงขุนทด',nick:'Vayu'},{id:'39507',name:'นางสาวสุริยาพร ถังกระโทก',nick:'Aom'},{id:'39508',name:'นางสาวชุติกาญจน์ กอบขุนทด',nick:'Idea'},{id:'39509',name:'นางสาวกัณญาลัก แรมจันทึก',nick:'Paerw'},{id:'39510',name:'นางสาววิกันดา สมขุนทด',nick:'Kawfang'},{id:'39511',name:'นางสาวพิมพ์พิกา ไลน้ำอ้อม',nick:'Yew'},{id:'39512',name:'นางสาวศิริกานดา นนท์ประสาท',nick:'Maysa'},{id:'39513',name:'นายปภังกร ถิ่นวงษ์แย',nick:'Pan'},{id:'39514',name:'นางสาวศิวะภาพร สาแช',nick:'Ming'},{id:'39515',name:'นางสาวพิมพ์ชนก อุดมจิตร',nick:'Fah'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    'M4/2':[{id:'36120',name:'นายชินาธิป เศียรนอก',nick:'Kun'},{id:'36175',name:'นายวรเมธ แซ่ย่าง',nick:'Li'},{id:'36428',name:'นางสาวอมรรัตน์ พูลพุทธา',nick:'Maprang'},{id:'36782',name:'นายวชิตะ หมื่นแคล้ว',nick:'Sunday'},{id:'36785',name:'นายศิวนาถ ยอดนอก',nick:'Film 1'},{id:'36804',name:'นางสาววรัทยา ฝุ่นทอง',nick:'Nxmpxn'},{id:'36811',name:'นายคณาธิป กันจันทึก',nick:'Nack'},{id:'36813',name:'นายเตโชดม ทองดอนพุ่ม',nick:'Guy'},{id:'36867',name:'นายศุภสิน ป้อมสุวรรณ',nick:'Save'},{id:'36956',name:'นางสาวกนกพร แดงชาติ',nick:'Film'},{id:'36965',name:'นางสาวนิชนันท์ โตสูงเนิน',nick:'Naming'},{id:'36967',name:'นางสาวรัตนาวดี เนยสูงเนิน',nick:'Kingpai'},{id:'36968',name:'นางสาววรรณวนัช กรวยสูงเนิน',nick:'Bonus'},{id:'36990',name:'นายศิรวิทย์ แสงฤทธิไกร',nick:'Poon'},{id:'37004',name:'นางสาวพรชนัน กลิ่นโสภณ',nick:'Palm'},{id:'37019',name:'นายชัยอนันต์ เชื้อจันทึก',nick:'Jay'},{id:'37026',name:'นายภาคิน เปลี้ยจันทึก',nick:'Aut'},{id:'37029',name:'นายรัตนชัย คณโฑเงิน',nick:'Kong'},{id:'37067',name:'นายธันวา สุขล้น',nick:'Thanwa'},{id:'37077',name:'นายพิชาชาญ วงษ์อินทร์',nick:'Pause'},{id:'37085',name:'นายอริญชัย บุญค้ำ',nick:'Aoo'},{id:'37090',name:'นางสาวขวัญนรินพร นิ่มทอง',nick:'Kwan'},{id:'37105',name:'นางสาวสิราลักษณ์ ม่วงราม',nick:'Manaw'},{id:'37127',name:'นางสาวจิราพัชร คำตัน',nick:'Woonsen'},{id:'37149',name:'นายกิตตินันท์ อุระภูมิ',nick:'Kittinan'},{id:'39516',name:'นายกิตติศักดิ์ มาตรนอก',nick:'King'},{id:'39517',name:'นายพงศธร จริงสูงเนิน',nick:'Phai'},{id:'39518',name:'นายพงศกร มาตย์นอก',nick:'Gae'},{id:'39519',name:'นายพรหมพิริยะ บุญจันทึก',nick:'Diamond'},{id:'39521',name:'นายธนวัฒน์ ไทยมณี',nick:'Cee'},{id:'39522',name:'นายธนภัทร ใยยะธรรม',nick:'Path'},{id:'39523',name:'นายอัคซ๊าส โมหะหมัด',nick:'Akzard'},{id:'39524',name:'นายสุรเดช กระโห้',nick:'Bas'},{id:'39525',name:'นายศิรายุธ แทนขุนทด',nick:'Aom'},{id:'39526',name:'นางสาวกชกร สวยกลาง',nick:'?'},{id:'39527',name:'นายภูริณัฐ สังข์โต',nick:'Ball'},{id:'39528',name:'นายฤทธิ์ทา กรุณรัมย์',nick:'Boss'},{id:'39529',name:'นายธรา รัตนรักษ์',nick:'Gohung'},{id:'39530',name:'นางสาวสุพัตรา บุตรกระโทก',nick:'Cherry'},{id:'39531',name:'นายวรากร ศรีเพ็ชร์',nick:'Kay'}],
+    'M4/3':[{id:'36770',name:'นายเตชิต ภิรมย์',nick:'Tete'},{id:'36839',name:'นางสาวพิชชาภา ขำมะลัง',nick:'Pai'},{id:'36877',name:'นางสาวชลิตา เสริฐสูงเนิน',nick:'Guitar'},{id:'36883',name:'นางสาวธนาภา มาสิงห์',nick:'Meiji'},{id:'36890',name:'นางสาวรมนรินทร์ สิมาแก้ว',nick:'Tonhm'},{id:'36923',name:'นางสาวรมิดา เพียรพ่วงพันธ์',nick:'Fame'},{id:'36924',name:'นางสาววรัญญา ส่งแสง',nick:'Baikhao'},{id:'36958',name:'นางสาวจีรภรณ์ สงขุนทด',nick:'Bell'},{id:'36977',name:'นายญาณากร ดงงาม',nick:'Tawan'},{id:'36982',name:'นายนิธิกร เอ็นจันทึก',nick:'Bom'},{id:'36993',name:'นายสุทธินันท์ แสนบุญ',nick:'Jigzaw'},{id:'36998',name:'นายอาเมียร์คาน โมหะหมัด',nick:'Amirkhan'},{id:'37007',name:'นางสาวแพรวา สินปรุ',nick:'Namprik'},{id:'37008',name:'นางสาวมริษา ม่วงเมือง',nick:'Kafiw'},{id:'37033',name:'นางสาวชวัลลักษณ์ ดาระศาสตร์',nick:'Chawanlak'},{id:'37035',name:'นางสาวณัฐธิดา เข็มชู',nick:'Natthida'},{id:'37039',name:'นางสาวบัณฑิตา ปีจัตุรัส',nick:'Tonhoom'},{id:'37045',name:'นางสาวพิชญา มาจันทึก',nick:'Pham'},{id:'37100',name:'นางสาวพลอยปภัส เหนียวจันทึก',nick:'Pleng'},{id:'37162',name:'นายเศรษฐพงศ์ ขันสิงห์',nick:'Tiewkhao'},{id:'37182',name:'นางสาวพนัชกร แหลมทองหลาง',nick:'Namkaeng'},{id:'37192',name:'นางสาวอัญชิสา นามบุญ',nick:'Anchisa'},{id:'37210',name:'นายอนุรักษ์ อินคงมะดัน',nick:'Auto'},{id:'39532',name:'นายรัฐธีร์ รพีไชยรุจน์',nick:'Kate'},{id:'39533',name:'นายคณนาถ ไพฑูรย์',nick:'Namo'},{id:'39534',name:'นางสาวอิงอร สวัสดีลาภา',nick:'Ing-On'},{id:'39535',name:'นางสาววรัญญา แข็งฤทธิ์',nick:'Nampan'},{id:'39536',name:'นางสาวทิพย์วิภา รัตนวรรณ',nick:'Nectar'},{id:'39537',name:'นายอาชาวิน สาสูงเนิน',nick:'Nammo'},{id:'39538',name:'นางสาวสุพรรษา มูลจันทึก',nick:'Khaohom'},{id:'39539',name:'นางสาวกิตตินันท์ กล่อมสูงเนิน',nick:'Pakkad'},{id:'39540',name:'นายธนโชติ เทียมขุนทด',nick:'Thanachot'},{id:'39541',name:'นางสาวเบญจมาศ ภูหงษ์ทอง',nick:'Benochaimt'},{id:'39542',name:'นางสาวรนารี มณีโชติ',nick:'Neem'},{id:'39543',name:'นายณัฐพล ช่างไม้',nick:'Gus'},{id:'39544',name:'นางสาววรรณวิสา กลิ่นเดช',nick:'May'},{id:'39545',name:'นางสาวจิรนันท์ ทุระพล',nick:'Nun'},{id:'39546',name:'นางสาวธัญญรักษ์ กรินทร์',nick:'Maysa'},{id:'39547',name:'นางสาวธัญชนก พลจันทึก',nick:'Kaimook'},{id:'39548',name:'นายอดิเทพ พรมสูง',nick:'Mix'}],
+    'M4/4':[{id:'36803',name:'นางสาววรรณิศา ดาววงค์',nick:'Piano'},{id:'36812',name:'นายฐิติพล แถบทอง',nick:'Kool'},{ld:'36828',name:'นายสุวิจักขณ์ งัดสันเทียะ',nick:'Dew 1'},{id:'36836',name:'นางสาวปวริศา ศรีเพ็ชร',nick:'Kan'},{id:'36864',name:'นายรพีภัทร ใจห้าว',nick:'Name'},{ld:'36938',name:'นายดลธรรม จงจันทึก',nick:'Namo 1'},{ld:'36942',name:'นายพสิษฐ์ อินทร์ทอง',nick:'Pun'},{ld:'36960',name:'นางสาวฉัตรธิดา เชื้อนิล',nick:'Manow'},{id:'36963',name:'นางสาวชุติญา ทรวงโพธิ์',nick:'Praewa'},{id:'36974',name:'นางสาวอนัตญา อาจสุนทร',nick:'Eye'},{id:'36979',name:'นายทยากร เร็วจันทึก',nick:'Stam'},{id:'36999',name:'นางสาวกัญญมาศ ชอบสุข',nick:'Mint 2'},{ld:'37038',name:'นางสาวนันทิกานต์ เกี้ยวกระโทก',nick:'Ice 1'},{id:'37050',name:'นางสาวภาวิดา จิตต์โสธร',nick:'Mild'},{ld:'37051',name:'นางสาวภาวิตา จิตต์โสธร',nick:'Mint 1'},{id:'37052',name:'นางสาวภิญญดาพัชญ์ เพชรจันทึก',nick:'Nadear'},{ld:'37053',name:'นางสาวลัดดาวัลย์ แมนจันทึก',nick:'Ploy'},{id:'37071',name:'นายธีรภัทร พลจันทึก',nick:'Mos'},{id:'37089',name:'นางสาวกุลภรณ์ ปราเดช',nick:'Ywwa'},{id:'37120',name:'นายศิกรพัฒน์ ข่อยจัตุรัส',nick:'Program'},{ld:'37154',name:'นายนิรันดร์เทพ สุพรรณนิล',nick:'Numnuea'},{id:'39549',name:'นางสาวทัศนีย์ รักษาพันธุ์',nick:'Thip'},{id:'39550',name:'นางสาวศศิกานต์ ชำนาญ',nick:'Eye'},{id:'39551',name:'นายวรวุธ อาจสูงเนิน',nick:'Dew 2'},{id:'39552',name:'นายอริญชัย ปัถมัง',nick:'Kim'},{id:'39553',name:'นางสาวพิมพ์ลภัส วิเชียรรัตน์',nick:'Meemee'},{id:'39554',name:'นางสาวสุชาดา บัวแก้ว',nick:'Ping'},{id:'39555',name:'นางสาวณัฐณิชา คมสันเทียะ',nick:'Aingeye'},{ld:'39556',name:'นางสาวกัญจากรณ์ นิลครบุรี',nick:'Kanja'},{id:'39557',name:'นางสาวภาสินี ภูจันทึก',nick:'Cream'},{id:'39558',name:'นางสาวชนัฐปภา ทุติสูงเนิน',nick:'Noodee'},{id:'39559',name:'นางสาววาสนา วรสิงห์',nick:'Baitoey'},{id:'39560',name:'นายสิรดนัย กัลยาศรี',nick:'Biw'},{id:'39561',name:'นายอรรถพันธ์ เรืองศรี',nick:'Golf'},{ld:'39562',name:'นางสาวพิชญา อมรเนติรัตน์',nick:'Minnie'},{ld:'39563',name:'นางสาวพิชชานันท์ ไตรประวัติ',nick:'Aom'},{ld:'39564',name:'นางสาววรรณชนก จันทร์ที',nick:'Namo 2'},{ld:'39565',name:'นางสาวศิรัตน์ตา พิศแลงาม',nick:'Ice 2'},{id:'39566',name:'นางสาววรัญญา เพ็งสูงเนิน',nick:'Pang'},{ld:'39567',name:'นายสถาพร เกลี้ยงพุดซา',nick:'Sunz'}],
+    'M4/5':[{ld:'36405',name:'นายศิวัช โสกขุนทด',nick:'Title'},{id:'36790',name:'นางสาวกัญญาพัชร แก่นจันทึก',nick:'Patty'},{id:'36797',name:'นางสาวนพรัตน์ ธงศรี',nick:'Nam'},{id:'36802',name:'นางสาวมณฑาทิพย์ ปล้องจันทึก',nick:'Khing'},{ld:'36817',name:'นายพีรพล ประกอบพล',nick:'Blossom'},{id:'36824',name:'นายศิวกร จรรยาศิริ',nick:'Ray'},{id:'36842',name:'นางสาววรรณภา พูนจันทึก',nick:'Karn'},{id:'36846',name:'นางสาวศุภกานต์ ศิลปศร',nick:'Tonaor'},{id:'36879',name:'นางสาวณัฏฐณิชา งวดสูงเนิน',nick:'Nicha'},{id:'36884',name:'นางสาวธัญญามาศ แบ็ค',nick:'Eunseon'},{id:'36906',name:'นางสาวขวัญมนัส สว่างแสง',nick:'Kartoon'},{ld:'36910',name:'นางสาวฐิติพร คงเจริญ',nick:'Pun'},{ld:'36912',name:'นางสาวนาเคนทรนขา ชุมคำ',nick:'In'},{id:'36916',name:'นางสาวปาริตา ลาดสว่าง',nick:'Mint'},{ld:'36926',name:'นางสาวศุภศิริ เดชวรรณ',nick:'Ping'},{id:'36928',name:'นางสาวสุชัญญา ชื่นชม',nick:'Jade'},{id:'37014',name:'นางสาวศศิวรรณ ศรีนุกูล',nick:'Dutch Mill'},{ld:'37027',name:'นายเมธัส พลจันทึก',nick:'Man-U'},{id:'37031',name:'นางสาวจิดาภา สร้อยคำ',nick:'Praew'},{id:'37057',name:'นางสาวศรัณย์พร เปล่งสันเทียะ',nick:'Satang'},{id:'37114',name:'นายปัณณวิช สารเสา',nick:'Tankoon'},{id:'39568',name:'นางสาวกัญญาพัชร เที่ยงจันทึก',nick:'May'},{id:'39569',name:'นายกมลโลจน์ หวลจันทึก',nick:'Focus'},{id:'39570',name:'นายธรรมรัตน์ ปัถมัง',nick:'Pauk'},{id:'39571',name:'นางสาวชญานิศ ดวงประวัติ',nick:'Khao'},{ld:'39572',name:'นางสาวเชษฐ์ธิดา อบเชย',nick:'Ja'},{id:'39573',name:'นางสาวจีระนันท์ สมบัติหอม',nick:'Toon'},{ld:'39574',name:'นางสาวศศิรา แน่พิมาย',nick:'Namwan'},{ld:'39575',name:'นางสาวพัชราภา สว่างจิตต์',nick:'Aum'},{ld:'39576',name:'นางสาวปรางค์วริณ พรมเดื่อ',nick:'Fay'},{ld:'39577',name:'นางสาวปาริชาติ บัวกลาง',nick:'Zoey'},{id:'39578',name:'นางสาวสิรามล โสพะเนาว์',nick:'Aoom'},{id:'39679',name:'นางสาวปุญจิรภา ศรีนวล',nick:'Pom Pom'},{ld:'37081',name:'วัฒนา มั่งจันทึก',nick:'Leo'},{ld:'36922',name:'ภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'}],
+    'M4/6':[{id:'36768',name:'นายเชิดศักดิ์ แขกสันเทียะ',nick:'Comford'},{id:'36784',name:'นายศราวิน ฟุ้งสุข',nick:'Pao'},{id:'36871',name:'นายอธิวัฒน์ คำโสม',nick:'Gunn'},{id:'36888',name:'นางสาวพลอยไพลิน ปรีชายุทธ์',nick:'Ploy'},{id:'36893',name:'นางสาวสุชานาถ หร่ายพิมาย',nick:'Fah'},{id:'36922',name:'นางสาวภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'},{id:'36986',name:'นายวรพล สุภาพ',nick:'Kao'},{id:'37021',name:'นายธนปพน ธาตะนะ',nick:'Geno'},{id:'37042',name:'นางสาวปรมา โลนขุนทด',nick:'Ming'},{id:'37110',name:'นายชลธีร์ แสงวิเศษ',nick:'Nam'},{id:'37126',name:'นางสาวจิราเจต เศษจันทึก',nick:'Lukked'},{id:'37133',name:'นางสาวฝันตรงจิต คุณไ�Wยสง',nick:'Tam'},{id:'37139',name:'นางสาววรกมล จอมเกาะ',nick:'Fangkhaw'},{id:'37142',name:'นางสาวศศิกานต์ ทีจันทึก',nick:'Pam'},{id:'37155',name:'นายบัญญวัต กอสันเทียะ',nick:'Manu'},{id:'37157',name:'นายพสิษฐ์ มั่งสูงเนิน',nick:'Mon'},{id:'37165',name:'นายอรรถพล เกยพุ�Wรา',nick:'Zee'},{id:'37166',name:'นางสาวกชนิภา เชื้อสูงเนิน',nick:'Khoahom'},{id:'37189',name:'นางสาวศุภดา เวกสูงเนิน',nick:'Manaw'},{id:'37193',name:'นายชลพัชร นาถาบำรุง',nick:'Annfuse'},{id:'37201',name:'นายพิตตินัน�W์ ขันจันทึก',nick:'Titan'},{id:'37538',name:'นางสาวอัญมณี เพื่อนกลาง',nick:'Fang'},{id:'39579',name:'นางสาวอธิชา จันทร์สูงเนิน',nick:'View'},{id:'39580',name:'นางสาวรุ่งรวิน โคตรจันทึก',nick:'Irin 1'},{id:'39581',name:'นางสาวสุดารัตน์ ทัดกลาง',nick:'Pooklook'},{id:'39582',name:'นางสาวสิริลักษณ์ อาญาเมือง',nick:'Cake'},{id:'39583',name:'นางสาวรวินท์นิภา อักษรเสือ',nick:'Gafew'},{id:'39584',name:'นายวิภู แพงไตร',nick:'Boom'},{id:'39585',name:'นางสาวธัญรัตน์ เนียมกลาง',nick:'Hom'},{id:'39586',name:'นางสาวชลดา บุรินทร์รัมย์',nick:'Om Am'},{id:'39587',name:'นายภาคิน เดิดขุนทด',nick:'Not'},{id:'39588',name:'นางสาวศิริธาดา หอมจันทร์',nick:'Khaimuk'},{id:'39589',name:'นางสาวสิริวิมล ปะเกาทัน',nick:'Tong'},{id:'39590',name:'นางสาวกรพินธุ์ บัวประ�Wุม',nick:'Jang'},{id:'39591',name:'นางสาวพรีมสุดา ธรหาญ',nick:'Prem'},{id:'39592',name:'นายณัฐพงศ์ พรมสุรินทร์',nick:'Sun'},{id:'39593',name:'นางสาวกุลปริยา แป้นโพธิ์',nick:'Irin 2'},{id:'39594',name:'นางสาวพิมพ์นภัส พิณพิมาย',nick:'Whan'},{id:'39595',name:'นางสาวฟาเดีย เย๊ะ',nick:'Fadia'},{id:'39596',name:'นายวงศกร สมน้อย',nick:'Satang'},{id:'39628',name:'ณัฐพล โอดจันทึก',nick:'Guy'}],
+    'M4/7':[{id:'36801',name:'นางสาวพิยดาวัลย์ เจตนา',nick:'Chompu'},{id:'36807',name:'นางสาวสุภาภรณ์ ศรีคำภา',nick:'Khaofang'},{id:'36913',name:'นางสาวนิชาภา นะโนนชัย',nick:'Nicha'},{id:'36919',name:'นางสาวพรรัมภา เพียราชโยทา',nick:'Pan'},{id:'37012',name:'นางสาววรัญญา โอษฐ์จัทร์ศรี',nick:'Koy'},{id:'37041',name:'นางสาวปภาดา อิ่มจันทึก',nick:'Khim'},{id:'37048',name:'นางสาวภัทรวดี พรมภิรมย์',nick:'Ploy'},{id:'37054',name:'นางสาววรัชชญา กรมไธสง',nick:'Prim'},{id:'37084',name:'นายสิทธิพงษ์ โพธิ์ศรี',nick:'Champhgne'},{id:'37086',name:'นายเอกราช กันยาสาย',nick:'Manyu'},{id:'37123',name:'นางสาวกันยกร ศรีสารากร',nick:'Hya'},{id:'37130',name:'นางสาวปรียานุช พิมพ์จันทึก',nick:'Milk'},{id:'37143',name:'นางสาวศศิวิมล พินิจรัมย์',nick:'Stamp'},{id:'37144',name:'นางสาวสุกัญญา เพ้ยจันทึก',nick:'Aom'},{id:'37147',name:'นางสาวอ�Wิชา ชูขุนทด',nick:'Aum'},{id:'37158',name:'นายพิชยะ ชัยวงศ์',nick:'Film'},{id:'37160',name:'นายวุฒิภัทร ภาวจันทึก',nick:'Morgan'},{id:'37163',name:'นายสัญชัย ผิวสายคำ',nick:'San'},{id:'37173',name:'นางสาวณัฐทิตา เรืองจันทึก',nick:'Praewa'},{id:'37183',name:'นางสาวภรณ์พชร สมฤทธิ์',nick:'Eve'},{id:'37188',name:'นางสาววิชญาพร เรืองจันทึก',nick:'Krathiu'},{id:'39597',name:'นายอัครพล ไทยมณี',nick:'Owen'},{id:'39598',name:'นางสาวเจนจิรา ตันเฮา',nick:'Pin'},{id:'39599',name:'นายเอกรินทร์ แกมขุนทด',nick:'Earth'},{id:'39600',name:'นายพงศธร ทองรักษ์',nick:'Pao'},{id:'39601',name:'นางสาวพิมพ์นิภา สายแก้ว',nick:'Tangmo'},{id:'39602',name:'นายศุภรักษ์ มิลขุนทด',nick:'Art'},{id:'39603',name:'นายธนัช ศรีวัฒนะ',nick:'Protae'},{id:'39604',name:'นางสาวสุกานดา องค์ตะคุ',nick:'Gam'},{id:'39605',name:'นางสาวพิชยาภา พลจันทึก',nick:'Cream'},{id:'39606',name:'นายพลช จงเจนกลาง',nick:'Paog},{id:'39607',name:'นางสาวณภัสสรณ์ ผาสุข',nick:'Hom'},{id:'39608',name:'นางสาวพิชญา นักระนาด',nick:'Pink'},{id:'39610',name:'นางสาวกวินธิดา มีบทสม',nick:'Phak Wan'},{id:'39611',name:'นางสาวณธพร ผินงูเหลือม',nick:'Mameowg},{id:'39612',name:'นายอนุชา เปราะจันทึก',nick:'Mamay'},{id:'39613',name:'นายอริณ ชูวิชับ',nick:'Kak'},{id:'39614',name:'นายพลากร มันกระโทก',nick:'Kay'},{ld:'39615',name:'นายจิรวัฒน์ ขอเชื้อกลาง',nick:'Film'},{id:'39617',name:'นางสาวธนันท์รัฐ ด้วงจอกนอก',nick:'Eve'}],
+    'M4/8':[{id:'36988',name:'นายวีรากร เงสันเทียะ',nick:'Fresh'},{id:'37064',name:'นายชานนท์ กล้าวาจา',nick:'Pao'},{id:'37093',name:'นางสาวณรัตรศภรณ์ เพียรทำดี',nick:'Khaimookg},{id:'37107',name:'นายกฤษณะกันต์ ปัญญางาน',nick:'Best'},{id:'37111',name:'นายณัฐวัช แป้นจันทึก',nick:'Beam'},{ld:'37112',name:'นายธนกฤต พรหมรุกขชาติ',nick:'Scale'},{id:'37118',name:'นายเมธากานต์ นิลสูงเนิน',nick:'Wan'},{id:'37119',name:'นายวัชรพล มะหายันทะ',nick:'Euro'},{ld:'37121',name:'นายสุชาครีย์ อาศัยป่า',nick:'Namcha 1'},{id:'37124',name:'นางสาวกานต์พิชชา การุณสิต',nick:'Kan'},{id:'37125',name:'นางสาวกานต์พิชชา ศิริไพฑูรย์',nick:'Ploy'},{ld:'37134',name:'นางสาวพิชญา เวียงจันทึก',nick:'Ice'},{ld:'37136',name:'นางสาวพีชญา ศรีสูงเนิน',nick:'Pream'},{id:'37137',name:'นางสาวภิญญาพัชญ์ อ่วมทอน',nick:'Moor'},{ld:'37141',name:'นางสาววิภาดา งอบโคกกรวด',nick:'Fahsai'},{ld:'37145',name:'นางสาวสุปรียา เสือสูงเนิน',nick:'Bumbim'},{ld:'37146',name:'นางสาวหทัยชนก ต่อสันเทียะ',nick:'Pakad'},{id:'37148',name:'นางสาวอภิสรา มุนจันทึก',nick:'Earn'},{ld:'37150',name:'นายกิตติศักดิ์ เดชวรรณ',nick:'Tonkla'},{ld:'37156',name:'นายปมัญญา เสริมเฉลียว',nick:'Pun'},{ld:'37168',name:'นางสาวกวินธิดา ทีจันทึก',nick:'Cream'},{id:'37170',name:'นางสาวจิรัชญา มะโนใหม่',nick:'Mint'},{ld:'37177',name:'นางสาวนฤมล พรพิทัก',nick:'Namtan'},{ld:'37195',name:'นายณเดช เกตุจันทึก',nick:'Bonus'},{id:'39618',name:'นายชีวานนท์ จุดาบุตร',nick:'Kuptun'},{id:'39619',name:'นางสาวณัชกมล เชื้อไพบูลย์',nick:'Tangtai'},{ld:'39620',name:'นายวรวิทย์ ทองภักดี',nick:'Worawit'},{id:'39621',name:'นางสาวจิรภิญญา ฉาดนอก',nick:'Jirapinya'},{id:'39622',name:'นางสาวมลฤดี อิ่มจันทึก',nick:'Mee'},{id:'39623',name:'นางสาวกัลชลิกา อันทะสา',nick:'Penneung'},{ld:'39624',name:'นางสาวศศิชา ขุยจันทึก',nick:'Namcha 2'},{id:'39625',name:'นางสาวธนัชชา หล่าแก้ว',nick:'Por'},{id:'39626',name:'นางสาววิลาสินี โอษฐ์จันทร์ศรี',nick:'Kluay'},{id:'39627',name:'นายณัฐภูมิ ทรัพย์กลาง',nick:'Film'},{id:'39628',name:'นายณัฐพล โอดจันทึก',nick:'Nattaphon'},{id:'39629',name:'นางสาวณัฐกฤตา พลศรี',nick:'Kaoiao'},{id:'39630',name:'นางสาวปิยนันท์ เพ็ชรงาม',nick:'Toey'},{ld:'39631',name:'นางสาวจิรัชญา สีสะอาด',nick:'Namwan'},{ld:'39632',name:'นางสาวสิมาภรณ์ เจือจันทึก',nick:'Ked'},{ld:'39633',name:'นางสาววรรณวิษา จำปาทอง',nick:'Nam'},{ld:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'}],
+    'M4/9':[{id:'36795',name:'นางสาวธนัสถา ม่วงมนตรี',nick:'Meen'},{ld:'36897',name:'นายโภควินท์ เหมจันทึก',nick:'Phokha'},{ld:'37059',name:'นางสาวสุกฤต บุตรหล่อ',nick:'Jam'},{ld:'37066',name:'นายต้นน้ำ ฉิพิมาย',nick:'Kungfu 1'},{id:'37122',name:'นายเอริค สตรูเซโร',nick:'Eric'},{ld:'37138',name:'นางสาวรมิตา ชัยเทพ',nick:'Numnuea'},{id:'37153',name:'นายธีระภัทร รักษาสระน้อย',nick:'Teerapat'},{ld:'37176',name:'นางสาวดวงกมล เมืองจันทึก',nick:'Preaw'},{id:'37200',name:'นายพัทธดนย์ วงษ์มา',nick:'Tennis'},{id:'37204',name:'นายภานุทัศน์ วาจาสิทธิ์',nick:'Kungfu 2'},{id:'37207',name:'นายศักดิ์สิทธิ์ นั่งสันเทียะ',nick:'Kafiw'},{ld:'37208',name:'นายศิวกร พวงศรี',nick:'Fiwjer'},{ld:'37211',name:'นายอภินันท์ เชิดกฤษ์',nick:'JJ'},{id:'37212',name:'นางสาวกมลชนก เพียซ้าย',nick:'Baitoey'},{ld:'37213',name:'นางสาวเกวลิน ชูจันทร์',nick:'Poppy'},{id:'37215',name:'นางสาวชลธิชา หวังบัวกลาง',nick:'Smile'},{id:'37216',name:'นางสาวฐิตินันท์ สิงห์ทอง',nick:'Khowhom'},{id:'37217',name:'นางสาวณฐกมล ธรรมกิตติศักดิ์',nick:'Pai'},{id:'37218',name:'นางสาวณิชมน นวลผ่อง',nick:'Ying'},{ld:'37219',name:'นางสาวธัญชนก ยวงจันทึก',nick:'Tonnam'},{ld:'37220',name:'นางสาวนิติณัฐดา พิมสิม',nick:'Satang'},{ld:'37221',name:'นางสาวพรนภัทร ลากูล',nick:'Aoey'},{id:'37222',name:'นางสาวพัชริดา วงศ์ดาว',nick:'Nana'},{id:'37224',name:'นางสาวแพรทิพย์ ม่วงจันทึก',nick:'Boklook'},{ld:'37225',name:'นางสาวภัทรวดี คราจันทึก',nick:'Fom'},{ld:'37227',name:'นางสาววริศรา สีดา',nick:'Ice'},{ld:'37228',name:'นางสาววิศราภรณ์ สุขมา',nick:'O-May'},{id:'37229',name:'นางสาวศศิกานต์ สายจันทร์',nick:'Gun'},{id:'37231',name:'นางสาวสุธีธิดา แก้ววิเชียร',nick:'Aeiy'},{ld:'37232',name:'นางสาวสุรีพร ต้นกันยา',nick:'Praewa'},{ld:'37235',name:'นางสาวอิชญ์อาณิก ปรีชากิจโกศล',nick:'Nam\'ing'},{id:'37236',name:'นางสาวเอมวิกา คูณจันทึก',nick:'AongAey'},{ld:'37264',name:'นางสาวน้ำเพชร เตือนจันทึก',nick:'Phet'},{id:'39634',name:'นายฐิติศักดิ์ เพียซ้าย',nick:'Frame'},{ld:'39635',name:'นางสาววริศรา เกตุพิบูรณ์',nick:'Kao'},{ld:'39636',name:'นายนักรบ หนึ่งจันทึก',nick:'Tangw},{id:'39637',name:'นายวงศกร บุญแซม',nick:'Tonkla'},{id:'39638',name:'นายปณวัฒน์ มีวงค์สม',nick:'Max'},{id:'39639',name:'นายตะวัน สระแก้ว',nick:'Tawan'},{ld:'39640',name:'นายธนกฤติ หนูน้อยจันทึก',nick:'Sea'}],
+    'M4/10':[{ld:'36894',name:'นายกิตติคุณ คงพะเนา',nick:'Gust'},{id:'36895',name:'นายศุภกฤต นาน้อย',nick:'Gan/ Mub'},{ld:'36903',name:'นายกฎชกร ฟดสูงเนิน',nick:'Kot'},{ld:'36909',name:'นางสาวชลธิชา เสาวรส',nick:'Thicha'},{ld:'36917',name:'นางสาวปุณณภา เยสูงเนิน',nick:'Napha'},{id:'36918',name:'นางสาวปุณยนุช สาระ',nick:'Kafae'},{id:'36921',name:'นางสาวภัทรวดี นาโควงค์',nick:'Grace'},{ld:'36971',name:'นางสาวศิริพร นิลโนรี',nick:'Aom'},{ld:'37000',name:'นางสาวกาญจน์เกล้า วงษ์ลักษณ์',nick:'Namkhing'},{id:'37017',name:'นางสาวอินทิมา จันทร์อินทร์',nick:'Ain'},{id:'37020',name:'นายเทพบดี พิพัธน์',nick:'Pao'},{id:'37034',name:'นางสาวณัฐชยา ขอสีกลาง',nick:'Kaimook'},{ld:'37040',name:'นางสาวปพิชญา แสนกุล',nick:'Manow'},{id:'37194',name:'นายณฐภัทร วงศ์วีระพันธุ์',nick:'Nai'},{id:'37196',name:'นายธนกร สิงห์สีโว',nick:'Tee'},{id:'37247',name:'นายศิริอัฐฎากรณ์ จูมจันทร์',nick:'Korn'},{ld:'37259',name:'นางสาวฐิตารีย์ สุดหา',nick:'Rin'},{ld:'39641',name:'นายพลภิภัทร ต้นกันยา',nick:'Mark'},{id:'39642',name:'นางสาวไอริน มิ่งมาลี',nick:'Ice'},{id:'39643',name:'นางสาวณัฐธิดา สมพงษ์',nick:'Jaja'},{id:'39644',name:'นางสาวณัฐญาดา สอนบุญชู',nick:'Lak'},{id:'39645',name:'นายสรวิชญ์ ประเสริฐ',nick:'Win'},{id:'39646',name:'นางสาววาสนา เจริญรัตน์',nick:'Mint'},{ld:'39647',name:'นางสาวณิชมน พิมพ์หนองเรือ',nick:'Kaowtip'},{id:'39648',name:'นางสาวภัทรธิดา วงษ์แก้ว',nick:'Stang'},{ld:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoow},{id:'39650',name:'นางสาวพิกุลแก้ว รัตนพงศ์พร',nick:'Kam'},{id:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},{id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}],
+    'M4/11':[{id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},{id:'36898',name:'นายบุญชัย พัดดำ',nick:'Prab'},{id:'36944',name:'นายพีรัช ใจหมั่น',nick:'Raie'},{ld:'36980',name:'นายธนดล ทิพย์ธงชัย',nick:'Mon1'},{id:'36987',name:'นายวัชรินทร์ โสโพ',nick:'Dan'},{id:'37115',name:'นายปุณญพัฒน์ พันแสน',nick:'Gun'},{id:'37117',name:'นายภูผา สุรพล',nick:'Paint'},{ld:'37164',name:'นายสุกฤษฎิ์ จันทร์แก้ว',nick:'Q'},{id:'37167',name:'นางสาวกฤชษา ทีปกรกุล',nick:'Noona'},{ld:'37171',name:'นางสาวจุฬาลักษณ์ แพงไธสงค์',nick:'View'},{id:'37202',name:'นายพีรวัส เนตรแสงศรี',nick:'Satangw},{id:'37244',name:'นายภาคิณ พึ่งเสือ',nick:'Fifa'},{id:'37273',name:'นางสาวหนึ่งน้ำทิพย์ วงค์ศักดิ์',nick:'Mon2'},{ld:'37537',name:'นางสาวดาริกา ดาษไธสง',nick:'Aomsin'},{ld:'39653',name:'นายพิธา ขวานอก',nick:'Porche'},{ld:'39654',name:'นายรัชภูมิ ราชวงศ์',nick:'Phum'},{id:'39655',name:'นางสาวมาริสา อ้ายจันทึก',nick:'Jaiya'},{ld:'39656',name:'นายณวีร์ภัทร นิธิโชคนนทรัตน์',nick:'Pao'},{ld:'39657',name:'นายชาคริต ทองดีนอก',nick:'Frasg'},{id:'39658',name:'นายนฤดม ไหมเตียงกลาง',nick:'Non'},{id:'39659',name:'นางสาวสุกันยา บุรัชกาล',nick:'Pringw},{id:'39660',name:'นางสาวธันยทิพย์ ถมมา',nick:'Irin'}],
+    'M4/12':[{id:'36787',name:'นางสาวกนกวรรณ สีมอด',nick:'Pancake'},{ld:'36796',name:'นางสาวธีนิดา ดวงจันทึก',nick:'Peiyw'},{id:'36799',name:'นางสาวปัญญาพร เนื่องนรินทร์',nick:'Sand'},{ld:'36914',name:'นางสาวปภัสสรา คูเมือง',nick:'VR'},{id:'36932',name:'นายก้องภพ เอี่ยมจะบก',nick:'Night'},{id:'36952',name:'นายโสภณวิชญ์ รักษาเพชร',nick:'Keane'},{ld:'36959',name:'นางสาวจุฑารัตน์ ทุมพร',nick:'Khim'},{id:'36966',name:'นางสาวภรณ์ชนก ชากรณ์',nick:'Jeed'},{id:'36981',name:'นายธนากร ธรรมรักษ์',nick:'Art'},{id:'37009',name:'นางสาวมีนา สุรัตน์',nick:'Meena'},{id:'37046',name:'นางสาวพิชญาภา แซะจอหอ',nick:'Nana'},{id:'37055',name:'นางสาววัลลภัคร แก้วกลาง',nick:'Namoun'},{id:'37058',name:'นางสาวสรัลพร อมรพิริยะ',nick:'Bahmee'},{id:'37097',name:'นางสาวนันท์นภัส พงษ์พยายาม',nick:'Paint'},{id:'37104',name:'นางสาววนิดา โพธิ์นอก',nick:'Peemai'},{id:'37131',name:'นางสาวปลายฟ้า สระทองแก้ว',nick:'Aungpao'},{id:'37132',name:'นางสาวปิยะวดี ชัยสงคราม',nick:'Sa'},{id:'37159',name:'นายรัตตัญญู หีบเเก้ว',nick:'Mammass'},{id:'37169',name:'นางสาวกานต์สินี ตาจันทึก',nick:'View'},{ld:'37180',name:'นางสาวนัธสิมา บุตะคุ',nick:'Kantongw},{id:'37181',name:'นางสาวบัณฑิตา หล่ำจันทึก',nick:'Aem'},{id:'37186',name:'นางสาวรัตนพร เศษสิงห์',nick:'Kartai'},{id:'37198',name:'นายปณวัตร ไฝจันทึก',nick:'Smart'},{ld:'37205',name:'นายภูมิพัฒน์ ภูมิจันทึก',nick:'Jeen'},{id:'37206',name:'นายวงศกร หมอกจันทึก',nick:'Nuea'},{id:'37209',name:'นายสิรภพ ภูวิภาค',nick:'Mark'},{ld:'37233',name:'นางสาวอัญชิสา อ่องอ้น',nick:'Meen'},{id:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'},{id:'38277',name:'นางสาวภูริชญา กลิ่นหอม',nick:'Namthip'},{id:'39661',name:'นางสาวจันทกานต์ ฮึมจันทึก',nick:'Tar'},{id:'39662',name:'นางสาวเพ็ญพิมล สาครวงษ์สุริย',nick:'Baifern'},{ld:'39663',name:'นางสาววรัญญา จอดนอก',nick:'Yaem'},{id:'39664',name:'นางสาวภัชรมน ราชประดิษฐ',nick:'Mew'},{id:'39665',name:'นายภานุวัฒน์ ทองหุ้ม',nick:'Kiv'},{id:'39666',name:'นางสาวปณิตา ติจันทึก',nick:'Meiw'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    'M4/13':[{id:'36900',name:'นายภูริ สนสูงเนิน',nick:'Nuea'},{ld:'37015',name:'นางสาวศิวพร แสนใจ',nick:'Mudmee'},{ld:'37108',name:'นายจิรพัฒน์ สายทอง',nick:'Todd'},{id:'37135',name:'นางสาวพิมพ์ชนก วรรณวงค์',nick:'Pim'},{id:'37197',name:'นายธีรภัทร ย้อยแสง',nick:'Kaow},{id:'37199',name:'นายปรินทร ป่วนสันเทียะ',nick:'Benten'},{id:'37230',name:'นางสาวศิรประภา เสนาภักดิ์',nick:'Madmee'},{id:'37234',name:'นางสาวอารยา วนากลาง',nick:'Namwan'},{id:'37239',name:'นายธนกฤต สระทองอุ่น',nick:'Pond'},{id:'37241',name:'นายปัณณกานต์ สิงห์สวัสดิ์',nick:'Pun'},{id:'37242',name:'นายพชร เพชรวัชรานนท์',nick:'Dome'},{ld:'37243',name:'นายภควัต อุดมนาม',nick:'AB'},{id:'37246',name:'นายรณกร สระทองอุ่น',nick:'Pong'},{ld:'37248',name:'นายสิรภัทร ภูวิภาค',nick:'Mac'},{ld:'37249',name:'นายสิริชัย ธูปขุนทด',nick:'Munggorn'},{id:'37250',name:'นายอธิป พิมพา',nick:'It'},{id:'37252',name:'นายอาทิวราห์ นารถสูงเนิน',nick:'Tan'},{id:'37254',name:'นางสาวกรกนก แสวงจันทร์',nick:'Nam'},{id:'37255',name:'นางสาวกรชนก เจริญสุข',nick:'Endu'},{id:'37257',name:'นางสาวกัณฑารีย์ ศศิปริยาพงศ์',nick:'Kan'},{id:'37258',name:'นางสาวชาลิดา เหยียดรัมย์',nick:'Looktan'},{ld:'37261',name:'นางสาวณัฐดาวรรณ วรรณรักษาศักดิ์',nick:'Nooin'},{id:'37262',name:'นางสาวณัฐธยาน์ ธงศรี',nick:'Nut'},{id:'37265',name:'นางสาวปุณยพร วงษ์เส็ง',nick:'Ice'},{id:'37268',name:'นางสาวพิชญธิดา อิ่มวัฒนกุล',nick:'Prae'},{ld:'37270',name:'นางสาววัลธภัชฏ์ คีรีวงษ์',nick:'Kokluai'},{id:'39667',name:'นางสาวนันท์นภัส ถวิลการ',nick:'Pinto'},{ld:'39668',name:'นางสาวภิญญดา ทองคำ',nick:'Nick'},{id:'39669',name:'นายกลกร เห็มสุวรรณ์',nick:'Sek'},{id:'39670',name:'นายรัชชานนท์ วิภาคโสภณชัย',nick:'Indo'},{id:'39671',name:'นายกฤตเมธ อ่ำรอด',nick:'Kong'},{ld:'39672',name:'นายถิรทักษ์ สีหะวงค์',nick:'Thakky'},{ld:'39673',name:'นางสาวขวัญข้าว พรมสอน',nick:'Gress'},{id:'39674',name:'นายประสพสุข จีระประพันธ์กุล',nick:'Guts'},{ld:'39675',name:'นางสาววรินทร มีเม่น',nick:'First'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    // M3/10, M3/12: loaded dynamically from Supabase submissions
+};
 
-// ── AUTH ──────────────────────────────────────────────────────────────────────
+// ── Auth ──
 function doLogin() {
-  var pw = document.getElementById('pwInput').value;
-  if (pw === TEACHER_PASSWORD) {
+    if (document.getElementById('pwInput').value === TEACHER_PASSWORD) {
+        sessionStorage.setItem('t_auth','1');
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('portal').style.display = 'block';
+        loadAll();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('pwInput').value = '';
+    }
+}
+document.getElementById('pwInput').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+function doLogout() {
+    sessionStorage.removeItem('t_auth');
+    document.getElementById('portal').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+}
+if (sessionStorage.getItem('t_auth')==='1') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('portal').style.display = 'block';
-    document.getElementById('loginError').style.display = 'none';
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-  }
-}
-function doLogout() {
-  document.getElementById('portal').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('pwInput').value = '';
-  document.getElementById('resultsSection').style.display = 'none';
-  document.getElementById('selSection').value = '';
-  document.getElementById('selStudent').innerHTML = '<option value="">— Select Section First —</option>';
-  document.getElementById('selStudent').disabled = true;
-  document.getElementById('selWorksheet').value = '';
+    loadAll();
 }
 
-// ── SECTION → STUDENT DROPDOWN ────────────────────────────────────────────────
-function onSectionChange() {
-  var section = document.getElementById('selSection').value;
-  var sel = document.getElementById('selStudent');
-  sel.innerHTML = '<option value="">— Loading... —</option>';
-  sel.disabled = true;
-  document.getElementById('resultsSection').style.display = 'none';
-  if (!section) {
-    sel.innerHTML = '<option value="">— Select Section First —</option>';
-    return;
-  }
-  var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&order=thai_name.asc';
-  fetch(url, {
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY
+// ── Section / Student dropdowns ──
+async function onSectionChange() {
+    var section = document.getElementById('selSection').value;
+    var sel = document.getElementById('selStudent');
+    var idInput = document.getElementById('inputStudentId');
+    sel.innerHTML = '<option value="">Loading…</option>';
+    sel.disabled = true;
+    idInput.value = '';
+
+    if (!section) { sel.innerHTML='<option value="">— Select Section First —</option>'; return; }
+
+    var students = studentData[section];
+    if (!students) {
+        // Load from Supabase submissions for this section
+        try {
+            var res = await fetch(
+                SUPABASE_URL+'/rest/v1/worksheet_submissions?select=student_id,student_name,thai_name&section=eq.'+encodeURIComponent(section),
+                {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
+            );
+            var rows = await res.json();
+            // Deduplicate by student_id
+            var seen = {}; students = [];
+            rows.forEach(function(r){
+                if (!seen[r.student_id]) {
+                    seen[r.student_id] = true;
+                    students.push({id:r.student_id, name:r.thai_name||'', nick:r.student_name||''});
+                }
+            });
+        } catch(e) { students = []; }
     }
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(data) {
-    sel.innerHTML = '<option value="">— Select Student —</option>';
-    if (!data || data.length === 0) {
-      sel.innerHTML = '<option value="">No students found</option>';
-      return;
-    }
-    data.forEach(function(s) {
-      var label = s.thai_name || s.name || s.student_id;
-      if (s.nickname) label += ' (' + s.nickname + ')';
-      label += ' — ' + s.student_id;
-      var opt = document.createElement('option');
-      opt.value = s.student_id;
-      opt.textContent = label;
-      sel.appendChild(opt);
-    });
-    sel.disabled = false;
-  })
-  .catch(function(err) {
-    sel.innerHTML = '<option value="">Error loading students</option>';
-    console.error(err);
-  });
-}
 
-// ── SEARCH ────────────────────────────────────────────────────────────────────
-function doSearch() {
-  var section  = document.getElementById('selSection').value;
-  var studentId = document.getElementById('selStudent').value;
-  var ws       = document.getElementById('selWorksheet').value;
-
-  if (!section || !studentId || !ws) {
-    alert('Please select a section, student, and worksheet.');
-    return;
-  }
-
-  var resultsSection = document.getElementById('resultsSection');
-  var resultsBody    = document.getElementById('resultsBody');
-  var resultsTitle   = document.getElementById('resultsTitle');
-
-  resultsSection.style.display = 'block';
-  resultsBody.innerHTML = '<div class="loading-msg">Loading results...</div>';
-
-  // Get student name for display
-  var selEl = document.getElementById('selStudent');
-  var studentLabel = selEl.options[selEl.selectedIndex].text;
-
-  resultsTitle.textContent = 'Results for ' + studentLabel + ' – Worksheet ' + ws;
-
-  var url = SUPABASE_URL + '/rest/v1/worksheet_submissions?select=*&student_id=eq.' + encodeURIComponent(studentId) + '&worksheet=eq.' + encodeURIComponent(ws) + '&order=submitted_at.desc';
-
-  fetch(url, {
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY
-    }
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(data) {
-    if (!data || data.length === 0) {
-      resultsBody.innerHTML = '<div class="no-result">📭 No submissions found for this student on Worksheet ' + ws + '.</div>';
-      return;
-    }
-    renderResults(data, studentLabel, ws, section);
-  })
-  .catch(function(err) {
-    resultsBody.innerHTML = '<div class="no-result">⚠️ Error loading results. Please try again.</div>';
-    console.error(err);
-  });
-}
-
-// ── RENDER RESULTS ────────────────────────────────────────────────────────────
-function renderResults(submissions, studentLabel, ws, section) {
-  var resultsBody = document.getElementById('resultsBody');
-  var html = '';
-
-  submissions.forEach(function(sub, idx) {
-    var score    = sub.score != null ? sub.score : '—';
-    var total    = sub.total != null ? sub.total : '—';
-    var pct      = (sub.score != null && sub.total) ? Math.round(sub.score / sub.total * 100) : null;
-    var pass     = pct != null ? (pct >= 50) : null;
-    var dateStr  = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB', {dateStyle:'medium', timeStyle:'short'}) : '—';
-    var badgeHtml = pass != null ? ('<span class="badge ' + (pass ? 'badge-pass' : 'badge-fail') + '">' + (pass ? '✅ Pass' : '❌ Fail') + '</span>') : '';
-
-    html += '<div class="result-card">';
-    html += '<div class="result-header">';
-    html += '<div><div class="score">Score: ' + score + ' / ' + total + (pct != null ? ' (' + pct + '%)' : '') + '</div>';
-    html += '<div class="meta">📅 ' + dateStr + ' &nbsp;|&nbsp; Section: ' + section + '</div></div>';
-    html += '<div>' + badgeHtml + '</div>';
-    html += '</div>';
-    html += '<div class="result-body">';
-    html += '<div style="font-size:.9em;color:#555">Attempt #' + (submissions.length - idx) + '</div>';
-    html += '<button class="btn-pdf" onclick="doPrint(' + idx + ')">🖨️ Download PDF Copy</button>';
-    html += '</div></div>';
-  });
-
-  resultsBody.innerHTML = html;
-
-  // Store submissions for printing
-  window._currentSubmissions = submissions;
-  window._currentLabel = studentLabel;
-  window._currentWS = ws;
-  window._currentSection = section;
-}
-
-// ── PRINT / PDF ───────────────────────────────────────────────────────────────
-function doPrint(idx) {
-  var sub = window._currentSubmissions[idx];
-  var studentLabel = window._currentLabel;
-  var ws  = window._currentWS;
-  var section = window._currentSection;
-  var dateStr = sub.submitted_at ? new Date(sub.submitted_at).toLocaleString('en-GB', {dateStyle:'long', timeStyle:'short'}) : '—';
-  var score = sub.score != null ? sub.score : '—';
-  var total = sub.total != null ? sub.total : '—';
-  var pct   = (sub.score != null && sub.total) ? Math.round(sub.score / sub.total * 100) : null;
-  var pass  = pct != null ? (pct >= 50) : null;
-
-  // Build answers table
-  var answers = sub.answers;
-  if (typeof answers === 'string') { try { answers = JSON.parse(answers); } catch(e) { answers = null; } }
-  var answersHtml = '';
-  if (answers && Array.isArray(answers)) {
-    answersHtml = '<table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:.9em">';
-    answersHtml += '<thead><tr style="background:#1a237e;color:#fff"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:left">Question</th><th style="padding:8px 12px;text-align:left">Student Answer</th><th style="padding:8px 12px;text-align:left">Correct Answer</th><th style="padding:8px 12px;text-align:left">Result</th></tr></thead><tbody>';
-    answers.forEach(function(a, i) {
-      var correct = a.correct || a.correctAnswer || '';
-      var student_ans = a.selected || a.studentAnswer || a.answer || '';
-      var isCorrect = (student_ans === correct);
-      var rowColor = isCorrect ? '#f1f8e9' : '#ffebee';
-      var resultText = isCorrect ? '✅ Correct' : '❌ Wrong';
-      answersHtml += '<tr style="background:' + rowColor + '">';
-      answersHtml += '<td style="padding:8px 12px;font-weight:bold">' + (i+1) + '</td>';
-      // Question text or image
-      var qText = a.question || a.questionText || '';
-      var qImg  = a.image || a.questionImage || '';
-      var qCell = '';
-      if (qImg) qCell += '<img src="' + IMAGE_BASE + qImg + '" style="max-width:160px;border-radius:4px;display:block;margin-bottom:4px">';
-      if (qText) qCell += qText;
-      if (!qCell) qCell = 'Question ' + (i+1);
-      answersHtml += '<td style="padding:8px 12px">' + qCell + '</td>';
-      answersHtml += '<td style="padding:8px 12px;font-weight:bold;color:' + (isCorrect ? '#2e7d32' : '#c62828') + '">' + (student_ans || '—') + '</td>';
-      answersHtml += '<td style="padding:8px 12px;font-weight:bold;color:#1a237e">' + (correct || '—') + '</td>';
-      answersHtml += '<td style="padding:8px 12px">' + resultText + '</td>';
-      answersHtml += '</tr>';
-    });
-    answersHtml += '</tbody></table>';
-  } else if (answers && typeof answers === 'object') {
-    // Object format fallback
-    answersHtml = '<table style="width:100%;border-collapse:collapse;margin-top:16px;font-size:.9em">';
-    answersHtml += '<thead><tr style="background:#1a237e;color:#fff"><th style="padding:8px 12px;text-align:left">#</th><th style="padding:8px 12px;text-align:left">Question</th><th style="padding:8px 12px;text-align:left">Student Answer</th></tr></thead><tbody>';
-    var keys = Object.keys(answers);
-    keys.forEach(function(k, i) {
-      answersHtml += '<tr style="background:' + (i%2===0?'#fff':'#f5f5f5') + '">';
-      answersHtml += '<td style="padding:8px 12px">' + (i+1) + '</td>';
-      answersHtml += '<td style="padding:8px 12px">' + k + '</td>';
-      answersHtml += '<td style="padding:8px 12px">' + answers[k] + '</td>';
-      answersHtml += '</tr>';
-    });
-    answersHtml += '</tbody></table>';
-  }
-
-  var printWin = window.open('', '_blank');
-  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8">');
-  printWin.document.write('<title>Worksheet ' + ws + ' — ' + studentLabel + '</title>');
-  printWin.document.write('<style>');
-  printWin.document.write('body{font-family:Arial,sans-serif;padding:30px;color:#222;max-width:900px;margin:0 auto}');
-  printWin.document.write('h1{color:#1a237e;font-size:1.4em;margin-bottom:4px}');
-  printWin.document.write('h2{color:#1a237e;font-size:1.1em;margin:20px 0 8px}');
-  printWin.document.write('.school{color:#555;font-size:.9em;margin-bottom:20px}');
-  printWin.document.write('.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;background:#f5f5f5;padding:14px 18px;border-radius:8px;margin-bottom:20px;font-size:.95em}');
-  printWin.document.write('.info-grid strong{color:#1a237e}');
-  printWin.document.write('.score-box{background:linear-gradient(135deg,#1a237e,#4a148c);color:#fff;padding:16px 22px;border-radius:10px;text-align:center;margin-bottom:20px}');
-  printWin.document.write('.score-box .big{font-size:2em;font-weight:bold}');
-  printWin.document.write('.score-box .small{font-size:.9em;opacity:.85}');
-  printWin.document.write('.pass{background:#2e7d32}');
-  printWin.document.write('@media print{button{display:none}}');
-  printWin.document.write('</style></head><body>');
-  printWin.document.write('<h1>🏫 Sikhio Sawadphadung Wittaya School</h1>');
-  printWin.document.write('<div class="school">Nakhon Ratchasima 30140 Thailand &nbsp;|&nbsp; Teacher Dashboard — Worksheet Report</div>');
-  printWin.document.write('<hr style="border:none;border-top:2px solid #1a237e;margin:12px 0 20px">');
-  printWin.document.write('<div class="info-grid">');
-  printWin.document.write('<div><strong>Student:</strong> ' + studentLabel + '</div>');
-  printWin.document.write('<div><strong>Section:</strong> ' + section + '</div>');
-  printWin.document.write('<div><strong>Worksheet:</strong> ' + ws + '</div>');
-  printWin.document.write('<div><strong>Submitted:</strong> ' + dateStr + '</div>');
-  printWin.document.write('</div>');
-  printWin.document.write('<div class="score-box' + (pass ? ' pass' : '') + '">');
-  printWin.document.write('<div class="big">Score: ' + score + ' / ' + total + (pct != null ? ' (' + pct + '%)' : '') + '</div>');
-  printWin.document.write('<div class="small">' + (pass != null ? (pass ? '✅ PASSED' : '❌ FAILED') : '') + '</div>');
-  printWin.document.write('</div>');
-  if (answersHtml) {
-    printWin.document.write('<h2>Answer Details</h2>');
-    printWin.document.write(answersHtml);
-  }
-  printWin.document.write('<br><button onclick="window.print()" style="padding:12px 28px;background:#1a237e;color:#fff;border:none;border-radius:8px;font-size:1em;cursor:pointer;margin-top:20px">🖨️ Print / Save as PDF</button>');
-  printWin.document.write('</body></html>');
-  printWin.document.close();
-}
-
-  async function checkNonSubmitters() {
-    const section = document.getElementById('nsSection').value;
-    const wsId = document.getElementById('nsWorksheet').value;
-    const out = document.getElementById('nsResults');
-    if (!section) { out.innerHTML = '<p style="color:red">Please select a section.</p>'; return; }
-    out.innerHTML = '<p>Checking...</p>';
-    try {
-      const h = {'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY};
-      const [sR, scR] = await Promise.all([
-        fetch(SUPABASE_URL + '/rest/v1/students?section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&select=student_id,nickname,thai_name&order=nickname.asc', {headers: h}),
-        fetch(SUPABASE_URL + '/rest/v1/scores?worksheet_id=eq.' + wsId + '&section=eq.' + encodeURIComponent(section) + '&select=student_id', {headers: h})
-      ]);
-      const students = await sR.json();
-      const scores = await scR.json();
-      const submittedIds = new Set(scores.map(x => x.student_id));
-      const missing = students.filter(s => !submittedIds.has(s.student_id));
-      const done = students.length - missing.length;
-      if (missing.length === 0) {
-        out.innerHTML = '<p style="color:green;font-size:1.1em;font-weight:bold">All ' + students.length + ' students in ' + section + ' have submitted!</p>';
+    if (!students || students.length === 0) {
+        sel.innerHTML = '<option value="">No students found for this section yet</option>';
+        sel.disabled = true;
         return;
-      }
-      const rows = missing.map(s =>
-        '<tr><td style="padding:6px 14px;border-bottom:1px solid #eee">' + (s.nickname || '') +
-        '</td><td style="padding:6px 14px;border-bottom:1px solid #eee">' + (s.thai_name || '') +
-        '</td><td style="padding:6px 14px;border-bottom:1px solid #eee;color:#888">' + s.student_id + '</td></tr>'
-      ).join('');
-      out.innerHTML = '<p style="color:#c0392b;font-weight:bold">' + missing.length + ' of ' + students.length + ' have NOT submitted Worksheet ' + wsId + ' in ' + section + ':</p>'
-        + '<table style="border-collapse:collapse;width:100%;margin-top:8px"><thead><tr style="background:#fdecea"><th style="padding:8px 14px;text-align:left">Nickname</th><th style="padding:8px 14px;text-align:left">Thai Name</th><th style="padding:8px 14px;text-align:left">Student ID</th></tr></thead><tbody>' + rows + '</tbody></table>'
-        + '<p style="color:green;margin-top:10px;font-size:.9em">' + done + ' student(s) have already submitted.</p>';
-    } catch(e) {
-      out.innerHTML = '<p style="color:red">Error: ' + e.message + '</p>';
     }
-  }
+
+    sel.innerHTML = '<option value="">— Select Student —</option>'
+        + students.map(function(s){
+            return '<option value="'+s.id+'" data-name="'+s.name+'" data-nick="'+s.nick+'">'
+                + s.name + ' ('+s.nick+') — ID: '+s.id+'</option>';
+        }).join('');
+    sel.disabled = false;
+}
+
+function onStudentChange() {
+    var sel = document.getElementById('selStudent');
+    var opt = sel.options[sel.selectedIndex];
+    document.getElementById('inputStudentId').value = opt && opt.value ? opt.value : '';
+}
+
+// ── Search ──
+async function doSearch() {
+    var section = document.getElementById('selSection').value;
+    var studentId = document.getElementById('inputStudentId').value.trim();
+    var worksheet = document.getElementById('selWorksheet').value;
+
+    if (!section || !studentId || !worksheet) {
+        alert('Please select Section, Student, and Worksheet Number.');
+        return;
+    }
+
+    var btn = document.getElementById('btnSearch');
+    btn.disabled = true; btn.textContent = 'Searching…';
+
+    try {
+        var url = SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*'
+            +'&student_id=eq.'+encodeURIComponent(studentId)
+            +'&worksheet=eq.'+encodeURIComponent(worksheet)
+            +'&order=submitted_at.desc';
+        var res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+        var results = await res.json();
+        renderResults(results, studentId, worksheet);
+    } catch(e) {
+        document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
+    }
+    btn.disabled = false; btn.textContent = '🔎 Search';
+}
+
+function renderResults(results, studentId, worksheet) {
+    var sec = document.getElementById('resultsSection');
+    sec.style.display = 'block';
+    var wsLabel = worksheet.replace('WS','Worksheet ');
+    document.getElementById('resultsTitle').textContent =
+        '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+
+    if (!results || results.length === 0) {
+        document.getElementById('resultsBody').innerHTML =
+            '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
+        return;
+    }
+
+    document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
+        var isPassed = s.status === 'PASSED';
+        var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+        return '<div class="result-card">'
+            +'<div class="result-header">'
+            +'<span><b>Attempt '+(i+1)+'</b></span>'
+            +'<span class="score">'+s.score+'/'+(s.total_questions||10)+'</span>'
+            +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
+            +'<span class="meta">'+dt+'</span>'
+            +'</div>'
+            +'<div class="result-body">'
+            +'<div class="result-info">👤 <b>'+(s.student_name||'—')+'</b>'
+            +(s.thai_name?' ('+s.thai_name+')':'')
+            +' &nbsp;|&nbsp; 🏫 '+(s.section||'—')+'</div>'
+            +'<button class="btn-pdf" onclick="viewSubmission('+s.id+')">📥 Download PDF Copy of This Worksheet</button>'
+            +'</div></div>';
+    }).join('');
+}
+
+// ── All Submissions ──
+async function loadAll() {
+    try {
+        var res = await fetch(
+            SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*&order=submitted_at.desc&limit=2000',
+            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
+        );
+        allSubmissions = await res.json();
+        document.getElementById('allCount').textContent = '('+allSubmissions.length+' total)';
+        var tbody = document.getElementById('allBody');
+        if (!allSubmissions.length) {
+            tbody.innerHTML = '<tr><td colspan="10" class="loading-msg">No submissions yet.</td></tr>';
+            return;
+        }
+        tbody.innerHTML = allSubmissions.map(function(s,i) {
+            var isPassed = s.status==='PASSED';
+            var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+            return '<tr>'
+                +'<td>'+(i+1)+'</td>'
+                +'<td><b>'+(s.student_id||'—')+'</b></td>'
+                +'<td>'+(s.student_name||'—')+'</td>'
+                +'<td style="font-size:.85em;">'+(s.thai_name||'—')+'</td>'
+                +'<td>'+(s.section||'—')+'</td>'
+                +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
+                +'<td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td>'
+                +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
+                +'<td style="font-size:.82em;color:#666;">'+dt+'</td>'
+                +'<td><button class="btn-view-sm" onclick="viewSubmission('+s.id+')">View</button></td>'
+                +'</tr>';
+        }).join('');
+    } catch(e) {
+        document.getElementById('allBody').innerHTML = '<tr><td colspan="10" class="loading-msg">⚠️ Failed to load.</td></tr>';
+    }
+}
+
+// ── Print Modal ──
+function viewSubmission(id) {
+    var s = allSubmissions.find(function(x){ return x.id===id; });
+    // If not in allSubmissions (came from search), fetch it
+    if (!s) {
+        fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions?id=eq.'+id,
+            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}})
+        .then(function(r){return r.json();})
+        .then(function(rows){ if(rows[0]) { allSubmissions.push(rows[0]); buildModal(rows[0]); } });
+        return;
+    }
+    buildModal(s);
+}
+
+function buildModal(s) {
+    var isPassed = s.status==='PASSED';
+    var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+    var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
+    var answers = s.answers || [];
+
+    document.getElementById('modalTitle').textContent =
+        wsLabel+' — '+(s.student_name||s.student_id);
+
+    var qHtml = answers.map(function(a,idx){
+        var imgHtml = a.question_image
+            ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
+        var optHtml = '';
+        if (a.selected_option === null || a.selected_option === undefined) {
+            optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+        } else if (a.selected_option === a.correct_option) {
+            optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
+        } else {
+            optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
+                    + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
+        }
+        return '<div class="q-card">'
+            +imgHtml
+            +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
+            +'<div class="q-body">'+optHtml+'</div>'
+            +'</div>';
+    }).join('');
+
+    document.getElementById('printContent').innerHTML =
+        '<table class="sub-info-table">'
+        +'<tr><td>Student Name</td><td><b>'+(s.student_name||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
+        +'<tr><td>Thai Name</td><td><b>'+(s.thai_name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
+        +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td></tr>'
+        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#1b5e20':'#b71c1c')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
+        +'<tr><td>Submitted</td><td colspan="3">'+dt+'</td></tr>'
+        +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
+        +'</table>'
+        +'<h3 style="color:#1a237e;margin:16px 0 12px;font-size:1em;">📝 Questions & Answers</h3>'
+        +qHtml
+        +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
+
+    document.getElementById('printModal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('printModal').classList.remove('open'); }
+
+function doPrint() {
+    var content = document.getElementById('printContent').innerHTML;
+    var pw = window.open('','_blank','width=960,height=750');
+    if (!pw) { alert('Please allow pop-ups to print/download PDF.'); return; }
+    pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Worksheet Record</title>'
+        +'<style>'
+        +'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:13px;}'
+        +'.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:18px;}'
+        +'.sub-info-table td{padding:7px 11px;border:1px solid #ddd;font-size:.9em;}'
+        +'.sub-info-table td:first-child{background:#f0f3ff;font-weight:bold;width:120px;}'
+        +'.q-card{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:10px;overflow:hidden;page-break-inside:avoid;}'
+        +'.q-card-img{width:100%;max-height:170px;object-fit:cover;}'
+        +'.q-header{background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-start;}'
+        +'.qnum{background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;min-width:22px;display:flex;align-items:center;justify-content:center;font-size:.8em;}'
+        +'.q-body{padding:10px 13px;}'
+        +'.opt-row{padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:.87em;border:1px solid #eee;}'
+        +'.opt-sc{background:#c8e6c9;border-color:#4caf50;font-weight:bold;}'
+        +'.opt-sw{background:#ffcdd2;border-color:#f44336;font-weight:bold;}'
+        +'.opt-cm{background:#e8f5e9;border-color:#81c784;color:#2e7d32;}'
+        +'.no-ans{color:#aaa;font-style:italic;font-size:.85em;}'
+        +'@page{margin:12mm;}'
+        +'</style></head><body>'
+        +'<h2 style="text-align:center;color:#1a237e;margin-bottom:4px;">📚 English Worksheet — Submission Record</h2>'
+        +'<hr style="border:1px solid #1a237e;margin-bottom:16px;">'
+        +content
+        +'<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},500);});<\/script>'
+        +'</body></html>');
+    pw.document.close();
+}
+
+document.getElementById('printModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 </script>
 </body>
 </html>
