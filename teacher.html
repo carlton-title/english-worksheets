@@ -94,24 +94,6 @@
         .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
         .opt-plain { background:#fafafa; color:#aaa; }
         .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
-        /* WORKSHEET LINKS CARD */
-        .ws-links-grid { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
-        .ws-row { border:2px solid #e8eaf6; border-radius:12px; overflow:hidden; }
-        .ws-row-header { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:10px 18px; font-weight:bold; font-size:.95em; display:flex; align-items:center; gap:10px; }
-        .ws-number-badge { background:rgba(255,255,255,.22); border-radius:8px; padding:2px 10px; font-size:.82em; letter-spacing:.5px; }
-        .ws-row-body { padding:12px 16px; display:flex; flex-wrap:wrap; gap:10px; }
-        .ws-variant { display:flex; align-items:center; gap:10px; padding:9px 14px; background:#f5f7ff; border-radius:10px; border:1px solid #e8eaf6; flex:1; min-width:260px; flex-wrap:wrap; }
-        .ws-variant-label { background:#1a237e; color:white; border-radius:6px; padding:2px 10px; font-size:.82em; font-weight:bold; white-space:nowrap; }
-        .ws-variant-classes { color:#555; font-size:.88em; white-space:nowrap; }
-        .ws-active-url { color:#1a237e; font-weight:bold; font-size:.88em; text-decoration:none; margin-left:auto; }
-        .ws-active-url:hover { text-decoration:underline; }
-        .ws-inactive-label { color:#bbb; font-size:.88em; font-style:italic; margin-left:auto; }
-        .kyle-test-section { margin-top:18px; padding:14px 18px; background:#fff8e1; border-radius:12px; border:2px dashed #ffb300; }
-        .kyle-test-section h3 { color:#e65100; font-size:.92em; margin-bottom:10px; }
-        .kyle-test-links { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
-        .kyle-test-link { display:inline-block; background:#fff3e0; border:1px solid #ffb300; border-radius:8px; padding:7px 16px; color:#e65100; font-weight:bold; font-size:.88em; text-decoration:none; }
-        .kyle-test-link:hover { background:#ffe0b2; }
-        .kyle-note { color:#999; font-size:.8em; font-style:italic; }
     </style>
 </head>
 <body>
@@ -191,42 +173,6 @@
         </div>
     </div>
 
-    <!-- STUDENT WORKSHEET LINKS -->
-    <div class="card">
-        <h2>📋 Student Worksheet Links</h2>
-        <div class="ws-links-grid">
-
-            <!-- WS5 M3 A1 -->
-            <div class="ws-row">
-                <div class="ws-row-header">
-                    Worksheet 5 &nbsp;<span class="ws-number-badge">WS5</span>
-                </div>
-                <div class="ws-row-body">
-                    <div class="ws-variant">
-                        <span class="ws-variant-label">A1</span>
-                        <span class="ws-variant-classes">M3/2 &nbsp;·&nbsp; M3/4 &nbsp;·&nbsp; M3/6</span>
-                        <a class="ws-active-url" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">🔗 worksheet5_m3_a1.html</a>
-                    </div>
-                    <div class="ws-variant">
-                        <span class="ws-variant-label">A2</span>
-                        <span class="ws-variant-classes">—</span>
-                        <span class="ws-inactive-label">Not yet assigned</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Kyle Test Mode -->
-        <div class="kyle-test-section">
-            <h3>🧪 Kyle Test Mode &nbsp;<small style="font-weight:normal;color:#999;">— visible to teacher only, never shown to students</small></h3>
-            <div class="kyle-test-links">
-                <a class="kyle-test-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">🧪 Worksheet 5 M3 A1 — Test Student (Kyle · ID 54565)</a>
-            </div>
-            <p class="kyle-note">Select section M3/2 → Test Student / Kyle to activate test mode.</p>
-        </div>
-    </div>
-
     <!-- ALL SUBMISSIONS -->
     <div class="card">
         <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;"></span>
@@ -241,6 +187,48 @@
                 </tr></thead>
                 <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
             </table>
+        </div>
+    </div>
+
+
+    <!-- NO SUBMISSION CHECK -->
+    <div class="card" id="noSubCard">
+        <h2>🚫 No Submission Check</h2>
+        <div class="search-grid">
+            <div class="form-group">
+                <label>Class / Section</label>
+                <select id="nsSection">
+                    <option value="">— Select Section —</option>
+                    <optgroup label="M3">
+                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                        <option>M3/10</option><option>M3/12</option>
+                    </optgroup>
+                    <optgroup label="M4">
+                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
+                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
+                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
+                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
+                        <option>M4/13</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Worksheet Number</label>
+                <select id="nsWorksheet">
+                    <option value="">— Select Worksheet —</option>
+                    <option value="WS1">Worksheet 1</option>
+                    <option value="WS2">Worksheet 2</option>
+                    <option value="WS3">Worksheet 3</option>
+                    <option value="WS4">Worksheet 4</option>
+                    <option value="WS5">Worksheet 5</option>
+                    <option value="WS6">Worksheet 6</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-search" onclick="doNoSubCheck()" style="margin-bottom:16px;">🔍 Check Missing Submissions</button>
+        <div id="noSubResult" style="display:none;">
+            <p id="noSubTitle" style="font-weight:bold;color:#1a237e;margin-bottom:12px;"></p>
+            <div id="noSubList"></div>
         </div>
     </div>
 
@@ -262,8 +250,8 @@
 </div>
 
 <script>
-var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
-var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+var M3_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+var M4_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
 var allSubmissions = [];
@@ -328,7 +316,8 @@ var studentData = {
         {id:'37685',name:'เด็กหญิงณิชาภัทร ดีบุรี',nick:'Foam'},
         {id:'37686',name:'เด็กหญิงทัดพิชาภรณ์ พิมพ์กลาง',nick:'Thadcha'},
         {id:'37687',name:'เด็กหญิงธนภรณ์ แซ่ลี้',nick:'Rak'},
-        {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play',1,        {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
+        {id:'37688',name:'เด็กหญิงธัญญลักษณ์ พวงมณีโชติ',nick:'Play'},
+        {id:'37689',name:'เด็กหญิงธัญพิชชา เรืองจันทึก',nick:'Jiw'},
         {id:'37690',name:'เด็กหญิงธิดารัตน์ จินโน',nick:'Fern'},
         {id:'37691',name:'เด็กหญิงนิชนันท์ สงขุนทด',nick:'Omyim'},
         {id:'37692',name:'เด็กหญิงบุญญาดา แก้วโพธิ์กลาง',nick:'Ice'},
@@ -369,39 +358,44 @@ var studentData = {
         {id:'37768',name:'เด็กหญิงกวิสรา สีนวล',nick:'Idea'},
         {id:'37769',name:'เด็กหญิงจิตตาภา สุขสูงเนิน',nick:'Pan'},
         {id:'37770',name:'เด็กหญิงชญาภรณ์ จันคำจร',nick:'Cartoon'},
-        {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pang'},
-        {id:'37772',name:'เด็กหญิงณัฐณิชา ช้อยชด',nick:'Noodee'},
+        {id:'37771',name:'เด็กหญิงชุติมล วันจันทึก',nick:'Pangy'},
+        {id:'37772',name:'เด็กหญิงณัฐณิชา ช้ทอชดา',nick:'Noodee'},
         {id:'37774',name:'เด็กหญิงบุญญาภา แก้วโพธิ์กลาง',nick:'Ink'},
-        {id:'37775',name:'เด็กหญิงปณิตา แซ่ตั้น',nick:'Benz'},
+        {id:'37775',name:'เด็กหญิงปณิตา แซ่ตท้น',nick:'Benon'},
         {id:'37776',name:'เด็กหญิงปริยานุช พลจันทึก',nick:'Pu'},
-        {id:'37777',name:'เด็กหญิงปลายฟ้า ฉลูพันธ์',nick:'Playfa'},
+        {id:'37777',name:'เด็กหญิงปลาฎว้า ฉลูพันธ์',nick:'Playfa'},
         {id:'37778',name:'เด็กหญิงพัชรพร แกล้วเกล้า',nick:'Sushi'},
-        {id:'37780',name:'เด็กหญิงพิชญาภา ดงเย็น',nick:'Pitchayapha'},
+        {id:'37780',name:'เด็กหญิงพิชญาภา ดงเข็น',nick:'Pitchayapha'},
         {id:'37781',name:'เด็กหญิงเพ็ญพิชชา จิระกุลน์',nick:'Xiider'},
         {id:'37782',name:'เด็กหญิงรินรดา เกตจันทึก',nick:'Pam'},
         {id:'37783',name:'เด็กหญิงวรรณภา เขาขุนทด',nick:'Somjeed'},
-        {id:'37784',name:'เด็กหญิงวริศรา มีวัน',nick:'Gift'},
-        {id:'37785',name:'เด็กหญิงศรัณย์พร สัตย์โส',nick:'Khawhom'},
+        {id:'37784',name:'เด็กหญิงวริศรา มีวทน',nick:'Gift'},
+        {id:'37785',name:'เด็กหญิงศรัณย์ฎร สัตย์โส',nick:'Khawhom'},
         {id:'37788',name:'เด็กหญิงสุพรรษา ทัศนาลัย',nick:'Lukwa'},
-        {id:'37789',name:'เด็กหญิงสุภัคตรา บุญมา',nick:'So'},
+        {id:'37789',name:'เด็กห�งสุภัคตรา บุญมา',nick:'So'},
         {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
         {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
         {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
     ]
-        'M4/1':[{id:'36771',name:'นายทวีชัย ศรีจันทึก',nick:'Ton'},{id:'36788',name:'นางสาวกฤติยาณี ชัยสงคราม',nick:'Aoy'},{id:'36830',name:'นางสาวกัญญาภัค เร็วจันทึก',nick:'Ploy 1'},{id:'36835',name:'นางสาวธนัชชา ศรีหาวงษ์',nick:'Beer'},{id:'36838',name:'นางสาวพรรณิภา คงชัย',nick:'Palm'},{id:'36840',name:'นางสาวพิมพ์ลภัส ประพงศ์พันธุ์',nick:'Mean'},{id:'36845',name:'นางสาวศิริญากรณ์ บุญธรรม',nick:'Vermicelli'},{id:'36850',name:'นางสาวอาภรณ์รัตน์ เสือรักวงษ์',nick:'Fang 1'},{id:'36857',name:'นายพิชชากร เเสงเเก้ว',nick:'Bas'},{id:'36846',name:'นางสาวบัณฑิตา สารฤทธิ์',nick:'August'},{id:'36849',name:'นางสาวภาวินี สิงห์มหา',nick:'Ploy 2'},{id:'36905',name:'นางสาวเกวลิน อิสริยานนท์',nick:'Gew'},{id:'36934',name:'นายชานนท์ ฤทธิ์ชัยเจริญ',nick:'Cha'},{id:'36939',name:'นายนาฤทธิ์ ตรีมงคล',nick:'Tan'},{id:'36951',name:'นายศรัญยู ทองจันทึก',nick:'U'},{id:'36970',name:'นางสาววิไลลักษณ์ อังกรรัมย์',nick:'Farn'},{id:'36975',name:'นายกนต์ธีร์ สงโนนสูง',nick:'Korn'},{id:'36989',name:'นายศักดากร ทวีลาภ',nick:'Pai'},{id:'36991',name:'นายศุภกร สิงห์จันทึก',nick:'Mix'},{id:'36997',name:'นายอัครวินท์ บุญมา',nick:'Yo'},{id:'37013',name:'นางสาวศศิธร เพียงจันทึก',nick:'Mook'},{id:'37032',name:'นางสาวชญาดา บำรุงตา',nick:'Wan'},{id:'37044',name:'นางสาวพิชญธิดา โสจันทึก',nick:'Baitoey'},{id:'37063',name:'นายกัญจน์ ฉิมพลี',nick:'Jay'},{id:'37116',name:'นายพิชญุตม์ พันธ์งาม',nick:'Tawan'},{id:'37129',name:'นางสาวณัฐชวลี ปราณีตพลกรัง',nick:'Fang 2'},{id:'37140',name:'นางสาววรรณิสา พวกจันทึก',nick:'Mochi'},{id:'39503',name:'นางสาวทิตาธร สอจันทึก',nick:'Fang 3'},{id:'39504',name:'นางสาวสุภัสสรา รักษาสุวรรณ',nick:'Aum'},{id:'39505',name:'นางสาวคีตภัทร สีโท',nick:'Kito'},{id:'39506',name:'นายกิตติศักดิ์ เกงขุนทด',nick:'Vayu'},{id:'39507',name:'นางสาวสุริยาพร ถังกระโทก',nick:'Aom'},{id:'39508',name:'นางสาวชุติกาญจน์ กอบขุนทด',nick:'Idea'},{id:'39509',name:'นางสาวกัณญาลัก แรมจันทึก',nick:'Paerw'},{id:'39510',name:'นางสาววิกันดา สมขุนทด',nick:'Kawfang'},{id:'39511',name:'นางสาวพิมพ์พิกา ไลน้ำอ้อม',nick:'Yew'},{id:'39512',name:'นางสาวศิริกานดา นนท์ประสาท',nick:'Maysa'},{id:'39513',name:'นายปภังกร ถิ่นวงษ์แย',nick:'Pan'},{id:'39514',name:'นางสาวศิวะภาพร สาแช',nick:'Ming'},{id:'39515',name:'นางสาวพิมพ์ชนก อุดมจิตร',nick:'Fah'},{id:'54565',name:'Test Student',nick:'Kyle'}],
-    'M4/2':[{id:'36120',name:'นายชินาธิป เศียรนอก',nick:'Kun'},{id:'36175',name:'นายวรเมธ แซ่ย่าง',nick:'Li'},{id:'36428',name:'นางสาวอมรรัตน์ พูลพุทธา',nick:'Maprang'},{id:'36782',name:'นายวชิตะ หมื่นแคล้ว',nick:'Sunday'},{id:'36785',name:'นายศิวนาถ ยอดนอก',nick:'Film 1'},{id:'36804',name:'นางสาววรัทยา ฝุ่นทอง',nick:'Nxmpxn'},{id:'36811',name:'นายคณาธิป กันจันทึก',nick:'Nack'},{id:'36813',name:'นายเตโชดม ทองดอนพุ่ม',nick:'Guy'},{id:'36867',name:'นายศุภสิน ป้อมสุวรรณ',nick:'Save'},{id:'36956',name:'นางสาวกนกพร แดงชาติ',nick:'Film'},{id:'36965',name:'นางสาวนิชนันท์ โตสูงเนิน',nick:'Naming'},{id:'36967',name:'นางสาวรัตนาวดี เนยสูงเนิน',nick:'Kingpai'},{id:'36968',name:'นางสาววรรณวนัช กรวยสูงเนิน',nick:'Bonus'},{id:'36990',name:'นายศิรวิทย์ แสงฤทธิไกร',nick:'Poon'},{id:'37004',name:'นางสาวพรชนัน กลิ่นโสภณ',nick:'Palm'},{id:'37019',name:'นายชัยอนันต์ เชื้อจันทึก',nick:'Jay'},{id:'37026',name:'นายภาคิน เปลี้ยจันทึก',nick:'Aut'},{id:'37029',name:'นายรัตนชัย คณโฑเงิน',nick:'Kong'},{id:'37067',name:'นายธันวา สุขล้น',nick:'Thanwa'},{id:'37077',name:'นายพิชาชาญ วงษ์อินทร์',nick:'Pause'},{id:'37085',name:'นายอริญชัย บุญค้ำ',nick:'Aoo'},{id:'37090',name:'นางสาวขวัญนรินพร นิ่มทอง',nick:'Kwan'},{id:'37105',name:'นางสาวสิราลักษณ์ ม่วงราม',nick:'Manaw'},{id:'37127',name:'นางสาวจิราพัชร คำตัน',nick:'Woonsen'},{id:'37149',name:'นายกิตตินันท์ อุระภูมิ',nick:'Kittinan'},{id:'39516',name:'นายกิตติศักดิ์ มาตรนอก',nick:'King'},{id:'39517',name:'นายพงศธร จริงสูงเนิน',nick:'Phai'},{id:'39518',name:'นายพงศกร มาตย์นอก',nick:'Gae'},{id:'39519',name:'นายพรหมพิริยะ บุญจันทึก',nick:'Diamond'},{id:'39521',name:'นายธนวัฒน์ ไทยมณี',nick:'Cee'},{id:'39522',name:'นายธนภัทร ใยยะธรรม',nick:'Path'},{id:'39523',name:'นายอัคซ๊าส โมหะหมัด',nick:'Akzard'},{id:'39524',name:'นายสุรเดช กระโห้',nick:'Bas'},{id:'39525',name:'นายศิรายุธ แทนขุนทด',nick:'Aom'},{id:'39526',name:'นางสาวกชกร สวยกลาง',nick:'?'},{id:'39527',name:'นายภูริณัฐ สังข์โต',nick:'Ball'},{id:'39528',name:'นายฤทธิ์ทา กรุณรัมย์',nick:'Boss'},{id:'39529',name:'นายธรา รัตนรักษ์',nick:'Gohung'},{id:'39530',name:'นางสาวสุพัตรา บุตรกระโทก',nick:'Cherry'},{id:'39531',name:'นายวรากร ศรีเพ็ชร์',nick:'Kay'}],
-    'M4/3':[{id:'36770',name:'นายเตชิต ภิรมย์',nick:'Tete'},{id:'36839',name:'นางสาวพิชชาภา ขำมะลัง',nick:'Pai'},{id:'36877',name:'นางสาวชลิตา เสริฐสูงเนิน',nick:'Guitar'},{id:'36883',name:'นางสาวธนาภา มาสิงห์',nick:'Meiji'},{id:'36890',name:'นางสาวรมนรินทร์ สิมาแก้ว',nick:'Tonhm'},{id:'36923',name:'นางสาวรมิดา เพียรพ่วงพันธ์',nick:'Fame'},{id:'36924',name:'นางสาววรัญญา ส่งแสง',nick:'Baikhao'},{id:'36958',name:'นางสาวจีรภรณ์ สงขุนทด',nick:'Bell'},{id:'36977',name:'นายญาณากร ดงงาม',nick:'Tawan'},{id:'36982',name:'นายนิธิกร เอ็นจันทึก',nick:'Bom'},{id:'36993',name:'นายสุทธินันท์ แสนบุญ',nick:'Jigzaw'},{id:'36998',name:'นายอาเมียร์คาน โมหะหมัด',nick:'Amirkhan'},{id:'37007',name:'นางสาวแพรวา สินปรุ',nick:'Namprik'},{id:'37008',name:'นางสาวมริษา ม่วงเมือง',nick:'Kafiw'},{id:'37033',name:'นางสาวชวัลลักษณ์ ดาระศาสตร์',nick:'Chawanlak'},{id:'37035',name:'นางสาวณัฐธิดา เข็มชู',nick:'Natthida'},{id:'37039',name:'นางสาวบัณฑิตา ปีจัตุรัส',nick:'Tonhoom'},{id:'37045',name:'นางสาวพิชญา มาจันทึก',nick:'Pham'},{id:'37100',name:'นางสาวพลอยปภัส เหนียวจันทึก',nick:'Pleng'},{id:'37162',name:'นายเศรษฐพงศ์ ขันสิงห์',nick:'Tiewkhao'},{id:'37182',name:'นางสาวพนัชกร แหลมทองหลาง',nick:'Namkaeng'},{id:'37192',name:'นางสาวอัญชิสา นามบุญ',nick:'Anchisa'},{id:'37210',name:'นายอนุรักษ์ อินคงมะดัน',nick:'Auto'},{id:'39532',name:'นายรัฐธีร์ รพีไชยรุจน์',nick:'Kate'},{id:'39533',name:'นายคณนาถ ไพฑูรย์',nick:'Namo'},{id:'39534',name:'นางสาวอิงอร สวัสดีลาภา',nick:'Ing-On'},{id:'39535',name:'นางสาววรัญญา แข็งฤทธิ์',nick:'Nampan'},{id:'39536',name:'นางสาวทิพย์วิภา รัตนวรรณ',nick:'Nectar'},{id:'39537',name:'นายอาชาวิน สาสูงเนิน',nick:'Nammo'},{id:'39538',name:'นางสาวสุพรรษา มูลจันทึก',nick:'Khaohom'},{id:'39539',name:'นางสาวกิตตินันท์ กล่อมสูงเนิน',nick:'Pakkad'},{id:'39540',name:'นายธนโชติ เทียมขุนทด',nick:'Thanachot'},{id:'39541',name:'นางสาวเบญจมาศ ภูหงษ์ทอง',nick:'Benochaimt'},{id:'39542',name:'นางสาวรนารี มณีโชติ',nick:'Neem'},{id:'39543',name:'นายณัฐพล ช่างไม้',nick:'Gus'},{id:'39544',name:'นางสาววรรณวิสา กลิ่นเดช',nick:'May'},{id:'39545',name:'นางสาวจิรนันท์ ทุระพล',nick:'Nun'},{id:'39546',name:'นางสาวธัญญรักษ์ กรินทร์',nick:'Maysa'},{id:'39547',name:'นางสาวธัญชนก พลจันทึก',nick:'Kaimook'},{id:'39548',name:'นายอดิเทพ พรมสูง',nick:'Mix'}],
-    'M4/4':[{id:'36803',name:'นางสาววรรณิศา ดาววงค์',nick:'Piano'},{id:'36812',name:'นายฐิติพล แถบทอง',nick:'Kool'},{ld:'36828',name:'นายสุวิจักขณ์ งัดสันเทียะ',nick:'Dew 1'},{id:'36836',name:'นางสาวปวริศา ศรีเพ็ชร',nick:'Kan'},{id:'36864',name:'นายรพีภัทร ใจห้าว',nick:'Name'},{ld:'36938',name:'นายดลธรรม จงจันทึก',nick:'Namo 1'},{ld:'36942',name:'นายพสิษฐ์ อินทร์ทอง',nick:'Pun'},{ld:'36960',name:'นางสาวฉัตรธิดา เชื้อนิล',nick:'Manow'},{id:'36963',name:'นางสาวชุติญา ทรวงโพธิ์',nick:'Praewa'},{id:'36974',name:'นางสาวอนัตญา อาจสุนทร',nick:'Eye'},{id:'36979',name:'นายทยากร เร็วจันทึก',nick:'Stam'},{id:'36999',name:'นางสาวกัญญมาศ ชอบสุข',nick:'Mint 2'},{ld:'37038',name:'นางสาวนันทิกานต์ เกี้ยวกระโทก',nick:'Ice 1'},{id:'37050',name:'นางสาวภาวิดา จิตต์โสธร',nick:'Mild'},{ld:'37051',name:'นางสาวภาวิตา จิตต์โสธร',nick:'Mint 1'},{id:'37052',name:'นางสาวภิญญดาพัชญ์ เพชรจันทึก',nick:'Nadear'},{ld:'37053',name:'นางสาวลัดดาวัลย์ แมนจันทึก',nick:'Ploy'},{id:'37071',name:'นายธีรภัทร พลจันทึก',nick:'Mos'},{id:'37089',name:'นางสาวกุลภรณ์ ปราเดช',nick:'Ywwa'},{id:'37120',name:'นายศิกรพัฒน์ ข่อยจัตุรัส',nick:'Program'},{ld:'37154',name:'นายนิรันดร์เทพ สุพรรณนิล',nick:'Numnuea'},{id:'39549',name:'นางสาวทัศนีย์ รักษาพันธุ์',nick:'Thip'},{id:'39550',name:'นางสาวศศิกานต์ ชำนาญ',nick:'Eye'},{id:'39551',name:'นายวรวุธ อาจสูงเนิน',nick:'Dew 2'},{id:'39552',name:'นายอริญชัย ปัถมัง',nick:'Kim'},{id:'39553',name:'นางสาวพิมพ์ลภัส วิเชียรรัตน์',nick:'Meemee'},{id:'39554',name:'นางสาวสุชาดา บัวแก้ว',nick:'Ping'},{id:'39555',name:'นางสาวณัฐณิชา คมสันเทียะ',nick:'Aingeye'},{ld:'39556',name:'นางสาวกัญจากรณ์ นิลครบุรี',nick:'Kanja'},{id:'39557',name:'นางสาวภาสินี ภูจันทึก',nick:'Cream'},{id:'39558',name:'นางสาวชนัฐปภา ทุติสูงเนิน',nick:'Noodee'},{id:'39559',name:'นางสาววาสนา วรสิงห์',nick:'Baitoey'},{id:'39560',name:'นายสิรดนัย กัลยาศรี',nick:'Biw'},{id:'39561',name:'นายอรรถพันธ์ เรืองศรี',nick:'Golf'},{ld:'39562',name:'นางสาวพิชญา อมรเนติรัตน์',nick:'Minnie'},{ld:'39563',name:'นางสาวพิชชานันท์ ไตรประวัติ',nick:'Aom'},{ld:'39564',name:'นางสาววรรณชนก จันทร์ที',nick:'Namo 2'},{ld:'39565',name:'นางสาวศิรัตน์ตา พิศแลงาม',nick:'Ice 2'},{id:'39566',name:'นางสาววรัญญา เพ็งสูงเนิน',nick:'Pang'},{ld:'39567',name:'นายสถาพร เกลี้ยงพุดซา',nick:'Sunz'}],
-    'M4/5':[{ld:'36405',name:'นายศิวัช โสกขุนทด',nick:'Title'},{id:'36790',name:'นางสาวกัญญาพัชร แก่นจันทึก',nick:'Patty'},{id:'36797',name:'นางสาวนพรัตน์ ธงศรี',nick:'Nam'},{id:'36802',name:'นางสาวมณฑาทิพย์ ปล้องจันทึก',nick:'Khing'},{ld:'36817',name:'นายพีรพล ประกอบพล',nick:'Blossom'},{id:'36824',name:'นายศิวกร จรรยาศิริ',nick:'Ray'},{id:'36842',name:'นางสาววรรณภา พูนจันทึก',nick:'Karn'},{id:'36846',name:'นางสาวศุภกานต์ ศิลปศร',nick:'Tonaor'},{id:'36879',name:'นางสาวณัฏฐณิชา งวดสูงเนิน',nick:'Nicha'},{id:'36884',name:'นางสาวธัญญามาศ แบ็ค',nick:'Eunseon'},{id:'36906',name:'นางสาวขวัญมนัส สว่างแสง',nick:'Kartoon'},{ld:'36910',name:'นางสาวฐิติพร คงเจริญ',nick:'Pun'},{ld:'36912',name:'นางสาวนาเคนทรนขา ชุมคำ',nick:'In'},{id:'36916',name:'นางสาวปาริตา ลาดสว่าง',nick:'Mint'},{ld:'36926',name:'นางสาวศุภศิริ เดชวรรณ',nick:'Ping'},{id:'36928',name:'นางสาวสุชัญญา ชื่นชม',nick:'Jade'},{id:'37014',name:'นางสาวศศิวรรณ ศรีนุกูล',nick:'Dutch Mill'},{ld:'37027',name:'นายเมธัส พลจันทึก',nick:'Man-U'},{id:'37031',name:'นางสาวจิดาภา สร้อยคำ',nick:'Praew'},{id:'37057',name:'นางสาวศรัณย์พร เปล่งสันเทียะ',nick:'Satang'},{id:'37114',name:'นายปัณณวิช สารเสา',nick:'Tankoon'},{id:'39568',name:'นางสาวกัญญาพัชร เที่ยงจันทึก',nick:'May'},{id:'39569',name:'นายกมลโลจน์ หวลจันทึก',nick:'Focus'},{id:'39570',name:'นายธรรมรัตน์ ปัถมัง',nick:'Pauk'},{id:'39571',name:'นางสาวชญานิศ ดวงประวัติ',nick:'Khao'},{ld:'39572',name:'นางสาวเชษฐ์ธิดา อบเชย',nick:'Ja'},{id:'39573',name:'นางสาวจีระนันท์ สมบัติหอม',nick:'Toon'},{ld:'39574',name:'นางสาวศศิรา แน่พิมาย',nick:'Namwan'},{ld:'39575',name:'นางสาวพัชราภา สว่างจิตต์',nick:'Aum'},{ld:'39576',name:'นางสาวปรางค์วริณ พรมเดื่อ',nick:'Fay'},{ld:'39577',name:'นางสาวปาริชาติ บัวกลาง',nick:'Zoey'},{id:'39578',name:'นางสาวสิรามล โสพะเนาว์',nick:'Aoom'},{id:'39679',name:'นางสาวปุญจิรภา ศรีนวล',nick:'Pom Pom'},{ld:'37081',name:'วัฒนา มั่งจันทึก',nick:'Leo'},{ld:'36922',name:'ภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'}],
-    'M4/6':[{id:'36768',name:'นายเชิดศักดิ์ แขกสันเทียะ',nick:'Comford'},{id:'36784',name:'นายศราวิน ฟุ้งสุข',nick:'Pao'},{id:'36871',name:'นายอธิวัฒน์ คำโสม',nick:'Gunn'},{id:'36888',name:'นางสาวพลอยไพลิน ปรีชายุทธ์',nick:'Ploy'},{id:'36893',name:'นางสาวสุชานาถ หร่ายพิมาย',nick:'Fah'},{id:'36922',name:'นางสาวภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'},{id:'36986',name:'นายวรพล สุภาพ',nick:'Kao'},{id:'37021',name:'นายธนปพน ธาตะนะ',nick:'Geno'},{id:'37042',name:'นางสาวปรมา โลนขุนทด',nick:'Ming'},{id:'37110',name:'นายชลธีร์ แสงวิเศษ',nick:'Nam'},{id:'37126',name:'นางสาวจิราเจต เศษจันทึก',nick:'Lukked'},{id:'37133',name:'นางสาวฝันตรงจิต คุณไ�Wยสง',nick:'Tam'},{id:'37139',name:'นางสาววรกมล จอมเกาะ',nick:'Fangkhaw'},{id:'37142',name:'นางสาวศศิกานต์ ทีจันทึก',nick:'Pam'},{id:'37155',name:'นายบัญญวัต กอสันเทียะ',nick:'Manu'},{id:'37157',name:'นายพสิษฐ์ มั่งสูงเนิน',nick:'Mon'},{id:'37165',name:'นายอรรถพล เกยพุ�Wรา',nick:'Zee'},{id:'37166',name:'นางสาวกชนิภา เชื้อสูงเนิน',nick:'Khoahom'},{id:'37189',name:'นางสาวศุภดา เวกสูงเนิน',nick:'Manaw'},{id:'37193',name:'นายชลพัชร นาถาบำรุง',nick:'Annfuse'},{id:'37201',name:'นายพิตตินัน�W์ ขันจันทึก',nick:'Titan'},{id:'37538',name:'นางสาวอัญมณี เพื่อนกลาง',nick:'Fang'},{id:'39579',name:'นางสาวอธิชา จันทร์สูงเนิน',nick:'View'},{id:'39580',name:'นางสาวรุ่งรวิน โคตรจันทึก',nick:'Irin 1'},{id:'39581',name:'นางสาวสุดารัตน์ ทัดกลาง',nick:'Pooklook'},{id:'39582',name:'นางสาวสิริลักษณ์ อาญาเมือง',nick:'Cake'},{id:'39583',name:'นางสาวรวินท์นิภา อักษรเสือ',nick:'Gafew'},{id:'39584',name:'นายวิภู แพงไตร',nick:'Boom'},{id:'39585',name:'นางสาวธัญรัตน์ เนียมกลาง',nick:'Hom'},{id:'39586',name:'นางสาวชลดา บุรินทร์รัมย์',nick:'Om Am'},{id:'39587',name:'นายภาคิน เดิดขุนทด',nick:'Not'},{id:'39588',name:'นางสาวศิริธาดา หอมจันทร์',nick:'Khaimuk'},{id:'39589',name:'นางสาวสิริวิมล ปะเกาทัน',nick:'Tong'},{id:'39590',name:'นางสาวกรพินธุ์ บัวประ�Wุม',nick:'Jang'},{id:'39591',name:'นางสาวพรีมสุดา ธรหาญ',nick:'Prem'},{id:'39592',name:'นายณัฐพงศ์ พรมสุรินทร์',nick:'Sun'},{id:'39593',name:'นางสาวกุลปริยา แป้นโพธิ์',nick:'Irin 2'},{id:'39594',name:'นางสาวพิมพ์นภัส พิณพิมาย',nick:'Whan'},{id:'39595',name:'นางสาวฟาเดีย เย๊ะ',nick:'Fadia'},{id:'39596',name:'นายวงศกร สมน้อย',nick:'Satang'},{id:'39628',name:'ณัฐพล โอดจันทึก',nick:'Guy'}],
-    'M4/7':[{id:'36801',name:'นางสาวพิยดาวัลย์ เจตนา',nick:'Chompu'},{id:'36807',name:'นางสาวสุภาภรณ์ ศรีคำภา',nick:'Khaofang'},{id:'36913',name:'นางสาวนิชาภา นะโนนชัย',nick:'Nicha'},{id:'36919',name:'นางสาวพรรัมภา เพียราชโยทา',nick:'Pan'},{id:'37012',name:'นางสาววรัญญา โอษฐ์จัทร์ศรี',nick:'Koy'},{id:'37041',name:'นางสาวปภาดา อิ่มจันทึก',nick:'Khim'},{id:'37048',name:'นางสาวภัทรวดี พรมภิรมย์',nick:'Ploy'},{id:'37054',name:'นางสาววรัชชญา กรมไธสง',nick:'Prim'},{id:'37084',name:'นายสิทธิพงษ์ โพธิ์ศรี',nick:'Champhgne'},{id:'37086',name:'นายเอกราช กันยาสาย',nick:'Manyu'},{id:'37123',name:'นางสาวกันยกร ศรีสารากร',nick:'Hya'},{id:'37130',name:'นางสาวปรียานุช พิมพ์จันทึก',nick:'Milk'},{id:'37143',name:'นางสาวศศิวิมล พินิจรัมย์',nick:'Stamp'},{id:'37144',name:'นางสาวสุกัญญา เพ้ยจันทึก',nick:'Aom'},{id:'37147',name:'นางสาวอ�Wิชา ชูขุนทด',nick:'Aum'},{id:'37158',name:'นายพิชยะ ชัยวงศ์',nick:'Film'},{id:'37160',name:'นายวุฒิภัทร ภาวจันทึก',nick:'Morgan'},{id:'37163',name:'นายสัญชัย ผิวสายคำ',nick:'San'},{id:'37173',name:'นางสาวณัฐทิตา เรืองจันทึก',nick:'Praewa'},{id:'37183',name:'นางสาวภรณ์พชร สมฤทธิ์',nick:'Eve'},{id:'37188',name:'นางสาววิชญาพร เรืองจันทึก',nick:'Krathiu'},{id:'39597',name:'นายอัครพล ไทยมณี',nick:'Owen'},{id:'39598',name:'นางสาวเจนจิรา ตันเฮา',nick:'Pin'},{id:'39599',name:'นายเอกรินทร์ แกมขุนทด',nick:'Earth'},{id:'39600',name:'นายพงศธร ทองรักษ์',nick:'Pao'},{id:'39601',name:'นางสาวพิมพ์นิภา สายแก้ว',nick:'Tangmo'},{id:'39602',name:'นายศุภรักษ์ มิลขุนทด',nick:'Art'},{id:'39603',name:'นายธนัช ศรีวัฒนะ',nick:'Protae'},{id:'39604',name:'นางสาวสุกานดา องค์ตะคุ',nick:'Gam'},{id:'39605',name:'นางสาวพิชยาภา พลจันทึก',nick:'Cream'},{id:'39606',name:'นายพลช จงเจนกลาง',nick:'Paog},{id:'39607',name:'นางสาวณภัสสรณ์ ผาสุข',nick:'Hom'},{id:'39608',name:'นางสาวพิชญา นักระนาด',nick:'Pink'},{id:'39610',name:'นางสาวกวินธิดา มีบทสม',nick:'Phak Wan'},{id:'39611',name:'นางสาวณธพร ผินงูเหลือม',nick:'Mameowg},{id:'39612',name:'นายอนุชา เปราะจันทึก',nick:'Mamay'},{id:'39613',name:'นายอริณ ชูวิชับ',nick:'Kak'},{id:'39614',name:'นายพลากร มันกระโทก',nick:'Kay'},{ld:'39615',name:'นายจิรวัฒน์ ขอเชื้อกลาง',nick:'Film'},{id:'39617',name:'นางสาวธนันท์รัฐ ด้วงจอกนอก',nick:'Eve'}],
-    'M4/8':[{id:'36988',name:'นายวีรากร เงสันเทียะ',nick:'Fresh'},{id:'37064',name:'นายชานนท์ กล้าวาจา',nick:'Pao'},{id:'37093',name:'นางสาวณรัตรศภรณ์ เพียรทำดี',nick:'Khaimookg},{id:'37107',name:'นายกฤษณะกันต์ ปัญญางาน',nick:'Best'},{id:'37111',name:'นายณัฐวัช แป้นจันทึก',nick:'Beam'},{ld:'37112',name:'นายธนกฤต พรหมรุกขชาติ',nick:'Scale'},{id:'37118',name:'นายเมธากานต์ นิลสูงเนิน',nick:'Wan'},{id:'37119',name:'นายวัชรพล มะหายันทะ',nick:'Euro'},{ld:'37121',name:'นายสุชาครีย์ อาศัยป่า',nick:'Namcha 1'},{id:'37124',name:'นางสาวกานต์พิชชา การุณสิต',nick:'Kan'},{id:'37125',name:'นางสาวกานต์พิชชา ศิริไพฑูรย์',nick:'Ploy'},{ld:'37134',name:'นางสาวพิชญา เวียงจันทึก',nick:'Ice'},{ld:'37136',name:'นางสาวพีชญา ศรีสูงเนิน',nick:'Pream'},{id:'37137',name:'นางสาวภิญญาพัชญ์ อ่วมทอน',nick:'Moor'},{ld:'37141',name:'นางสาววิภาดา งอบโคกกรวด',nick:'Fahsai'},{ld:'37145',name:'นางสาวสุปรียา เสือสูงเนิน',nick:'Bumbim'},{ld:'37146',name:'นางสาวหทัยชนก ต่อสันเทียะ',nick:'Pakad'},{id:'37148',name:'นางสาวอภิสรา มุนจันทึก',nick:'Earn'},{ld:'37150',name:'นายกิตติศักดิ์ เดชวรรณ',nick:'Tonkla'},{ld:'37156',name:'นายปมัญญา เสริมเฉลียว',nick:'Pun'},{ld:'37168',name:'นางสาวกวินธิดา ทีจันทึก',nick:'Cream'},{id:'37170',name:'นางสาวจิรัชญา มะโนใหม่',nick:'Mint'},{ld:'37177',name:'นางสาวนฤมล พรพิทัก',nick:'Namtan'},{ld:'37195',name:'นายณเดช เกตุจันทึก',nick:'Bonus'},{id:'39618',name:'นายชีวานนท์ จุดาบุตร',nick:'Kuptun'},{id:'39619',name:'นางสาวณัชกมล เชื้อไพบูลย์',nick:'Tangtai'},{ld:'39620',name:'นายวรวิทย์ ทองภักดี',nick:'Worawit'},{id:'39621',name:'นางสาวจิรภิญญา ฉาดนอก',nick:'Jirapinya'},{id:'39622',name:'นางสาวมลฤดี อิ่มจันทึก',nick:'Mee'},{id:'39623',name:'นางสาวกัลชลิกา อันทะสา',nick:'Penneung'},{ld:'39624',name:'นางสาวศศิชา ขุยจันทึก',nick:'Namcha 2'},{id:'39625',name:'นางสาวธนัชชา หล่าแก้ว',nick:'Por'},{id:'39626',name:'นางสาววิลาสินี โอษฐ์จันทร์ศรี',nick:'Kluay'},{id:'39627',name:'นายณัฐภูมิ ทรัพย์กลาง',nick:'Film'},{id:'39628',name:'นายณัฐพล โอดจันทึก',nick:'Nattaphon'},{id:'39629',name:'นางสาวณัฐกฤตา พลศรี',nick:'Kaoiao'},{id:'39630',name:'นางสาวปิยนันท์ เพ็ชรงาม',nick:'Toey'},{ld:'39631',name:'นางสาวจิรัชญา สีสะอาด',nick:'Namwan'},{ld:'39632',name:'นางสาวสิมาภรณ์ เจือจันทึก',nick:'Ked'},{ld:'39633',name:'นางสาววรรณวิษา จำปาทอง',nick:'Nam'},{ld:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'}],
-    'M4/9':[{id:'36795',name:'นางสาวธนัสถา ม่วงมนตรี',nick:'Meen'},{ld:'36897',name:'นายโภควินท์ เหมจันทึก',nick:'Phokha'},{ld:'37059',name:'นางสาวสุกฤต บุตรหล่อ',nick:'Jam'},{ld:'37066',name:'นายต้นน้ำ ฉิพิมาย',nick:'Kungfu 1'},{id:'37122',name:'นายเอริค สตรูเซโร',nick:'Eric'},{ld:'37138',name:'นางสาวรมิตา ชัยเทพ',nick:'Numnuea'},{id:'37153',name:'นายธีระภัทร รักษาสระน้อย',nick:'Teerapat'},{ld:'37176',name:'นางสาวดวงกมล เมืองจันทึก',nick:'Preaw'},{id:'37200',name:'นายพัทธดนย์ วงษ์มา',nick:'Tennis'},{id:'37204',name:'นายภานุทัศน์ วาจาสิทธิ์',nick:'Kungfu 2'},{id:'37207',name:'นายศักดิ์สิทธิ์ นั่งสันเทียะ',nick:'Kafiw'},{ld:'37208',name:'นายศิวกร พวงศรี',nick:'Fiwjer'},{ld:'37211',name:'นายอภินันท์ เชิดกฤษ์',nick:'JJ'},{id:'37212',name:'นางสาวกมลชนก เพียซ้าย',nick:'Baitoey'},{ld:'37213',name:'นางสาวเกวลิน ชูจันทร์',nick:'Poppy'},{id:'37215',name:'นางสาวชลธิชา หวังบัวกลาง',nick:'Smile'},{id:'37216',name:'นางสาวฐิตินันท์ สิงห์ทอง',nick:'Khowhom'},{id:'37217',name:'นางสาวณฐกมล ธรรมกิตติศักดิ์',nick:'Pai'},{id:'37218',name:'นางสาวณิชมน นวลผ่อง',nick:'Ying'},{ld:'37219',name:'นางสาวธัญชนก ยวงจันทึก',nick:'Tonnam'},{ld:'37220',name:'นางสาวนิติณัฐดา พิมสิม',nick:'Satang'},{ld:'37221',name:'นางสาวพรนภัทร ลากูล',nick:'Aoey'},{id:'37222',name:'นางสาวพัชริดา วงศ์ดาว',nick:'Nana'},{id:'37224',name:'นางสาวแพรทิพย์ ม่วงจันทึก',nick:'Boklook'},{ld:'37225',name:'นางสาวภัทรวดี คราจันทึก',nick:'Fom'},{ld:'37227',name:'นางสาววริศรา สีดา',nick:'Ice'},{ld:'37228',name:'นางสาววิศราภรณ์ สุขมา',nick:'O-May'},{id:'37229',name:'นางสาวศศิกานต์ สายจันทร์',nick:'Gun'},{id:'37231',name:'นางสาวสุธีธิดา แก้ววิเชียร',nick:'Aeiy'},{ld:'37232',name:'นางสาวสุรีพร ต้นกันยา',nick:'Praewa'},{ld:'37235',name:'นางสาวอิชญ์อาณิก ปรีชากิจโกศล',nick:'Nam\'ing'},{id:'37236',name:'นางสาวเอมวิกา คูณจันทึก',nick:'AongAey'},{ld:'37264',name:'นางสาวน้ำเพชร เตือนจันทึก',nick:'Phet'},{id:'39634',name:'นายฐิติศักดิ์ เพียซ้าย',nick:'Frame'},{ld:'39635',name:'นางสาววริศรา เกตุพิบูรณ์',nick:'Kao'},{ld:'39636',name:'นายนักรบ หนึ่งจันทึก',nick:'Tangw},{id:'39637',name:'นายวงศกร บุญแซม',nick:'Tonkla'},{id:'39638',name:'นายปณวัฒน์ มีวงค์สม',nick:'Max'},{id:'39639',name:'นายตะวัน สระแก้ว',nick:'Tawan'},{ld:'39640',name:'นายธนกฤติ หนูน้อยจันทึก',nick:'Sea'}],
-    'M4/10':[{ld:'36894',name:'นายกิตติคุณ คงพะเนา',nick:'Gust'},{id:'36895',name:'นายศุภกฤต นาน้อย',nick:'Gan/ Mub'},{ld:'36903',name:'นายกฎชกร ฟดสูงเนิน',nick:'Kot'},{ld:'36909',name:'นางสาวชลธิชา เสาวรส',nick:'Thicha'},{ld:'36917',name:'นางสาวปุณณภา เยสูงเนิน',nick:'Napha'},{id:'36918',name:'นางสาวปุณยนุช สาระ',nick:'Kafae'},{id:'36921',name:'นางสาวภัทรวดี นาโควงค์',nick:'Grace'},{ld:'36971',name:'นางสาวศิริพร นิลโนรี',nick:'Aom'},{ld:'37000',name:'นางสาวกาญจน์เกล้า วงษ์ลักษณ์',nick:'Namkhing'},{id:'37017',name:'นางสาวอินทิมา จันทร์อินทร์',nick:'Ain'},{id:'37020',name:'นายเทพบดี พิพัธน์',nick:'Pao'},{id:'37034',name:'นางสาวณัฐชยา ขอสีกลาง',nick:'Kaimook'},{ld:'37040',name:'นางสาวปพิชญา แสนกุล',nick:'Manow'},{id:'37194',name:'นายณฐภัทร วงศ์วีระพันธุ์',nick:'Nai'},{id:'37196',name:'นายธนกร สิงห์สีโว',nick:'Tee'},{id:'37247',name:'นายศิริอัฐฎากรณ์ จูมจันทร์',nick:'Korn'},{ld:'37259',name:'นางสาวฐิตารีย์ สุดหา',nick:'Rin'},{ld:'39641',name:'นายพลภิภัทร ต้นกันยา',nick:'Mark'},{id:'39642',name:'นางสาวไอริน มิ่งมาลี',nick:'Ice'},{id:'39643',name:'นางสาวณัฐธิดา สมพงษ์',nick:'Jaja'},{id:'39644',name:'นางสาวณัฐญาดา สอนบุญชู',nick:'Lak'},{id:'39645',name:'นายสรวิชญ์ ประเสริฐ',nick:'Win'},{id:'39646',name:'นางสาววาสนา เจริญรัตน์',nick:'Mint'},{ld:'39647',name:'นางสาวณิชมน พิมพ์หนองเรือ',nick:'Kaowtip'},{id:'39648',name:'นางสาวภัทรธิดา วงษ์แก้ว',nick:'Stang'},{ld:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoow},{id:'39650',name:'นางสาวพิกุลแก้ว รัตนพงศ์พร',nick:'Kam'},{id:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},{id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}],
-    'M4/11':[{id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},{id:'36898',name:'นายบุญชัย พัดดำ',nick:'Prab'},{id:'36944',name:'นายพีรัช ใจหมั่น',nick:'Raie'},{ld:'36980',name:'นายธนดล ทิพย์ธงชัย',nick:'Mon1'},{id:'36987',name:'นายวัชรินทร์ โสโพ',nick:'Dan'},{id:'37115',name:'นายปุณญพัฒน์ พันแสน',nick:'Gun'},{id:'37117',name:'นายภูผา สุรพล',nick:'Paint'},{ld:'37164',name:'นายสุกฤษฎิ์ จันทร์แก้ว',nick:'Q'},{id:'37167',name:'นางสาวกฤชษา ทีปกรกุล',nick:'Noona'},{ld:'37171',name:'นางสาวจุฬาลักษณ์ แพงไธสงค์',nick:'View'},{id:'37202',name:'นายพีรวัส เนตรแสงศรี',nick:'Satangw},{id:'37244',name:'นายภาคิณ พึ่งเสือ',nick:'Fifa'},{id:'37273',name:'นางสาวหนึ่งน้ำทิพย์ วงค์ศักดิ์',nick:'Mon2'},{ld:'37537',name:'นางสาวดาริกา ดาษไธสง',nick:'Aomsin'},{ld:'39653',name:'นายพิธา ขวานอก',nick:'Porche'},{ld:'39654',name:'นายรัชภูมิ ราชวงศ์',nick:'Phum'},{id:'39655',name:'นางสาวมาริสา อ้ายจันทึก',nick:'Jaiya'},{ld:'39656',name:'นายณวีร์ภัทร นิธิโชคนนทรัตน์',nick:'Pao'},{ld:'39657',name:'นายชาคริต ทองดีนอก',nick:'Frasg'},{id:'39658',name:'นายนฤดม ไหมเตียงกลาง',nick:'Non'},{id:'39659',name:'นางสาวสุกันยา บุรัชกาล',nick:'Pringw},{id:'39660',name:'นางสาวธันยทิพย์ ถมมา',nick:'Irin'}],
-    'M4/12':[{id:'36787',name:'นางสาวกนกวรรณ สีมอด',nick:'Pancake'},{ld:'36796',name:'นางสาวธีนิดา ดวงจันทึก',nick:'Peiyw'},{id:'36799',name:'นางสาวปัญญาพร เนื่องนรินทร์',nick:'Sand'},{ld:'36914',name:'นางสาวปภัสสรา คูเมือง',nick:'VR'},{id:'36932',name:'นายก้องภพ เอี่ยมจะบก',nick:'Night'},{id:'36952',name:'นายโสภณวิชญ์ รักษาเพชร',nick:'Keane'},{ld:'36959',name:'นางสาวจุฑารัตน์ ทุมพร',nick:'Khim'},{id:'36966',name:'นางสาวภรณ์ชนก ชากรณ์',nick:'Jeed'},{id:'36981',name:'นายธนากร ธรรมรักษ์',nick:'Art'},{id:'37009',name:'นางสาวมีนา สุรัตน์',nick:'Meena'},{id:'37046',name:'นางสาวพิชญาภา แซะจอหอ',nick:'Nana'},{id:'37055',name:'นางสาววัลลภัคร แก้วกลาง',nick:'Namoun'},{id:'37058',name:'นางสาวสรัลพร อมรพิริยะ',nick:'Bahmee'},{id:'37097',name:'นางสาวนันท์นภัส พงษ์พยายาม',nick:'Paint'},{id:'37104',name:'นางสาววนิดา โพธิ์นอก',nick:'Peemai'},{id:'37131',name:'นางสาวปลายฟ้า สระทองแก้ว',nick:'Aungpao'},{id:'37132',name:'นางสาวปิยะวดี ชัยสงคราม',nick:'Sa'},{id:'37159',name:'นายรัตตัญญู หีบเเก้ว',nick:'Mammass'},{id:'37169',name:'นางสาวกานต์สินี ตาจันทึก',nick:'View'},{ld:'37180',name:'นางสาวนัธสิมา บุตะคุ',nick:'Kantongw},{id:'37181',name:'นางสาวบัณฑิตา หล่ำจันทึก',nick:'Aem'},{id:'37186',name:'นางสาวรัตนพร เศษสิงห์',nick:'Kartai'},{id:'37198',name:'นายปณวัตร ไฝจันทึก',nick:'Smart'},{ld:'37205',name:'นายภูมิพัฒน์ ภูมิจันทึก',nick:'Jeen'},{id:'37206',name:'นายวงศกร หมอกจันทึก',nick:'Nuea'},{id:'37209',name:'นายสิรภพ ภูวิภาค',nick:'Mark'},{ld:'37233',name:'นางสาวอัญชิสา อ่องอ้น',nick:'Meen'},{id:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'},{id:'38277',name:'นางสาวภูริชญา กลิ่นหอม',nick:'Namthip'},{id:'39661',name:'นางสาวจันทกานต์ ฮึมจันทึก',nick:'Tar'},{id:'39662',name:'นางสาวเพ็ญพิมล สาครวงษ์สุริย',nick:'Baifern'},{ld:'39663',name:'นางสาววรัญญา จอดนอก',nick:'Yaem'},{id:'39664',name:'นางสาวภัชรมน ราชประดิษฐ',nick:'Mew'},{id:'39665',name:'นายภานุวัฒน์ ทองหุ้ม',nick:'Kiv'},{id:'39666',name:'นางสาวปณิตา ติจันทึก',nick:'Meiw'},{id:'54565',name:'Test Student',nick:'Kyle'}],
-    'M4/13':[{id:'36900',name:'นายภูริ สนสูงเนิน',nick:'Nuea'},{ld:'37015',name:'นางสาวศิวพร แสนใจ',nick:'Mudmee'},{ld:'37108',name:'นายจิรพัฒน์ สายทอง',nick:'Todd'},{id:'37135',name:'นางสาวพิมพ์ชนก วรรณวงค์',nick:'Pim'},{id:'37197',name:'นายธีรภัทร ย้อยแสง',nick:'Kaow},{id:'37199',name:'นายปรินทร ป่วนสันเทียะ',nick:'Benten'},{id:'37230',name:'นางสาวศิรประภา เสนาภักดิ์',nick:'Madmee'},{id:'37234',name:'นางสาวอารยา วนากลาง',nick:'Namwan'},{id:'37239',name:'นายธนกฤต สระทองอุ่น',nick:'Pond'},{id:'37241',name:'นายปัณณกานต์ สิงห์สวัสดิ์',nick:'Pun'},{id:'37242',name:'นายพชร เพชรวัชรานนท์',nick:'Dome'},{ld:'37243',name:'นายภควัต อุดมนาม',nick:'AB'},{id:'37246',name:'นายรณกร สระทองอุ่น',nick:'Pong'},{ld:'37248',name:'นายสิรภัทร ภูวิภาค',nick:'Mac'},{ld:'37249',name:'นายสิริชัย ธูปขุนทด',nick:'Munggorn'},{id:'37250',name:'นายอธิป พิมพา',nick:'It'},{id:'37252',name:'นายอาทิวราห์ นารถสูงเนิน',nick:'Tan'},{id:'37254',name:'นางสาวกรกนก แสวงจันทร์',nick:'Nam'},{id:'37255',name:'นางสาวกรชนก เจริญสุข',nick:'Endu'},{id:'37257',name:'นางสาวกัณฑารีย์ ศศิปริยาพงศ์',nick:'Kan'},{id:'37258',name:'นางสาวชาลิดา เหยียดรัมย์',nick:'Looktan'},{ld:'37261',name:'นางสาวณัฐดาวรรณ วรรณรักษาศักดิ์',nick:'Nooin'},{id:'37262',name:'นางสาวณัฐธยาน์ ธงศรี',nick:'Nut'},{id:'37265',name:'นางสาวปุณยพร วงษ์เส็ง',nick:'Ice'},{id:'37268',name:'นางสาวพิชญธิดา อิ่มวัฒนกุล',nick:'Prae'},{ld:'37270',name:'นางสาววัลธภัชฏ์ คีรีวงษ์',nick:'Kokluai'},{id:'39667',name:'นางสาวนันท์นภัส ถวิลการ',nick:'Pinto'},{ld:'39668',name:'นางสาวภิญญดา ทองคำ',nick:'Nick'},{id:'39669',name:'นายกลกร เห็มสุวรรณ์',nick:'Sek'},{id:'39670',name:'นายรัชชานนท์ วิภาคโสภณชัย',nick:'Indo'},{id:'39671',name:'นายกฤตเมธ อ่ำรอด',nick:'Kong'},{ld:'39672',name:'นายถิรทักษ์ สีหะวงค์',nick:'Thakky'},{ld:'39673',name:'นางสาวขวัญข้าว พรมสอน',nick:'Gress'},{id:'39674',name:'นายประสพสุข จีระประพันธ์กุล',nick:'Guts'},{ld:'39675',name:'นางสาววรินทร มีเม่น',nick:'First'},{id:'54565',name:'Test Student',nick:'Kyle'}],
-    // M3/10, M3/12: loaded dynamically from Supabase submissions
+        'M4/1':[{id:'36771',name:'นายทวีชัย ศรีจันทึก',nick:'Ton'},{id:'36788',name:'นางสาวกฤติยาณี ชัยสงคราม',nick:'Aoy'},{id:'36830',name:'นางสาวกัญญาภัค เร็วจันทึก',nick:'Ploy 1'},{id:'36835',name:'นางสาวธนัชชา ศรีหาวงษ์',nick:'Beer'},{id:'36838',name:'นางสาวพรรณิภา คงชัย',nick:'Palm'},{id:'36840',name:'นางสาวพิมพ์ลภัส ประพงศ์พันธุ์',nick:'Mean'},{id:'36845',name:'นางสาวศิริญากรณ์ บุญธรรม',nick:'Vermicelli'},{id:'36850',name:'นางสาวอาภรณ์รัตน์ เสือรักวงษ์',nick:'Fang 1'},{id:'36857',name:'นายพิชชากร เเสงเเก้ว',nick:'Bas'},{id:'36886',name:'นางสาวบัณฑิตา สารฤทธิ์',nick:'August'},{id:'36889',name:'นางสาวภาวินี สิงห์มหา',nick:'Ploy 2'},{id:'36905',name:'นางสาวเกวลิน อิสริยานนท์',nick:'Gew'},{id:'36934',name:'นายชานนท์ ฤทธิ์ชัยเจริญ',nick:'Cha'},{id:'36939',name:'นายนาฤทธิ์ ตรีมงคล',nick:'Tan'},{id:'36951',name:'นายศรัญยู ทองจันทึก',nick:'U'},{id:'36970',name:'นางสาววิไลลักษณ์ อังกรรัมย์',nick:'Farn'},{id:'36975',name:'นายกนต์ธีร์ สงโนนสูง',nick:'Korn'},{id:'36989',name:'นายศักดากร ทวีลาภ',nick:'Pai'},{id:'36991',name:'นายศุภกร สิงห์จันทึก',nick:'Mix'},{id:'36997',name:'นายอัครวินท์ บุญมา',nick:'Yo'},{id:'37013',name:'นางสาวศศิธร เพียงจันทึก',nick:'Mook'},{id:'37032',name:'นางสาวชญาดา บำรุงตา',nick:'Wan'},{id:'37044',name:'นางสาวพิชญธิดา โสจันทึก',nick:'Baitoey'},{id:'37063',name:'นายกัญจน์ ฉิมพลี',nick:'Jay'},{id:'37116',name:'นายพิชญุตม์ พันธ์งาม',nick:'Tawan'},{id:'37129',name:'นางสาวณัฐชวลี ปราณีตพลกรัง',nick:'Fang 2'},{id:'37140',name:'นางสาววรรณิสา พวกจันทึก',nick:'Mochi'},{id:'39503',name:'นางสาวทิตาธร สอจันทึก',nick:'Fang 3'},{id:'39504',name:'นางสาวสุภัสสรา รักษาสุวรรณ',nick:'Aum'},{id:'39505',name:'นางสาวคีตภัทร สีโท',nick:'Kitoy'},{id:'39506',name:'นายกิตติศักดิ์ เกงขุนทด',nick:'Vayu'},{id:'39507',name:'นางสาวสุริซยา ถังกระโทก',nick:'Aom'},{id:'39508',name:'นางสาวชุติก�ญจน์ กอบขุนทด',nick:'Idea'},{id:'39509',name:'นางสาวกัณญาลัก แรมจันทึก',nick:'Paerw'},{id:'39510',name:'นางสาววิกันดา สมขุนทด',nick:'Kawfang'},{id:'39511',name:'นางสาวพิมพ์พิกา ไลน้ำอ้อม',nick:'Yew'},{id:'39512',name:'นางสาวศิริกานดา นนท์ประสาท',nick:'Maysa'},{id:'39513',name:'นายปภังกร ถิ่นวงษ์แย',nick:'Pao'},{id:'39514',name:'นางสาวศิวะภาพร สาแช',nick:'Ming'},{id:'39515',name:'นางสาวพิมพ์ชนก อุดมจิตร',nick:'Fah'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    'M4/2':[{id:'36120',name:'นายชินาธิป เศียรนอก',nick:'Kun'},{id:'36175',name:'นายวรเมธ แซ่ย่าง',nick:'Li'},{id:'36428',name:'นางสาวอมรรัตน์ พูลพุทธา',nick:'Maprang'},{id:'36782',name:'นายวชิตะ หมื่นแคล้ว',nick:'Sunday'},{id:'36785',name:'นายศิวนาถ ยอดนอก',nick:'Film 1'},{id:'36804',name:'นางสาววรัทยา ฝุ่นทอง',nick:'Nxmpxn'},{id:'36811',name:'นายคณาธิป กันจันทึก',nick:'Nack'},{id:'36813',name:'นายเตโชดม ทองดอนพุ่ม',nick:'Guy'},{id:'36867',name:'นายศุภสิน ป้อมสุวรรณ',nick:'Save'},{id:'36956',name:'นางสาวกนกพร แดงชาติ',nick:'Film'},{id:'36965',name:'นางสาวนิชนันท์ โตสูงเนิน',nick:'Naming'},{id:'36967',name:'นางสาวรัตนาวดี เนยสูงเนิน',nick:'Kingpai'},{id:'36968',name:'นางสาววรรณวนัช กรวยสูงเนิน',nick:'Bonus'},{id:'36990',name:'นายศิรวิทย์ แสงฤทธิไกร',nick:'Poon'},{id:'37004',name:'นางสาวพรชนัน กลิ่นโสภณ',nick:'Palm'},{id:'37019',name:'นายชัยอนันต์ เชื้อจันทึก',nick:'Jay'},{id:'37026',name:'นายภาคิน เปลี้ยจันทึก',nick:'Aut'},{id:'37029',name:'นายรัตนชัย คณโฑเงิน',nick:'Kong'},{id:'37067',name:'นายธันวา สุขล้น',nick:'Thanwa'},{id:'37077',name:'นายพิชาชาญ วงษ์อินทร์',nick:'Pause'},{id:'37085',name:'นายอริญชัย บุญค้ำ',nick:'Aooy'},{id:'37090',name:'นางสาวขวัญนรินพร นิ่นทอง',nick:'Kwan'},{id:'37105',name:'นางสาวสิฏาลักษณ์ ม่วงราม',nick:'Manay'},{id:'37127',name:'นางสาวจิราพัชร คำตัน',nick:'Woonsen'},{id:'37149',name:'นาชกิตตินันท์ อุระภูมิ',nick:'Kittinan'},{id:'39516',name:'นายกิตติศักดิ์ กาตฏนอก',nick:'King'},{id:'39517',name:'นาชพงศธร จริงสูงเนิน',nick:'Phai'},{id:'39518',name:'นาช ��งศกร มาตย์นอก',nick:'Gae'},{id:'39519',name:'นาช ��รหมพิริยะ บุญจันทึก',nick:'Diamond'},{id:'39521',name:'นายธนวัฒน์ ไทซม��O��Ԝ������
+�������������Ȝ�����蟂�g��˂⋂�c��g�⃂�ǂ�_�⌃���⋂⋂�Â�c�⏂⏂ℜ������A�Ѡ�����������̜�����蟂�g��˂⋂ⷂ�ǂ���/��+��˂⨃���⇂⯂�Â⯂⇂�ǂ�P���������ɐ�����������М�����蟂�g��˂⋂⫂��⏂���S��(����⏂�Â��⯂�$�������	�̝����������Ԝ�����蟂�g��˂⋂⣂�ӂ⏂�˂⋂���`�����_��g������g��_��P��������������������؜�����蟂�g��˂��⫂�˂⟂���+���⌃�⫂⟂⋂��◂�˂��������������������ܜ�����蟂�g��˂⋂⃂��⏂�ӂ�O��ǂ�@��⫂�ǂ�����3����T�������	���������������������蟂�g��˂⋂Ⓜ�_��c��ӂ�3��_��ȃ���⏂���O�⏂�ǂ⇂⋂�0�������	��̝����������䜱����蟂�g��˂⋂�c�⏂�ȃ�⏂�ǂ�W��g�⏂�ǂ��⧂�0���������չ�������������������蟂�g��˂��⫂�˂⟂⫂���{��ǂ�W�⏂�ȃ��k����W�⏂��⏂�Â���_���������
+���������������Ĝ�����蟂�g��˂⋂⟂⏂�˂��⌃�⣂⏂�ׂ���{����+�⏂�0�������-���t�(�����4м̜�m���������������蟂�g��˂⋂���W��+��ӂ�T��⃂�ӂ⏂⇂⋂�0�������Q�є�����������䜱����蟂�g��˂��⫂�˂⟂�{��ӂ�+��+��˂⃂�ȃ����ς⇂�Â◂�ǂ��������A�������������ܜ�����蟂�g��˂��⫂�˂⟂�+�◂�ӂ�W��ȃ���⫂⏂�ӂ�C�⫂�������g��ӂ�d�������եхȝ����������̜�����蟂�g��˂��⫂�˂⟂�c��g��˂⃂�ȃ�⇂�˂⫂�ӂ��⯂�0�������5����������������������蟂�g��˂��⫂�˂⟂⏂⇂�g�⏂�ӂ�g��_�⏂�0��⫂�ӂ⇂�˂�����'�✜������Q���������������̜�����蟂�g��˂��⫂�˂⟂⏂⇂�ӂ�S��ȃ����{��ׂ⋂⏂�{��#�⟂���{��ǂ�g��c��0���������������������М�����蟂�g��˂��⫂�˂⟂⟂⏂�ǂ�7��7��ȃ�⫂�#�����⫂��������	������������������������蟂�g��˂��⫂�˂⟂�#��ׂ⏂⃂⏂�O��0��⫂�������g��_��P�������	��������������ܜ�����蟂�g��˂⋂�7��˂�O��˂��⌃��S������˂ℜ������Q�݅������������Ȝ�����蟂�g��˂⋂�g��ӂ�c��ӂ��⌃���ⷂ���g��#��ǂ�g��_��ۂ��������	��������������93',name:'นายสุทธินันท์ แสนบุญ',nick:'Jigzaw'},{id:'36998',name:'นายอาเมียร์คาน โมหะหมัด',nick:'Amirkhan'},{id:'37007',name:'นางสาวแพรวา สินปรุ',nick:'Namprik'},{id:'37008',name:'นางสาวมริษา ม่วงเมือง',nick:'Kafiw'},{id:'37033',name:'นางสาวชวัลลักษณ์ ดาระศาสตร์',nick:'Chawanlak'},{id:'37035',name:'นางสาวณัฐธิดา เข็มชู',nick:'Natthida'},{id:'37039',name:'นางสาวบัณฑิตา ปีจัตุรัส',nick:'Tonhoom'},{id:'37045',name:'นางสาวพิชญา มาจันทึก',nick:'Pham'},{id:'37100',name:'นางสาวพลอยปภัส เหนียวจันทึก',nick:'Plengy'},{id:'37162',name:'นาย��ศรษฐพงศ์ ขันสิงห์',nick:'Tiewkhao'},{id:'37182',name:'นางสาวพนัชกร แหลมทองหลาง',nick:'Namkaeng'},{id:'37192',name:'นางสาวอัญชิสา นามบุญ',nick:'AnChisa'},{ld:'37210',name:'นายอนุรักษ์ อินคงมะดัน',nick:'Autoy'},{id:'39532',name:'นายรัฐธีร์ ฏพ�ׂ���+�⋂⏂���#��g��0�������-�є�����������̜�����蟂�g��˂⋂���O��g��˂�X�����{��G���⏂⋂�0�������9��������������М�����蟂�g��˂��⫂�˂⟂ⷂ�ӂ��ⷂ⌃�⫂⟂�ǂ⫂�S��ׂ◂�˂⃂�Ȝ������%���=������������Ԝ�����蟂�g��˂��⫂�˂⟂⟂⏂�ǂ�7��7��ȃ���������Ⓜ�_��c��ӂ�0�������9����������������؜�����蟂�g��˂��⫂�˂⟂�_��ӂ�{�⋂�3�⟂�ӂ⃂�ȃ�⏂�ǂ�W��g�⟂⏂⏂�L�������9��хȝ����������ܜ�����蟂�g��˂⋂ⷂ�˂�+��˂⟂�ӂ�d��⫂�˂⫂�������g��ӂ�d�������9����������������������蟂�g��˂��⫂�˂⟂⫂���{�⏂⏂⧂�ȃ�⇂��◂�#��ǂ�g��_��ۂ��������-�����������������䜱����蟂�g��˂��⫂�˂⟂���ӂ�W��W��ӂ�g��ǂ�g��_��0����◂�#�ⷂ⇂⫂�������g��ӂ�d�������A�����������������������蟂�g��˂⋂�c��g����+��W��Ѓ����_��ׂ⋂⇂�����g��_��P�������Q�������Н����������Ĝ�����蟂�g��˂��⫂�˂⟂���k��7��#�⇂�˂⠃�⃂��⯂��⧂�3��_�ⷂ��������	���
+����Н����������Ȝ�����蟂�g��˂��⫂�˂⟂⏂�g��˂⏂�ԃ�⇂�O��ׂ���+��W��М������9��������������̜�����蟂�g��˂⋂�O��ǂ�C��{�┃��+��#��˂����⇂�$��������̝����������М�����蟂�g��˂��⫂�˂⟂⟂⏂⏂�O�⟂�ӂ⫂�ȃ���◂�ӂ�#��g����S��(�������5������������Ԝ�����蟂�g��˂��⫂�˂⟂�#��ӂ⏂�g��ǂ�g��_��0���_���⏂�Â�{�├������9ո�����������؜�����蟂�g��˂��⫂�˂⟂�c��ǂ�7��7�⏂�ǂ��⧂�0����⏂�ӂ�g��_�⏂�0�������5��̈́����������ܜ�����蟂�g��˂��⫂�˂⟂�c��ǂ�7��+��g�����{�◂�#��ǂ�g��_��ۂ��������-������������������������蟂�g��˂⋂ⷂ�S��ӂ���_��x���{�⏂⇂⫂����������5����t�(�����4мМ�m��������̜�����蟂�g��˂��⫂�˂⟂⟂⏂⏂�O��ӂ⣂�ȃ��S��˂⟂⟂�����0�������A���������������Ȝ�����蟂�g��˂⋂�C��ӂ�W��ӂ�{�┃����[��k��_�ⷂ��������-���������������������蟂�g��˂⋂⫂��⟂�ӂ�#��ǂ�����O��0�����ǂ�S�⫂�ǂ�g����_��ׂ⋂����������܀ĝ����������؜�����蟂�g��˂��⫂�˂⟂�o�⟂⏂�ӂ⣂�ȃ�⣂⏂�ׂ���{����+�⌜������-�������������М�����蟂�g��˂⋂⏂�{��ׂ⃂�ǂ�_�⌃����#�⯂�'��˂✜������9���������������������蟂�g��˂⋂�S�◂�c�⏂⏂℃��#����#��ǂ�g��_��ۂ��������9����ĝ����������Ȝ�����蟂�g��˂⋂�{�⫂�ӂ⧂�C��0��ⷂ�ӂ�g��_�⏂�3��_�ⷂ��������Aո������������������蟂�g��˂��⫂�˂⟂�'��ǂ�W�⏂�c��ӂ�S��ȃ����+��߂�'�ⷂ�g��ӂ├������5���ܝ����������̜�����蟂�g��˂��⫂�˂⟂�+����W��ӂ�7��ȃ��_�⏂⟂�����{��c��ӂ�0�������AɅ�݄�����������М�����蟂�g��˂��⫂�˂⟂ⷂ�g��ǂ�W��7��ȃ�ⷂ�˂�#�⫂���g��_�⌜������唝����������䜱����蟂�g��˂⋂�_�⋂�˂��⌃���⏂��⟂�#��ǂ�g��_��ۂ��������Mх������������䜱����蟂�g��˂��⫂�˂⟂���ǂ�7��7�⇂�˂⠃��+�ⷂ�k�⫂����������5��Ѐȝ�����������������蟂�g��˂��⫂�˂⟂�g��ǂ�g��_��ӂ���˂�g��W��0�������ׂ�'�⋂⟂��⏂�Â���_���������%���ĝ�����������������蟂�g��˂��⫂�˂⟂⃂�˂⟂�ӂ�S��ȃ��#��ӂ�W��W��3���⫂�c�⌜������5��������������Ĝ�����蟂�g��˂��⫂�˂⟂⃂�˂⟂�ӂ�W��ȃ��#��ӂ�W��W��3���⫂�c�⌜������5��Ѐĝ����������Ȝ�����蟂�g��˂��⫂�˂⟂⃂�ӂ�7��7��S��˂�{��ǂ�+��7��0�����{��+�⏂�#��ǂ�g��_��ۂ��������9����ȝ����������̜�����蟂�g��˂��⫂�˂⟂◂�ǂ�S��S��˂⟂�ǂ◂⋂�0����⇂�g��#��ǂ�g��_��ۂ��������A�������������Ĝ�����蟂�g��˂⋂�c��ׂ⏂⃂�ǂ�_�⌃��{�◂�#��ǂ�g��_��ۂ��������5�̝����������䜱����蟂�g��˂��⫂�˂⟂����◂⃂⏂�O��0���o�⏂�˂���S��(�������e�݄������������������蟂�g��˂⋂⣂�ӂ��⏂�{��ǂ�K��g��0�����#�ⷂ⋂�#��ǂ�W���⏂�ǂ⨜������Aɽ�Ʌ������������М�����蟂�g��˂⋂�g��ӂ⏂�ǂ�g��S�⏂�3����_��x��⫂���{�⏂⏂�O��g��ӂ├������9յ�Օ������������䜱����蟂�g��˂��⫂�˂⟂�_��ǂ⣂�g��ׂ⋂�0��⏂�ǂ��⧂�˂�{��ǂ�g��c����0�������Q���������������������蟂�g��˂��⫂�˂⟂⣂⣂�ӂ���˂�g��W��0���+��ς�g��˂�4�������唝����������Ĝ�����蟂�g��˂⋂⟂⏂⟂���`��ⷂ�˂�#�⫂�������g��ӂ�d��������܀ȝ����������Ȝ�����蟂�g��˂⋂ⷂ⏂�ӂ�7��+��ǂ∃��o��ǂ�[�⇂�ǂ��������-�������������̜�����蟂�g��˂��⫂�˂⟂�{��ӂ⇂�{��3�◂⃂�ǂ⨃�⟂�ӂ���+��ׂ⋂⏂⏂�ǂ�W��g��0�������5����������������М�����蟂�g��˂��⫂�˂⟂⫂���+��˂�S��ȃ��k��ǂ⟂�����'�✜������A��������������Ԝ�����蟂�g��˂��⫂�˂⟂�O��ǂ�C��O��ӂ�+��ȃ���⇂⫂�ǂ�g����_��ׂ⋂�������������唝����������؜�����蟂�g��˂��⫂�˂⟂���ǂ�7��#��˂��⏂�O��0���g��ӂ◂��⏂�k���⏂�Ԝ������-���������������ܜ�����蟂�g��˂��⫂�˂⟂⃂�˂⫂�ӂ�g��ԃ�⃂���#��ǂ�g��_��ۂ��������
+ɕ��������������������蟂�g��˂��⫂�˂⟂�+��g��ǂ�C��o�⃂�ȃ��_����W��ӂ⫂�������g��ӂ�d�������9����������������䜱����蟂�g��˂��⫂�˂⟂⟂�˂⫂�g��ȃ�⟂⏂⫂�ӂ��⯂�0�������	��ѽ�������������������蟂�g��˂⋂⫂�ӂ⏂�S��g��ǂ∃����ǂ◂⋂�˂⣂⏂�Ԝ������	�ܝ����������Ĝ�����蟂�g��˂⋂ⷂ⏂⏂�[��{��ǂ�g��c��0����⏂�߂ⷂ��⣂⏂�Ԝ��������������������Ȝ�����蟂�g��˂��⫂�˂⟂�{��ӂ�+��7��ȃ�ⷂ⇂⏂���g��W��ӂ⏂�ǂ�W��g��0�������5����������������̜�����蟂�g��˂��⫂�˂⟂�{��ӂ�+��+��˂�g��ǂ�g��_��0�����W�⏂�o�⏂�Â⟂�ǂ�W��М�������������������М�����蟂�g��˂��⫂�˂⟂⟂⏂⏂�O��+��g�����#��ǂ�g��_�⏂�3��_��Ԝ������9����ȝ����������Ԝ�����蟂�g��˂��⫂�˂⟂⣂�ӂ⏂�ǂ�W��g��3��W��ȃ��{��ӂ⣂��◂���˂ℜ������%���ȝ����������؜�����蟂�g��˂��⫂�˂⟂⟂⏂�ǂ�7��7��ȃ����{�����⫂�������g��ӂ�d�������A��������������ܜ�����蟂�g��˂⋂⫂�[��˂�{�⌃������_��ׂ�'��/��ׂ⋂���ӂ�#��.�"r��6��u7V���w����t�B�Rs����C�s3cCRr���S�~���.�.���N�~����.�.��.�����~�Br��6��uF�F�Rw�Ƕ�C�s3cs�r���S�~���.�~���.�~�������.������2������������~�n�r��6��uGG�w�Ƕ�C�s3cs�rr���S�~���.�~���.�~�����
+��ǂ�W��g��0���c���⣂⏂�Ԝ������9�������������Ȝ�����蟂�g��˂��⫂�˂⟂⇂�O��G��˂�_��ӂ�{�⋂�0���o�◂�'�ⷂ���#��ǂ�g��_��ۂ��������-���������������ܜ�����蟂�g��˂⋂�{��ׂ⏂�{�┃��o�⏂�Â��ⷂ�k����ׂ├������	���ͽ������������؜�����蟂�g��˂⋂⣂�ӂ⟂��⌃��#�⏂⏂⋂�˂⣂�ӂ⏂�М������I������������Ȝ�����蟂�g��˂��⫂�˂⟂⟂⏂⏂�O�₺�ȃ��{����g��#��ǂ�g��_��ۂ��������-�ɸ���텐�����؜�����蟂�g��˂��⫂�˂⟂⣂��⃂���˂�g��W��0��⣂�ӂ�_��o�⣂✜������Q����ȝ����������䜱����蟂�g��˂��⫂�˂⟂�O��ǂ�?��C��O��ӂ�+��ȃ���⟂�S�⫂�������g��ӂ�d�������9���������������М�����蟂�g��˂��⫂�˂⟂�c��ǂ�7��7��˂⇂�˂⠃����k�����������չ͕�������������؜�����蟂�g��˂��⫂�˂⟂��⟂�ǂ�7�⇂�g��ǂ⨃�⫂⟂�#��������������-��ѽ��������������������蟂�g��˂��⫂�˂⟂�C��ӂ�W��ӂ�{�⌃��������#�⏂�ӂ�4�������Aո�����������Ȝ�����蟂�g��˂��⫂�˂⟂�g��˂�����g��_�⏂�g����ȃ��+���⇂���̜������%������������؜�����蟂�g��˂��⫂�˂⟂�o��˂⏂�ӂ�W��ȃ�◂�˂�S�⫂⟂�#��˂��������5��Н����������؜�����蟂�g��˂��⫂�˂⟂⣂����⣂�ӂ⏂�Ѓ����S��+�⟂⏂⏂�L�������A���������������������蟂�g��˂��⫂�˂⟂⫂���+��ǂ�7��7��ȃ��+��߂�#��g��+�ℜ������)��������������М�����蟂�g��˂��⫂�˂⟂⣂⣂�ӂ⟂⏂⏂�L�นุกูล',nick:'Dutch Mill'},{id:'37027',name:'นายเมธัส พลจันทึก',nick:'Man-u'},{id:'37031',name:'นางสาวจิดาภา สร้อยคำ',nick:'Praew'},{id:'37057',name:'นางสาวศรัณย์พร เปล่งสันเทียะ',nick:'Satang'},{id:'37114',name:'นายปัณณวิช สารเสา',nick:'Tankoon'},{ld:'39568',name:'นางสาวกัญญาพัชร เที่ยงจันทึก',nick:'May'},{ld:'39569',name:'นายกมลโลจน์ หวลจันทึก',nick:'Focus'},{id:'39570',name:'นายธรรมรัตน์ ปัถมัง',nick:'Pauk'},{ld:'39571',name:'นางสาวชญานิศ ดวงประวัติ',nick:'Khay'},{id:'39572',name:'นางสาวเชษฐ์ธิดา อบเชย',nick:'Ja'},{ld:'39573',name:'นางสาวจีระนันท์ สมบัติหอม',nick:'Toon'},{id:'39574',name:'นางสาวศศิรา แน่พิมาย',nick:'Namwan'},{id:'39575',name:'นางสาวพัชราภา สว่างจิตต์',nick:'Aum'},{id:'39576',name:'นางสาวปรางค์วริณ พรมเดื่อ',nick:'Fay'},{id:'39577',name:'นางสาวปาริชาติ บัวกลาง',nick:'Zoey'},{id:'39578',name:'นางสาวสิรามล โสพะเนาว์',nick:'Aoom'},{ld:'39679',name:'นางสาวปุญจิรภา ศรีนวล',nick:'Pom Pom'},{id:'37081',name:'วัฒนา มั่งจันทึก',nick:'Leoy'},{id:'36922',name:'ภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'y],
+    'M4/6':[{id:'36768',name:'นายเชิดศกดิ์��������⫂�ǂ�g����_��ׂ⋂���������
+����ɐ�����������М�����蟂�g��˂⋂⣂⏂�˂⟂�ӂ�d�������'���⫂����������A�������������Ĝ�����蟂�g��˂⋂ⷂ�c��ӂ⟂�ǂ�K��g��0�����ς��⫂ℜ������չ�������������������蟂�g��˂��⫂�˂⟂�{�◂ⷂ⋂���{�◂�ӂ�d���o�⏂�ׂ�+��˂⋂���_��c��0�������A�������������̜�����蟂�g��˂��⫂�˂⟂⫂���+��˂�g��˂�X��⯂⏂�#��˂⋂�{��ӂ⇂�˂∜�����������텐�����Ȝ�����蟂�g��˂��⫂�˂⟂⃂�ǂ�_�⏂⟂⏂�ӂ�g��_�⏂�0�����˂�k��#��ǂ�g��_��ۂ��������A��������������؜�����蟂�g��˂⋂⟂⏂�{�┃�⫂��⃂�˂�x�������-������������Ĝ�����蟂�g��˂⋂�c��g��o��{��d���c��˂�W��Â�g������������������������Ȝ�����蟂�g��˂��⫂�˂⟂�o�⏂⇂�ȃ���◂�g������g��_��P�������5���������������������蟂�g��˂⋂�+�◂�c��ׂ⏂�0����⫂��⟂�ӂ��⣂⤜������9�������������؜�����蟂�g��˂��⫂�˂⟂�#��ӂ⏂�˂���#��T����⣂⧂�#��ǂ�g��_��ۂ��������1խ��������������̜�����蟂�g��˂��⫂�˂⟂�w��ǂ�g��W�⏂���#��ӂ�T�������O����_�⋂⫂��������Q�������������䜱����蟂�g��˂��⫂�˂⟂⟂⏂��⇂┃��#�ⷂ⇂�����˂���������������ܝ��텐�����Ȝ�����蟂�g��˂��⫂�˂⟂⣂⣂�ӂ���˂�g��W��0���_��ׂ�#��ǂ�g��_��ۂ��������A�����텐�����Ԝ�����蟂�g��˂⋂�k��ǂ�7��7�⟂�ǂ�T����ⷂ⫂�ǂ�g����_��ׂ⋂���������5��ԝ����������ܜ�����蟂�g��˂⋂�{�⫂�ӂ⧂�C��0��⇂�ǂ�#���⫂�������g��ӂ�d�������5�������������Ԝ�����蟂�g��˂⋂ⷂ⏂⏂�[��{�┃�����⋂�{����_�⏂�Ȝ������i�������������؜�����蟂�g��˂��⫂�˂⟂���+��g��ӂ⃂�ȃ����+��߂�'�ⷂ⫂�������g��ӂ�d�������-�����������������䜱����蟂�g��˂��⫂�˂⟂⣂��⃂�S��ȃ���⟂��⫂�������g��ӂ�d�������5���ܝ����������̜�����蟂�g��˂⋂�+�◂�{��ǂ�+�⌃��g��˂�[��˂�k��ς⏂��������������͔�����������Ĝ�����蟂�g��˂⋂�{��ӂ�W��W��ӂ�g��ǂ�g��_��0�����ǂ�g��#��ǂ�g��_��ۂ��������Q�х�������������������蟂�g��˂��⫂�˂⟂ⷂ�ǂ�7�⇂�O��ԃ����{��߂�#�ⷂ�g���◂�˂����������������������䜱����蟂�g��˂��⫂�˂⟂ⷂ�c��ӂ�+��ȃ��#��ǂ�g��_����3�⫂�������g��ӂ�d�������Y��ܝ��텐������������蟂�g��˂��⫂�˂⟂⏂���#���⏂⟂�ӂ�d�������W�⏂�#��ǂ�g��_��ۂ��������%ɥ��ĝ��텐�����Ĝ�����蟂�g��˂��⫂�˂⟂⫂���S��˂⏂�ǂ�W��g��0���_��ǂ�S���◂�˂��������A������������������Ȝ�����蟂�g��˂��⫂�˂⟂⫂�ӂ⏂�ӂ◂�ǂ��⧂�O��0��ⷂ�˂�7��˂��⇂�߂ⷂ��������
+������텐�����̜�����蟂�g��˂��⫂�˂⟂⏂⟂�ӂ�g��_��3��g��ӂ⃂�ȃ�ⷂ�ǂ��⧂⏂��⫂�߂ⴜ���������ܝ����������М�����蟂�g��˂⋂⟂�ӂ⃂�䃂���{������W�⌜������	������텐�����Ԝ�����蟂�g��˂��⫂�˂⟂�c��ǂ�7�⏂�ǂ�W��g��0�����g��ׂ⋂⇂��◂�˂��������!�����텐�����؜�����蟂�g��˂��⫂�˂⟂�+�◂�S��ȃ��k���⏂�ӂ�g��_�⏂�3�⏂�ǂ⇂⋂�0�������=��������������ܜ�����蟂�g��˂⋂⃂�˂���ӂ�d�����S��ӂ�S������g��_��P�������9�Н�����������������蟂�g��˂��⫂�˂⟂⣂�ӂ⏂�ӂ�c��˂�S��ȃ�⯂ⷂ⇂�#��ǂ�g��_�⏂�0�������-����լ���텐�����䜱����蟂�g��˂��⫂�˂⟂⫂�ӂ⏂�ӂ⟂�ӂ⇂┃��o��Â�����˂�_��ǂ�d�������Q���������������������蟂�g��˂��⫂�˂⟂��⏂�{��ӂ�g��c����0���k��ǂ⟂�o�⏂�Â�_���ℜ������)������텐�����Ĝ�����蟂�g��˂��⫂�˂⟂�{�⏂�ׂ⇂⫂���S��ȃ��c��?���.��r��6��u&V�w�ǶC�s3�S�"r���S�~���.�.�>�����~�������>������>�N���~�>��r��6��u7V�w�ǶC�s3�S�2r���S�~���.�~���.�~����^���>�N�.�"��������.�����N��r��6��t�&��"w�ǶC�s3�S�Br���S�~���.�~���.�~���N��������������N�>���N��.�"r��6��uv��w�Ƕ�C�s3�S�Rr���S�~���.�~���.�~���.��N�^�"��.���r��6��tfF�w�ǶC�s3�S�br���S�~���.�.�~�~����2����������"r��6��u6F�rw�ǶC�s3�c#�r���S�~�>�����R�.���N������~�n�r��6��twW�w����t�B�rs����C�s3c�r���S�~���.�~���.�~���N�.�N�.�~��^�.������^���"r��6��t6���Rw�Ƕ�C�s3c�rr���S�~���.�~���.�~������.��>�>�����>�^�N�>��"r��6��t���f�rw�Ƕ�C�s3c�2r���S�~���.�~���.�~���N���.��"����.��������"r��6��t�6�w�Ƕ�C�s3c��r���S�~���.�~���.�~���>�>����"����^�.�>�.���.�.�~�"r��6��u�w�Ƕ�C�s3s"r���S�~���.�~���.�~�~�>������"�.�����������~�>�����>�Rr��6��t���w�Ƕ�C�s3sCr���S�~���.�~���.�~����.�N�"���N���������~�n�r��6��t����w�Ƕ�C�s3sC�r���S�~���.�~���.�~���~�>�~�N�R���>���N�>��.��r��6��u���w�Ƕ�C�s3sSBr���S�~���.�~���.�~�~�>��������"��>��N�����rr��6��u&��w�ǶC�s3s�Br���S�~���.�.���N�~���N���~�����.�����N�����>�Rr��6��t6���v�Rw�ǶC�s3s�br���S�~���.�.�����>�.�������.�.���.�"r��6��t��Rw�Ƕ�C�s3s#2r���S�~���.�~���.�~�����.��2���>�^���.�>�.��2r��6��t��w�Ƕ�C�s3s3r���S�~���.�~���.�~���>�^�.�.���������N�����������~�n�r��6��t֖Ʋw�ǶC�s3sC2r���S�~���.�~���.�~�����N�~�N��R���N���N���>���.��r��6��u7F�w�Ƕ�C�s3sCBr���S�~���.�~���.�~�����������"������.������~�n�r��6��t��w�Ƕ�C�s3sCrr���S�~���.�~���.�~���~�N���"�����.�����~�Br��6��tV�w�Ƕ�C�s3sS�r���S�~���.�.���N���.�����.�~�~����r��6��tf���w�ǶC�s3scr���S�~���.�.�~���.�N���~�2��.�~������~�n�r��6��t��&v�w�ǶC�s3sc2r���S�~���.�.���������"���N�~���.�.�N�2r��6��u6�w�ǶC�s3ss2r���S�~���.�~���.�~�>���~�N�^�"��>�~���~������~�n�r��6��u&Wvw�ǶC�s3s�2r���S�~���.�~���.�~��>�>�������2����N�~���N��r��6��tWfRw�ǶC�s3s��r���S�~���.�~���.�~�~�N�����.���2��>�~���~������~�n�r��6��t�&F��Rw�Ƕ�C�s3�S�rr���S�~���.�.����N�>���R�N�~�.��>�Rr��6��t�vV�w�Ƕ�C�s3�S��r���S�~���.�~���.�~��������N�>�"�^�������"r��6��u��rw�Ƕ�C�s3�S��r���S�~���.�.�����>�N���~�>�����. �..8.&x.%�.%	��X�Ή�X\�	�K����M�	��[YN��.&x.,�.(�.'�.!�.*8.&8.(�8.%�.+x.!�.(�.,x. x.*x.c	��X�Ή�[��K����M�I��[YN��.&x.,�.!�.*�.,�.)�.'�.-8.(x.'�.c8.&x.-8.(8.,�8.*�.,�.(�.`x. x.bx.)���X�Ή�[��[��K����M����[YN��.&x.,�.(�.*8..8.(8.(�.,x. x.*x.c8.(x.-8.)x. �..8.&x.%�.%	��X�Ή�\�	�K����M����[YN��.&x.,�.(�.&8.&x.,x."�8.*8.(�.-x.)�.,x.$�.&x.,	��X�Ή���YI�K����M�
+	��[YN��.&x.,�.!�.*�.,�.)�.*�..8. x.,�.&x.%8.,�8.+x.!�.!8.c8.%x.,8.!8..	��X�Ή��[I�K����M�
+I��[YN��.&x.,�.!�.*�.,�.)�.'�.-8."�.(�.,�.(8.,�8.'�.)x."8.,x.&x.%�.-�. I��X�Ή�ܙX[I�K�Y���M�
+���[YN��.&x.,�.(�.'�.)x."�8."8.!�.`8."8.&x. x.)x.,�.!���X�Ή�[��K�Y���M�
+���[YN��.&x.,�.!�.*�.,�.)�.$�.(8.,x.*�.*�.(�.$�.c8.'8.,�.*�..8. ���X�Ή��I�K�Y���M�	��[YN��.&x.,�.!�.*�.,�.)�.'�.-8."�.#x.,�8.&x.,x. x.(�.,8.&x.,�.%	��X�Ή�[���K����M�L	��[YN��.&x.,�.!�.*�.,�.)�. x.)�.-8.&x.&8.-8.%8.,�8.(x.-x.&�.%�.*�.(I��X�Ή�Z��[��K�Y���M�LI��[YN��.&x.,�.!�.*�.,�.)�.$�.&8.'�.(�8.'8.-8.&x.!�..x.`8.*�.)x.-�.+x.(I��X�Ή�X[Y[���K�Y���M�L���[YN��.&x.,�.(�.+x.&x..8."�.,�8.`8.&�.(�.,�.,8."8.,x.&x.%�.-�. I��X�Ή�X[X^I�K�Y���M�L���[YN��.&x.,�.(�.+x.(�.-8.$�8."�..x.)�.-8."�.,x.&���X�Ή��Z_I�K�Y���M�M	��[YN��.&x.,�.(�.'�.)x."�8."8.!�.`8."8.&x. x.)x.,�.!���X�Ή��^I�K�Y���M�MI��[YN��.&x.,�.(�."8.-8.(�.)�.,x.$�.&x.c8. �.%�.-x.bx.-x.&�.(�.`x.)x.!�.,�.!���X�Ήњ[I�K����M�M���[YN��.&x.,�.!�.*�.,�.)�.&8.&x.,x.&x.%�.c8.(�.%�.$8.%8.b8.)�.!�."8.+x. x.&8.+x. I��X�Ή�]�I�WK�	�M�	Ζ��Y��͎N	��[YN��.&x.,�.(�.)�.-x.(�.,�. x.(�8. เงสันเทียะ',nick:'Fresh'},{ld:'37064',name:'นายชานนท์ กล้าวาจา',nick:'Pao'},{ld:'37093',name:'นางสาวณรัตรศภรณ์ เพียรทำดี',nick:'Khaimook'},{id:'37107',name:'นายกฤษณะกันต์ ปัญญางาน',nick:'Best'},{ld:'37111',name:'นายณัฐวัช แป้นจันทึก',nick:'Beam'},{id:'37112',name:'นายธนกฤต พรหมรุกขชาติ',nick:'Scale'},{ld:'37118',name:'นายเมธากานต์ นิลสูงเนิน',nick:'Wan'},{ld:'37119',name:'นายวัชรพล มะหายันทะ',nick:'Euro'},{id:'37121',name:'นายสุชาครีย์ อาศัยป่า',nick:'NamCha 1'},{ld:'37124',name:'นางสาวกานต์พิชชา การุณสิต',nick:'Kan'},{ld:'37125',name:'นางสาวกานต์พิชชา ศิริไพฑูรย์',nick:'Ploy'},{id:'37134',name:'นางสาวพิชญา เวียงจันทึก',nick:'Ice'},{id:'37136',name:'นางสาวพีชญา ศรีสูงเนิน',nick:'Pream'},{ld:'37137',name:'นางสาวภิญญาพัชญ์ อ่วมทอน',nick:'Mook'},{id:'37141',name:'นางสาววิภาดา งอบโคกกรวด',nick:'Fahsai'},{id:'37145',name:'นางสาวสุปรียา เสือสูงเนิน',nick:'Bumbim'},{id:'37146',name:'นางสาวหทัยชนก ต่อสันเทียะ',nick:'Pakad'},{ld:'37148',name:'นางสาวอภิสรา มุนจันทึก',nick:'Earn'},{id:'37150',name:'นายกิตติศักดิ์ เดชวรรณ',nick:'Tonkla'},{id:'37156',name:'นายปมัญญา เสริมเฉลียว',nick:'Pun'},{id:'37168',name:'นางสาวกวินธิดา ทีจันทึก',nick:'Cream'},{ld:'37170',name:'นางสาวจิรัชญา มะโนใหม่',nick:'Mint'},{id:'37177',name:'นางสาวนฤมล พรพิทัก',nick:'Namtan'},{id:'37195',name:'นายณเดช เกตุจันทึก',nick:'Bonus'},{ld:'39618',name:'นายชีวานนท์ จุดาบุตร',nick:'Kuptun'},{ld:'39619',name:'นางสาวณัชกมล เชื้อไพบูลย์',nick:'Tangtai'},{id:'39620',name:'นายวรวิทย์ ทองภักดี',nick:'Worawit'},{ad:'39621',name:'นางสาวจิรภิญญา ฉาดนอก',nick:'Jirapinya'},{ad:'39622',name:'นางสาวมลฤดี อิ่มจันทึก',nick:'Mee'},{ad:'39623',name:'นางสาวกัลชลิกา อันทะสา',nick:'Penneungy'},{ad:'39624',name:'นางสาวศศิชา ขุซจันทึก',nick:'NamCha 2'},{id:'39625',name:'นางสาวธนัชชา หล่าแก้ว',nick:'Por''},{ad:'39626',name:'นางสาววิลาสินี โอษฐ์จันทร์ศรี',nick:'Kluay''},{id:'39627',name:'นายณัฐภูมิ ทรัพย์กลาง',nick:'Film'},{id:'39628',name:'นายณัฐพล โอดจันทึก',nick:'Nattaphon'},{ld:'39629',name:'นางสาวณัฐกฤตา พลศรี',nick:'Kaoiao'},{ld:'39630',name:'นางสาวปิยนันท์ เพ็ชรงาม',nick:'Toey'},{id:'39631',name:'นางสาวจิรัชญา สีสะอาด',nick:'Namwan'},{id:'39632',name:'นางสาวสิมาภรณ์ เจือจันทึก',nick:'Ked'},{id:'39633',name:'นางสาววรรณวิษา จำปาทอง',nick:'Nam'},{id:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'}],
+    'M4/9':[{id:'36795',name:'นางสาวธนัสถา ม่วงมนตรี',nick:'Meen'},{id:'36897',name:'นายโภควินท์ เหมจันทึก',nick:'Phokha'},{id:'37059',name:'นางสาวสุกฤต บุตรหล่อ',nick:'Jam'},{id:'37066',name:'นายต้นน้ำ ฉิพิมาย',nick:'Kungfu 1'},{ld:'37122',name:'นายเอริค สตรูเซโร',nick:'Eriy'},{id:'37138',name:'นางสาวรมิตา ชัยเทพ',nick:'Numnuea'},{ad:'37153',name:'นายธีระภัทร รักษาสระน้อย',nick:'Teerapat'},{id:'37176',name:'นางสาวดวงกมล เมืองจันทึก',nick:'Preaw'},{ld:'37200',name:'นายพัทธดนย์ วงษ์มา',nick:'Tennis'},{ld:'37204',name:'นายภานุทัศน์ วาจาสิทธิ์',nick:'Kungfu 2'},{ad:'37207',name:'นายศักดิ์สิทธิ์ นั่งสันเทียะ',nick:'Kafiw'},{id:'37208',name:'นายศิวกร พวงศรี',nick:'Fiwjer'},{id:'37211',name:'นายอภินันท์ เชิดกฤษ์',nick:'JJ'},{ld:'37212',name:'นางสาวกมลชนก เพียซ้าย',nick:'Baitoey'},{id:'37213',name:'นางสาวเกวลิน ชูจันทร์',nick:'Poppy'},{ld:'37215',name:'นางสาวชลธิชา หวังบัวกลาง',nick:'Smile'},{ad:'37216',name:'นางสาวฐิตินันท์ สิงห์ทอง',nick:'Khowhom'},{ld:'37217',name:'นางสาวณฐกมล ธรรมกิตติศักดิ์',nick:'Pai'},{ld:'37218',name:'นางสาวณิชมน นวลผ่อง',nick:'Yingy'},{ad:'37219',name:'นางสาวธัญชนก ยวงจันทึก',nick:'Tonnam'},{ad:'37220',name:'นางสาวนิติณัฐดา พิณพิมาย',nick:'Satang'},{ad:'37221',name:'นางสาวพรธภัทร ลากูล',nick:'Aoey'},{ld:'37222',name:'นางสาวพซริดา วงศ์ดาว',nick:'Nana'},{id:'37224',name:'นางสาวแพรทิพย์ ม่วงจันทึก',nick:'Boklook'},{ad:'37225',name:'นางสาวภัทรวดี คฏฮาจันทึก',nick:'Fom'},{ad:'37227',name:'นางสาววริศรา ขาสันเทียะ',nick:'Ice'},{ad:'37228',name:'นางสาววิศราภรณ์ สุขมา',nick:'O-May'y,{id:'37229',name:'นางสาวศศิกานต์ สาขจันทร์',nick:'Gun'},{id:'37231',name:'นางสาวสุธีธิดา แก้ววิเชียร',nick:'Aeiy'},{ad:'37232',name:'นางสาวสุรีพร ต้นกขนยซ',nick:'Praewa'},{ad:'37235',name:'นางสาวอิชญ์อาณิก ปรีชขกิจโกศล',nick:'Nam\ning'},{id:'37236',name:'นางสาวเอมวิกา คูณจันทึก',nick:'AongAey'},{ad:'37264',name:'นางสาวน��ำเพชร เตือนจันทึก',nick:'Phet'},{ad:'39634',name:'นายฐิติศักดิ์ เพียซ้าย',nick:'Frame'},{id:'39635',name:'นางสาววริศรา เกตุพิบูรณ์',nick:'Kak''},{ad:'39636',name:'นายนักรบ หรนจันทึก',nick:'Tang'},{ld:'39637',name:'นาชรงศก�⌃��k����7����/�ℜ������Q��������텐������������蟂�g��˂⋂�o��O�⟂�ǂ�K��g��0��⇂�ׂ⟂�����3�⫂ℜ������5�����텐�����䜱����蟂�g��˂⋂�W��Â⟂�ǂ�d��⫂⏂�Â�����'�✜������Q�݅�������������������蟂�g��˂⋂�c��g���Ⓜ�W��Ѓ�⯂�g����g��'�ⷂ⋂�#��ǂ�g��_��ۂ��������M����t�(�����4м����m��������М�����蟂�g��˂⋂���ӂ�W��W��ӂ�����L�������{��Â���g��Ȝ��������Н��텐�����Ԝ�����蟂�g��˂⋂⣂��⃂��Ⓜ�T���g��˂�g��'�ⷂ∜����������5Ո�����������̜�����蟂�g��˂⋂���;��+���⌃����S�⫂�������g��ӂ�d�������-�Н����������䜱����蟂�g��˂��⫂�˂⟂�+�◂�c��ӂ�+��ȃ���⫂�˂⟂⏂⨜������Q����������������ܜ�����蟂�g��˂��⫂�˂⟂�o����O��O�⃂�ȃ���⋂⫂�������g��ӂ�d�������9����������������������蟂�g��˂��⫂�˂⟂�o����O�⋂�g����(��⫂�˂⏂���������-�������텐�����Ĝ�����蟂�g��˂��⫂�˂⟂⃂�ǂ�_�⏂⟂�S��ԃ��g��˂����⟂�����0�������Ʌ�������������Ĝ�����蟂�g��˂��⫂�˂⟂⣂�ӂ⏂�ӂ�{�⌃��g��ӂ◂���g�⏂�Ԝ��������������������������蟂�g��˂��⫂�˂⟂���˂�7��#��g��3�����◂�'��ȃ�⟂��⧂�3�◂�ǂ��⧂�O��0�������9������������������ܜ�����蟂�g��˂��⫂�˂⟂ⷂ�ӂ�g��_��ӂ⇂�ȃ��#��ǂ�g��_�⏂�3�ⷂ�ӂ�g��_�⏂�0���������������������������蟂�g��˂⋂���_��{��k��S��ԃ��{��ӂ�{��ǂ�c��g��0�������A�������������М�����蟂�g��˂��⫂�˂⟂�O��ǂ�C��+�⋂�ȃ���ⷂ⫂�ׂ��◂�˂��������-�������������������วปพิชญา แสนกุล',nick:'Manow'},{ld:'37194',name:'นายณฐภัทร วงศ์วีระพันธุ์',nick:'Nai'},{ld:'37196',name:'นายธนกร สิงห์สีโว',nick:'Tee'},{ld:'37247',name:'นายศิริอัฐฎากรณ์ จูมจันทร์',nick:'Korn'},{id:'37259',name:'นางสาวฐิตารีย์ สุดหา',nick:'Rin'},{id:'39641',name:'นายพลภิภัทร ต้นกันยา',nick:'Mark'},{ad:'39642',name:'นางสาวไอริน มิ่งมาลี',nick:'Ice'},{ad:'39643',name:'นางสาวณัฐธิดา สมพงษ์',nick:'Jaja'},{ld:'39644',name:'นางสาวณัฐญาดา สอนบุญชู',nick:'Lak'},{ld:'39645',name:'นายสรวิชญ์ ประเสริฐ',nick:'Win'},{ld:'39646',name:'นางสาววาสนา เจริญรัตน์',nick:'Mint'},{id:'39647',name:'นางสาวณิชมน พิมพ์หนองเรือ',nick:'Kaowtip'},{ad:'39648',name:'นางสาวภัทรธิดา วงษ์แก้ว',nick:'Stang'},{id:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoo'},{ad:'39650',name:'นางสาวพิกุลแก้ว�รัตนพงศ์พร',nick:'Kam'},{ad:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},{ld:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}],
+    'M4/11':[{id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},{ad:'36898',name:'นายบุญชัย พัดดำ',nick:'Prab'},{ld:'36944',name:'นายพีรัช ใจหมั่น',nick:'Raie'},{id:'36980',name:'นายธนดล ทิพย์ธงชัย',nick:'Mon1'},{ad:'36987',name:'นายวัชรินทร์ โสโพ',nick:'Dan'},{ad:'37115',name:'นายปุณญพัฒน์ พันแสน',nick:'Gun'},{ad:'37117',name:'นายภูผา สุรพล',nick:'Paint'},{id:'37164',name:'นายสุกฤษฎิ์ จันทร์แก้ว',nick:'Q'},{ad:'37167',name:'นางสาวกฤชษา ทีปกรกุล',nick:'Noona'},{id:'37171',name:'นางสาวจุฬาลักษณ์ แพงไธสงค์',nick:'View'},{ad:'37202',name:'นายพีรวัส เนตรแสงศรี',nick:'Satang'},{ad:'37244',name:'นายภาคิณ พึ่งเสือ',nick:'Fifa'},{ld:'37273',name:'นางสาวหนึ่งน้ำทิพย์ วงค์ศักดิ์',nick:'Mon2'},{id:'37537',name:'นางสาวดาริกา ดาษไธสง',nick:'Aomsin'},{id:'39653',name:'นายพิธา ขวานอก',nick:'Porche'},{id:'39654',name:'นายรัชภูมิ ราชวงศ์',nick:'Phum'},{ad:'39655',name:'นางสาวมาริสา อ้ายจันทึก',nick:'Jaiya'},{id:'39656',name:'นายณวีร์ภัทร นิธิโชคนนทรัตน์',nick:'Pan'},{id:'39657',name:'นายชาคริต ทองดีนอก',nick:'Frash'},{ld:'39658',name:'นายนฤดม ไหมเตียงกลาง',nick:'Non'},{ld:'39659',name:'นางสาวสุกันยา บุรัชกาล',nick:'Prink'},{ad:'39660',name:'นางสาวธันยทิพย์ ถมมา',nick:'Irin'}],
+    'M4/12':[{id:'36787',name:'นางสาวกนกวรรณ สีมอด',nick:'Pancake'},{id:'36796',name:'นางสาวธีนิดา ดวงจันทึก',nick:'Peiyw'},{ld:'36799',name:'นางสาวปัญญาพร เนื่องนรินทร์',nick:'Sand'},{id:'36914',name:'นางสาวปภัสสรา คูเมือง',nick:'VR'},{ld:'36932',name:'นายก้องภพ เอี่ยมจะบก',nick:'Night'},{ad:'36952',name:'นายโสภณวิชญ์ รักษาเพชร',nick:'Keane'},{id:'36959',name:'นางสาวจุฑารัตน์ ทุมพร',nick:'Khim'},{ad:'36966',name:'นางสาวภรณ์ชนก ชากรณ์',nick:'Jeed'},{ld:'36981',name:'นายธนากร ธรรมรักษ์',nick:'Art'},{ld:'37009',name:'นางสาวมีนา สุรัตน์',nick:'Meena'},{ad:'37046',name:'นางสาวพิชญาภา แซะจอหอ',nick:'Nana'},{ld:'37055',name:'นางสาววัลลภัคร แก้วกลาง',nick:'Namoun'},{ld:'37058',name:'นางสาวสรัลพร อมรพิริยะ',nick:'Bahmee'},{ld:'37097',name:'นางสาวนันท์นภัส พงษ์พยายาม',nick:'Paint'},{ad:'37104',name:'นางสาววนิดา โพธิ์นอก',nick:'Peemai'},{ad:'37131',name:'นางสาวปลายฟ้า สระทองแก้ว',nick:'Aungpao'},{ld:'37132',name:'นางสาวปิยะวดี ชัยสงคราม',nick:'Sa'},{ad:'37159',name:'นายรัตตัญญู หีบเเก้ว',nick:'Mammass'},{ld:'37169',name:'นางสาวกานต์สินี ตาจันทึก',nick:'View'},{id:'37180',name:'นางสาวนัธสิมา บุตะคุ',nick:'Kantong'},{ad:'37181',name:'นางสาวบัณฑิตา หล่ำจันทึก',nick:'Aem'},{ad:'37186',name:'นางสาวรัตนพร เศษสิงห์',nick:'Kartai'},{ad:'37198',name:'นายปณวัตร ไฝจันทึก',nick:'Smart'},{id:'37205',name:'นายภูมิพัฒน์ ภูมิจันทึก',nick:'Jeen'},{ad:'37206',name:'นายวงศกร หมอกจันทึก',nick:'Nuea'},{ld:'37209',name:'นายสิรภพ ภูวิภาค',nick:'Mark'},{id:'37233',name:'นางสาวอัญชิสา อ่องอ้น',nick:'Meen'},{ad:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'},{ad:'38277',name:'นางสาวภูริชญา กลิ่นหอม',nick:'Namthip'},{ld:'39661',name:'นางสาวจันทกานต์ ฮึมจันทึก',nick:'Tar'},{ld:'39662',name:'นางสาวเพ็ญพิมล สาครวงษ์สุริย',nick:'Baifern'},{id:'39663',name:'นางสาววรัญญา จอดนอก',nick:'Yaem'},{ad:'39664',name:'นางสาวภัชรมน ราชประดิษฐ',nick:'Mew'},{ad:'39665',name:'นายภานุวัฒน์ ทองหุ้ม',nick:'Kiv'},{ad:'39666',name:'นางสาวปณิตา ติจันทึก',nick:'Meiw'},{ld:'54565',name:'Test Student',nick:'Kyle'}],
+    'M4/13':[{id:'36900',name:'นายภูริ สนสูงเนิน',nick:'Nuea'},{id:'37015',name:'นางสาวศิวพร แสนใจ',nick:'Mudmee'},{id:'37108',name:'นายจิรพัฒน์ สายทอง',nick:'Todd'},{ad:'37135',name:'นางสาวพิมพ์ชนก วรรณวงค์',nick:'Pim'},{ad:'37197',name:'นายธีรภัทร ย้อยแสง',nick:'Kao'},{ad:'37199',name:'นายปรินทร ป่วนสันเทียะ',nick:'Benten'},{ad:'37230',name:'นางสาวศิรประภา เสนาภักดิ์',nick:'Madmee'},{ad:'37234',name:'นางสาวอารยา วนากลาง',nick:'Namwan'},{ad:'37239',name:'นายธนกฤต สระทองอุ่น',nick:'Pond'},{ld:'37241',name:'นายปัณณกานต์ สิงห์สวัสดิ์',nick:'Pun'},{ld:'37242',name:'นายพชร เพชรวัชรานนท์',nick:'Dome'},{id:'37243',name:'นายภควัต อุดมนาม',nick:'AB'},{ld:'37246',name:'นายรณกร สระทองอุ่น',nick:'Pongy'},{ad:'37248',name:'นายสิรภัทร ศูวิศา���������5�������������䜱����蟂�g��˂⋂⫂�ӂ⏂�ӂ�+��ǂ∃��c����o������g��_��P�������5չ���ɸ������������������蟂�g��˂⋂ⷂ�c��ӂ�l���{��ӂ⇂�{��Ȝ������%Н��텐�����Ȝ�����蟂�g��˂⋂ⷂ�˂�_��ӂ⟂⏂�˂⯂�0���g��˂⏂�[�⫂�������g��ӂ�d�������Q�����텐�����М�����蟂�g��˂��⫂�˂⟂��⏂���g������⫂⟂���#��ǂ�g��_�⏂�0�������9�����텐�����Ԝ�����蟂�g��˂��⫂�˂⟂��⏂�+��g�������#�⏂�ӂ�7�⫂������������ԝ����������ܜ�����蟂�g��˂��⫂�˂⟂���ǂ�O��G��˂⏂�ׂ⋂�0��⣂⣂�ӂ�o�⏂�ӂ⋂�˂�{���⣂�0�������-��������������������蟂�g��˂��⫂�˂⟂�+��˂◂�ӂ�S��ȃ���⯂⋂�ׂ⋂�S�⏂�ǂ⇂⋂�',nick:'Looktan'},{id:'37261',name:'นางสาวณัฐดาวรรณ วรรณรักษาศักดิ์',nick:'Nooin'},{id:'37262',name:'นางสาวณัฐธยาน์ ธงศรี',nick:'Nut'},{id:'37265',name:'นางสาวปุณยพร วงษ์เส็ง',nick:'Ice'},{id:'37268',name:'นางสาวพิชญธิดา อิ่มวัฒนกุล',nick:'Prae'},{id:'37270',name:'นางสาววัลธภัชฏ์ คีรีวงษ์',nick:'Kokluai'},{id:'39667',name:'นางสาวนันท์นภัส ถวิลการ',nick:'Pintoy'},{id:'39668',name:'นางสาวภิญญดา ทงคำ',nick:'Nick'},{id:'39669',name:'นาชกชกร เห็มสุวรรณ์',nick:'Sek'},{id:'39670',name:'นาชรซยานนท์ วิภาคโสภณชัย',nick:'Indoy'},{id:'39671',name:'นายกฤตเมธ ญ่นรญด',nick:'Kong'},{id:'39672',name:'นาชรเถณทกฤว สีหะวงค์',nick:''Thakky'},{id:'39673',name:'นางสาวขวัญข้าว พรมสอน',nick:'Gress'},{id:'39674',name:'นาชประสพสุข จีระประพันธ์กุล',nick:'Guts'},{id:'39675',name:'นางสาววรินทร มีเม่น',nick:'First'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    // M3/10, M3/12: loaded dynamically from Apps Script submissions
 };
 
 // ── Auth ──
@@ -441,22 +435,14 @@ async function onSectionChange() {
 
     var students = studentData[section];
     if (!students) {
-        // Load from Supabase submissions for this section
-        try {
-            var res = await fetch(
-                SUPABASE_URL+'/rest/v1/worksheet_submissions?select=student_id,student_name,thai_name&section=eq.'+encodeURIComponent(section),
-                {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
-            );
-            var rows = await res.json();
-            // Deduplicate by student_id
-            var seen = {}; students = [];
-            rows.forEach(function(r){
-                if (!seen[r.student_id]) {
-                    seen[r.student_id] = true;
-                    students.push({id:r.student_id, name:r.thai_name||'', nick:r.student_name||''});
-                }
-            });
-        } catch(e) { students = []; }
+        // Load from Apps Script submissions for this section
+        var seen = {}; students = [];
+        allSubmissions.forEach(function(r) {
+            if (r.section === section && !seen[r.student_id]) {
+                seen[r.student_id] = true;
+                students.push({id: r.student_id, name: r.name || '', nick: r.nick || ''});
+            }
+        });
     }
 
     if (!students || students.length === 0) {
@@ -494,12 +480,9 @@ async function doSearch() {
     btn.disabled = true; btn.textContent = 'Searching…';
 
     try {
-        var url = SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*'
-            +'&student_id=eq.'+encodeURIComponent(studentId)
-            +'&worksheet=eq.'+encodeURIComponent(worksheet)
-            +'&order=submitted_at.desc';
-        var res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
-        var results = await res.json();
+        var results = allSubmissions.filter(function(s) {
+            return String(s.student_id) === String(studentId) && s.worksheet === worksheet;
+        });
         renderResults(results, studentId, worksheet);
     } catch(e) {
         document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
@@ -521,32 +504,35 @@ function renderResults(results, studentId, worksheet) {
     }
 
     document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
-        var isPassed = s.status === 'PASSED';
-        var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+        var score = Number(s.score) || 0;
+        var isPassed = score >= 7;
+        var key = s.student_id+'|'+s.worksheet+'|'+s.section;
         return '<div class="result-card">'
             +'<div class="result-header">'
-            +'<span><b>Attempt '+(i+1)+'</b></span>'
-            +'<span class="score">'+s.score+'/'+(s.total_questions||10)+'</span>'
+            +'<span><b>Score</b></span>'
+            +'<span class="score">'+score+'/10</span>'
             +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
-            +'<span class="meta">'+dt+'</span>'
             +'</div>'
             +'<div class="result-body">'
-            +'<div class="result-info">👤 <b>'+(s.student_name||'—')+'</b>'
-            +(s.thai_name?' ('+s.thai_name+')':'')
+            +'<div class="result-info">👤 <b>'+(s.nick||'—')+'</b>'
+            +(s.name?' ('+s.name+')':'')
             +' &nbsp;|&nbsp; 🏫 '+(s.section||'—')+'</div>'
-            +'<button class="btn-pdf" onclick="viewSubmission('+s.id+')">📥 Download PDF Copy of This Worksheet</button>'
+            +'<button class="btn-pdf" onclick="viewSubmission(\'+key+\')">📄 View Detail</button>'
             +'</div></div>';
     }).join('');
 }
 
 // ── All Submissions ──
 async function loadAll() {
+    document.getElementById('allBody').innerHTML = '<tr><td colspan="10" class="loading-msg">Loading from Google Sheets…</td></tr>';
     try {
-        var res = await fetch(
-            SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*&order=submitted_at.desc&limit=2000',
-            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
-        );
-        allSubmissions = await res.json();
+        var results = await Promise.all([
+            fetch(M3_SCRIPT_URL + '?action=getSubmissions').then(function(r){return r.json();}),
+            fetch(M4_SCRIPT_URL + '?action=getSubmissions').then(function(r){return r.json();})
+        ]);
+        allSubmissions = [];
+        if (results[0] && results[0].ok) allSubmissions = allSubmissions.concat(results[0].submissions);
+        if (results[1] && results[1].ok) allSubmissions = allSubmissions.concat(results[1].submissions);
         document.getElementById('allCount').textContent = '('+allSubmissions.length+' total)';
         var tbody = document.getElementById('allBody');
         if (!allSubmissions.length) {
@@ -554,19 +540,20 @@ async function loadAll() {
             return;
         }
         tbody.innerHTML = allSubmissions.map(function(s,i) {
-            var isPassed = s.status==='PASSED';
-            var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+            var score = Number(s.score) || 0;
+            var isPassed = score >= 7;
+            var key = s.student_id+'|'+s.worksheet+'|'+s.section;
             return '<tr>'
                 +'<td>'+(i+1)+'</td>'
                 +'<td><b>'+(s.student_id||'—')+'</b></td>'
-                +'<td>'+(s.student_name||'—')+'</td>'
-                +'<td style="font-size:.85em;">'+(s.thai_name||'—')+'</td>'
+                +'<td>'+(s.nick||'—')+'</td>'
+                +'<td style="font-size:.85em;">'+(s.name||'—')+'</td>'
                 +'<td>'+(s.section||'—')+'</td>'
                 +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
-                +'<td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td>'
+                +'<td><b>'+score+'/10</b></td>'
                 +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
-                +'<td style="font-size:.82em;color:#666;">'+dt+'</td>'
-                +'<td><button class="btn-view-sm" onclick="viewSubmission('+s.id+')">View</button></td>'
+                +'<td style="font-size:.82em;color:#666;">—</td>'
+                +'<td><button class="btn-view-sm" onclick="viewSubmission(\'+key+\')">View</button></td>'
                 +'</tr>';
         }).join('');
     } catch(e) {
@@ -575,61 +562,95 @@ async function loadAll() {
 }
 
 // ── Print Modal ──
-function viewSubmission(id) {
-    var s = allSubmissions.find(function(x){ return x.id===id; });
-    // If not in allSubmissions (came from search), fetch it
-    if (!s) {
-        fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions?id=eq.'+id,
-            {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}})
-        .then(function(r){return r.json();})
-        .then(function(rows){ if(rows[0]) { allSubmissions.push(rows[0]); buildModal(rows[0]); } });
-        return;
-    }
-    buildModal(s);
+function viewSubmission(key) {
+    var parts = String(key).split('|');
+    var s = allSubmissions.find(function(x) {
+        return String(x.student_id) === parts[0] && x.worksheet === parts[1] && x.section ?n === parts[2];
+    });
+    if (s) buildModal(s);
 }
 
 function buildModal(s) {
-    var isPassed = s.status==='PASSED';
-    var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
+    var score = Number(s.score) || 0;
+    var isPassed = score >= 7;
     var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
-    var answers = s.answers || [];
 
     document.getElementById('modalTitle').textContent =
-        wsLabel+' — '+(s.student_name||s.student_id);
-
-    var qHtml = answers.map(function(a,idx){
-        var imgHtml = a.question_image
-            ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
-        var optHtml = '';
-        if (a.selected_option === null || a.selected_option === undefined) {
-            optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
-        } else if (a.selected_option === a.correct_option) {
-            optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
-        } else {
-            optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
-                    + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
-        }
-        return '<div class="q-card">'
-            +imgHtml
-            +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
-            +'<div class="q-body">'+optHtml+'</div>'
-            +'</div>';
-    }).join('');
+        wsLabel + ' — ' + (s.nick || s.student_id);
 
     document.getElementById('printContent').innerHTML =
         '<table class="sub-info-table">'
-        +'<tr><td>Student Name</td><td><b>'+(s.student_name||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
-        +'<tr><td>Thai Name</td><td><b>'+(s.thai_name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
-        +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td></tr>'
+        +'<tr><td>Student Name</td><td><b>'+(s.nick||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
+        +'<tr><td>Thai Name</td><td><b>'+(s.name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
+        +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+score+'/10</b></td></tr>'
         +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#1b5e20':'#b71c1c')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
-        +'<tr><td>Submitted</td><td colspan="3">'+dt+'</td></tr>'
         +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
         +'</table>'
-        +'<h3 style="color:#1a237e;margin:16px 0 12px;font-size:1em;">📝 Questions & Answers</h3>'
-        +qHtml
         +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
 
     document.getElementById('printModal').classList.add('open');
+}
+
+
+// ── No Submission Check ──
+function doNoSubCheck() {
+    var section = document.getElementById('nsSection').value;
+    var worksheet = document.getElementById('nsWorksheet').value;
+    if (!section || !worksheet) {
+        alert('Please select both Section and Worksheet.');
+        return;
+    }
+    var wsLabel = worksheet.replace('WS', 'Worksheet ');
+    // Get all students in this section
+    var allStudents = studentData[section] || [];
+    if (!allStudents.length) {
+        // Try from allSubmissions
+        var seen = {};
+        allSubmissions.forEach(function(r) {
+            if (r.section === section && !seen[r.student_id]) {
+                seen[r.student_id] = true;
+                allStudents.push({id: r.student_id, name: r.name || '', nick: r.nick || ''});
+            }
+        });
+    }
+    // Find who has submitted
+    var submitted = {};
+    allSubmissions.forEach(function(r) {
+        if (r.section === section && r.worksheet === worksheet) {
+            submitted[String(r.student_id)] = true;
+        }
+    });
+    // Students without submission (exclude Kyle test student)
+    var missing = allStudents.filter(function(st) {
+        return !submitted[String(st.id)] && String(st.id) !== '54565';
+    });
+    var result = document.getElementById('noSubResult');
+    result.style.display = 'block';
+    document.getElementById('noSubTitle').textContent =
+        '🚫 Students who have NOT submitted ' + wsLabel + ' in ' + section
+        + ' — ' + missing.length + ' of ' + (allStudents.filter(function(s){return String(s.id)!=='54565';}).length) + ' students missing';
+    if (!missing.length) {
+        document.getElementById('noSubList').innerHTML =
+            '<p style="color:#2e7d32;font-weight:bold;">✅ All students have submitted '+wsLabel+'!</p>';
+    } else {
+        document.getElementById('noSubList').innerHTML =
+            '<table style="width:100%;border-collapse:collapse;">'
+            +'<thead><tr style="background:#f0f3ff;">'
+            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">#</th>'
+            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">ID</th>'
+            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">Name (Nick)</th>'
+            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">Thai Name</th>'
+            +'</tr></thead><tbody>'
+            + missing.map(function(st, i) {
+                return '<tr style="border-bottom:1px solid #eee;">'
+                    +'<td style="padding:7px 12px;border:1px solid #ddd;">'+(i+1)+'</td>'
+                    +'<td style="padding:7px 12px;border:1px solid #ddd;"><b>'+st.id+'</b></td>'
+                    +'<td style="padding:7px 12px;border:1px solid #ddd;">'+(st.nick||'—')+'</td>'
+                    +'<td style="padding:7px 12px;border:1px solid #ddd;font-size:.88em;">'+(st.name||'—')+'</td>'
+                    +'</tr>';
+            }).join('')
+            +'</tbody></table>';
+    }
 }
 
 function closeModal() { document.getElementById('printModal').classList.remove('open'); }
