@@ -196,11 +196,6 @@
         <h3>&#x1F4CB; Before You Start</h3>
         <div class="form-group">
             <label>&#x1F3EB; 1. Your Class</label>
-            <!-- Kyle Test Mode Banner -->
-            <div id="testmode-banner" style="display:none;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:14px 18px;margin-bottom:18px;color:#856404;font-size:15px;">
-              <strong>🧪 TEST MODE — Kyle (Test Student)</strong><br>
-              Student ID: 54565 &nbsp;|&nbsp; Teacher use only &nbsp;|&nbsp; Questions are in original order (not randomized).
-            </div>
             <select id="section" onchange="loadThaiNames()">
                 <option value="">&#x2014; Select your class &#x2014;</option>
                 <option value="M4/10">M4/10</option>
@@ -300,15 +295,141 @@
 
 <script>
     // ===================== STUDENT DATA =====================
-    // ===================== SUPABASE CONFIG =====================
-        var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
-        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
-        var studentData = {};
+    var studentData = {
+        'M4/10': [
+            {id:'36894',name:'นายกิตติคุณ คงพะเนา',nick:'Gust'},
+            {id:'36895',name:'นายศุภกฤต นาน้อย',nick:'Gan/ Mub'},
+            {id:'36903',name:'นายกฎชกร ฟดสูงเนิน',nick:'Kot'},
+            {id:'36909',name:'นางสาวชลธิชา เสาวรส',nick:'Thicha'},
+            {id:'36917',name:'นางสาวปุณณภา เยสูงเนิน',nick:'Napha'},
+            {id:'36918',name:'นางสาวปุณยนุช สาระ',nick:'Kafae'},
+            {id:'36921',name:'นางสาวภัทรวดี นาโควงค์',nick:'Grace'},
+            {id:'36971',name:'นางสาวศิริพร นิลโนรี',nick:'Aom'},
+            {id:'37000',name:'นางสาวกาญจน์เกล้า วงษ์ลักษณ์',nick:'Namkhing'},
+            {id:'37017',name:'นางสาวอินทิมา จันทร์อินทร์',nick:'Ain'},
+            {id:'37020',name:'นายเทพบดี พิพัธน์',nick:'Pao'},
+            {id:'37034',name:'นางสาวณัฐชยา ขอสีกลาง',nick:'Kaimook'},
+            {id:'37040',name:'นางสาวปพิชญา แสนกุล',nick:'Manow'},
+            {id:'37194',name:'นายณฐภัทร วงศ์วีระพันธุ์',nick:'Nai'},
+            {id:'37196',name:'นายธนกร สิงห์สีโว',nick:'Tee'},
+            {id:'37247',name:'นายศิริอัฐฎากรณ์ จูมจันทร์',nick:'Korn'},
+            {id:'37259',name:'นางสาวฐิตารีย์ สุดหา',nick:'Rin'},
+            {id:'39641',name:'นายพลภิภัทร ต้นกันยา',nick:'Mark'},
+            {id:'39642',name:'นางสาวไอริน มิ่งมาลี',nick:'Ice'},
+            {id:'39643',name:'นางสาวณัฐธิดา สมพงษ์',nick:'Jaja'},
+            {id:'39644',name:'นางสาวณัฐญาดา สอนบุญชู',nick:'Lak'},
+            {id:'39645',name:'นายสรวิชญ์ ประเสริฐ',nick:'Win'},
+            {id:'39646',name:'นางสาววาสนา เจริญรัตน์',nick:'Mint'},
+            {id:'39647',name:'นางสาวณิชมน พิมพ์หนองเรือ',nick:'Kaowtip'},
+            {id:'39648',name:'นางสาวภัทรธิดา วงษ์แก้ว',nick:'Stang'},
+            {id:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoo'},
+            {id:'39650',name:'นางสาวพิกุลแก้ว รัตนพงศ์พร',nick:'Kam'},
+            {id:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},
+            {id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}
+        ],
+        'M4/11': [
+            {id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},
+            {id:'36898',name:'นายบุญชัย พัดดำ',nick:'Prab'},
+            {id:'36944',name:'นายพีรัช ใจหมั่น',nick:'Raie'},
+            {id:'36980',name:'นายธนดล ทิพย์ธงชัย',nick:'Mon1'},
+            {id:'36987',name:'นายวัชรินทร์ โสโพ',nick:'Dan'},
+            {id:'37115',name:'นายปุณญพัฒน์ พันแสน',nick:'Gun'},
+            {id:'37117',name:'นายภูผา สุรพล',nick:'Paint'},
+            {id:'37164',name:'นายสุกฤษฎิ์ จันทร์แก้ว',nick:'Q'},
+            {id:'37167',name:'นางสาวกฤชษา ทีปกรกุล',nick:'Noona'},
+            {id:'37171',name:'นางสาวจุฬาลักษณ์ แพงไธสงค์',nick:'View'},
+            {id:'37202',name:'นายพีรวัส เนตรแสงศรี',nick:'Satang'},
+            {id:'37244',name:'นายภาคิณ พึ่งเสือ',nick:'Fifa'},
+            {id:'37273',name:'นางสาวหนึ่งน้ำทิพย์ วงค์ศักดิ์',nick:'Mon2'},
+            {id:'37537',name:'นางสาวดาริกา ดาษไธสง',nick:'Aomsin'},
+            {id:'39653',name:'นายพิธา ขวานอก',nick:'Porche'},
+            {id:'39654',name:'นายรัชภูมิ ราชวงศ์',nick:'Phum'},
+            {id:'39655',name:'นางสาวมาริสา อ้ายจันทึก',nick:'Jaiya'},
+            {id:'39656',name:'นายณวีร์ภัทร นิธิโชคนนทรัตน์',nick:'Pao'},
+            {id:'39657',name:'นายชาคริต ทองดีนอก',nick:'Frash'},
+            {id:'39658',name:'นายนฤดม ไหมเตียงกลาง',nick:'Non'},
+            {id:'39659',name:'นางสาวสุกันยา บุรัชกาล',nick:'Prink'},
+            {id:'39660',name:'นางสาวธันยทิพย์ ถมมา',nick:'Irin'}
+        ],
+        'M4/12': [
+            {id:'36787',name:'นางสาวกนกวรรณ สีมอด',nick:'Pancake'},
+            {id:'36796',name:'นางสาวธีนิดา ดวงจันทึก',nick:'Peiyw'},
+            {id:'36799',name:'นางสาวปัญญาพร เนื่องนรินทร์',nick:'Sand'},
+            {id:'36914',name:'นางสาวปภัสสรา คูเมือง',nick:'VR'},
+            {id:'36932',name:'นายก้องภพ เอี่ยมจะบก',nick:'Night'},
+            {id:'36952',name:'นายโสภณวิชญ์ รักษาเพชร',nick:'Keane'},
+            {id:'36959',name:'นางสาวจุฑารัตน์ ทุมพร',nick:'Khim'},
+            {id:'36966',name:'นางสาวภรณ์ชนก ชากรณ์',nick:'Jeed'},
+            {id:'36981',name:'นายธนากร ธรรมรักษ์',nick:'Art'},
+            {id:'37009',name:'นางสาวมีนา สุรัตน์',nick:'Meena'},
+            {id:'37046',name:'นางสาวพิชญาภา แซะจอหอ',nick:'Nana'},
+            {id:'37055',name:'นางสาววัลลภัคร แก้วกลาง',nick:'Namoun'},
+            {id:'37058',name:'นางสาวสรัลพร อมรพิริยะ',nick:'Bahmee'},
+            {id:'37097',name:'นางสาวนันท์นภัส พงษ์พยายาม',nick:'Paint'},
+            {id:'37104',name:'นางสาววนิดา โพธิ์นอก',nick:'Peemai'},
+            {id:'37131',name:'นางสาวปลายฟ้า สระทองแก้ว',nick:'Aungpao'},
+            {id:'37132',name:'นางสาวปิยะวดี ชัยสงคราม',nick:'Sa'},
+            {id:'37159',name:'นายรัตตัญญู หีบเเก้ว',nick:'Mammass'},
+            {id:'37169',name:'นางสาวกานต์สินี ตาจันทึก',nick:'View'},
+            {id:'37180',name:'นางสาวนัธสิมา บุตะคุ',nick:'Kantong'},
+            {id:'37181',name:'นางสาวบัณฑิตา หล่ำจันทึก',nick:'Aem'},
+            {id:'37186',name:'นางสาวรัตนพร เศษสิงห์',nick:'Kartai'},
+            {id:'37198',name:'นายปณวัตร ไฝจันทึก',nick:'Smart'},
+            {id:'37205',name:'นายภูมิพัฒน์ ภูมิจันทึก',nick:'Jeen'},
+            {id:'37206',name:'นายวงศกร หมอกจันทึก',nick:'Nuea'},
+            {id:'37209',name:'นายสิรภพ ภูวิภาค',nick:'Mark'},
+            {id:'37233',name:'นางสาวอัญชิสา อ่องอ้น',nick:'Meen'},
+            {id:'38277',name:'นางสาวภูริชญา กลิ่นหอม',nick:'Namthip'},
+            {id:'39661',name:'นางสาวจันทกานต์ ฮึมจันทึก',nick:'Tar'},
+            {id:'39662',name:'นางสาวเพ็ญพิมล สาครวงษ์สุริย',nick:'Baifern'},
+            {id:'39663',name:'นางสาววรัญญา จอดนอก',nick:'Yaem'},
+            {id:'39664',name:'นางสาวภัชรมน ราชประดิษฐ',nick:'Mew'},
+            {id:'39665',name:'นายภานุวัฒน์ ทองหุ้ม',nick:'Kiv'},
+            {id:'39666',name:'นางสาวปณิตา ติจันทึก',nick:'Meiw'}
+        ],
+        'M4/13': [
+            {id:'36900',name:'นายภูริ สนสูงเนิน',nick:'Nuea'},
+            {id:'37015',name:'นางสาวศิวพร แสนใจ',nick:'Mudmee'},
+            {id:'37108',name:'นายจิรพัฒน์ สายทอง',nick:'Todd'},
+            {id:'37135',name:'นางสาวพิมพ์ชนก วรรณวงค์',nick:'Pim'},
+            {id:'37197',name:'นายธีรภัทร ย้อยแสง',nick:'Kao'},
+            {id:'37199',name:'นายปรินทร ป่วนสันเทียะ',nick:'Benten'},
+            {id:'37230',name:'นางสาวศิรประภา เสนาภักดิ์',nick:'Madmee'},
+            {id:'37234',name:'นางสาวอารยา วนากลาง',nick:'Namwan'},
+            {id:'37239',name:'นายธนกฤต สระทองอุ่น',nick:'Pond'},
+            {id:'37241',name:'นายปัณณกานต์ สิงห์สวัสดิ์',nick:'Pun'},
+            {id:'37242',name:'นายพชร เพชรวัชรานนท์',nick:'Dome'},
+            {id:'37243',name:'นายภควัต อุดมนาม',nick:'AB'},
+            {id:'37246',name:'นายรณกร สระทองอุ่น',nick:'Pong'},
+            {id:'37248',name:'นายสิรภัทร ภูวิภาค',nick:'Mac'},
+            {id:'37249',name:'นายสิริชัย ธูปขุนทด',nick:'Munggorn'},
+            {id:'37250',name:'นายอธิป พิมพา',nick:'It'},
+            {id:'37252',name:'นายอาทิวราห์ นารถสูงเนิน',nick:'Tan'},
+            {id:'37254',name:'นางสาวกรกนก แสวงจันทร์',nick:'Nam'},
+            {id:'37255',name:'นางสาวกรชนก เจริญสุข',nick:'Endu'},
+            {id:'37257',name:'นางสาวกัณฑารีย์ ศศิปริยาพงศ์',nick:'Kan'},
+            {id:'37258',name:'นางสาวชาลิดา เหยียดรัมย์',nick:'Looktan'},
+            {id:'37261',name:'นางสาวณัฐดาวรรณ วรรณรักษาศักดิ์',nick:'Nooin'},
+            {id:'37262',name:'นางสาวณัฐธยาน์ ธงศรี',nick:'Nut'},
+            {id:'37265',name:'นางสาวปุณยพร วงษ์เส็ง',nick:'Ice'},
+            {id:'37268',name:'นางสาวพิชญธิดา อิ่มวัฒนกุล',nick:'Prae'},
+            {id:'37270',name:'นางสาววัลธภัชฏ์ คีรีวงษ์',nick:'Kokluai'},
+            {id:'39667',name:'นางสาวนันท์นภัส ถวิลการ',nick:'Pinto'},
+            {id:'39668',name:'นางสาวภิญญดา ทองคำ',nick:'Nick'},
+            {id:'39669',name:'นายกลกร เห็มสุวรรณ์',nick:'Sek'},
+            {id:'39670',name:'นายรัชชานนท์ วิภาคโสภณชัย',nick:'Indo'},
+            {id:'39671',name:'นายกฤตเมธ อ่ำรอด',nick:'Kong'},
+            {id:'39672',name:'นายถิรทักษ์ สีหะวงค์',nick:'Thakky'},
+            {id:'39673',name:'นางสาวขวัญข้าว พรมสอน',nick:'Gress'},
+            {id:'39674',name:'นายประสพสุข จีระประพันธ์กุล',nick:'Guts'},
+            {id:'39675',name:'นางสาววรินทร มีเม่น',nick:'First'}
+        ]
+    };
 
     // ===================== QUESTION DATA =====================
     var canvaImages = [
-        'WS4M4Q1.png','WS4M4Q2.png','WS4M4Q3.png','WS4M4Q4.png','WS4M4Q5.png',
-        'WS4M4Q6.png','WS4M4Q7.png','WS4M4Q8.png','WS4M4Q9.png','WS4M4Q10.png'
+        'W4M4A2Q1.png','W4M4A2Q2.png','W4M4A2Q3.png','W4M4A2Q4.png','W4M4A2Q5.png',
+        'W4M4A2Q6.png','W4M4A2Q7.png','W4M4A2Q8.png','W4M4A2Q9.png','W4M4A2Q10.png'
     ];
 
     var questions = [
@@ -407,49 +528,39 @@
     }
 
     // ===================== APP STATE =====================
-    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
     var userAnswers = {};
     var attempts = 0;
     var allAttemptScores = [];
-    var TEST_STUDENT_IDS = ['54565']; // Kyle test student
     var maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
 
     // ===================== FORM FUNCTIONS =====================
-    async function loadThaiNames() {
-            var section = document.getElementById('section').value;
-            var thaiSelect = document.getElementById('thaiName');
-            var thaiGroup = document.getElementById('thaiNameGroup');
-            if (thaiGroup) thaiGroup.style.display = 'none';
-            thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
-            if (!section) return;
-            if (thaiGroup) thaiGroup.style.display = 'block';
-            thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
-            try {
-                var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
-                var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
-                var students = await resp.json();
-                var isTest = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
-                thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
-                if (isTest) {
-                    var kyleOpt = document.createElement('option');
-                    kyleOpt.value = '54565';
-                    kyleOpt.text = 'Kyle (Test Student)';
-                    thaiSelect.appendChild(kyleOpt);
-                }
-                students.forEach(function(s) {
-                    var opt = document.createElement('option');
-                    opt.value = s.student_id;
-                    opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
-        opt.dataset.nick = s.nickname;
-                    thaiSelect.appendChild(opt);
-                });
-            } catch(e) {
-                thaiSelect.innerHTML = '<option value="">-- Error loading students --</option>';
-                console.error('Supabase error:', e);
-            }
+    function loadThaiNames() {
+        var section = document.getElementById('section').value;
+        var thaiNameGroup = document.getElementById('thaiNameGroup');
+        var thaiNameSelect = document.getElementById('thaiName');
+
+        document.getElementById('nickname').value = '';
+        document.getElementById('studentId').value = '';
+        thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+
+        if (!section) {
+            thaiNameGroup.style.display = 'none';
+            return;
         }
+
+        var students = studentData[section] || [];
+        students.forEach(function(s) {
+            var opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = s.name + ' (' + s.nick + ')';
+            opt.dataset.nick = s.nick;
+            thaiNameSelect.appendChild(opt);
+        });
+        thaiNameGroup.style.display = 'block';
+    }
 
     function autoFillStudent() {
         var thaiNameSelect = document.getElementById('thaiName');
@@ -486,7 +597,7 @@
         attempts = savedData.attempts || 0;
         allAttemptScores = savedData.scores || [];
 
-        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+        if (attempts >= maxAttempts) {
             document.querySelector('.form-section').style.display = 'none';
             document.getElementById('questionsSection').classList.remove('show');
             document.getElementById('lockedMessage').classList.add('show');
@@ -574,7 +685,7 @@
                 + 'ได้คะแนน ' + score + '/10 &#x1F31F;'
                 + '</span>';
         } else {
-            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+            if (attempts >= maxAttempts) {
                 var highest = Math.max.apply(null, allAttemptScores);
                 submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = '<span class="status-fail">'
@@ -604,16 +715,44 @@
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
-        var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS4_M4', date:new Date().toISOString(), status:status};
-        var params = new URLSearchParams(data);
-        fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
+        // Capture per-question answer texts from the questions array
+        var ans = {};
+        questions.forEach(function(q) {
+            var selectedIdx = userAnswers[q.id];
+            ans['Q' + q.id] = (selectedIdx !== undefined && q.options[selectedIdx]) ? q.options[selectedIdx].text : null;
+        });
+        // Get Thai name text (strip the (Nick) suffix)
+        var ts = document.getElementById('thaiName');
+        var tn = ts && ts.selectedIndex > 0 ? ts.options[ts.selectedIndex].text.replace(/\s*\([^)]*\)\s*$/, '').trim() : String(nickname);
+        // Normalize status for Supabase (PASSED→PASS, HIGHEST_FAIL→FAIL)
+        var st = (status === 'PASSED') ? 'PASS' : 'FAIL';
+        // 1. Save to Supabase with full answer record
+        fetch('https://smtgkffnptwjlgccsrti.supabase.co/rest/v1/worksheet_submissions', {
+            method: 'POST',
+            headers: {
+                'apikey': 'sb_publishable_LTsf2Mltr8iFmVAN8DxaCQ_FtDnNOuD',
+                'Authorization': 'Bearer sb_publishable_LTsf2Mltr8iFmVAN8DxaCQ_FtDnNOuD',
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({student_id: String(studentId), student_name: tn, section: section, worksheet: 'WS4', score: Number(score), total_questions: 10, status: st, answers: ans})
+        }).catch(function(e) { console.warn('Supabase error:', e); });
+        // 2. Send to M4 Apps Script (Google Sheets)
+        var p = '?studentId=' + encodeURIComponent(studentId)
+            + '&nickname=' + encodeURIComponent(nickname)
+            + '&section=' + encodeURIComponent(section)
+            + '&score=' + encodeURIComponent(score)
+            + '&worksheet=WS4'
+            + '&status=' + encodeURIComponent(status)
+            + '&date=' + encodeURIComponent(new Date().toISOString());
+        fetch(SCRIPT_URL + p).catch(function(e) { console.warn('Apps Script error:', e); });
     }
 
     function resetForm() {
         userAnswers = {};
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'none';
-        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+        if (attempts >= maxAttempts) {
             document.getElementById('lockedMessage').classList.add('show');
         } else {
             document.querySelector('.form-section').style.display = 'block';
@@ -716,21 +855,7 @@
             + attemptsHtml
             + '<p style="text-align:center;color:#aaa;font-size:0.8em;margin-top:20px;">M4 (A2) English Worksheet 4 &bull; Health and Weather &bull; carlton-title.github.io</p>'
             + '<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},400);});<\/script>'
-            + '
-<script>
-(function(){
-var _S="https://smtgkffnptwjlgccsrti.supabase.co",_K="sb_publishable_LTsf2Mltr8iFmVAN8DxaCQ_FtDnNOuD",_M="https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec";
-window.submitToSheet=function(sid,nick,sec,score,status){
-var ans={};for(var i=1;i<=10;i++){var c=document.querySelector('input[name="q'+i+'"]:checked');if(c){var l=c.closest("label")||c.parentElement;ans["Q"+i]=l?l.textContent.trim():"Opt"+c.value;}else ans["Q"+i]=null;}
-var ts=document.getElementById("thaiName");var tn=ts&&ts.selectedIndex>0?ts.options[ts.selectedIndex].text.replace(/\s*\([^)]*\)\s*$/,"").trim():String(nick);
-var st=status||(Number(score)>=7?"PASS":"FAIL");
-fetch(_S+"/rest/v1/worksheet_submissions",{method:"POST",headers:{"apikey":_K,"Authorization":"Bearer "+_K,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({student_id:String(sid),student_name:tn,section:sec,worksheet:"WS4",score:Number(score),total_questions:10,status:st,answers:ans})}).catch(function(e){console.warn("SB:",e);});
-var p="?studentId="+encodeURIComponent(sid)+"&nickname="+encodeURIComponent(nick)+"&section="+encodeURIComponent(sec)+"&score="+encodeURIComponent(score)+"&worksheet=WS4&status="+encodeURIComponent(st)+"&date="+encodeURIComponent(new Date().toISOString());
-fetch(_M+p).catch(function(e){console.warn("AS:",e);});
-};
-})();
-</script>
-</body></html>';
+            + '</body></html>';
 
         var pw = window.open('', '_blank', 'width=950,height=750');
         if (pw) { pw.document.write(printHTML); pw.document.close(); }
@@ -740,7 +865,7 @@ fetch(_M+p).catch(function(e){console.warn("AS:",e);});
     function updateAttemptsDisplay() {
         document.getElementById('attemptsUsed').textContent = attempts;
         var msg = document.getElementById('attemptsMessage');
-        if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+        if (attempts >= maxAttempts) {
             msg.innerHTML = '&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว';
             msg.style.color = '#c41e3a';
         } else {
@@ -750,55 +875,6 @@ fetch(_M+p).catch(function(e){console.warn("AS:",e);});
     }
 
     updateAttemptsDisplay();
-
-        // ── Kyle Test Mode Init ─────────────────────────────────────────────────────
-        (async function kyleTestModeInit() {
-          const params = new URLSearchParams(window.location.search);
-          if (params.get('testmode') !== 'Carlton2026') return;
-
-          // Show testmode banner
-          const banner = document.getElementById('testmode-banner');
-          if (banner) banner.style.display = 'block';
-
-          // Disable randomization — return array in original order
-          if (typeof seededShuffle === 'function') window.seededShuffle = arr => [...arr];
-          if (typeof applySeededOrder === 'function') window.applySeededOrder = arr => arr;
-
-          // Show the Thai Name dropdown group (hidden by default, shown by loadThaiNames)
-          const thaiGroup = document.getElementById('thaiNameGroup');
-          if (thaiGroup) thaiGroup.style.display = 'block';
-
-          // Populate thaiName dropdown with Kyle
-          const thaiSel = document.getElementById('thaiName');
-          if (thaiSel) {
-            thaiSel.innerHTML = '';
-            const opt = document.createElement('option');
-            opt.value = '54565';
-            opt.textContent = '🧪 Test Student (Kyle) — 54565';
-            opt.dataset.nick = 'Kyle';
-            thaiSel.appendChild(opt);
-            thaiSel.value = '54565';
-          }
-
-          // Fill nickname and student ID
-          const nickEl = document.getElementById('nickname');
-          const sidEl  = document.getElementById('studentId');
-          if (nickEl) nickEl.value = 'Kyle';
-          if (sidEl)  sidEl.value  = '54565';
-
-          // Patch autoFillStudent — Kyle always gets nickname='Kyle' even after section change
-          const _origAutoFill = typeof autoFillStudent === 'function' ? autoFillStudent : null;
-          window.autoFillStudent = function() {
-            const sel = document.getElementById('thaiName');
-            if (sel && sel.value === '54565') {
-              document.getElementById('nickname').value = 'Kyle';
-              document.getElementById('studentId').value = '54565';
-              return;
-            }
-            if (_origAutoFill) _origAutoFill.apply(this, arguments);
-          };
-        })();
-
 </script>
 </body>
 </html>
