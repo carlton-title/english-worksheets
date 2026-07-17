@@ -71,6 +71,42 @@
         .badge-ws { background:#e3f2fd; color:#0d47a1; }
         .btn-view-sm { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:7px; padding:5px 13px; cursor:pointer; font-size:.82em; font-weight:bold; }
 
+        /* WORKSHEETS QUICK ACCESS */
+        .ws-section-label { font-weight:bold; color:#1a237e; font-size:.95em; margin-bottom:10px; }
+        .ws-tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+        @media(max-width:700px){ .ws-tiles { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:420px){ .ws-tiles { grid-template-columns:1fr; } }
+        .ws-tile {
+            background:#f0f3ff;
+            border:2px solid #c5cae9;
+            border-radius:12px;
+            padding:14px 12px 10px;
+            cursor:pointer;
+            transition:all .2s;
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+        .ws-tile:hover { background:#e3e7ff; border-color:#3949ab; transform:translateY(-2px); box-shadow:0 6px 18px rgba(26,35,126,.15); }
+        .ws-tile-soon { background:#f5f5f5; border-color:#e0e0e0; cursor:default; opacity:.6; }
+        .ws-tile-soon:hover { transform:none; box-shadow:none; background:#f5f5f5; border-color:#e0e0e0; }
+        .ws-tile-title { font-weight:bold; color:#1a237e; font-size:.97em; }
+        .ws-tile-sub { font-size:.82em; color:#666; }
+        .ws-copy-btn {
+            margin-top:6px;
+            background:linear-gradient(135deg,#1a237e,#4a148c);
+            color:white;
+            border:none;
+            border-radius:7px;
+            padding:5px 11px;
+            font-size:.78em;
+            font-weight:bold;
+            cursor:pointer;
+            width:fit-content;
+            align-self:flex-start;
+        }
+        .ws-copy-btn:hover { opacity:.85; }
+
         /* PRINT MODAL */
         #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
         #printModal.open { display:flex; }
@@ -116,6 +152,57 @@
     <div class="top-bar">
         <h1>🏫 Teacher Dashboard — Worksheet Submissions</h1>
         <button class="btn-logout" onclick="doLogout()">Logout</button>
+    </div>
+
+    <!-- WORKSHEETS QUICK ACCESS -->
+    <div class="card">
+        <h2>🔗 Worksheets Quick Access</h2>
+
+        <div class="ws-section-label">📚 Worksheet 4</div>
+        <div class="ws-tiles">
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html','_blank')">
+                <div class="ws-tile-title">WS4 — M3 (A1)</div>
+                <div class="ws-tile-sub">M3 Sections 2, 4 &amp; 6</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html')">📋 Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html','_blank')">
+                <div class="ws-tile-title">WS4 — M3 (A2)</div>
+                <div class="ws-tile-sub">M3 Sections 10 &amp; 12</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html')">📋 Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html','_blank')">
+                <div class="ws-tile-title">WS4 — M4 (A1)</div>
+                <div class="ws-tile-sub">M4 Sections 1–9</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html')">📋 Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html','_blank')">
+                <div class="ws-tile-title">WS4 — M4 (A2)</div>
+                <div class="ws-tile-sub">M4 Sections 10–13</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html')">📋 Copy Link</button>
+            </div>
+        </div>
+
+        <div class="ws-section-label" style="margin-top:20px;">📚 Worksheet 5</div>
+        <div class="ws-tiles">
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html','_blank')">
+                <div class="ws-tile-title">WS5 — M3 (A1)</div>
+                <div class="ws-tile-sub">M3 Sections 2, 4 &amp; 6</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html')">📋 Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html','_blank')">
+                <div class="ws-tile-title">WS5 — M3 (A2)</div>
+                <div class="ws-tile-sub">M3 Sections 10 &amp; 12</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html')">📋 Copy Link</button>
+            </div>
+            <div class="ws-tile ws-tile-soon">
+                <div class="ws-tile-title">WS5 — M4 (A1)</div>
+                <div class="ws-tile-sub">Coming soon</div>
+            </div>
+            <div class="ws-tile ws-tile-soon">
+                <div class="ws-tile-title">WS5 — M4 (A2)</div>
+                <div class="ws-tile-sub">Coming soon</div>
+            </div>
+        </div>
     </div>
 
     <!-- SEARCH CARD -->
@@ -173,22 +260,9 @@
         </div>
     </div>
 
-    <!-- ALL SUBMISSIONS -->
-    <div class="card">
-        <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;"></span>
-            <button onclick="loadAll()" style="float:right;background:#f0f3ff;border:1px solid #c5cae9;border-radius:8px;padding:6px 14px;cursor:pointer;color:#1a237e;font-size:.82em;font-weight:bold;">↻ Refresh</button>
-        </h2>
-        <div class="table-wrap">
-            <table>
-                <thead><tr>
-                    <th>#</th><th>ID</th><th>Name</th><th>Thai Name</th>
-                    <th>Section</th><th>Worksheet</th><th>Score</th>
-                    <th>Status</th><th>Submitted</th><th></th>
-                </tr></thead>
-                <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
-            </table>
-        </div>
-    </div>
+    <!-- ALL SUBMISSIONS — data loaded silently for search & no-sub-check; table not shown -->
+    <span id="allCount" style="display:none;"></span>
+    <table style="display:none;"><tbody id="allBody"></tbody></table>
 
 
     <!-- NO SUBMISSION CHECK -->
@@ -395,6 +469,43 @@ var studentData = {
     'M3/12': [{id:'37996',name:'',nick:'Kanin'},{id:'37997',name:'',nick:'Thung'},{id:'37998',name:'',nick:'Ford'},{id:'37999',name:'',nick:'Unic'},{id:'38000',name:'',nick:'Tan'},{id:'38001',name:'',nick:'Action'},{id:'38002',name:'',nick:'Gun'},{id:'38003',name:'',nick:'Game'},{id:'38004',name:'',nick:'Wai'},{id:'38005',name:'',nick:'Kang'},{id:'38006',name:'',nick:'Boat'},{id:'38007',name:'',nick:'Chev'},{id:'38010',name:'',nick:'Lookbas'},{id:'38011',name:'',nick:'Win'},{id:'38012',name:'',nick:'Tablet'},{id:'38013',name:'',nick:'Klao'},{id:'38014',name:'',nick:'Baifern'},{id:'38015',name:'',nick:'Manaw'},{id:'38016',name:'',nick:'Grace'},{id:'38017',name:'',nick:'Pim'},{id:'38018',name:'',nick:'Saipan'},{id:'38019',name:'',nick:'Praew'},{id:'38020',name:'',nick:'Cheer'},{id:'38022',name:'',nick:'Naphat'},{id:'38023',name:'',nick:'Gambum 1'},{id:'38025',name:'',nick:'Nuea'},{id:'38027',name:'',nick:'Pink'},{id:'38028',name:'',nick:'Fanta'},{id:'38029',name:'',nick:'Chompoo'},{id:'38030',name:'',nick:'Bel'},{id:'38031',name:'',nick:'Eve'},{id:'38032',name:'',nick:'Gambum 2'},{id:'38033',name:'',nick:'Kartoon'},{id:'38034',name:'',nick:'Tonkhao'},{id:'54565',name:'Test Student',nick:'Kyle'}],
     // M3/10: loaded dynamically from Apps Script submissions
 };
+
+// ── Copy worksheet URL ──
+function copyURL(url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){
+            showCopyToast('✅ Link copied!');
+        }).catch(function(){
+            fallbackCopy(url);
+        });
+    } else {
+        fallbackCopy(url);
+    }
+}
+function fallbackCopy(url) {
+    var ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopyToast('✅ Link copied!');
+}
+function showCopyToast(msg) {
+    var t = document.getElementById('copyToast');
+    if (!t) {
+        t = document.createElement('div');
+        t.id = 'copyToast';
+        t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a237e;color:white;padding:10px 22px;border-radius:20px;font-size:.92em;font-weight:bold;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);';
+        document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function(){ t.style.display = 'none'; }, 2000);
+}
 
 // ── Auth ──
 function doLogin() {
