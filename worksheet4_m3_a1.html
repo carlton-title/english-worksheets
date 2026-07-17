@@ -187,7 +187,7 @@
 
     <div class="info-banner">
         <div class="info-item"><span>&#x1F4DD;</span><span>Multiple Choice</span></div>
-        <div class="info-item"><span>&#x2B50;</span><span>Passing score: 8/10</span></div>
+        <div class="info-item"><span>&#x2B50;</span><span>Passing Score: 8/10</span></div>
         <div class="info-item"><span>&#x1F512;</span><span>Max 3 Attempts</span></div>
         <div class="info-item"><span>&#x1F389;</span><span>Have Fun!</span></div>
     </div>
@@ -240,7 +240,7 @@
     </div>
 
     <div class="questions-section" id="questionsSection">
-        <h3 style="color:#667eea; margin-bottom:20px;">&#x1F4DA; News Headlines and Main Ideas (A1)</h3>
+        <h3 style="color:#667eea; margin-bottom:20px;">&#x1F4F0; News Headlines and Main Ideas (A1)</h3>
         <div id="questionsContainer"></div>
         <div class="button-group">
             <button class="btn-submit" onclick="submitAnswers()">&#x2714; Submit Answers &#x1F3AF;</button>
@@ -293,13 +293,9 @@
 </div>
 
 <script>
-    // ===================== STUDENT DATA =====================
-    // NOTE: Kyle (Test Student, ID 54565) is intentionally NOT in any section list.
-    // To access Kyle for troubleshooting, open this page with ?testmode=Carlton2026 (teacher use only).
     // ===================== SUPABASE CONFIG =====================
-        var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
-        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
-        var studentData = {};
+    var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 
     // ===================== QUESTION DATA =====================
     var canvaImages = [
@@ -308,26 +304,76 @@
     ];
 
     var questions = [
-        {id:1,image:canvaImages[0],text:'Read the headline: "SCIENTISTS DISCOVER NEW PLANET NEAR EARTH" — What is the main idea?',
-         options:[{text:"A) Earth is in danger from a new planet",correct:false},{text:"B) Scientists found a new planet close to Earth",correct:true},{text:"C) A planet has disappeared from our solar system",correct:false},{text:"D) Earth is growing bigger every year",correct:false}]},
-        {id:2,image:canvaImages[1],text:"A news headline should be _____.",
-         options:[{text:"A) very long with many details and opinions",correct:false},{text:"B) short and tell only the most important idea",correct:true},{text:"C) written with many adjectives and feelings",correct:false},{text:"D) a full paragraph about the whole story",correct:false}]},
-        {id:3,image:canvaImages[2],text:'Read the headline: "HEAVY RAIN FLOODS CITY STREETS" — What is the main idea?',
-         options:[{text:"A) The city is building new streets",correct:false},{text:"B) People are swimming in the streets",correct:false},{text:"C) Rain caused flooding in the city streets",correct:true},{text:"D) The city needs more rain to survive",correct:false}]},
-        {id:4,image:canvaImages[3],text:'Read the headline: "PRICES OF FOOD RISE DUE TO DROUGHT" — What caused food prices to rise?',
-         options:[{text:"A) A flood destroyed the markets",correct:false},{text:"B) A drought — very dry weather with no rain",correct:true},{text:"C) Too much rain ruined the crops",correct:false},{text:"D) New government laws on farming",correct:false}]},
-        {id:5,image:canvaImages[4],text:'Read the headline: "SCHOOL WINS NATIONAL SCIENCE COMPETITION" — Who won the competition?',
-         options:[{text:"A) A hospital team",correct:false},{text:"B) A national sports team",correct:false},{text:"C) A school",correct:true},{text:"D) A science company",correct:false}]},
-        {id:6,image:canvaImages[5],text:"Which is the BEST headline for a news story about a new hospital opening in the city?",
-         options:[{text:"A) Buildings Are Very Expensive These Days",correct:false},{text:"B) NEW HOSPITAL OPENS TO SERVE THE COMMUNITY",correct:true},{text:"C) People Sometimes Get Sick and Need Help",correct:false},{text:"D) Doctors and Nurses Like Their Jobs",correct:false}]},
-        {id:7,image:canvaImages[6],text:'Read the headline: "TEENAGER SAVES DROWNING CHILD AT LOCAL BEACH" — What is the main idea?',
-         options:[{text:"A) Beaches are always dangerous places for children",correct:false},{text:"B) A young person rescued a child from drowning",correct:true},{text:"C) Children should never swim at the beach",correct:false},{text:"D) Teenagers should not go to the0beach alone",correct:false}]},
-        {id:8,image:canvaImages[7],text:"In a news article, the FIRST paragraph usually contains _____.",
-         options:[{text:"A) advertisements for products",correct:false},{text:"B) only the writer's personal opinion",correct:false},{text:"C) the most important information of the story",correct:true},{text:"D) the conclusion and final summary",correct:false}]},
-        {id:9,image:canvaImages[8],text:'Read the headline: "ELECTRIC CARS NOW CHEAPER THAN PETROL CARS" — What does this headline tell us?',
-         options:[{text:"A) Petrol cars are a new invention",correct:false},{text:"B) Electric cars now cost less than petrol cars",correct:true},{text:"C) All cars are now free to buy",correct:false},{text:"D) Cars use more electricity than petrol today",correct:false}]},
-        {id:10,image:canvaImages[9],text:"Which part of a news headline is MOST important?",
-         options:[{text:"A) The font size and colour of the words",correct:false},{text:"B) The number of words in the headline",correct:false},{text:"C) The key information — who, what, where, or when",correct:true},{text:"D) Whether the headline rhymes or sounds nice",correct:false}]}
+        {id:1, image:canvaImages[0], text:"Look at the image. What is the MAIN IDEA of this news story?",
+         options:[
+           {text:"A) A local school wins a science competition.",correct:false},
+           {text:"B) Scientists have discovered a new planet near Earth.",correct:true},
+           {text:"C) A new telescope was built in Asia.",correct:false},
+           {text:"D) Astronauts return safely from the moon.",correct:false}
+         ]},
+        {id:2, image:canvaImages[1], text:"The newspaper headline says \"THE SKY IS FALLING!\" What does this headline MOST LIKELY mean?",
+         options:[
+           {text:"A) The atmosphere is breaking apart.",correct:false},
+           {text:"B) It is a science report about weather.",correct:false},
+           {text:"C) Something very bad or dangerous is happening.",correct:true},
+           {text:"D) New satellites are falling from space.",correct:false}
+         ]},
+        {id:3, image:canvaImages[2], text:"What would the MAIN IDEA of a news article about this image be?",
+         options:[
+           {text:"A) A new temple is being built in Thailand.",correct:false},
+           {text:"B) People are enjoying swimming in the city.",correct:false},
+           {text:"C) Heavy floods have damaged a community.",correct:true},
+           {text:"D) The dry season has arrived early this year.",correct:false}
+         ]},
+        {id:4, image:canvaImages[3], text:"A news article using this image would most likely have which headline?",
+         options:[
+           {text:"A) Supermarkets Offer Huge Discounts on Food",correct:false},
+           {text:"B) Food Prices Continue to Rise",correct:true},
+           {text:"C) Local Market Opens New Branch",correct:false},
+           {text:"D) Farmers Enjoy Record Harvest This Year",correct:false}
+         ]},
+        {id:5, image:canvaImages[4], text:"What is the MAIN IDEA of an article about this image?",
+         options:[
+           {text:"A) Students are on a school holiday trip.",correct:false},
+           {text:"B) A new cafeteria opens at a local school.",correct:false},
+           {text:"C) Young students are conducting science research.",correct:true},
+           {text:"D) Teachers attend a science training course.",correct:false}
+         ]},
+        {id:6, image:canvaImages[5], text:"A news article using this image would most likely be about:",
+         options:[
+           {text:"A) A fire at a local government building.",correct:false},
+           {text:"B) A power blackout affecting the city.",correct:false},
+           {text:"C) Urban development and city growth.",correct:true},
+           {text:"D) A street food festival in the city center.",correct:false}
+         ]},
+        {id:7, image:canvaImages[6], text:"What situation does this image most likely show?",
+         options:[
+           {text:"A) People enjoying a boat ride at a resort.",correct:false},
+           {text:"B) A water sports competition at the beach.",correct:false},
+           {text:"C) A person being rescued from water.",correct:true},
+           {text:"D) A fisherman pulling in a large net.",correct:false}
+         ]},
+        {id:8, image:canvaImages[7], text:"The headline \"NEW WAVE OF FORECLOSURES\" means:",
+         options:[
+           {text:"A) A large ocean wave is heading toward the shore.",correct:false},
+           {text:"B) Banks are offering more affordable home loans.",correct:false},
+           {text:"C) Many people are losing their homes because of debt.",correct:true},
+           {text:"D) New houses are being built all over the country.",correct:false}
+         ]},
+        {id:9, image:canvaImages[8], text:"What is the MAIN IDEA of an article about this image?",
+         options:[
+           {text:"A) Gas prices are dropping to record lows.",correct:false},
+           {text:"B) Car companies are going out of business.",correct:false},
+           {text:"C) Electric vehicles are becoming more popular.",correct:true},
+           {text:"D) Traffic jams are getting worse in the city.",correct:false}
+         ]},
+        {id:10, image:canvaImages[9], text:"The headline \"16 MILLION UNEMPLOYED\" tells us that:",
+         options:[
+           {text:"A) 16 million new jobs were created last year.",correct:false},
+           {text:"B) 16 million workers chose to quit their jobs.",correct:false},
+           {text:"C) 16 million people have lost or cannot find work.",correct:true},
+           {text:"D) The unemployment rate has fallen to 16 percent.",correct:false}
+         ]}
     ];
 
     // ===================== SEEDED RNG =====================
@@ -375,51 +421,50 @@
     var allAttemptScores = [];
     var TEST_STUDENT_IDS = ['54565'];
     var maxAttempts = 3;
-    // Test mode: teacher opens with ?testmode=Carlton2026 to access Kyle for troubleshooting.
-    // Regular students never see Kyle in their dropdown.
-    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
 
     document.getElementById('date').valueAsDate = new Date();
 
-    // ===================== FORM FUNCTIONS =====================
+    // ===================== STUDENT LOADING (Supabase) =====================
     async function loadThaiNames() {
-            var section = document.getElementById('section').value;
-            var thaiSelect = document.getElementById('thaiName');
-            var thaiGroup = document.getElementById('thaiNameGroup');
-            if (thaiGroup) thaiGroup.style.display = 'none';
-            thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
-            if (!section) return;
-            if (thaiGroup) thaiGroup.style.display = 'block';
-            thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
-            try {
-                var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
-                var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
-                var students = await resp.json();
-                var isTest = new URLSearchParams(window.location.search).get('testmode') === 'Carlton2026';
-                thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
-                if (isTest) {
-                    var kyleOpt = document.createElement('option');
-                    kyleOpt.value = '54565';
-                    kyleOpt.text = 'Kyle (Test Student)';
-                    kyleOpt.dataset.nick = 'Kyle';
-                    thaiSelect.appendChild(kyleOpt);
-                }
-                students.forEach(function(s) {
-                    var opt = document.createElement('option');
-                    opt.value = s.student_id;
-                    opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
-                    opt.dataset.nick = s.nickname || '';
-                    thaiSelect.appendChild(opt);
-                });
-            } catch(e) {
-                thaiSelect.innerHTML = '<option value="">-- Error loading students --</option>';
-                console.error('Supabase error:', e);
+        var section = document.getElementById('section').value;
+        var thaiSelect = document.getElementById('thaiName');
+        var thaiGroup = document.getElementById('thaiNameGroup');
+        document.getElementById('nickname').value = '';
+        document.getElementById('studentId').value = '';
+        if (thaiGroup) thaiGroup.style.display = 'none';
+        thaiSelect.innerHTML = '<option value="">-- Select section first --</option>';
+        if (!section) return;
+        if (thaiGroup) thaiGroup.style.display = 'block';
+        thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
+        try {
+            var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
+            var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
+            var students = await resp.json();
+            var isTest = ['Carlton2026', 'kyle'].includes(new URLSearchParams(window.location.search).get('testmode'));
+            thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
+            if (isTest) {
+                var kyleOpt = document.createElement('option');
+                kyleOpt.value = '54565';
+                kyleOpt.text = 'Kyle (Test Student)';
+                kyleOpt.dataset.nick = 'Kyle';
+                thaiSelect.appendChild(kyleOpt);
             }
+            students.forEach(function(s) {
+                var opt = document.createElement('option');
+                opt.value = s.student_id;
+                opt.text = (s.thai_name || s.name) + (s.nickname ? ' (' + s.nickname + ')' : '');
+                opt.dataset.nick = s.nickname || '';
+                thaiSelect.appendChild(opt);
+            });
+        } catch(e) {
+            thaiSelect.innerHTML = '<option value="">-- Error loading students --</option>';
+            console.error('Supabase error:', e);
         }
+    }
 
     function autoFillStudent() {
-        var thaiNameSelect = document.getElementById('thaiName');
-        var selectedOpt = thaiNameSelect.options[thaiNameSelect.selectedIndex];
+        var thaiSelect = document.getElementById('thaiName');
+        var selectedOpt = thaiSelect.options[thaiSelect.selectedIndex];
         if (!selectedOpt || !selectedOpt.value) {
             document.getElementById('nickname').value = '';
             document.getElementById('studentId').value = '';
@@ -536,8 +581,7 @@
             submitToSheet(studentId, nickname, section, score, 'PASSED');
             statusEl.innerHTML = '<span class="status-pass">'
                 + '&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>'
-                + 'ผ่านแล้วแปลกว่า 3 ครั้ง<br>'
-                + 'ได้คะแนนสูงสุดครั้งนี้'
+                + 'ผ่านแล้วด้วยคะแนนสูงสุดครั้งนี้'
                 + '</span>';
         } else {
             if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
@@ -553,7 +597,6 @@
                 var remaining = maxAttempts - attempts;
                 statusEl.innerHTML = '<span class="status-fail">'
                     + '&#x274C; ยังไม่ผ่านค่ะ<br>'
-                    + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
                     + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
                     + 'โอกาสเหลือ: ' + remaining + ' ครั้ง'
                     + '</span>';
@@ -705,6 +748,33 @@
     }
 
     updateAttemptsDisplay();
+
+    // ===================== KYLE TEST MODE =====================
+    // Accessible from Teacher's Dashboard only via ?testmode=kyle
+    // This link only exists in teacher.html — students never see it
+    (function() {
+        if (new URLSearchParams(window.location.search).get('testmode') !== 'kyle') return;
+        // Ensure Kyle in TEST_STUDENT_IDS (unlimited retries, no shuffle)
+        if (!TEST_STUDENT_IDS.includes('54565')) TEST_STUDENT_IDS.push('54565');
+        // Add TEST option to section dropdown (loadThaiNames will inject Kyle via isTest)
+        var secSel = document.getElementById('section');
+        if (secSel) {
+            var kOpt = document.createElement('option');
+            kOpt.value = 'TEST';
+            kOpt.textContent = '🧪 Kyle — Test Mode';
+            secSel.insertBefore(kOpt, secSel.options[1] || null);
+            secSel.value = 'TEST';
+            if (typeof loadThaiNames === 'function') {
+                setTimeout(function() { loadThaiNames(); }, 50);
+            }
+        }
+        // Show teacher banner
+        var banner = document.createElement('div');
+        banner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin:0 0 16px;font-weight:bold;color:#856404;text-align:center;font-size:.9em;';
+        banner.innerHTML = '🧪 <strong>KYLE TEST MODE</strong> — Teacher use only. Scores record normally to Google Sheets & Supabase.';
+        var formSection = document.querySelector('.form-section');
+        if (formSection) formSection.insertBefore(banner, formSection.firstChild);
+    })();
 </script>
 </body>
 </html>

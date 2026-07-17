@@ -107,6 +107,41 @@
         }
         .ws-copy-btn:hover { opacity:.85; }
 
+        /* KYLE TEST MODE CARD */
+        .kyle-card { background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%); border-radius:18px; padding:22px 24px; margin-bottom:20px; }
+        .kyle-card h2 { color:#fff; margin:0 0 6px; font-size:1.1em; }
+        .kyle-card-note { color:#e8eaf6; font-size:.83em; margin:0 0 16px; }
+        .kyle-tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+        @media(max-width:600px){ .kyle-tiles { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:380px){ .kyle-tiles { grid-template-columns:1fr; } }
+        .kyle-tile {
+            background:rgba(255,255,255,.13);
+            border:1.5px solid rgba(255,255,255,.3);
+            border-radius:10px;
+            padding:12px 10px 8px;
+            cursor:pointer;
+            transition:all .2s;
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+        }
+        .kyle-tile:hover { background:rgba(255,255,255,.25); border-color:rgba(255,255,255,.6); transform:translateY(-2px); }
+        .kyle-tile-title { font-weight:bold; color:#fff; font-size:.92em; }
+        .kyle-tile-sub { font-size:.78em; color:#c5cae9; }
+        .kyle-copy-btn {
+            margin-top:5px;
+            background:rgba(255,255,255,.2);
+            color:#fff;
+            border:1px solid rgba(255,255,255,.4);
+            border-radius:6px;
+            padding:4px 10px;
+            font-size:.75em;
+            font-weight:bold;
+            cursor:pointer;
+            width:fit-content;
+        }
+        .kyle-copy-btn:hover { background:rgba(255,255,255,.35); }
+
         /* PRINT MODAL */
         #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
         #printModal.open { display:flex; }
@@ -201,6 +236,48 @@
             <div class="ws-tile ws-tile-soon">
                 <div class="ws-tile-title">WS5 — M4 (A2)</div>
                 <div class="ws-tile-sub">Coming soon</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KYLE TEST MODE CARD — Teacher only, never visible to students -->
+    <div class="kyle-card">
+        <h2>🧪 Kyle Test Mode — Teacher Only</h2>
+        <p class="kyle-card-note">Opens each worksheet with Kyle (ID 54565) pre-selected. Scores record normally to Google Sheets &amp; Supabase. Use this to verify worksheet functionality before students attempt.</p>
+        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 4</div>
+        <div class="kyle-tiles" style="margin-bottom:14px;">
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M3 (A1)</div>
+                <div class="kyle-tile-sub">M3 Sections 2, 4 &amp; 6</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle')">📋 Copy Link</button>
+            </div>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M3 (A2)</div>
+                <div class="kyle-tile-sub">M3 Sections 10 &amp; 12</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle')">📋 Copy Link</button>
+            </div>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M4 (A1)</div>
+                <div class="kyle-tile-sub">M4 Sections 1–9</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle')">📋 Copy Link</button>
+            </div>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M4 (A2)</div>
+                <div class="kyle-tile-sub">M4 Sections 10–13</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle')">📋 Copy Link</button>
+            </div>
+        </div>
+        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 5</div>
+        <div class="kyle-tiles">
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS5 — M3 (A1)</div>
+                <div class="kyle-tile-sub">M3 Sections 2, 4 &amp; 6</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle')">📋 Copy Link</button>
+            </div>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS5 — M3 (A2)</div>
+                <div class="kyle-tile-sub">M3 Sections 10 &amp; 12</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle')">📋 Copy Link</button>
             </div>
         </div>
     </div>
