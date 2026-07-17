@@ -428,8 +428,8 @@
 
     // ===================== QUESTION DATA =====================
     var canvaImages = [
-        'W4M4A2Q1.png','W4M4A2Q2.png','W4M4A2Q3.png','W4M4A2Q4.png','W4M4A2Q5.png',
-        'W4M4A2Q6.png','W4M4A2Q7.png','W4M4A2Q8.png','W4M4A2Q9.png','W4M4A2Q10.png'
+        'WS4M4Q1.png','WS4M4Q2.png','WS4M4Q3.png','WS4M4Q4.png','WS4M4Q5.png',
+        'WS4M4Q6.png','WS4M4Q7.png','WS4M4Q8.png','WS4M4Q9.png','WS4M4Q10.png'
     ];
 
     var questions = [
@@ -869,44 +869,4 @@
         var msg = document.getElementById('attemptsMessage');
         var studentId = document.getElementById('studentId').value.trim();
         if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-            msg.innerHTML = '&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว';
-            msg.style.color = '#c41e3a';
-        } else {
-            msg.innerHTML = 'โอกาสเหลือ: ' + (maxAttempts - attempts) + ' ครั้ง';
-            msg.style.color = '#666';
-        }
-    }
-
-    updateAttemptsDisplay();
-
-    // ===================== KYLE TEST MODE =====================
-    // Accessible from Teacher's Dashboard only via ?testmode=kyle
-    // This link only exists in teacher.html — students never see it
-    (function() {
-        if (new URLSearchParams(window.location.search).get('testmode') !== 'kyle') return;
-        // Ensure Kyle in TEST_STUDENT_IDS (unlimited retries, no shuffle)
-        if (!TEST_STUDENT_IDS.includes('54565')) TEST_STUDENT_IDS.push('54565');
-        // Register Kyle under a dedicated TEST section
-        studentData['TEST'] = [{id:'54565', name:'Test Student', nick:'Kyle'}];
-        // Add TEST option to section dropdown
-        var secSel = document.getElementById('section');
-        if (secSel) {
-            var kOpt = document.createElement('option');
-            kOpt.value = 'TEST';
-            kOpt.textContent = '🧪 Kyle — Test Mode';
-            secSel.insertBefore(kOpt, secSel.options[1] || null);
-            secSel.value = 'TEST';
-            if (typeof loadThaiNames === 'function') {
-                setTimeout(function() { loadThaiNames(); }, 50);
-            }
-        }
-        // Show teacher banner
-        var banner = document.createElement('div');
-        banner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin:0 0 16px;font-weight:bold;color:#856404;text-align:center;font-size:.9em;';
-        banner.innerHTML = '🧪 <strong>KYLE TEST MODE</strong> — Teacher use only. Scores record normally to Google Sheets & Supabase.';
-        var formSection = document.querySelector('.form-section');
-        if (formSection) formSection.insertBefore(banner, formSection.firstChild);
-    })();
-</script>
-</body>
-</html>
+            msg.innerHTML = '&#x1F
