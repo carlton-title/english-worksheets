@@ -467,8 +467,8 @@ async function doSearch() {
     var studentId = document.getElementById('inputStudentId').value.trim();
     var worksheet = document.getElementById('selWorksheet').value;
 
-    if (!section || !studentId || !worksheet) {
-        alert('Please select Section, Student, and Worksheet Number.');
+    if (!section || !worksheet) {
+        alert('Please select Section and Worksheet Number.');
         return;
     }
 
@@ -476,26 +476,40 @@ async function doSearch() {
     btn.disabled = true; btn.textContent = 'Searching…';
 
     try {
-        var results = allSubmissions.filter(function(s) {
-            return String(s.student_id) === String(studentId) && s.worksheet === worksheet;
-        });
-        renderResults(results, studentId, worksheet);
+        var results;
+        if (studentId) {
+            // specific student
+            results = allSubmissions.filter(function(s) {
+                return String(s.student_id) === String(studentId) && s.worksheet === worksheet;
+            });
+        } else {
+            // entire class for this worksheet
+            results = allSubmissions.filter(function(s) {
+                return s.section === section && s.worksheet === worksheet;
+            });
+        }
+        renderResults(results, studentId, worksheet, section);
     } catch(e) {
         document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
     }
     btn.disabled = false; btn.textContent = '🔎 Search';
 }
 
-function renderResults(results, studentId, worksheet) {
+function renderResults(results, studentId, worksheet, section) {
     var sec = document.getElementById('resultsSection');
     sec.style.display = 'block';
     var wsLabel = worksheet.replace('WS','Worksheet ');
-    document.getElementById('resultsTitle').textContent =
-        '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+    if (studentId) {
+        document.getElementById('resultsTitle').textContent =
+            '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+    } else {
+        document.getElementById('resultsTitle').textContent =
+            '📄 All ' + wsLabel + ' Submissions — ' + (section||'');
+    }
 
     if (!results || results.length === 0) {
         document.getElementById('resultsBody').innerHTML =
-            '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
+            '<div class="no-result">❌ No submitted worksheets found' + (studentId ? ' for this student' : ' for '+section) + '.<br>' + (studentId ? 'The student has not attempted '+wsLabel+' yet.' : 'No students in this class have submitted '+wsLabel+' yet.') + '</div>';
         return;
     }
 
@@ -513,7 +527,7 @@ function renderResults(results, studentId, worksheet) {
             +'<div class="result-info">👤 <b>'+(s.nick||'—')+'</b>'
             +(s.name?' ('+s.name+')':'')
             +' &nbsp;|&nbsp; 🏫 '+(s.section||'—')+'</div>'
-            +'<button class="btn-pdf" onclick="viewSubmission(\'+key+\')">📄 View Detail</button>'
+            +'<button class="btn-pdf" onclick="viewSubmission(\''+key+'\')">📄 View Detail</button>'
             +'</div></div>';
     }).join('');
 }
@@ -549,7 +563,7 @@ async function loadAll() {
                 +'<td><b>'+score+'/10</b></td>'
                 +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
                 +'<td style="font-size:.82em;color:#666;">—</td>'
-                +'<td><button class="btn-view-sm" onclick="viewSubmission(\'+key+\')">View</button></td>'
+                +'<td><button class="btn-view-sm" onclick="viewSubmission(\''+key+'\')">View</button></td>'
                 +'</tr>';
         }).join('');
     } catch(e) {
