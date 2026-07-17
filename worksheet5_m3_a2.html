@@ -317,25 +317,25 @@
     // ===================== QUESTION DATA =====================
     var questions = [
         {id:1,image:"W4M3A1Q1.png",text:"My sister is the _____ in our family.",
-         options:[{text:"A) tall",correct:false},{text:"B) taller",correct:false},{text:"C) tallest",correct:true},{text:"D) more tall",correct:false}]},
+         options:[{text:"tall",correct:false},{text:"taller",correct:false},{text:"tallest",correct:true},{text:"more tall",correct:false}]},
         {id:2,image:"W4M3A1Q2.png",text:"Which sentence uses the SUPERLATIVE correctly?",
-         options:[{text:"A) This car is the most fastest in the race.",correct:false},{text:"B) This car is the faster in the race.",correct:false},{text:"C) This car is fastest than the others.",correct:false},{text:"D) This car is the fastest in the race.",correct:true}]},
+         options:[{text:"This car is the most fastest in the race.",correct:false},{text:"This car is the faster in the race.",correct:false},{text:"This car is fastest than the others.",correct:false},{text:"This car is the fastest in the race.",correct:true}]},
         {id:3,image:"W4M3A1Q3.png",text:"Bangkok is the _____ city in Thailand in terms of population.",
-         options:[{text:"A) bigger",correct:false},{text:"B) the bigger",correct:false},{text:"C) biggest",correct:true},{text:"D) most biggest",correct:false}]},
+         options:[{text:"bigger",correct:false},{text:"the bigger",correct:false},{text:"biggest",correct:true},{text:"most biggest",correct:false}]},
         {id:4,image:"W4M3A1Q4.png",text:'Choose the correct sentence using "as...as".',
-         options:[{text:"A) She is not as taller as her friend.",correct:false},{text:"B) She is not as tall as her friend.",correct:true},{text:"C) She is not as tallest as her friend.",correct:false},{text:"D) She is not as more tall as her friend.",correct:false}]},
+         options:[{text:"She is not as taller as her friend.",correct:false},{text:"She is not as tall as her friend.",correct:true},{text:"She is not as tallest as her friend.",correct:false},{text:"She is not as more tall as her friend.",correct:false}]},
         {id:5,image:"W4M3A1Q5.png",text:"An elephant is the _____ land animal in the world.",
-         options:[{text:"A) more heavy",correct:false},{text:"B) heavier",correct:false},{text:"C) most heavy",correct:false},{text:"D) heaviest",correct:true}]},
+         options:[{text:"more heavy",correct:false},{text:"heavier",correct:false},{text:"most heavy",correct:false},{text:"heaviest",correct:true}]},
         {id:6,image:"W4M3A1Q6.png",text:"Which sentence is CORRECT?",
-         options:[{text:"A) Math is the difficultest subject.",correct:false},{text:"B) Math is the most difficult subject.",correct:true},{text:"C) Math is the more difficult subject.",correct:false},{text:"D) Math is the difficulter subject.",correct:false}]},
+         options:[{text:"Math is the difficultest subject.",correct:false},{text:"Math is the most difficult subject.",correct:true},{text:"Math is the more difficult subject.",correct:false},{text:"Math is the difficulter subject.",correct:false}]},
         {id:7,image:"W4M3A1Q7.png",text:"This pizza is the _____ food I have ever eaten!",
-         options:[{text:"A) more delicious",correct:false},{text:"B) deliciouser",correct:false},{text:"C) most delicious",correct:true},{text:"D) deliciousest",correct:false}]},
+         options:[{text:"more delicious",correct:false},{text:"deliciouser",correct:false},{text:"most delicious",correct:true},{text:"deliciousest",correct:false}]},
         {id:8,image:"W4M3A1Q8.png",text:"Which sentence uses an IRREGULAR comparative correctly?",
-         options:[{text:"A) The weather today is more bad than yesterday.",correct:false},{text:"B) The weather today is badder than yesterday.",correct:false},{text:"C) The weather today is worse than yesterday.",correct:true},{text:"D) The weather today is worst than yesterday.",correct:false}]},
+         options:[{text:"The weather today is more bad than yesterday.",correct:false},{text:"The weather today is badder than yesterday.",correct:false},{text:"The weather today is worse than yesterday.",correct:true},{text:"The weather today is worst than yesterday.",correct:false}]},
         {id:9,image:"W4M3A1Q9.png",text:'"A dolphin is _____ smart as a dog." Choose the correct word.',
-         options:[{text:"A) more",correct:false},{text:"B) as",correct:true},{text:"C) most",correct:false},{text:"D) the",correct:false}]},
+         options:[{text:"more",correct:false},{text:"as",correct:true},{text:"most",correct:false},{text:"the",correct:false}]},
         {id:10,image:"W4M3A1Q10.png",text:"Which sentence is CORRECT?",
-         options:[{text:"A) English is the most easiest language.",correct:false},{text:"B) Thai is gooder than English.",correct:false},{text:"C) English is as difficult as Thai.",correct:true},{text:"D) Thai is the most better language.",correct:false}]}
+         options:[{text:"English is the most easiest language.",correct:false},{text:"Thai is gooder than English.",correct:false},{text:"English is as difficult as Thai.",correct:true},{text:"Thai is the most better language.",correct:false}]}
     ];
 
     // ===================== SEEDED RNG =====================
@@ -361,14 +361,14 @@
         return Object.assign({}, q, {displayOptions: q.options.slice()});
     });
 
-    function applySeededOrder(studentId) {
+    function applySeededOrder(studentId, attemptNum) {
         if (TEST_STUDENT_IDS.includes(String(studentId))) {
             displayQuestions = questions.map(function(q) {
                 return Object.assign({}, q, {displayOptions: q.options.slice()});
             });
             return;
         }
-        var seed = parseInt(studentId) || 0;
+        var seed = ((parseInt(studentId) || 0) + (attemptNum || 0) * 99991) | 0;
         var rng = seededRandom(seed);
         var shuffledQs = seededShuffle(questions, rng);
         displayQuestions = shuffledQs.map(function(q) {
@@ -457,7 +457,7 @@
         if (!date) isValid = false;
         if (!isValid) return;
 
-        applySeededOrder(studentId);
+        applySeededOrder(studentId, attempts);
 
         var storageKey = 'ws5_m3_a2_' + studentId + '_' + section;
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
