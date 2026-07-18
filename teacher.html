@@ -680,10 +680,41 @@ async function doSearch() {
     try {
         var results;
         if (studentId) {
-            // specific student
+            // specific student — search Google Sheets first, fall back to Supabase
             results = allSubmissions.filter(function(s) {
                 return String(s.student_id) === String(studentId) && s.worksheet === worksheet;
             });
+            if (results.length === 0) {
+                // Not found in Google Sheets — query Supabase directly
+                var supaUrl = SUPA_URL + '/rest/v1/worksheet_submissions'
+                    + '?student_id=eq.' + encodeURIComponent(String(studentId))
+                    + '&worksheet=eq.' + encodeURIComponent(worksheet)
+                    + '&order=submitted_at.desc';
+                var supaRows = await fetch(supaUrl, {
+                    headers: {'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY}
+                }).then(function(r){ return r.json(); });
+                if (supaRows && supaRows.length > 0) {
+                    results = supaRows.map(function(r) {
+                        return {
+                            student_id: r.student_id,
+                            nick: r.student_name || String(r.student_id),
+                            name: r.student_name || '',
+                            section: r.section,
+                            worksheet: r.worksheet,
+                            score: r.score,
+                            status: r.status
+                        };
+                    });
+                    // Cache in allSubmissions so viewSubmission can look them up
+                    results.forEach(function(r) {
+                        var exists = allSubmissions.some(function(s) {
+                            return String(s.student_id) === String(r.student_id)
+                                && s.worksheet === r.worksheet && s.section === r.section;
+                        });
+                        if (!exists) allSubmissions.push(r);
+                    });
+                }
+            }
         } else {
             // entire class for this worksheet
             results = allSubmissions.filter(function(s) {
