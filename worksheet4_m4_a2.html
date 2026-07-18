@@ -176,11 +176,6 @@
             .options { grid-template-columns: 1fr; }
         }
 
-        .form-group select:disabled {
-            background: #f5f5f5;
-            color: #aaa;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 <body>
@@ -214,7 +209,7 @@
         </div>
         <div class="form-group" id="thaiNameGroup">
             <label>&#x1F1F9;&#x1F1ED; 2. Your Thai Name</label>
-            <select id="thaiName" onchange="autoFillStudent()" disabled>
+            <select id="thaiName" onchange="autoFillStudent()">
                 <option value="">&#x2014; Select your class first &#x2014;</option>
             </select>
             <div class="warning" id="thaiNameWarning">&#x26A0;&#xFE0F; Please select your name from the list.</div>
@@ -556,8 +551,6 @@
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
 
         if (!section) {
-            thaiNameSelect.disabled = true;
-            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your class first &#x2014;</option>';
             return;
         }
 
@@ -569,7 +562,7 @@
             opt.dataset.nick = s.nick;
             thaiNameSelect.appendChild(opt);
         });
-        thaiNameSelect.disabled = false;
+        
     }
 
     function autoFillStudent() {
@@ -779,9 +772,7 @@
             document.getElementById('studentId').value = '';
             document.getElementById('section').value = '';
             document.getElementById('thaiName').innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
-            var tnSel = document.getElementById('thaiName');
-            tnSel.innerHTML = '<option value="">&#x2014; Select your class first &#x2014;</option>';
-            tnSel.disabled = true;
+            document.getElementById('thaiName').innerHTML = '<option value="">&#x2014; Select your class first &#x2014;</option>';
             document.getElementById('date').valueAsDate = new Date();
         }
     }
