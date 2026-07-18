@@ -837,6 +837,19 @@
             return;
         }
 
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+            thaiNameSelect.value = '54565';
+            autoFillStudent();
+            return;
+        }
+
         var students = studentData[section] || [];
         students.forEach(function(s) {
             var opt = document.createElement('option');
