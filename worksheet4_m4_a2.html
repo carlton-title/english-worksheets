@@ -327,7 +327,8 @@
             {id:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoo'},
             {id:'39650',name:'นางสาวพิกุลแก้ว รัตนพงศ์พร',nick:'Kam'},
             {id:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},
-            {id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}
+            {id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'},
+            {id:'54565',name:'Test Student',nick:'Kyle'}
         ],
         'M4/11': [
             {id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},
@@ -551,6 +552,19 @@
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
 
         if (!section) {
+            return;
+        }
+
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+            thaiNameSelect.value = '54565';
+            autoFillStudent();
             return;
         }
 
@@ -889,6 +903,14 @@
 
     updateAttemptsDisplay();
 
+    // ===================== KYLE TEST MODE =====================
+    (function() {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('testmode') === 'kyle') {
+            document.getElementById('section').value = 'M4/10';
+            loadThaiNames();
+        }
+    })();
 </script>
 </body>
 </html>

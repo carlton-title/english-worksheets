@@ -425,6 +425,9 @@
     var maxAttempts = 3;
 
     document.getElementById('date').valueAsDate = new Date();
+    if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+        document.getElementById('section').value = 'M3/2';
+    }
     loadThaiNames(); // Initialize name dropdown based on current section value
 
     // ===================== STUDENT LOADING (Supabase) =====================
@@ -435,20 +438,24 @@
         document.getElementById('nickname').value = '';
         document.getElementById('studentId').value = '';
         if (!section) return;
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.text = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiSelect.appendChild(kyleOpt);
+            thaiSelect.value = '54565';
+            autoFillStudent();
+            return;
+        }
         thaiSelect.innerHTML = '<option value="">-- Loading... --</option>';
         try {
             var url = SUPABASE_URL + '/rest/v1/students?select=student_id,name,thai_name,nickname&section=eq.' + encodeURIComponent(section) + '&is_test=eq.false&order=name';
             var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
             var students = await resp.json();
-            var isTest = ['Carlton2026', 'kyle'].includes(new URLSearchParams(window.location.search).get('testmode'));
             thaiSelect.innerHTML = '<option value="">-- Select your name --</option>';
-            if (isTest) {
-                var kyleOpt = document.createElement('option');
-                kyleOpt.value = '54565';
-                kyleOpt.text = 'Kyle (Test Student)';
-                kyleOpt.dataset.nick = 'Kyle';
-                thaiSelect.appendChild(kyleOpt);
-            }
             students.forEach(function(s) {
                 var opt = document.createElement('option');
                 opt.value = s.student_id;

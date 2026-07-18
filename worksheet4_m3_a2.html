@@ -392,9 +392,10 @@
     var maxAttempts = 3;
     // Test mode: teacher opens with ?testmode=true to access Kyle for troubleshooting.
     // Regular students never see Kyle in their dropdown.
-    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'true';
+    var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'kyle';
 
     document.getElementById('date').valueAsDate = new Date();
+    if (isTestMode) { document.getElementById('section').value = 'M3/10'; }
     loadThaiNames(); // Initialize name dropdown based on current section value
 
     // ===================== FORM FUNCTIONS =====================
@@ -411,6 +412,19 @@
             return;
         }
 
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+            thaiNameSelect.value = '54565';
+            autoFillStudent();
+            return;
+        }
+
         if (!studentData[section] || studentData[section].length === 0) {
             await loadStudentsFromSupabase(section);
         }
@@ -424,23 +438,7 @@
         });
         
 
-        // TEST MODE ONLY: append Kyle when ?testmode=true (teacher troubleshooting — never visible to students)
-        if (isTestMode) {
-            var testBanner = document.getElementById('testModeBanner');
-            if (!testBanner) {
-                testBanner = document.createElement('div');
-                testBanner.id = 'testModeBanner';
-                testBanner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin-bottom:16px;font-weight:bold;color:#856404;text-align:center;font-size:.95em;';
-                testBanner.innerHTML = '&#x1F9EA; TEST MODE ACTIVE — Kyle (Test Student) is visible. This URL is for teacher troubleshooting only.';
-                var formSection = document.querySelector('.form-section');
-                formSection.insertBefore(testBanner, formSection.querySelector('h3').nextSibling);
-            }
-            var kyleOpt = document.createElement('option');
-            kyleOpt.value = '54565';
-            kyleOpt.textContent = '🧪 Test Student (Kyle) — 54565';
-            kyleOpt.dataset.nick = 'Kyle';
-            thaiNameSelect.appendChild(kyleOpt);
-        }
+
     }
 
     function autoFillStudent() {

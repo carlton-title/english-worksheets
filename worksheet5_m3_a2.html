@@ -405,7 +405,18 @@
             return;
         }
 
-        
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+            thaiNameSelect.value = '54565';
+            autoFillStudent();
+            return;
+        }
 
         if (!studentData[section]) {
             await loadStudentsFromSupabase(section);
@@ -753,6 +764,13 @@
     // ===================== KYLE TEST MODE =====================
     // Accessible from Teacher's Dashboard only via ?testmode=kyle
     // This link only exists in teacher.html. Not visible to students.
+    (async function() {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('testmode') === 'kyle') {
+            document.getElementById('section').value = 'M3/10';
+            await loadThaiNames();
+        }
+    })();
 
 </script>
 </body>
