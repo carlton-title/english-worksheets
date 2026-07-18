@@ -431,70 +431,70 @@
 
     // ===================== QUESTION DATA =====================
     var questions = [
-        {id:1, image:'WS5M4A2Q1.png', text:"What does 'gripping' mean when describing a movie?",
+        {id:1, image:'WS5M4A21.png', text:"What does 'gripping' mean when describing a movie?",
          options:[
             {text:'Very exciting and difficult to stop watching',correct:true},
             {text:'Extremely violent and disturbing',correct:false},
             {text:'Very confusing and hard to follow',correct:false},
             {text:'Long and slow-moving',correct:false}
         ]},
-        {id:2, image:'WS5M4A2Q2.png', text:'Which sentence is grammatically CORRECT when expressing a movie opinion?',
+        {id:2, image:'WS5M4A22.png', text:'Which sentence is grammatically CORRECT when expressing a movie opinion?',
          options:[
             {text:'In my opinion, this movie is well-directed.',correct:true},
             {text:'In my opinion, this movie are well-directed.',correct:false},
             {text:'My opinion, this movie is well-directed.',correct:false},
             {text:'I opinion this movie is well-directed.',correct:false}
         ]},
-        {id:3, image:'WS5M4A2Q3.png', text:'The story was so _____ that I guessed the ending in the first ten minutes.',
+        {id:3, image:'WS5M4A23.png', text:'The story was so _____ that I guessed the ending in the first ten minutes.',
          options:[
             {text:'predictable',correct:true},
             {text:'gripping',correct:false},
             {text:'breathtaking',correct:false},
             {text:'outstanding',correct:false}
         ]},
-        {id:4, image:'WS5M4A2Q4.png', text:"What does 'overrated' mean when describing a movie?",
+        {id:4, image:'WS5M4A24.png', text:"What does 'overrated' mean when describing a movie?",
          options:[
             {text:'Praised more than it actually deserves',correct:true},
             {text:'Very popular around the world',correct:false},
             {text:'Extremely scary and violent',correct:false},
             {text:'Won many international awards',correct:false}
         ]},
-        {id:5, image:'WS5M4A2Q5.png', text:'Which phrase shows a NEGATIVE opinion of a movie?',
+        {id:5, image:'WS5M4A25.png', text:'Which phrase shows a NEGATIVE opinion of a movie?',
          options:[
             {text:'I was completely let down by the plot.',correct:true},
             {text:'I was blown away by the acting!',correct:false},
             {text:'It was an absolute masterpiece.',correct:false},
             {text:"I'd watch it over and over again.",correct:false}
         ]},
-        {id:6, image:'WS5M4A2Q6.png', text:'The lead actor _____ the role of a detective brilliantly.',
+        {id:6, image:'WS5M4A26.png', text:'The lead actor _____ the role of a detective brilliantly.',
          options:[
             {text:'played',correct:true},
             {text:'play',correct:false},
             {text:'playing',correct:false},
             {text:'plays to',correct:false}
         ]},
-        {id:7, image:'WS5M4A2Q7.png', text:"What is a 'sequel'?",
+        {id:7, image:'WS5M4A27.png', text:"What is a 'sequel'?",
          options:[
             {text:'A movie that continues the story of an earlier film',correct:true},
             {text:'The very first film in a series',correct:false},
             {text:'A short film shown before the main movie',correct:false},
             {text:'A film based entirely on a true story',correct:false}
         ]},
-        {id:8, image:'WS5M4A2Q8.png', text:"Which sentence correctly AGREES with someone's movie opinion?",
+        {id:8, image:'WS5M4A28.png', text:"Which sentence correctly AGREES with someone's movie opinion?",
          options:[
             {text:'I feel exactly the same way!',correct:true},
             {text:'I am agree with you.',correct:false},
             {text:'I feels the same.',correct:false},
             {text:'Same way I feel.',correct:false}
         ]},
-        {id:9, image:'WS5M4A2Q9.png', text:'The background music was so _____ that I could not get it out of my head!',
+        {id:9, image:'WS5M4A29.png', text:'The background music was so _____ that I could not get it out of my head!',
          options:[
             {text:'catchy',correct:true},
             {text:'silent',correct:false},
             {text:'plain',correct:false},
             {text:'rough',correct:false}
         ]},
-        {id:10, image:'WS5M4A2Q10.png', text:'Which sentence politely DISAGREES with a movie opinion?',
+        {id:10, image:'WS5M4A210.png', text:'Which sentence politely DISAGREES with a movie opinion?',
          options:[
             {text:'I see your point, but I found the plot quite confusing.',correct:true},
             {text:'You are totally wrong about that.',correct:false},
@@ -584,6 +584,19 @@
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
 
         if (!section) {
+            return;
+        }
+
+        // KYLE TEST MODE — show only Kyle, skip all student loading
+        if (new URLSearchParams(window.location.search).get('testmode') === 'kyle') {
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
+            var kyleOpt = document.createElement('option');
+            kyleOpt.value = '54565';
+            kyleOpt.textContent = 'Test Student (Kyle)';
+            kyleOpt.dataset.nick = 'Kyle';
+            thaiNameSelect.appendChild(kyleOpt);
+            thaiNameSelect.value = '54565';
+            autoFillStudent();
             return;
         }
 
@@ -926,10 +939,4 @@
             msg.innerHTML = 'โอกาสเหลือ: ' + (maxAttempts - attempts) + ' ครั้ง';
             msg.style.color = '#666';
         }
-    }
-
-    updateAttemptsDisplay();
-
-</script>
-</body>
-</html
+ 
