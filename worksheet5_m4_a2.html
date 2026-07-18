@@ -527,13 +527,6 @@
     });
 
     function applySeededOrder(studentId, attemptNum) {
-        // Kyle (test student) always sees original order — no shuffle
-        if (TEST_STUDENT_IDS.includes(String(studentId))) {
-            displayQuestions = questions.map(function(q) {
-                return Object.assign({}, q, {displayOptions: q.options.slice()});
-            });
-            return;
-        }
         var seed = ((parseInt(studentId) || 0) + (attemptNum || 0) * 99991) | 0;
         var rng = seededRandom(seed);
         var shuffledQs = seededShuffle(questions, rng);
