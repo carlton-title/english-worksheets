@@ -947,8 +947,10 @@
         document.getElementById('scoreValue').textContent = score + '/10';
 
         var statusEl = document.getElementById('scoreStatus');
+        // Always record every attempt to Supabase and Google Sheets
+        submitToSheet(studentId, nickname, section, score, isPassed ? 'PASSED' : 'FAILED');
+
         if (isPassed) {
-            submitToSheet(studentId, nickname, section, score, 'PASSED');
             statusEl.innerHTML = '<span class="status-pass">'
                 + '&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>'
                 + 'ผ่านแบบทดสอบ Worksheet 4 (A1)<br>'
@@ -956,8 +958,6 @@
                 + '</span>';
         } else {
             if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-                var highest = Math.max.apply(null, allAttemptScores);
-                submitToSheet(studentId, nickname, section, highest, 'HIGHEST_FAIL');
                 statusEl.innerHTML = '<span class="status-fail">'
                     + '&#x274C; ยังไม่ผ่านค่ะ<br>'
                     + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
@@ -999,6 +999,7 @@
                 is_correct: selectedOpt ? selectedOpt.correct : false
             };
         });
+        ans['_meta'] = { code: 'WS4M4A1' };
         // Get Thai name text (strip the (Nick) suffix)
         var ts = document.getElementById('thaiName');
         var tn = ts && ts.selectedIndex > 0 ? ts.options[ts.selectedIndex].text.replace(/\s*\([^)]*\)\s*$/, '').trim() : String(nickname);

@@ -809,6 +809,7 @@ function loadAnswersForModal(studentId, worksheet, section) {
     var url = SUPA_URL + '/rest/v1/worksheet_submissions'
         + '?student_id=eq.' + encodeURIComponent(String(studentId))
         + '&worksheet=eq.' + encodeURIComponent(worksheet)
+        + '&section=eq.' + encodeURIComponent(String(section))
         + '&order=submitted_at.desc&limit=1';
     fetch(url, {headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}})
     .then(function(r){return r.json();})
@@ -821,7 +822,11 @@ function loadAnswersForModal(studentId, worksheet, section) {
         }
         var row = rows[0];
         var answers = row.answers || {};
-        var keys = Object.keys(answers).sort(function(a,b){return parseInt(a.replace('Q',''))-parseInt(b.replace('Q',''));});
+        // Extract worksheet activity code for images (stored in answers._meta by new submissions)
+        var wsCode = (answers['_meta'] && answers['_meta'].code) ? answers['_meta'].code : '';
+        // Only process Q# keys, exclude _meta
+        var keys = Object.keys(answers).filter(function(k){ return /^Q\d+$/.test(k); })
+            .sort(function(a,b){return parseInt(a.replace('Q',''))-parseInt(b.replace('Q',''));});
         if (keys.length === 0) {
             ansDiv.innerHTML = '<div style="color:#999;font-size:.84em;text-align:center;padding:10px;">Answer details not recorded for this submission.</div>';
             return;
@@ -829,11 +834,14 @@ function loadAnswersForModal(studentId, worksheet, section) {
 
         // Detect format: new = value is an object {question,options[],selected,correct_answer,is_correct}
         var isNewFormat = answers[keys[0]] !== null && typeof answers[keys[0]] === 'object';
-        var html = '<div style="border-top:2px solid #e8eaf6;padding-top:12px;">'
-            +'<div style="font-weight:700;font-size:.93em;color:#1a237e;margin-bottom:12px;">📝 Worksheet Answers</div>';
+        var html = '<div style="border-top:2px solid #e8eaf6;padding-top:12px;">';
+        if (wsCode) {
+            html += '<div style="font-size:.78em;color:#7986cb;margin-bottom:10px;">🗂 Activity: <b>'+escHtml(wsCode)+'</b></div>';
+        }
+        html += '<div style="font-weight:700;font-size:.93em;color:#1a237e;margin-bottom:12px;">📝 Worksheet Answers</div>';
 
         if (isNewFormat) {
-            // ── Full question card rendering ──────────────────────────────────
+            // ── Full question card rendering with images ───────────────────────
             keys.forEach(function(qKey) {
                 var q = answers[qKey];
                 if (!q || typeof q !== 'object') return;
@@ -846,6 +854,11 @@ function loadAnswersForModal(studentId, worksheet, section) {
                     +'<span style="flex:1;">'+escHtml(q.question||qKey)+'</span>'
                     +'<span style="font-size:.82em;white-space:nowrap;padding:2px 8px;border-radius:10px;background:'+(isCorrect?'#c8e6c9':'#ffcdd2')+';color:'+(isCorrect?'#1b5e20':'#b71c1c')+';">'+(isCorrect?'✅ Correct':'❌ Wrong')+'</span>'
                     +'</div>';
+                // Question image (if activity code known)
+                if (wsCode) {
+                    var imgUrl = IMAGE_BASE + wsCode + qNum + '.png';
+                    html += '<img class="q-card-img" src="'+imgUrl+'" alt="Question '+qNum+'" style="width:100%;max-height:220px;object-fit:contain;background:#f8f9ff;border-bottom:1px solid #e8eaf6;display:block;" onerror="this.style.display=\'none\'">';
+                }
                 // Options
                 html += '<div class="q-body" style="padding:10px 13px;">';
                 var opts = Array.isArray(q.options) ? q.options : [];
