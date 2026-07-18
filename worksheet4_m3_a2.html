@@ -400,6 +400,7 @@
     var isTestMode = new URLSearchParams(window.location.search).get('testmode') === 'true';
 
     document.getElementById('date').valueAsDate = new Date();
+    loadThaiNames(); // Initialize name dropdown based on current section value
 
     // ===================== FORM FUNCTIONS =====================
     async function loadThaiNames() {

@@ -394,6 +394,7 @@
     // (Kyle test mode handled at bottom of script via ?testmode=kyle)
 
     document.getElementById('date').valueAsDate = new Date();
+    loadThaiNames(); // Initialize name dropdown based on current section value
 
     // ===================== FORM FUNCTIONS =====================
     async function loadThaiNames() {
