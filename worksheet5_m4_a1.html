@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1131,7 +1131,7 @@
         var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
         var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
 
-        var printHTML = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+        var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8">'
             + '<title>WS5 M4 Record - ' + nickname + ' (' + studentId + ')</title>'
             + '<style>'
             + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
@@ -1177,8 +1177,4 @@
         }
     }
 
-    updateAttemptsDisplay();
-
-</script>
-</body>
-</html>
+    updat
