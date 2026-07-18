@@ -702,8 +702,7 @@
         var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
         var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
 
-        var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8">
-    <meta name="google" content="notranslate">'
+        var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8"><meta name="google" content="notranslate">'
             + '<title>WS5 A2 Record - ' + nickname + ' (' + studentId + ')</title>'
             + '<style>'
             + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
@@ -753,4 +752,8 @@
 
     // ===================== KYLE TEST MODE =====================
     // Accessible from Teacher's Dashboard only via ?testmode=kyle
-    // This link only exists in teacher.ht
+    // This link only exists in teacher.html. Not visible to students.
+
+</script>
+</body>
+</html>

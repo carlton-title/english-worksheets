@@ -841,8 +841,7 @@
         var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
         var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
 
-        var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8">
-    <meta name="google" content="notranslate">'
+        var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8"><meta name="google" content="notranslate">'
             + '<title>WS4 M4 A2 Record - ' + nickname + ' (' + studentId + ')</title>'
             + '<style>'
             + 'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:14px;}'
@@ -880,4 +879,16 @@
         var msg = document.getElementById('attemptsMessage');
         var studentId = document.getElementById('studentId').value.trim();
         if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-            msg.innerHTML = '&#x1F
+            msg.innerHTML = '&#x1F512; คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว';
+            msg.style.color = '#c41e3a';
+        } else {
+            msg.innerHTML = 'โอกาสเหลือ: ' + (maxAttempts - attempts) + ' ครั้ง';
+            msg.style.color = '#666';
+        }
+    }
+
+    updateAttemptsDisplay();
+
+</script>
+</body>
+</html>
