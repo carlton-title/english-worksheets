@@ -575,11 +575,19 @@
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
-        // Build answers object from question data
+        // Build full per-question answer record
         var ans = {};
-        questions.forEach(function(q) {
+        displayQuestions.forEach(function(q) {
             var selectedIdx = userAnswers[q.id];
-            ans['Q' + q.id] = (selectedIdx !== undefined && q.options[selectedIdx]) ? q.options[selectedIdx].text : null;
+            var selectedOpt = (selectedIdx !== undefined) ? q.displayOptions[selectedIdx] : null;
+            var correctOpt = q.displayOptions.find(function(o) { return o.correct; });
+            ans['Q' + q.id] = {
+                question: q.text,
+                options: q.displayOptions.map(function(o) { return o.text; }),
+                selected: selectedOpt ? selectedOpt.text : null,
+                correct_answer: correctOpt ? correctOpt.text : null,
+                is_correct: selectedOpt ? selectedOpt.correct : false
+            };
         });
         // Get Thai name from dropdown
         var ts = document.getElementById('thaiName');
@@ -743,32 +751,4 @@
 
     // ===================== KYLE TEST MODE =====================
     // Accessible from Teacher's Dashboard only via ?testmode=kyle
-    // This link only exists in teacher.html — students never see it
-    (function() {
-        if (new URLSearchParams(window.location.search).get('testmode') !== 'kyle') return;
-        // Ensure Kyle in TEST_STUDENT_IDS (unlimited retries, no shuffle)
-        if (!TEST_STUDENT_IDS.includes('54565')) TEST_STUDENT_IDS.push('54565');
-        // Register Kyle under a dedicated TEST section (loadThaiNames reads studentData before Supabase)
-        studentData['TEST'] = [{id:'54565', name:'Test Student', nick:'Kyle'}];
-        // Add TEST option to section dropdown
-        var secSel = document.getElementById('section');
-        if (secSel) {
-            var kOpt = document.createElement('option');
-            kOpt.value = 'TEST';
-            kOpt.textContent = '🧪 Kyle — Test Mode';
-            secSel.insertBefore(kOpt, secSel.options[1] || null);
-            secSel.value = 'TEST';
-            if (typeof loadThaiNames === 'function') {
-                setTimeout(function() { loadThaiNames(); }, 50);
-            }
-        }
-        // Show teacher banner
-        var banner = document.createElement('div');
-        banner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin:0 0 16px;font-weight:bold;color:#856404;text-align:center;font-size:.9em;';
-        banner.innerHTML = '🧪 <strong>KYLE TEST MODE</strong> — Teacher use only. Scores record normally to Google Sheets & Supabase.';
-        var formSection = document.querySelector('.form-section');
-        if (formSection) formSection.insertBefore(banner, formSection.firstChild);
-    })();
-</script>
-</body>
-</html>
+    // This link only exists in teacher.ht

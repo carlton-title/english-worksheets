@@ -969,11 +969,19 @@
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
-        // Capture per-question answer texts from the questions array
+        // Build full per-question answer record
         var ans = {};
-        questions.forEach(function(q) {
+        displayQuestions.forEach(function(q) {
             var selectedIdx = userAnswers[q.id];
-            ans['Q' + q.id] = (selectedIdx !== undefined && q.options[selectedIdx]) ? q.options[selectedIdx].text : null;
+            var selectedOpt = (selectedIdx !== undefined) ? q.displayOptions[selectedIdx] : null;
+            var correctOpt = q.displayOptions.find(function(o) { return o.correct; });
+            ans['Q' + q.id] = {
+                question: q.text,
+                options: q.displayOptions.map(function(o) { return o.text; }),
+                selected: selectedOpt ? selectedOpt.text : null,
+                correct_answer: correctOpt ? correctOpt.text : null,
+                is_correct: selectedOpt ? selectedOpt.correct : false
+            };
         });
         // Get Thai name text (strip the (Nick) suffix)
         var ts = document.getElementById('thaiName');

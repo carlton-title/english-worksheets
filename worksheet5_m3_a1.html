@@ -668,6 +668,45 @@
     }
 
     function submitToSheet(studentId, nickname, section, score, status) {
+        // Build full per-question answer record
+        var ans = {};
+        displayQuestions.forEach(function(q) {
+            var selectedIdx = userAnswers[q.id];
+            var selectedOpt = (selectedIdx !== undefined) ? q.displayOptions[selectedIdx] : null;
+            var correctOpt = q.displayOptions.find(function(o) { return o.correct; });
+            ans['Q' + q.id] = {
+                question: q.text,
+                options: q.displayOptions.map(function(o) { return o.text; }),
+                selected: selectedOpt ? selectedOpt.text : null,
+                correct_answer: correctOpt ? correctOpt.text : null,
+                is_correct: selectedOpt ? selectedOpt.correct : false
+            };
+        });
+        // Get Thai name from dropdown
+        var ts = document.getElementById('thaiName');
+        var tn = ts && ts.selectedIndex > 0 ? ts.options[ts.selectedIndex].text.replace(/\s*\([^)]*\)\s*$/, '').trim() : String(nickname);
+        var st = (status === 'PASSED') ? 'PASS' : 'FAIL';
+        // 1. Save to Supabase with full answer record
+        fetch('https://smtgkffnptwjlgccsrti.supabase.co/rest/v1/worksheet_submissions', {
+            method: 'POST',
+            headers: {
+                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs',
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+                student_id: String(studentId),
+                student_name: tn,
+                section: section,
+                worksheet: 'WS5',
+                score: Number(score),
+                total_questions: 10,
+                status: st,
+                answers: ans
+            })
+        }).catch(function(e) { console.warn('Supabase error:', e); });
+        // 2. Send to Google Apps Script (Google Sheets)
         var data = {studentId:studentId, nickname:nickname, section:section, score:score, worksheet:'WS5', date:new Date().toISOString(), status:status};
         var params = new URLSearchParams(data);
         fetch(SCRIPT_URL + '?' + params, {method:'GET', mode:'no-cors'}).catch(function(){});
@@ -803,34 +842,4 @@
 
     updateAttemptsDisplay();
 
-    // ===================== KYLE TEST MODE =====================
-    // Accessible from Teacher's Dashboard only via ?testmode=kyle
-    // This link only exists in teacher.html — students never see it
-    (function() {
-        if (new URLSearchParams(window.location.search).get('testmode') !== 'kyle') return;
-        // Ensure Kyle in TEST_STUDENT_IDS (unlimited retries, no shuffle)
-        if (!TEST_STUDENT_IDS.includes('54565')) TEST_STUDENT_IDS.push('54565');
-        // Register Kyle under a dedicated TEST section
-        studentData['TEST'] = [{id:'54565', name:'Test Student', nick:'Kyle'}];
-        // Add TEST option to section dropdown
-        var secSel = document.getElementById('section');
-        if (secSel) {
-            var kOpt = document.createElement('option');
-            kOpt.value = 'TEST';
-            kOpt.textContent = '🧪 Kyle — Test Mode';
-            secSel.insertBefore(kOpt, secSel.options[1] || null);
-            secSel.value = 'TEST';
-            if (typeof loadThaiNames === 'function') {
-                setTimeout(function() { loadThaiNames(); }, 50);
-            }
-        }
-        // Show teacher banner
-        var banner = document.createElement('div');
-        banner.style.cssText = 'background:#fff3cd;border:2px solid #ffc107;border-radius:8px;padding:10px 16px;margin:0 0 16px;font-weight:bold;color:#856404;text-align:center;font-size:.9em;';
-        banner.innerHTML = '🧪 <strong>KYLE TEST MODE</strong> — Teacher use only. Scores record normally to Google Sheets & Supabase.';
-        var formSection = document.querySelector('.form-section');
-        if (formSection) formSection.insertBefore(banner, formSection.firstChild);
-    })();
-</script>
-</body>
-</html>
+    // ==================
