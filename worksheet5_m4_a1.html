@@ -175,6 +175,12 @@
             .title { font-size: 1.8em; }
             .options { grid-template-columns: 1fr; }
         }
+
+        .form-group select:disabled {
+            background: #f5f5f5;
+            color: #aaa;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -211,10 +217,10 @@
             </select>
             <div class="warning" id="sectionWarning">&#x26A0;&#xFE0F; Please select your class.</div>
         </div>
-        <div class="form-group" id="thaiNameGroup" style="display:none;">
+        <div class="form-group" id="thaiNameGroup">
             <label>&#x1F1F9;&#x1F1ED; 2. Your Thai Name</label>
-            <select id="thaiName" onchange="autoFillStudent()">
-                <option value="">&#x2014; Select your name &#x2014;</option>
+            <select id="thaiName" onchange="autoFillStudent()" disabled>
+                <option value="">&#x2014; Select your class first &#x2014;</option>
             </select>
             <div class="warning" id="thaiNameWarning">&#x26A0;&#xFE0F; Please select your name from the list.</div>
         </div>
@@ -832,7 +838,8 @@
         thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
 
         if (!section) {
-            thaiNameGroup.style.display = 'none';
+            thaiNameSelect.disabled = true;
+            thaiNameSelect.innerHTML = '<option value="">&#x2014; Select your class first &#x2014;</option>';
             return;
         }
 
@@ -844,7 +851,7 @@
             opt.dataset.nick = s.nick;
             thaiNameSelect.appendChild(opt);
         });
-        thaiNameGroup.style.display = 'block';
+        thaiNameSelect.disabled = false;
     }
 
     function autoFillStudent() {
@@ -1062,7 +1069,9 @@
             document.getElementById('studentId').value = '';
             document.getElementById('section').value = '';
             document.getElementById('thaiName').innerHTML = '<option value="">&#x2014; Select your name &#x2014;</option>';
-            document.getElementById('thaiNameGroup').style.display = 'none';
+            var tnSel = document.getElementById('thaiName');
+            tnSel.innerHTML = '<option value="">&#x2014; Select your class first &#x2014;</option>';
+            tnSel.disabled = true;
             document.getElementById('date').valueAsDate = new Date();
         }
     }
