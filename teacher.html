@@ -1078,7 +1078,7 @@ function renderSubmissionModal(row) {
         return '<div class="q-opt '+cls+'">'+( isSel?(isCorr?'&#10003; ':'&#10007; '):( isCorr?'&#9651; ':''   ))+escHtml(String(opt))+'</div>';
       }).join('');
     }
-    return '<div class="q-card"><div class="q-header">Q'+qNum+'</div>'+imgHtml+'<div class="q-opts">'+optsHtml+'</div></div>';
+    return '<div class="q-card"><div class="q-header">'+(qNum)+'</div>'+imgHtml+'<div class="q-opts">'+optsHtml+'</div></div>';
   }).join('');
   document.getElementById('printContent').innerHTML=infoHtml+'<div class="qa-grid">'+qaHtml+'</div>';
   document.getElementById('printModal').style.display='flex';
