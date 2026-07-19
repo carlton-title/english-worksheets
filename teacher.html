@@ -667,7 +667,9 @@ function onStudentChange() {
 
 // ── Search ──
 async function doSearch() {
-  var section=document.getElementById('selSection').value,sid=document.getElementById('inputStudentId').value.trim(),ws=document.getElementById('selWorksheet').value;
+  var section=document.getElementById('selSection').value;
+  var sid=document.getElementById('inputStudentId').value.trim();
+  var ws=document.getElementById('selWorksheet').value;
   if(!section||!sid||!ws){alert('Please select section, student, and worksheet.');return;}
   var btn=document.getElementById('btnSearch');
   btn.disabled=true;btn.textContent='Searching...';
@@ -680,44 +682,42 @@ async function doSearch() {
     rows=sr.ok?await sr.json():[];
   }catch(e){console.warn(e);}
   if(Array.isArray(rows)&&rows.length>0){
-    rows.forEach(function(r){var idx=allSubmissions.findIndex(function(s){return s.id===r.id;});if(idx<0)allSubmissions.push(r);else allSubmissions[idx]=r;});
-    var n=rows.length;
-    document.getElementById('resultsTitle').textContent='Results for ID '+sid+' - '+ws+' ('+n+' submission'+(n>1?'s':'')+', newest first)';
-    document.getElementById('resultsBody').innerHTML=rows.map(function(r,i){
-      var total=r.total||10,sc=typeof r.score==='number'?r.score:parseInt(r.score)||0;
-      var pass=(r.status||'').toUpperCase().indexOf('PASS')===0;
-      var dt=r.submitted_at?new Date(r.submitted_at).toLocaleString():'--';
-      var hasQA=r.answers&&Object.keys(r.answers).some(function(k){return k!=='_meta';});
-      var latest=i===0?' [Latest]':'';
-      return '<div class="result-card"><div class="result-header"><div>'+
-        '<div style="font-weight:bold">'+(r.nickname||sid)+' ('+(r.name||r.nickname||sid)+')</div>'+
-        '<div class="meta">Section: '+(r.section||section)+latest+' | '+dt+'</div>'+
-        '</div><div><div class="score">'+sc+'/'+total+'</div>'+
-        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+(pass?'PASSED':'FAILED')+'</span>'+
-        '</div></div><div class="result-body"><div class="result-info">Worksheet: '+ws+' | Q&A: '+(hasQA?'Available':'Not available')+
-        '</div><button class="btn-pdf" onclick="viewSubmissionById('+r.id+')">View Detail / PDF</button></div></div>';
+    rows.forEach(function(r){var i=allSubmissions.findIndex(function(s){return s.id===r.id;});if(i<0)allSubmissions.push(r);else allSubmissions[i]=r;});
+    var html=rows.map(function(r){
+      var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
+      var dt=r.submitted_at?new Date(r.submitted_at).toLocaleString():'N/A';
+      return '<div class="result-card"><div class="result-header">'+
+        '<div class="result-name">'+escHtml(r.nickname||r.name||sid)+'</div>'+
+        '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
+        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
+        '</div><div class="result-body">'+
+        '<div class="result-info">Worksheet: '+ws+'</div>'+
+        '<div class="result-info">Section: '+escHtml(r.section||section)+'</div>'+
+        '<div class="result-info">Date: '+dt+'</div>'+
+        '</div><button class="btn-pdf" onclick="viewSubmissionById('+r.id+')">View Detail / PDF</button>'+
+        '</div></div>';
     }).join('');
+    document.getElementById('resultsBody').innerHTML=html;
+    document.getElementById('resultsTitle').textContent='Search Results ('+rows.length+' attempt'+(rows.length>1?'s':'')+')';
     btn.disabled=false;btn.textContent='Search';return;
   }
-  var gsFound=allSubmissions.filter(function(s){return String(s.studentId||s.student_id||'')===String(sid)&&(s.worksheet||s.ws||'')===ws;});
-  if(gsFound.length>0){
-    document.getElementById('resultsTitle').textContent='Results for ID '+sid+' - '+ws;
-    document.getElementById('resultsBody').innerHTML=gsFound.map(function(r){
-      var sc=r.score!==undefined?r.score:'--',total=r.total||10;
-      var pass=String(r.status||'').toUpperCase()==='PASSED';
-      var nick=r.nickname||r.nick||sid,sec=r.section||r.class||section,dt=r.date||r.timestamp||'--';
-      return '<div class="result-card"><div class="result-header"><div>'+
-        '<div style="font-weight:bold">'+nick+' ('+(r.name||nick)+')</div>'+
-        '<div class="meta">Section: '+sec+' | '+dt+'</div>'+
-        '</div><div><div class="score">'+sc+(typeof sc==='number'?'/'+total:'')+'</div>'+
-        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+(pass?'PASSED':'FAILED')+'</span>'+
-        '</div></div><div class="result-body"><div class="result-info">Worksheet: '+ws+'</div>'+
-        '<button class="btn-pdf" onclick="loadViewModal(''+sid+'',''+ws+'',''+sec+'',''+nick+'','+(typeof sc==='number'?sc:0)+','+total+',''+(pass?'PASSED':'FAILED')+'')">View Detail / PDF</button></div></div>';
+  var cached=allSubmissions.filter(function(s){return String(s.student_id)===String(sid)&&s.worksheet===ws;});
+  if(cached.length>0){
+    var html2=cached.map(function(r,i){
+      var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
+      window['_tr_'+i]=r;
+      return '<div class="result-card"><div class="result-header">'+
+        '<div class="result-name">'+escHtml(r.nickname||r.name||sid)+'</div>'+
+        '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
+        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
+        '</div><div class="result-body"><div class="result-info">Worksheet: '+ws+'</div></div>'+
+        '<button class="btn-pdf" onclick="var _r=window._tr_'+i+';loadViewModal(_r.student_id,_r.worksheet,_r.section,_r.nickname,_r.score,_r.total,_r.status)">View Detail / PDF</button>'+
+        '</div></div>';
     }).join('');
+    document.getElementById('resultsBody').innerHTML=html2;
     btn.disabled=false;btn.textContent='Search';return;
   }
-  document.getElementById('resultsTitle').textContent='No Results';
-  document.getElementById('resultsBody').innerHTML='<div class="no-result">No submission found for this student and worksheet.</div>';
+  document.getElementById('resultsBody').innerHTML='<div class="loading-msg">No results found.</div>';
   btn.disabled=false;btn.textContent='Search';
 }
 
@@ -1038,53 +1038,50 @@ function viewSubmissionById(supaId) {
   if(!row){alert('Submission not found. Please search again.');return;}
   renderSubmissionModal(row);
 }
+
 function loadViewModal(sid,ws,sec,nick,sc,total,status) {
   var minRow={student_id:sid,worksheet:ws,section:sec,nickname:nick,name:nick,score:sc,total:total,status:status,submitted_at:null,answers:{}};
   renderSubmissionModal(minRow);
   fetch(SUPA_URL+'/rest/v1/worksheet_submissions?student_id=eq.'+encodeURIComponent(sid)+'&worksheet=eq.'+encodeURIComponent(ws)+'&order=submitted_at.desc&limit=1',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}})
-    .then(function(r){return r.json();})
-    .then(function(rows){if(rows&&rows[0]&&rows[0].answers){renderSubmissionModal(Object.assign({},minRow,rows[0]));}})
-    .catch(function(){});
+  .then(function(r){return r.json();})
+  .then(function(rows){if(rows&&rows[0]&&rows[0].answers){renderSubmissionModal(Object.assign({},minRow,rows[0]));}})
+  .catch(function(){});
 }
+
 function renderSubmissionModal(row) {
-  var ws=row.worksheet||'--',sc=typeof row.score==='number'?row.score:parseInt(row.score)||0;
-  var total=row.total||10,pass=(row.status||'').toUpperCase().indexOf('PASS')===0;
-  var sec=row.section||'--',nick=row.nickname||'--',nm=row.name||nick;
-  var sid=row.student_id||'--',dt=row.submitted_at?new Date(row.submitted_at).toLocaleString():'--';
-  document.getElementById('modalTitle').textContent=ws.replace('WS','Worksheet ')+' -- '+nick;
-  var info='<table class="sub-info-table">'+
-    '<tr><td>Student Name</td><td>'+nick+'</td><td>Student ID</td><td>'+sid+'</td></tr>'+
-    '<tr><td>Thai Name</td><td>'+nm+'</td><td>Section</td><td>'+sec+'</td></tr>'+
-    '<tr><td>Worksheet</td><td>'+ws.replace('WS','Worksheet ')+'</td><td>Score</td><td><strong>'+sc+'/'+total+'</strong></td></tr>'+
-    '<tr><td>Status</td><td colspan="3"><span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+(pass?'PASSED':'FAILED')+'</span></td></tr>'+
-    '<tr><td>Printed On</td><td colspan="3">'+dt+'</td></tr>'+
-    '<tr><td colspan="4" style="text-align:center;color:#777;font-size:.8em;">English Worksheets -- carlton-title.github.io/english-worksheets/teacher.html</td></tr>'+
+  var ws=row.worksheet||'';
+  var wsCode=ws.replace(/\s+/g,'_').replace(/[^\w]/g,'_');
+  var answers=row.answers||{};
+  var keys=Object.keys(answers).filter(function(k){return k!=='_meta'&&!isNaN(parseInt(k));});
+  keys.sort(function(a,b){return parseInt(a)-parseInt(b);});
+  var sc=row.score;var total=row.total||10;
+  var pass=typeof sc==='number'&&sc>=Math.ceil(total*0.7);
+  var statusLabel=row.status||(pass?'PASSED':'FAILED');
+  var infoHtml='<table class="info-table">'+
+    '<tr><th>Student</th><td>'+escHtml(row.nickname||row.name||String(row.student_id||'?'))+'</td></tr>'+
+    '<tr><th>ID</th><td>'+escHtml(String(row.student_id||'?'))+'</td></tr>'+
+    '<tr><th>Worksheet</th><td>'+escHtml(ws)+'</td></tr>'+
+    '<tr><th>Section</th><td>'+escHtml(row.section||'')+'</td></tr>'+
+    '<tr><th>Score</th><td>'+(sc!==undefined?sc:'?')+' / '+total+'</td></tr>'+
+    '<tr><th>Status</th><td>'+escHtml(statusLabel)+'</td></tr>'+
+    '<tr><th>Date</th><td>'+(row.submitted_at?new Date(row.submitted_at).toLocaleString():'N/A')+'</td></tr>'+
     '</table>';
-  var ans=row.answers||{};
-  var keys=Object.keys(ans).filter(function(k){return k!=='_meta';}).sort(function(a,b){return parseInt(a.replace('Q',''))-parseInt(b.replace('Q',''));});
-  var wsCode=(ans._meta&&ans._meta.code)?ans._meta.code:'';
-  var qa=keys.length===0?
-    '<p style="text-align:center;color:#999;font-style:italic;padding:20px;">No detailed answer data for this submission.<br><small>Answer details are recorded for submissions made after the Supabase upgrade.</small></p>':
-    keys.map(function(k){
-      var q=ans[k];if(!q||typeof q!=='object')return '';
-      var qNum=k.replace('Q',''),opts=Array.isArray(q.options)?q.options:[];
-      var optHtml=opts.map(function(opt){
-        var isSel=opt===q.selected,isCorr=opt===q.correct_answer,cls='opt-row ',icon='';
-        if(isSel&&isCorr){cls+='opt-sc';icon='[CORRECT] ';}
-        else if(isSel&&!isCorr){cls+='opt-sw';icon='[WRONG] ';}
-        else if(!isSel&&isCorr){cls+='opt-cm';icon='[ANS] ';}
-        else{cls+='opt-plain';}
-        return '<div class="'+cls+'">'+icon+opt+'</div>';
+  var qaHtml=keys.length===0?'<p class="no-data-msg">No detailed answer data available.</p>':keys.map(function(qNum){
+    var q=answers[qNum];if(!q)return '';
+    var imgHtml='<img class="q-card-img" src="'+IMAGE_BASE+wsCode+qNum+'.png" onerror="this.remove()">';
+    var optsHtml='';
+    if(q.options&&Array.isArray(q.options)){
+      optsHtml=q.options.map(function(opt,oi){
+        var isSel=(q.selected===oi||q.selected===opt);
+        var isCorr=(q.correct===oi||q.correct===opt);
+        var cls=isSel&&isCorr?'opt-sc':isSel&&!isCorr?'opt-sw':!isSel&&isCorr?'opt-cm':'opt-plain';
+        return '<div class="q-opt '+cls+'">'+( isSel?(isCorr?'&#10003; ':'&#10007; '):( isCorr?'&#9651; ':''   ))+escHtml(String(opt))+'</div>';
       }).join('');
-      return '<div class="q-card">'+
-        '<img class="q-card-img" src="'+IMAGE_BASE+wsCode+qNum+'.png" onerror="this.style.display=\'none\'">'+
-        '<div class="q-header"><span class="qnum">'+qNum+'</span>'+
-        '<span style="flex:1;margin-left:6px;">'+(q.question||'')+'</span>'+
-        (q.is_correct?'<span style="color:green;margin-left:auto;">CORRECT</span>':'<span style="color:red;margin-left:auto;">WRONG</span>')+
-        '</div><div class="q-body">'+optHtml+'</div></div>';
-    }).join('');
-  document.getElementById('printContent').innerHTML=info+qa;
-  document.getElementById('printModal').classList.add('open');
+    }
+    return '<div class="q-card"><div class="q-header">Q'+qNum+'</div>'+imgHtml+'<div class="q-opts">'+optsHtml+'</div></div>';
+  }).join('');
+  document.getElementById('printContent').innerHTML=infoHtml+'<div class="qa-grid">'+qaHtml+'</div>';
+  document.getElementById('printModal').style.display='flex';
 }
 </script>
 </body>
