@@ -1076,7 +1076,7 @@ function renderSubmissionModal(row) {
     if(q.options&&Array.isArray(q.options)){
       optsHtml=q.options.map(function(opt,oi){
         var isSel=(q.selected===oi||q.selected===opt);
-        var isCorr=(q.correct===oi||q.correct===opt);
+        var isCorr=(q.correct_answer===opt||q.is_correct&&q.selected===opt||q.correct===oi||q.correct===opt);
         var cls=isSel&&isCorr?'opt-sc':isSel&&!isCorr?'opt-sw':!isSel&&isCorr?'opt-cm':'opt-plain';
         var badge=isSel&&isCorr?'<span class="badge-correct">&#10003; Correct</span> ':isSel&&!isCorr?'<span class="badge-incorrect">&#10007; Incorrect</span> ':!isSel&&isCorr?'<span class="badge-answer">&#10003; Correct Answer</span> ':'';return '<div class="q-opt '+cls+'">'+badge+escHtml(String(opt))+'</div>';
       }).join('');
