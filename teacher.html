@@ -9,8 +9,10 @@
         body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%); min-height:100vh; padding:20px; }
 
         /* LOGIN */
-        #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
-        .login-box { background:white; border-radius:20px; padding:50px 40px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; }
+        #loginScreen { position:relative; display:flex; align-items:center; justify-content:center; min-height:100vh; overflow:hidden; }
+#loginScreen::before { content:''; position:absolute; inset:0; background:url('Screenshot (393).png') center/cover no-repeat; filter:contrast(1.15) saturate(1.2) brightness(0.88); z-index:0; }
+#loginScreen::after { content:''; position:absolute; inset:0; background:rgba(10,20,80,0.45); z-index:1; }
+        .login-box { position:relative; z-index:2; background:white; border-radius:20px; padding:50px 40px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; }
         .login-box h1 { color:#1a237e; font-size:1.8em; margin-bottom:6px; }
         .login-box p { color:#777; margin-bottom:30px; font-size:.95em; }
         .login-box input { width:100%; padding:14px 16px; border:2px solid #ddd; border-radius:10px; font-size:1em; margin-bottom:16px; outline:none; }
