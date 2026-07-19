@@ -164,6 +164,9 @@
         .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
         .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
         .opt-plain { background:#fafafa; color:#aaa; }
+        .badge-correct{display:inline-block;background:#2e7d32;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.78em;font-weight:bold;margin-right:5px;}
+        .badge-incorrect{display:inline-block;background:#c62828;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.78em;font-weight:bold;margin-right:5px;}
+        .badge-answer{display:inline-block;background:#388e3c;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.78em;font-weight:normal;margin-right:5px;}
         .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
     </style>
 </head>
@@ -1075,7 +1078,7 @@ function renderSubmissionModal(row) {
         var isSel=(q.selected===oi||q.selected===opt);
         var isCorr=(q.correct===oi||q.correct===opt);
         var cls=isSel&&isCorr?'opt-sc':isSel&&!isCorr?'opt-sw':!isSel&&isCorr?'opt-cm':'opt-plain';
-        return '<div class="q-opt '+cls+'">'+( isSel?(isCorr?'&#10003; ':'&#10007; '):( isCorr?'&#9651; ':''   ))+escHtml(String(opt))+'</div>';
+        var badge=isSel&&isCorr?'<span class="badge-correct">&#10003; Correct</span> ':isSel&&!isCorr?'<span class="badge-incorrect">&#10007; Incorrect</span> ':!isSel&&isCorr?'<span class="badge-answer">&#10003; Correct Answer</span> ':'';return '<div class="q-opt '+cls+'">'+badge+escHtml(String(opt))+'</div>';
       }).join('');
     }
     return '<div class="q-card"><div class="q-header">'+(qNum)+'</div>'+imgHtml+'<div class="q-opts">'+optsHtml+'</div></div>';
