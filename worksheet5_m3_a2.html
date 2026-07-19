@@ -591,7 +591,7 @@
         var ans = {};
         displayQuestions.forEach(function(q) {
             var selectedIdx = userAnswers[q.id];
-            var selectedOpt = (selectedIdx !== undefined) ? q.displayOptions[selectedIdx] : null;
+            var selectedOpt = (selectedIdx !== undefined) ? q.options[selectedIdx] : null;
             var correctOpt = q.displayOptions.find(function(o) { return o.correct; });
             ans['Q' + q.id] = {
                 question: q.text,
