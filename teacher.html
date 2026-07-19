@@ -687,7 +687,7 @@ async function doSearch() {
       var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
       var dt=r.submitted_at?new Date(r.submitted_at).toLocaleString():'N/A';
       return '<div class="result-card"><div class="result-header">'+
-        '<div class="result-name">'+escHtml(r.nickname||r.name||sid)+'</div>'+
+        '<div class="result-name">'+escHtml(r.student_name||r.nickname||r.name||sid)+'</div>'+
         '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
         '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
         '</div><div class="result-body">'+
@@ -707,7 +707,7 @@ async function doSearch() {
       var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
       window['_tr_'+i]=r;
       return '<div class="result-card"><div class="result-header">'+
-        '<div class="result-name">'+escHtml(r.nickname||r.name||sid)+'</div>'+
+        '<div class="result-name">'+escHtml(r.student_name||r.nickname||r.name||sid)+'</div>'+
         '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
         '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
         '</div><div class="result-body"><div class="result-info">Worksheet: '+ws+'</div></div>'+
@@ -1052,13 +1052,13 @@ function renderSubmissionModal(row) {
   var ws=row.worksheet||'';
   var wsCode=ws.replace(/\s+/g,'_').replace(/[^\w]/g,'_');
   var answers=row.answers||{};
-  var keys=Object.keys(answers).filter(function(k){return k!=='_meta'&&!isNaN(parseInt(k));});
-  keys.sort(function(a,b){return parseInt(a)-parseInt(b);});
-  var sc=row.score;var total=row.total||10;
+  var keys=Object.keys(answers).filter(function(k){return !k.startsWith('_');});
+  keys.sort(function(a,b){return parseInt(a.replace(/\D/g,''))-parseInt(b.replace(/\D/g,''));});
+  var sc=row.score;var total=row.total||row.total_questions||10;
   var pass=typeof sc==='number'&&sc>=Math.ceil(total*0.7);
-  var statusLabel=row.status||(pass?'PASSED':'FAILED');
+  var statusLabel=(row.status==='PASS'?'PASSED':row.status==='FAIL'?'FAILED':row.status)||(pass?'PASSED':'FAILED');
   var infoHtml='<table class="info-table">'+
-    '<tr><th>Student</th><td>'+escHtml(row.nickname||row.name||String(row.student_id||'?'))+'</td></tr>'+
+    '<tr><th>Student</th><td>'+escHtml(row.student_name||row.nickname||row.name||String(row.student_id||'?'))+'</td></tr>'+
     '<tr><th>ID</th><td>'+escHtml(String(row.student_id||'?'))+'</td></tr>'+
     '<tr><th>Worksheet</th><td>'+escHtml(ws)+'</td></tr>'+
     '<tr><th>Section</th><td>'+escHtml(row.section||'')+'</td></tr>'+
