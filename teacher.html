@@ -1077,7 +1077,7 @@ function renderSubmissionModal(row) {
         return '<div class="'+cls+'">'+icon+opt+'</div>';
       }).join('');
       return '<div class="q-card">'+
-        '<img class="q-card-img" src="'+IMAGE_BASE+wsCode+qNum+'.png" onerror="this.style.display='none'">'+
+        '<img class="q-card-img" src="'+IMAGE_BASE+wsCode+qNum+'.png" onerror="this.style.display=\'none\'">'+
         '<div class="q-header"><span class="qnum">'+qNum+'</span>'+
         '<span style="flex:1;margin-left:6px;">'+(q.question||'')+'</span>'+
         (q.is_correct?'<span style="color:green;margin-left:auto;">CORRECT</span>':'<span style="color:red;margin-left:auto;">WRONG</span>')+
