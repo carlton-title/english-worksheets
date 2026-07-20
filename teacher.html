@@ -162,11 +162,8 @@
         .opt-row { padding:6px 11px; border-radius:6px; margin-bottom:4px; font-size:.88em; border:1px solid #eee; display:flex; align-items:center; gap:8px; }
         .opt-sc { background:#c8e6c9; border-color:#4caf50; font-weight:bold; }
         .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
-        .opt-cm { background:#fafafa; color:#aaa; }
+        .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
         .opt-plain { background:#fafafa; color:#aaa; }
-        .badge-correct{display:inline-block;background:#2e7d32;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.78em;font-weight:bold;margin-right:5px;}
-        .badge-incorrect{display:inline-block;background:#c62828;color:#fff;border-radius:4px;padding:2px 8px;font-size:0.78em;font-weight:bold;margin-right:5px;}
-        
         .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
     </style>
 </head>
@@ -196,21 +193,21 @@
     <div class="card">
         <h2>🔗 Worksheets Quick Access</h2>
 
-                <div class="ws-section-label">📄 Worksheet 1</div>
+        <div class="ws-section-label">📄 Worksheet 1</div>
         <div class="ws-tiles">
-            <div class="ws-tile" onclick="window.open('https://m4worksheet1.netlify.app/','_blank')">
-                <div class="ws-tile-title">WS1 — M4</div>
-                <div class="ws-tile-sub">M4 Sections 1–13 (A2 &amp; B1)</div>
-                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://m4worksheet1.netlify.app/')">&#x1F4CB; Copy Link</button>
-            </div>
             <div class="ws-tile" onclick="window.open('https://m3-worksheet1b-51749f.netlify.app/','_blank')">
                 <div class="ws-tile-title">WS1 — M3</div>
                 <div class="ws-tile-sub">M3 Sections 2, 4, 6, 10 &amp; 12</div>
                 <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://m3-worksheet1b-51749f.netlify.app/')">&#x1F4CB; Copy Link</button>
             </div>
+            <div class="ws-tile" onclick="window.open('https://m4worksheet1.netlify.app/','_blank')">
+                <div class="ws-tile-title">WS1 — M4</div>
+                <div class="ws-tile-sub">M4 Sections 1–13 (A2 &amp; B1)</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://m4worksheet1.netlify.app/')">&#x1F4CB; Copy Link</button>
+            </div>
         </div>
 
-<div class="ws-section-label">📚 Worksheet 4</div>
+        <div class="ws-section-label">📚 Worksheet 4</div>
         <div class="ws-tiles">
             <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html','_blank')">
                 <div class="ws-tile-title">WS4 — M3 (A1)</div>
@@ -265,19 +262,19 @@
         <p class="kyle-card-note">Opens each worksheet with Kyle (ID 54565) pre-selected. Scores record normally to Google Sheets &amp; Supabase. Use this to verify worksheet functionality before students attempt.</p>
         <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 1</div>
         <div class="kyle-tiles" style="margin-bottom:14px;">
-            <div class="kyle-tile" onclick="window.open('https://m4worksheet1.netlify.app/?testmode=kyle','_blank')">
-                <div class="kyle-tile-title">WS1 — M4</div>
-                <div class="kyle-tile-sub">Kyle · ID 54565 · M4/1</div>
-                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://m4worksheet1.netlify.app/?testmode=kyle')">&#x1F4CB; Copy Link</button>
-            </div>
             <div class="kyle-tile" onclick="window.open('https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle','_blank')">
                 <div class="kyle-tile-title">WS1 — M3</div>
                 <div class="kyle-tile-sub">Kyle · ID 54565 · M3/2</div>
                 <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle')">&#x1F4CB; Copy Link</button>
             </div>
+            <div class="kyle-tile" onclick="window.open('https://m4worksheet1.netlify.app/?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS1 — M4</div>
+                <div class="kyle-tile-sub">Kyle · ID 54565 · M4/1</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://m4worksheet1.netlify.app/?testmode=kyle')">&#x1F4CB; Copy Link</button>
+            </div>
         </div>
 
-<div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 4</div>
+        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 4</div>
         <div class="kyle-tiles" style="margin-bottom:14px;">
             <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle','_blank')">
                 <div class="kyle-tile-title">WS4 — M3 (A1)</div>
@@ -286,21 +283,18 @@
             </div>
             <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle','_blank')">
                 <div class="kyle-tile-title">WS4 — M3 (A2)</div>
-                <div class="kyle-tile-sub">M3 Sections 10        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 1</div>
-        <div class="kyle-tiles" style="margin-bottom:14px;">
-            <div class="kyle-tile" onclick="window.open('https://m4worksheet1.netlify.app/?testmode=kyle','_blank')">
-                <div class="kyle-tile-title">WS1 — M4</div>
-                <div class="kyle-tile-sub">Kyle · ID 54565 · M4/1</div>
-                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://m4worksheet1.netlify.app/?testmode=kyle')">&#x1F4CB; Copy Link</button>
+                <div class="kyle-tile-sub">M3 Sections 10 &amp; 12</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle')">📋 Copy Link</button>
             </div>
-            <div class="kyle-tile" onclick="window.open('https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle','_blank')">
-                <div class="kyle-tile-title">WS1 — M3</div>
-                <div class="kyle-tile-sub">Kyle · ID 54565 · M3/2</div>
-                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle')">&#x1F4CB; Copy Link</button>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M4 (A1)</div>
+                <div class="kyle-tile-sub">M4 Sections 1–9</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle')">📋 Copy Link</button>
             </div>
-        </div>
-
-s="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle')">📋 Copy Link</button>
+            <div class="kyle-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle','_blank')">
+                <div class="kyle-tile-title">WS4 — M4 (A2)</div>
+                <div class="kyle-tile-sub">M4 Sections 10–13</div>
+                <button class="kyle-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle')">📋 Copy Link</button>
             </div>
         </div>
         <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 5</div>
@@ -701,422 +695,37 @@ function onStudentChange() {
 
 // ── Search ──
 async function doSearch() {
-  var section=document.getElementById('selSection').value;
-  var sid=document.getElementById('inputStudentId').value.trim();
-  var ws=document.getElementById('selWorksheet').value;
-  if(!section||!sid||!ws){alert('Please select section, student, and worksheet.');return;}
-  var btn=document.getElementById('btnSearch');
-  btn.disabled=true;btn.textContent='Searching...';
-  document.getElementById('resultsSection').style.display='block';
-  document.getElementById('resultsBody').innerHTML='<div class="loading-msg">Searching...</div>';
-  document.getElementById('resultsTitle').textContent='Search Results';
-  var rows=[];
-  try{
-    var sr=await fetch(SUPA_URL+'/rest/v1/worksheet_submissions?student_id=eq.'+encodeURIComponent(sid)+'&worksheet=eq.'+encodeURIComponent(ws)+'&order=submitted_at.desc',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}});
-    rows=sr.ok?await sr.json():[];
-  }catch(e){console.warn(e);}
-  if(Array.isArray(rows)&&rows.length>0){
-    rows.forEach(function(r){var i=allSubmissions.findIndex(function(s){return s.id===r.id;});if(i<0)allSubmissions.push(r);else allSubmissions[i]=r;});
-    var html=rows.map(function(r){
-      var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
-      var dt=r.submitted_at?new Date(r.submitted_at).toLocaleString():'N/A';
-      return '<div class="result-card"><div class="result-header">'+
-        '<div class="result-name">'+escHtml(r.student_name||r.nickname||r.name||sid)+'</div>'+
-        '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
-        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
-        '</div><div class="result-body">'+
-        '<div class="result-info">Worksheet: '+ws+'</div>'+
-        '<div class="result-info">Section: '+escHtml(r.section||section)+'</div>'+
-        '<div class="result-info">Date: '+dt+'</div>'+
-        '</div><button class="btn-pdf" onclick="viewSubmissionById('+r.id+')">View Detail / PDF</button>'+
-        '</div></div>';
-    }).join('');
-    document.getElementById('resultsBody').innerHTML=html;
-    document.getElementById('resultsTitle').textContent='Search Results ('+rows.length+' attempt'+(rows.length>1?'s':'')+')';
-    btn.disabled=false;btn.textContent='Search';return;
-  }
-  var cached=allSubmissions.filter(function(s){return String(s.student_id)===String(sid)&&s.worksheet===ws;});
-  if(cached.length>0){
-    var html2=cached.map(function(r,i){
-      var sc=r.score;var total=r.total||10;var pass=sc>=Math.ceil(total*0.7);
-      window['_tr_'+i]=r;
-      return '<div class="result-card"><div class="result-header">'+
-        '<div class="result-name">'+escHtml(r.student_name||r.nickname||r.name||sid)+'</div>'+
-        '<div class="result-score">'+sc+(typeof sc==='number'?'/':'')+total+'</div>'+
-        '<span class="badge '+(pass?'badge-pass':'badge-fail')+'">'+( pass?'PASSED':'FAILED')+'</span>'+
-        '</div><div class="result-body"><div class="result-info">Worksheet: '+ws+'</div></div>'+
-        '<button class="btn-pdf" onclick="var _r=window._tr_'+i+';loadViewModal(_r.student_id,_r.worksheet,_r.section,_r.nickname,_r.score,_r.total,_r.status)">View Detail / PDF</button>'+
-        '</div></div>';
-    }).join('');
-    document.getElementById('resultsBody').innerHTML=html2;
-    btn.disabled=false;btn.textContent='Search';return;
-  }
-  document.getElementById('resultsBody').innerHTML='<div class="loading-msg">No results found.</div>';
-  btn.disabled=false;btn.textContent='Search';
-}
+    var section = document.getElementById('selSection').value;
+    var studentId = document.getElementById('inputStudentId').value.trim();
+    var worksheet = document.getElementById('selWorksheet').value;
 
-function renderResults(results, studentId, worksheet, section) {
-    var sec = document.getElementById('resultsSection');
-    sec.style.display = 'block';
-    var wsLabel = worksheet.replace('WS','Worksheet ');
-    if (studentId) {
-        document.getElementById('resultsTitle').textContent =
-            '📄 Results for ID ' + studentId + ' — ' + wsLabel;
-    } else {
-        document.getElementById('resultsTitle').textContent =
-            '📄 All ' + wsLabel + ' Submissions — ' + (section||'');
-    }
-
-    if (!results || results.length === 0) {
-        document.getElementById('resultsBody').innerHTML =
-            '<div class="no-result">❌ No submitted worksheets found' + (studentId ? ' for this student' : ' for '+section) + '.<br>' + (studentId ? 'The student has not attempted '+wsLabel+' yet.' : 'No students in this class have submitted '+wsLabel+' yet.') + '</div>';
-        return;
-    }
-
-    document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
-        var score = Number(s.score) || 0;
-        var isPassed = score >= 7;
-        var key = s.student_id+'|'+s.worksheet+'|'+s.section;
-        return '<div class="result-card">'
-            +'<div class="result-header">'
-            +'<span><b>Score</b></span>'
-            +'<span class="score">'+score+'/10</span>'
-            +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
-            +'</div>'
-            +'<div class="result-body">'
-            +'<div class="result-info">👤 <b>'+(s.nick||'—')+'</b>'
-            +(s.name?' ('+s.name+')':'')
-            +' &nbsp;|&nbsp; 🏫 '+(s.section||'—')+'</div>'
-            +'<button class="btn-pdf" onclick="viewSubmission(\''+key+'\')">📄 View Detail</button>'
-            +'</div></div>';
-    }).join('');
-}
-
-// ── All Submissions ──
-async function loadAll() {
-    document.getElementById('allBody').innerHTML = '<tr><td colspan="10" class="loading-msg">Loading from Google Sheets…</td></tr>';
-    try {
-        var results = await Promise.all([
-            fetch(M3_SCRIPT_URL + '?action=getSubmissions').then(function(r){return r.json();}),
-            fetch(M4_SCRIPT_URL + '?action=getSubmissions').then(function(r){return r.json();})
-        ]);
-        allSubmissions = [];
-        if (results[0] && results[0].ok) allSubmissions = allSubmissions.concat(results[0].submissions);
-        if (results[1] && results[1].ok) allSubmissions = allSubmissions.concat(results[1].submissions);
-        document.getElementById('allCount').textContent = '('+allSubmissions.length+' total)';
-        var tbody = document.getElementById('allBody');
-        if (!allSubmissions.length) {
-            tbody.innerHTML = '<tr><td colspan="10" class="loading-msg">No submissions yet.</td></tr>';
-            return;
-        }
-        tbody.innerHTML = allSubmissions.map(function(s,i) {
-            var score = Number(s.score) || 0;
-            var isPassed = score >= 7;
-            var key = s.student_id+'|'+s.worksheet+'|'+s.section;
-            return '<tr>'
-                +'<td>'+(i+1)+'</td>'
-                +'<td><b>'+(s.student_id||'—')+'</b></td>'
-                +'<td>'+(s.nick||'—')+'</td>'
-                +'<td style="font-size:.85em;">'+(s.name||'—')+'</td>'
-                +'<td>'+(s.section||'—')+'</td>'
-                +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
-                +'<td><b>'+score+'/10</b></td>'
-                +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
-                +'<td style="font-size:.82em;color:#666;">—</td>'
-                +'<td><button class="btn-view-sm" onclick="viewSubmission(\''+key+'\')">View</button></td>'
-                +'</tr>';
-        }).join('');
-    } catch(e) {
-        document.getElementById('allBody').innerHTML = '<tr><td colspan="10" class="loading-msg">⚠️ Failed to load.</td></tr>';
-    }
-}
-
-// ── Print Modal ──
-function viewSubmission(key) {
-    var parts = String(key).split('|');
-    var s = allSubmissions.find(function(x) {
-        return String(x.student_id) === parts[0] && x.worksheet === parts[1] && x.section === parts[2];
-    });
-    if (s) buildModal(s);
-}
-
-function buildModal(s) {
-    var score = Number(s.score) || 0;
-    var isPassed = score >= 7;
-    var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
-
-    document.getElementById('modalTitle').textContent =
-        wsLabel + ' — ' + (s.nick || s.student_id);
-
-    document.getElementById('printContent').innerHTML =
-        '<table class="sub-info-table">'
-        +'<tr><td>Student Name</td><td><b>'+(s.nick||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
-        +'<tr><td>Thai Name</td><td><b>'+(s.name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
-        +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+score+'/10</b></td></tr>'
-        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#1b5e20':'#b71c1c')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
-        +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
-        +'</table>'
-        +'<div id="answersSection" style="margin-top:14px;"><div style="color:#888;font-size:.85em;text-align:center;padding:10px;">📋 Loading answer details…</div></div>'
-        +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
-
-    document.getElementById('printModal').classList.add('open');
-    loadAnswersForModal(s.student_id, s.worksheet, s.section);
-}
-
-function loadAnswersForModal(studentId, worksheet, section) {
-    var url = SUPA_URL + '/rest/v1/worksheet_submissions'
-        + '?student_id=eq.' + encodeURIComponent(String(studentId))
-        + '&worksheet=eq.' + encodeURIComponent(worksheet)
-        + '&order=submitted_at.desc&limit=1'
-        + '&order=submitted_at.desc&limit=1';
-    fetch(url, {headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}})
-    .then(function(r){return r.json();})
-    .then(function(rows) {
-        var ansDiv = document.getElementById('answersSection');
-        if (!ansDiv) return;
-        if (!rows || rows.length === 0) {
-            ansDiv.innerHTML = '<div style="color:#999;font-size:.84em;text-align:center;padding:10px;">No detailed answer data in Supabase for this submission.<br><small>Answer details are recorded for submissions made after the Supabase upgrade.</small></div>';
-            return;
-        }
-        var row = rows[0];
-        var answers = row.answers || {};
-        // Extract worksheet activity code for images (stored in answers._meta by new submissions)
-        var wsCode = (answers['_meta'] && answers['_meta'].code) ? answers['_meta'].code : '';
-        // Only process Q# keys, exclude _meta
-        var keys = Object.keys(answers).filter(function(k){ return /^Q\d+$/.test(k); })
-            .sort(function(a,b){return parseInt(a.replace('Q',''))-parseInt(b.replace('Q',''));});
-        if (keys.length === 0) {
-            ansDiv.innerHTML = '<div style="color:#999;font-size:.84em;text-align:center;padding:10px;">Answer details not recorded for this submission.</div>';
-            return;
-        }
-
-        // Detect format: new = value is an object {question,options[],selected,correct_answer,is_correct}
-        var isNewFormat = answers[keys[0]] !== null && typeof answers[keys[0]] === 'object';
-        var html = '<div style="border-top:2px solid #e8eaf6;padding-top:12px;">';
-        if (wsCode) {
-            html += '<div style="font-size:.78em;color:#7986cb;margin-bottom:10px;">🗂 Activity: <b>'+escHtml(wsCode)+'</b></div>';
-        }
-        html += '<div style="font-weight:700;font-size:.93em;color:#1a237e;margin-bottom:12px;">📝 Worksheet Answers</div>';
-
-        if (isNewFormat) {
-            // ── Full question card rendering with images ───────────────────────
-            keys.forEach(function(qKey) {
-                var q = answers[qKey];
-                if (!q || typeof q !== 'object') return;
-                var qNum = qKey.replace('Q','');
-                var isCorrect = q.is_correct === true;
-                html += '<div class="q-card" style="border:1px solid #e0e0e0;border-radius:8px;margin-bottom:10px;overflow:hidden;">';
-                // Header: Q number + question text + result badge
-                html += '<div class="q-header" style="background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-start;">'
-                    +'<span class="qnum" style="background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;min-width:22px;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;flex-shrink:0;">'+qNum+'</span>'
-                    +'<span style="flex:1;">'+escHtml(q.question||qKey)+'</span>'
-                    +'<span style="font-size:.82em;white-space:nowrap;padding:2px 8px;border-radius:10px;background:'+(isCorrect?'#c8e6c9':'#ffcdd2')+';color:'+(isCorrect?'#1b5e20':'#b71c1c')+';">'+(isCorrect?'✅ Correct':'❌ Wrong')+'</span>'
-                    +'</div>';
-                // Question image (if activity code known)
-                if (wsCode) {
-                    var imgUrl = IMAGE_BASE + wsCode + qNum + '.png';
-                    html += '<img class="q-card-img" src="'+imgUrl+'" alt="Question '+qNum+'" style="width:100%;max-height:220px;object-fit:contain;background:#f8f9ff;border-bottom:1px solid #e8eaf6;display:block;" onerror="this.style.display=\'none\'">';
-                }
-                // Options
-                html += '<div class="q-body" style="padding:10px 13px;">';
-                var opts = Array.isArray(q.options) ? q.options : [];
-                if (opts.length === 0) {
-                    html += '<div style="color:#aaa;font-style:italic;font-size:.85em;">No option data.</div>';
-                } else {
-                    opts.forEach(function(optText) {
-                        var isSelected = optText === q.selected;
-                        var isCorrectOpt = optText === q.correct_answer;
-                        var rowStyle, prefix;
-                        if (isSelected && isCorrect) {
-                            rowStyle = 'background:#c8e6c9;border-color:#4caf50;font-weight:bold;';
-                            prefix = '✅ ';
-                        } else if (isSelected && !isCorrect) {
-                            rowStyle = 'background:#ffcdd2;border-color:#f44336;font-weight:bold;';
-                            prefix = '❌ ';
-                        } else if (isCorrectOpt) {
-                            rowStyle = 'background:#e8f5e9;border-color:#81c784;color:#2e7d32;';
-                            prefix = '✔ ';
-                        } else {
-                            rowStyle = 'background:#fff;';
-                            prefix = '○ ';
-                        }
-                        html += '<div class="opt-row" style="padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:.87em;border:1px solid #eee;'+rowStyle+'">'
-                            +prefix+escHtml(optText)+'</div>';
-                    });
-                }
-                html += '</div></div>';
-            });
-        } else {
-            // ── Legacy format: simple Q# → answer text table ─────────────────
-            html += '<table style="width:100%;border-collapse:collapse;font-size:.87em;">'
-                +'<tr style="background:#e8eaf6;"><th style="padding:6px 10px;text-align:left;width:60px;">Q#</th><th style="padding:6px 10px;text-align:left;">Selected Answer</th></tr>';
-            keys.forEach(function(q,idx){
-                html += '<tr style="background:'+(idx%2===0?'#fff':'#f5f7ff')+';border-bottom:1px solid #e8eaf6;">'
-                    +'<td style="padding:6px 10px;font-weight:700;color:#3949ab;">'+q+'</td>'
-                    +'<td style="padding:6px 10px;">'+(answers[q]||'—')+'</td></tr>';
-            });
-            html += '</table>';
-        }
-
-        html += '<div style="font-size:.76em;color:#bbb;margin-top:8px;text-align:right;">Submitted: '+new Date(row.submitted_at).toLocaleString()+'</div></div>';
-        ansDiv.innerHTML = html;
-    })
-    .catch(function(){
-        var ansDiv = document.getElementById('answersSection');
-        if (ansDiv) ansDiv.innerHTML = '<div style="color:#e53935;font-size:.82em;text-align:center;padding:8px;">⚠️ Could not load answer details.</div>';
-    });
-}
-
-function escHtml(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-
-// ── No Submission Check ──
-function doNoSubCheck() {
-    var section = document.getElementById('nsSection').value;
-    var worksheet = document.getElementById('nsWorksheet').value;
     if (!section || !worksheet) {
-        alert('Please select both Section and Worksheet.');
+        alert('Please select Section and Worksheet Number.');
         return;
     }
-    var wsLabel = worksheet.replace('WS', 'Worksheet ');
-    // Get all students in this section
-    var allStudents = studentData[section] || [];
-    if (!allStudents.length) {
-        // Try from allSubmissions
-        var seen = {};
-        allSubmissions.forEach(function(r) {
-            if (r.section === section && !seen[r.student_id]) {
-                seen[r.student_id] = true;
-                allStudents.push({id: r.student_id, name: r.name || '', nick: r.nick || ''});
-            }
-        });
-    }
-    // Find who has submitted
-    var submitted = {};
-    allSubmissions.forEach(function(r) {
-        if (r.section === section && r.worksheet === worksheet) {
-            submitted[String(r.student_id)] = true;
-        }
-    });
-    // Students without submission (exclude Kyle test student)
-    var missing = allStudents.filter(function(st) {
-        return !submitted[String(st.id)] && String(st.id) !== '54565';
-    });
-    var result = document.getElementById('noSubResult');
-    result.style.display = 'block';
-    document.getElementById('noSubTitle').textContent =
-        '🚫 Students who have NOT submitted ' + wsLabel + ' in ' + section
-        + ' — ' + missing.length + ' of ' + (allStudents.filter(function(s){return String(s.id)!=='54565';}).length) + ' students missing';
-    if (!missing.length) {
-        document.getElementById('noSubList').innerHTML =
-            '<p style="color:#2e7d32;font-weight:bold;">✅ All students have submitted '+wsLabel+'!</p>';
-    } else {
-        document.getElementById('noSubList').innerHTML =
-            '<table style="width:100%;border-collapse:collapse;">'
-            +'<thead><tr style="background:#f0f3ff;">'
-            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">#</th>'
-            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">ID</th>'
-            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">Name (Nick)</th>'
-            +'<th style="padding:8px 12px;text-align:left;border:1px solid #ddd;">Thai Name</th>'
-            +'</tr></thead><tbody>'
-            + missing.map(function(st, i) {
-                return '<tr style="border-bottom:1px solid #eee;">'
-                    +'<td style="padding:7px 12px;border:1px solid #ddd;">'+(i+1)+'</td>'
-                    +'<td style="padding:7px 12px;border:1px solid #ddd;"><b>'+st.id+'</b></td>'
-                    +'<td style="padding:7px 12px;border:1px solid #ddd;">'+(st.nick||'—')+'</td>'
-                    +'<td style="padding:7px 12px;border:1px solid #ddd;font-size:.88em;">'+(st.name||'—')+'</td>'
-                    +'</tr>';
-            }).join('')
-            +'</tbody></table>';
-    }
-}
 
-function closeModal() { document.getElementById('printModal').classList.remove('open'); }
+    var btn = document.getElementById('btnSearch');
+    btn.disabled = true; btn.textContent = 'Searching…';
 
-function doPrint() {
-    var content = document.getElementById('printContent').innerHTML;
-    var pw = window.open('','_blank','width=960,height=750');
-    if (!pw) { alert('Please allow pop-ups to print/download PDF.'); return; }
-    pw.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Worksheet Record</title>'
-        +'<style>'
-        +'body{font-family:Arial,sans-serif;margin:25px;color:#333;font-size:13px;}'
-        +'.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:18px;}'
-        +'.sub-info-table td{padding:7px 11px;border:1px solid #ddd;font-size:.9em;}'
-        +'.sub-info-table td:first-child{background:#f0f3ff;font-weight:bold;width:120px;}'
-        +'.q-card{border:1px solid #e0e0e0;border-radius:8px;margin-bottom:10px;overflow:hidden;page-break-inside:avoid;}'
-        +'.q-card-img{width:100%;max-height:170px;object-fit:cover;}'
-        +'.q-header{background:#f0f3ff;padding:9px 13px;font-weight:bold;color:#1a237e;font-size:.88em;border-bottom:1px solid #e0e0e0;display:flex;gap:8px;align-items:flex-start;}'
-        +'.qnum{background:#1a237e;color:white;border-radius:50%;width:22px;height:22px;min-width:22px;display:flex;align-items:center;justify-content:center;font-size:.8em;}'
-        +'.q-body{padding:10px 13px;}'
-        +'.opt-row{padding:5px 10px;border-radius:5px;margin-bottom:4px;font-size:.87em;border:1px solid #eee;}'
-        +'.opt-sc{background:#c8e6c9;border-color:#4caf50;font-weight:bold;}'
-        +'.opt-sw{background:#ffcdd2;border-color:#f44336;font-weight:bold;}'
-        +'.opt-cm{background:#e8f5e9;border-color:#81c784;color:#2e7d32;}'
-        +'.no-ans{color:#aaa;font-style:italic;font-size:.85em;}'
-        +'@page{margin:12mm;}'
-        +'</style></head><body>'
-        +'<h2 style="text-align:center;color:#1a237e;margin-bottom:4px;">📚 English Worksheet — Submission Record</h2>'
-        +'<hr style="border:1px solid #1a237e;margin-bottom:16px;">'
-        +content
-        +'<script>window.addEventListener("load",function(){setTimeout(function(){window.print();},500);});<\/script>'
-        +'</body></html>');
-    pw.document.close();
-}
-
-document.getElementById('printModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-
-function viewSubmissionById(supaId) {
-  var row=allSubmissions.find(function(s){return s.id===supaId;});
-  if(!row){alert('Submission not found. Please search again.');return;}
-  renderSubmissionModal(row);
-}
-
-function loadViewModal(sid,ws,sec,nick,sc,total,status) {
-  var minRow={student_id:sid,worksheet:ws,section:sec,nickname:nick,name:nick,score:sc,total:total,status:status,submitted_at:null,answers:{}};
-  renderSubmissionModal(minRow);
-  fetch(SUPA_URL+'/rest/v1/worksheet_submissions?student_id=eq.'+encodeURIComponent(sid)+'&worksheet=eq.'+encodeURIComponent(ws)+'&order=submitted_at.desc&limit=1',{headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY}})
-  .then(function(r){return r.json();})
-  .then(function(rows){if(rows&&rows[0]&&rows[0].answers){renderSubmissionModal(Object.assign({},minRow,rows[0]));}})
-  .catch(function(){});
-}
-
-function renderSubmissionModal(row) {
-  var ws=row.worksheet||'';
-  var wsCode=ws.replace(/\s+/g,'_').replace(/[^\w]/g,'_');
-  var answers=row.answers||{};
-  var keys=Object.keys(answers).filter(function(k){return !k.startsWith('_');});
-  keys.sort(function(a,b){return parseInt(a.replace(/\D/g,''))-parseInt(b.replace(/\D/g,''));});
-  var sc=row.score;var total=row.total||row.total_questions||10;
-  var pass=typeof sc==='number'&&sc>=Math.ceil(total*0.7);
-  var statusLabel=(row.status==='PASS'?'PASSED':row.status==='FAIL'?'FAILED':row.status)||(pass?'PASSED':'FAILED');
-  var infoHtml='<table class="info-table">'+
-    '<tr><th>Student</th><td>'+escHtml(row.student_name||row.nickname||row.name||String(row.student_id||'?'))+'</td></tr>'+
-    '<tr><th>ID</th><td>'+escHtml(String(row.student_id||'?'))+'</td></tr>'+
-    '<tr><th>Worksheet</th><td>'+escHtml(ws)+'</td></tr>'+
-    '<tr><th>Section</th><td>'+escHtml(row.section||'')+'</td></tr>'+
-    '<tr><th>Score</th><td>'+(sc!==undefined?sc:'?')+' / '+total+'</td></tr>'+
-    '<tr><th>Status</th><td>'+escHtml(statusLabel)+'</td></tr>'+
-    '<tr><th>Date</th><td>'+(row.submitted_at?new Date(row.submitted_at).toLocaleString():'N/A')+'</td></tr>'+
-    '</table>';
-  var qaHtml=keys.length===0?'<p class="no-data-msg">No detailed answer data available.</p>':keys.map(function(qNum){
-    var q=answers[qNum];if(!q)return '';
-    var imgHtml='<img class="q-card-img" src="'+IMAGE_BASE+wsCode+qNum+'.png" onerror="this.remove()">';
-    var optsHtml='';
-    if(q.options&&Array.isArray(q.options)){
-      optsHtml=q.options.map(function(opt,oi){
-        var isSel=(q.selected&&q.selected===opt);
-        var isCorr=(isSel&&((q.correct_answer&&q.correct_answer===opt)||(q.is_correct===true)));
-         var cls=isSel&&isCorr?'opt-sc':isSel?'opt-sw':'opt-plain';
-        var badge=isSel&&isCorr?'<span class="badge-correct">&#10003; Correct</span> ':isSel?'<span class="badge-incorrect">&#10007; Incorrect</span> ':'';return '<div class="q-opt '+cls+'">'+badge+escHtml(String(opt))+'</div>';
-      }).join('');
-    }
-    return '<div class="q-card"><div class="q-header">'+(qNum)+'</div>'+imgHtml+'<div class="q-opts">'+optsHtml+'</div></div>';
-  }).join('');
-  document.getElementById('printContent').innerHTML=infoHtml+'<div class="qa-grid">'+qaHtml+'</div>';
-  document.getElementById('printModal').style.display='flex';
-}
-</script>
-</body>
-</html>
+    try {
+        var results;
+        if (studentId) {
+            // specific student — search Google Sheets first, fall back to Supabase
+            results = allSubmissions.filter(function(s) {
+                return String(s.student_id) === String(studentId) && s.worksheet === worksheet;
+            });
+            if (results.length === 0) {
+                // Not found in Google Sheets — query Supabase directly
+                var supaUrl = SUPA_URL + '/rest/v1/worksheet_submissions'
+                    + '?student_id=eq.' + encodeURIComponent(String(studentId))
+                    + '&worksheet=eq.' + encodeURIComponent(worksheet)
+                    + '&order=submitted_at.desc';
+                var supaRows = await fetch(supaUrl, {
+                    headers: {'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY}
+                }).then(function(r){ return r.json(); });
+                if (supaRows && supaRows.length > 0) {
+                    results = supaRows.map(function(r) {
+                        return {
+                            student_id: r.student_id,
+                            nick: r.student_name || String(r.student_id),
+    
