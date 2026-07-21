@@ -101,6 +101,8 @@
         .result-header .meta { font-size:.88em; opacity:.9; }
         .badge { display:inline-block; padding:4px 12px; border-radius:12px; font-size:.82em; font-weight:bold; }
         .badge-pass { background:#c8e6c9; color:#1b5e20; }
+        .badge-average { background:#fff3e0; color:#e65100; }
+        .badge-completed { background:#e3f2fd; color:#1565c0; }
         .badge-fail { background:#ffcdd2; color:#b71c1c; }
         .result-body { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
         .result-info { font-size:.92em; color:#555; }
@@ -307,7 +309,8 @@
     <div class="card">
         <h2>📭 No Worksheet Submitted Search</h2>
         <p style="color:#666;font-size:.9em;margin-bottom:4px;">Cross-references your class roster against Supabase &amp; Google Sheets submission records.</p>
-        <p style="color:#999;font-size:.82em;margin-bottom:18px;">Results show each student's ID, Thai name, nickname, the date the worksheet was tasked (from Supabase), and a "No Worksheet Submitted" remark.</p>
+        <p style="color:#999;font-size:.82em;margin-bottom:6px;">Results mirror your Google Sheet — students with a score (even 0) count as submitted. Absent ("A") entries are excluded.</p>
+        <p style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:8px 12px;font-size:.82em;color:#795548;margin-bottom:18px;">⚠️ <b>First time?</b> Open your Google Sheet → Extensions → Apps Script → paste <b>SyncToSupabase.gs</b> → run <b>Sync ALL sheets now</b> to populate. After that it auto-updates whenever you edit a score.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:flex-end;margin-bottom:0;">
             <div class="form-group">
                 <label>Class / Section</label>
@@ -644,7 +647,7 @@ function renderResults(results, studentId, worksheet) {
             +'<div class="result-header">'
             +'<span><b>Attempt '+(i+1)+'</b></span>'
             +'<span class="score">'+s.score+'/'+(s.total_questions||10)+'</span>'
-            +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
+            +'<span class="badge '+ stBadge.cls +'">'+ stBadge.label +'</span>'
             +'<span class="meta">'+dt+'</span>'
             +'</div>'
             +'<div class="result-body">'
@@ -671,7 +674,7 @@ async function loadAll() {
             return;
         }
         tbody.innerHTML = allSubmissions.map(function(s,i) {
-            var isPassed = s.status==='PASSED';
+            var stBadge = getStatusBadge(s.status); var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
             var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
             return '<tr>'
                 +'<td>'+(i+1)+'</td>'
@@ -681,7 +684,7 @@ async function loadAll() {
                 +'<td>'+(s.section||'—')+'</td>'
                 +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
                 +'<td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td>'
-                +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
+                +'<td><span class="badge '+stBadge.cls+'">'+stBadge.label+'</span></td>'
                 +'<td style="font-size:.82em;color:#666;">'+dt+'</td>'
                 +'<td><button class="btn-view-sm" onclick="viewSubmission('+s.id+')">View</button></td>'
                 +'</tr>';
@@ -705,7 +708,7 @@ function viewSubmission(id) {
 }
 
 function buildModal(s) {
-    var isPassed = s.status==='PASSED';
+    var stBadge = getStatusBadge(s.status); var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
     var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
     var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
     var answers = s.answers || [];
@@ -783,25 +786,24 @@ async function doNoSubCheck() {
     if (!section || !worksheet) { alert('Please select both a Section and a Worksheet.'); return; }
 
     btn.disabled = true; btn.textContent = '⏳ Checking…';
-    out.innerHTML = '<div class="loading-msg">🔍 Checking Supabase submission records…</div>';
+    out.innerHTML = '<div class="loading-msg">🔍 Checking Google Sheet scores (sheet_scores)…</div>';
 
     try {
-        // 1. Fetch every submission record for this section + worksheet from Supabase
+        // 1. Fetch scores from sheet_scores table (mirrors Google Sheets — authoritative source)
         var url = SUPABASE_URL
-            + '/rest/v1/worksheet_submissions?select=student_id,student_name,score,status,submitted_at'
+            + '/rest/v1/sheet_scores?select=student_id,student_name,score,status,updated_at'
             + '&section=eq.' + encodeURIComponent(section)
             + '&worksheet=eq.' + encodeURIComponent(worksheet)
             + '&order=student_id.asc';
         var res  = await fetch(url, { headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
         var subs = await res.json();
 
-        // 2a. Derive the earliest submission date for this section+worksheet
-        //     — used as "Date Tasked" for non-submitting students
+        // 2a. Derive the earliest updated date for this section+worksheet (Date Tasked)
         var earliestDate = '—';
         if (subs.length > 0) {
             var earliest = subs.reduce(function(min, r) {
-                return r.submitted_at && r.submitted_at < min ? r.submitted_at : min;
-            }, subs[0].submitted_at || '');
+                return r.updated_at && r.updated_at < min ? r.updated_at : min;
+            }, subs[0].updated_at || '');
             if (earliest) {
                 var ed = new Date(earliest);
                 earliestDate = (ed.getMonth()+1).toString().padStart(2,'0') + '/'
@@ -810,19 +812,22 @@ async function doNoSubCheck() {
             }
         }
 
-        // 2b. Build a map: student_id → best attempt info
+        // 2b. Build a map: student_id → score info (one row per student in sheet_scores)
         var subMap = {};
+        if (!Array.isArray(subs) || subs.length === 0) {
+            out.innerHTML = '<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:18px;color:#795548;">'
+                + '⚠️ <b>No Google Sheet data found for ' + section + ' / ' + worksheet + '.</b><br><br>'
+                + 'You need to sync your Google Sheet first:<br>'
+                + '1. Open Google Sheets → Extensions → Apps Script<br>'
+                + '2. Paste the <b>SyncToSupabase.gs</b> file<br>'
+                + '3. From the sheet menu: 📊 Sync to Supabase → Sync ALL sheets now'
+                + '</div>';
+            btn.disabled = false; btn.textContent = '🔍 Check';
+            return;
+        }
         subs.forEach(function(r) {
             var sid = String(r.student_id);
-            if (!subMap[sid]) {
-                subMap[sid] = { name: r.student_name, score: r.score, status: r.status, attempts: 0 };
-            }
-            subMap[sid].attempts++;
-            // Keep the highest score across attempts
-            if ((r.score || 0) > (subMap[sid].score || 0)) {
-                subMap[sid].score  = r.score;
-                subMap[sid].status = r.status;
-            }
+            subMap[sid] = { name: r.student_name, score: r.score, status: r.status };
         });
 
         // 3. Get the class roster
@@ -907,20 +912,17 @@ async function doNoSubCheck() {
                 + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Nick</th>'
                 + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Score</th>'
                 + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Result</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Attempts</th>'
                 + '</tr></thead><tbody>'
                 + done.map(function(d, i) {
-                    var isPassed = d.sub.status === 'PASSED';
+                    var stBadge = getStatusBadge(d.sub.status); var isPassed = (d.sub.status === 'PASSED' || d.sub.status === 'PASS');
                     return '<tr style="background:' + (i%2===0?'#fff':'#f9fbe7') + ';">'
                         + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + (i+1) + '</td>'
                         + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-family:monospace;">' + d.student.id + '</td>'
                         + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + d.student.name + '</td>'
                         + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;color:#888;">' + (d.student.nick||'—') + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-weight:bold;">' + (d.sub.score !== null ? d.sub.score : '—') + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-weight:bold;">' + (d.sub.score !== null ? d.sub.score + '/10' : '—') + '</td>'
                         + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">'
-                        +   '<span style="background:' + (isPassed?'#c8e6c9':'#ffcdd2') + ';color:' + (isPassed?'#1b5e20':'#b71c1c') + ';padding:2px 9px;border-radius:10px;font-size:.82em;font-weight:bold;">'
-                        +   (isPassed ? '✅ PASS' : '❌ FAIL') + '</span></td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;color:#888;">' + d.sub.attempts + '</td>'
+                        +   '<span class="badge ' + stBadge.cls + '">' + stBadge.label + '</span></td>'
                         + '</tr>';
                 }).join('')
                 + '</tbody></table></div></details>';

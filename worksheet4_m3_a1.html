@@ -154,6 +154,9 @@
         .score-status { font-size: 1.1em; color: #555; margin-top: 10px; }
         .status-pass { color: #4caf50; font-weight: bold; }
         .status-fail { color: #e74c3c; font-weight: bold; }
+        .status-average { color: #e65100; font-weight: bold; }
+        .status-completed { color: #1565c0; font-weight: bold; }
+
         .summary-section {
             background: #f8f9fa;
             padding: 20px;
@@ -417,8 +420,6 @@
     }
 
     // ===================== APP STATE =====================
-    var SUPABASE_URL='https://smtgkffnptwjlgccsrti.supabase.co';
-    var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
     var userAnswers = {};
     var attempts = 0;
@@ -550,7 +551,6 @@
         });
     }
 
-    function submitToSupabase(sId,nick,sec,score,status){var ans={};questions.forEach(function(q){var sel=userAnswers[q.id];var sO=sel!==undefined?q.options[sel]:null;var cO=q.options.find(function(o){return o.correct;});ans['Q'+q.id]={selected:sO?sO.text:null,correct_answer:cO?cO.text:null,is_correct:sO?sO.correct:false};});ans['_meta']={code:'WS4M3A1'};fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({student_id:String(sId),student_name:String(nick),section:sec,worksheet:'WS4',score:Number(score),total_questions:10,status:status==='PASSED'?'PASS':'FAIL',answers:ans})}).catch(function(e){console.warn('Supabase:',e);});}
     function submitAnswers() {
         var score = 0;
         questions.forEach(function(q) {
@@ -561,7 +561,19 @@
         var studentId = document.getElementById('studentId').value.trim();
         var section = document.getElementById('section').value;
         var storageKey = 'ws4_m3_a1_' + studentId + '_' + section;
-        var isPassed = score >= 8;
+                function getWsStatus(s) {
+            if (s >= 8) return 'PASSED';
+            if (s >= 5) return 'AVERAGE';
+            if (s >= 1) return 'COMPLETED';
+            return 'FAILED';
+        }
+        function getStatusDisplay(st) {
+            if (st === 'PASSED' || st === 'PASS') return {icon:'&#x2705;', label:'PASSED', bg:'#c8e6c9', color:'#1b5e20'};
+            if (st === 'AVERAGE') return {icon:'&#x1F4CA;', label:'AVERAGE', bg:'#fff3e0', color:'#e65100'};
+            if (st === 'COMPLETED') return {icon:'&#x1F4DD;', label:'COMPLETED', bg:'#e3f2fd', color:'#1565c0'};
+            return {icon:'&#x274C;', label:'FAILED', bg:'#ffcdd2', color:'#b71c1c'};
+        }
+        var wsStatus = getWsStatus(score);
 
         var savedData = JSON.parse(localStorage.getItem(storageKey) || '{"attempts":0,"scores":[],"attemptHistory":[]}');
         savedData.attempts = (savedData.attempts || 0) + 1;
@@ -576,12 +588,11 @@
             nickname: nickname,
             studentId: studentId,
             section: section,
-            status: isPassed ? 'PASSED' : 'FAILED'
+            status: wsStatus
         });
         attempts = savedData.attempts;
         allAttemptScores = savedData.scores;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
-        submitToSupabase(studentId, nickname, section, score, isPassed ? 'PASSED' : 'FAILED');
 
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'block';
@@ -589,13 +600,43 @@
 
         var statusEl = document.getElementById('scoreStatus');
         // Always record every attempt to Supabase and Google Sheets
-        submitToSheet(studentId, nickname, section, score, isPassed ? 'PASSED' : 'FAILED');
+        submitToSheet(studentId, nickname, section, score, wsStatus);
 
-        if (isPassed) {
+        if (wsStatus === 'PASSED') {
             statusEl.innerHTML = '<span class="status-pass">'
                 + '&#x2705; ยินดีด้วยคุณผ่านแล้ว! &#x1F389;<br>'
-                + 'ผ่านแล้วด้วยคะแนนสูงสุดครั้งนี้'
+                + 'ได้คะแนน ' + score + '/10 &#x1F31F;'
                 + '</span>';
+        } else if (wsStatus === 'AVERAGE') {
+            var remAvg = maxAttempts - attempts;
+            statusEl.innerHTML = '<span class="status-average">'
+                + '&#x1F4CA; ระดับพอใช้ได้ค่ะ<br>'
+                + 'ได้คะแนน ' + score + '/10<br>'
+                + ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) ? 'โอกาสเหลือ: 0 ครั้ง' : 'โอกาสเหลือ: ' + remAvg + ' ครั้ง')
+                + '</span>';
+        } else if (wsStatus === 'COMPLETED') {
+            var remCmp = maxAttempts - attempts;
+            statusEl.innerHTML = '<span class="status-completed">'
+                + '&#x1F4DD; ส่งเรียบร้อยแล้วค่ะ<br>'
+                + 'ได้คะแนน ' + score + '/10<br>'
+                + ((attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) ? 'โอกาสเหลือ: 0 ครั้ง' : 'โอกาสเหลือ: ' + remCmp + ' ครั้ง')
+                + '</span>';
+        } else {
+            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
+                    + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
+                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
+                    + 'โอกาสเหลือ: 0 ครั้ง'
+                    + '</span>';
+            } else {
+                var remaining = maxAttempts - attempts;
+                statusEl.innerHTML = '<span class="status-fail">'
+                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
+                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
+                    + 'โอกาสเหลือ: ' + remaining + ' ครั้ง'
+                    + '</span>';
+            }
         } else {
             if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
                 statusEl.innerHTML = '<span class="status-fail">'
@@ -629,7 +670,7 @@
         var ans = {};
         displayQuestions.forEach(function(q) {
             var selectedIdx = userAnswers[q.id];
-            var selectedOpt = (selectedIdx !== undefined) ? q.options[selectedIdx] : null;
+            var selectedOpt = (selectedIdx !== undefined) ? q.displayOptions[selectedIdx] : null;
             var correctOpt = q.displayOptions.find(function(o) { return o.correct; });
             ans['Q' + q.id] = {
                 question: q.text,
@@ -643,7 +684,7 @@
         // Get Thai name from dropdown
         var ts = document.getElementById('thaiName');
         var tn = ts && ts.selectedIndex > 0 ? ts.options[ts.selectedIndex].text.replace(/\s*\([^)]*\)\s*$/, '').trim() : String(nickname);
-        var st = (status === 'PASSED') ? 'PASS' : 'FAIL';
+        var st = status;
         // 1. Save to Supabase with full answer record
         fetch('https://smtgkffnptwjlgccsrti.supabase.co/rest/v1/worksheet_submissions', {
             method: 'POST',
@@ -701,11 +742,11 @@
             attemptsHtml = '<p style="color:#999;text-align:center;">No attempt records found.</p>';
         } else {
             history.forEach(function(attempt) {
-                var isPassed = attempt.status === 'PASSED';
-                var statusIcon = isPassed ? '&#x2705;' : '&#x274C;';
-                var statusLabel = isPassed ? 'PASSED' : 'FAILED';
-                var statusBg = isPassed ? '#c8e6c9' : '#ffcdd2';
-                var statusColor = isPassed ? '#1b5e20' : '#b71c1c';
+                var statusInfo = getStatusDisplay(attempt.status);
+                var statusIcon = statusInfo.icon;
+                var statusLabel = statusInfo.label;
+                var statusBg = statusInfo.bg;
+                var statusColor = statusInfo.color;
 
                 var questionsHtml = '';
                 questions.forEach(function(q) {
@@ -750,7 +791,7 @@
 
         var allScores = savedData.scores || [];
         var highest = allScores.length ? Math.max.apply(null, allScores) : 0;
-        var hasPassed = history.some(function(a) { return a.status === 'PASSED'; });
+        var hasPassed = history.some(function(a) { return a.status === 'PASSED' || a.status === 'PASS'; });
 
         var printHTML = '<!DOCTYPE html><html lang="en" translate="no"><head><meta charset="UTF-8"><meta name="google" content="notranslate">'
             + '<title>WS4 Record - ' + nickname + ' (' + studentId + ')</title>'
