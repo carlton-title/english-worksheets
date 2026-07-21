@@ -379,6 +379,8 @@
     }
 
     // ===================== APP STATE =====================
+    var SUPABASE_URL='https://smtgkffnptwjlgccsrti.supabase.co';
+    var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
     var userAnswers = {};
     var attempts = 0;
@@ -512,6 +514,7 @@
         });
     }
 
+    function submitToSupabase(sId,nick,sec,score,status){var ans={};questions.forEach(function(q){var sel=userAnswers[q.id];var sO=sel!==undefined?q.options[sel]:null;var cO=q.options.find(function(o){return o.correct;});ans['Q'+q.id]={selected:sO?sO.text:null,correct_answer:cO?cO.text:null,is_correct:sO?sO.correct:false};});ans['_meta']={code:'WS5M3A2'};fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({student_id:String(sId),student_name:String(nick),section:sec,worksheet:'WS5',score:Number(score),total_questions:10,status:status==='PASSED'?'PASS':'FAIL',answers:ans})}).catch(function(e){console.warn('Supabase:',e);});}
     function submitAnswers() {
         var score = 0;
         questions.forEach(function(q) {
@@ -542,6 +545,7 @@
         attempts = savedData.attempts;
         allAttemptScores = savedData.scores;
         localStorage.setItem(storageKey, JSON.stringify(savedData));
+        submitToSupabase(studentId, nickname, section, score, isPassed ? 'PASSED' : 'FAILED');
 
         document.getElementById('questionsSection').classList.remove('show');
         document.getElementById('scoreDisplay').style.display = 'block';
