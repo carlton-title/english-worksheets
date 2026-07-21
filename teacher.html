@@ -623,21 +623,52 @@ async function doSearch() {
             +'&order=submitted_at.desc';
         var res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
         var results = await res.json();
-        renderResults(results, studentId, worksheet);
+        if (!results || results.length === 0) {
+            // Fall back to sheet_scores (scores synced from Google Sheet)
+            var url2 = SUPABASE_URL+'/rest/v1/sheet_scores?select=*'
+                +'&student_id=eq.'+encodeURIComponent(studentId)
+                +'&worksheet=eq.'+encodeURIComponent(worksheet)
+                +'&limit=1';
+            var res2 = await fetch(url2, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+            var sheetResults = await res2.json();
+            renderResults([], studentId, worksheet, sheetResults && sheetResults.length ? sheetResults[0] : null);
+        } else {
+            renderResults(results, studentId, worksheet, null);
+        }
     } catch(e) {
         document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
     }
     btn.disabled = false; btn.textContent = '🔎 Search';
 }
 
-function renderResults(results, studentId, worksheet) {
+function renderResults(results, studentId, worksheet, sheetScore) {
     var sec = document.getElementById('resultsSection');
     sec.style.display = 'block';
     var wsLabel = worksheet.replace('WS','Worksheet ');
     document.getElementById('resultsTitle').textContent = '📄 Results for ID ' + studentId + ' — ' + wsLabel;
     if (!results || results.length === 0) {
-        document.getElementById('resultsBody').innerHTML =
-            '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
+        if (sheetScore) {
+            // Show score from Google Sheet sync
+            var badgeMap = {PASSED:'badge-passed',AVERAGE:'badge-average',COMPLETED:'badge-completed',FAILED:'badge-failed'};
+            var badgeCls = badgeMap[sheetScore.status] || 'badge-failed';
+            var updated = sheetScore.updated_at ? new Date(sheetScore.updated_at).toLocaleString() : '—';
+            document.getElementById('resultsBody').innerHTML =
+                '<div class="result-card" style="border-left:4px solid #f59e0b">'
+                +'<div class="result-header">'
+                +'<span><b>📊 Score from Google Sheet</b></span>'
+                +'<span class="score">'+sheetScore.score+'/10</span>'
+                +'<span class="badge '+badgeCls+'">'+sheetScore.status+'</span>'
+                +'<span class="meta">Updated: '+updated+'</span>'
+                +'</div>'
+                +'<div class="result-body">'
+                +'<div class="result-info">👤 <b>'+(sheetScore.student_name||studentId)+'</b>'
+                +' &nbsp;|&nbsp; 🏫 '+(sheetScore.section||'—')+'</div>'
+                +'<div style="color:#92400e;font-size:0.85em;margin-top:6px">⚠️ No digital submission on file — score recorded from teacher\'s Google Sheet.</div>'
+                +'</div></div>';
+        } else {
+            document.getElementById('resultsBody').innerHTML =
+                '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
+        }
         return;
     }
     document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
