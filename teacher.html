@@ -169,7 +169,7 @@
         
         .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
 
-        .kyle-links{display:flex;flex-direction:column;gap:5px;}
+        .kyle-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;} .kyle-col{} .kyle-links{display:flex;flex-direction:column;gap:5px;}
         .kyle-link{display:block;color:#90caf9;text-decoration:none;padding:6px 12px;border-left:3px solid #5c6bc0;border-radius:4px;font-size:14px;font-weight:500;transition:background .15s,color .15s;}
         .kyle-link:hover{background:rgba(255,255,255,0.1);color:#fff;}
     </style>
@@ -236,6 +236,29 @@
                 <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html')">&#x1F4CB; Copy Link</button>
             </div>
         </div>
+        <div class="ws-section-label">📄 Worksheet 3</div>
+        <div class="ws-tiles">
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html','_blank')">
+                <div class="ws-tile-title">WS3 — M3 A</div>
+                <div class="ws-tile-sub">M3 Level A</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html')">&#x1F4CB; Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html','_blank')">
+                <div class="ws-tile-title">WS3 — M3 B</div>
+                <div class="ws-tile-sub">M3 Level B</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html')">&#x1F4CB; Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html','_blank')">
+                <div class="ws-tile-title">WS3 — M4 A</div>
+                <div class="ws-tile-sub">M4 Level A</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html')">&#x1F4CB; Copy Link</button>
+            </div>
+            <div class="ws-tile" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html','_blank')">
+                <div class="ws-tile-title">WS3 — M4 B</div>
+                <div class="ws-tile-sub">M4 Level B</div>
+                <button class="ws-copy-btn" onclick="event.stopPropagation();copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html')">&#x1F4CB; Copy Link</button>
+            </div>
+        </div>
 
 <div class="ws-section-label">📚 Worksheet 4</div>
         <div class="ws-tiles">
@@ -290,31 +313,44 @@
     <div class="kyle-card">
         <h2>🧪 Kyle Test Mode — Teacher Only</h2>
         <p class="kyle-card-note">Opens each worksheet with Kyle (ID 54565) pre-selected. Scores record normally to Google Sheets &amp; Supabase. Use this to verify worksheet functionality before students attempt.</p>
-        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 1</div>
-        <div class="kyle-links" style="margin-bottom:14px;">
-            <a class="kyle-link" href="https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle" target="_blank">Worksheet Test Mode 1 M3</a>
-            <a class="kyle-link" href="https://m4worksheet1.netlify.app/?testmode=kyle" target="_blank">Worksheet Test Mode 1 M4</a>
-        </div>
-        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 2</div>
-        <div class="kyle-links" style="margin-bottom:14px;">
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M3 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M3 B1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M4 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M4 B1</a>
-        </div>
-        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 4</div>
-        <div class="kyle-links" style="margin-bottom:14px;">
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M3 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M3 A2</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M4 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M4 A2</a>
-        </div>
-        <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 5</div>
-        <div class="kyle-links" style="margin-bottom:14px;">
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M3 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M3 A2</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M4 A1</a>
-            <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M4 A2</a>
+        <div class="kyle-cols">
+            <div class="kyle-col">
+                <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 1</div>
+                <div class="kyle-links" style="margin-bottom:14px;">
+                    <a class="kyle-link" href="https://m3-worksheet1b-51749f.netlify.app/?testmode=kyle" target="_blank">Worksheet Test Mode 1 M3</a>
+                    <a class="kyle-link" href="https://m4worksheet1.netlify.app/?testmode=kyle" target="_blank">Worksheet Test Mode 1 M4</a>
+                </div>
+                <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 2</div>
+                <div class="kyle-links" style="margin-bottom:14px;">
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M3 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M3 B1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M4 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html?testmode=kyle" target="_blank">Worksheet Test Mode 2 M4 B1</a>
+                </div>
+                <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 3</div>
+                <div class="kyle-links" style="margin-bottom:14px;">
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 3 M3 A</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 3 M3 B</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 3 M4 A</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 3 M4 B</a>
+                </div>
+            </div>
+            <div class="kyle-col">
+                <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 4</div>
+                <div class="kyle-links" style="margin-bottom:14px;">
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M3 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M3 A2</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M4 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 4 M4 A2</a>
+                </div>
+                <div class="ws-section-label" style="color:#e8eaf6;margin-bottom:8px;">Worksheet 5</div>
+                <div class="kyle-links" style="margin-bottom:14px;">
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M3 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M3 A2</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M4 A1</a>
+                    <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html?testmode=kyle" target="_blank">Worksheet Test Mode 5 M4 A2</a>
+                </div>
+            </div>
         </div>
     </div>
 
