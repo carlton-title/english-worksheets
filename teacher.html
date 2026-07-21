@@ -536,6 +536,15 @@ var studentData = {
     // M3/10, M3/12: loaded dynamically from Supabase submissions
 };
 
+// ── Status badge helper ──
+function getStatusBadge(status) {
+    var s = (status || '').toUpperCase();
+    if (s === 'PASSED' || s === 'PASS') return {cls:'badge-passed', label:'PASSED'};
+    if (s === 'AVERAGE')               return {cls:'badge-average', label:'AVERAGE'};
+    if (s === 'COMPLETED')             return {cls:'badge-completed', label:'COMPLETED'};
+    return {cls:'badge-failed', label: s || 'FAILED'};
+}
+
 // ── Auth ──
 function doLogin() {
     if (document.getElementById('pwInput').value === TEACHER_PASSWORD) {
