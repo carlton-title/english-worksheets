@@ -1,314 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Dashboard — Sikhio Sawadphadung Wittaya School</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f4ff;min-height:100vh;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard — Sikhio Sawadphadung Wittaya School</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#1a237e 0%,#4a148c 100%); min-height:100vh; padding:20px; }
 
-/* LOGIN */
-#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0d1b4b 0%,#1a3eb8 100%);}
-.login-box{background:white;border-radius:24px;padding:50px 40px;max-width:420px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,0.4);text-align:center;}
-.login-sticker{width:80px;height:80px;object-fit:contain;margin-bottom:18px;border-radius:14px;}
-.login-box h1{color:#0d1b4b;font-size:1.7em;margin-bottom:6px;}
-.login-box p{color:#777;margin-bottom:28px;font-size:.92em;line-height:1.6;}
-.login-box input{width:100%;padding:14px 16px;border:2px solid #ddd;border-radius:12px;font-size:1em;margin-bottom:14px;outline:none;}
-.login-box input:focus{border-color:#1a3eb8;}
-.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;border:none;border-radius:12px;font-size:1.05em;cursor:pointer;font-weight:bold;}
-.btn-login:hover{opacity:.9;}
-.login-error{color:#c62828;font-size:.9em;margin-top:10px;display:none;}
+        /* LOGIN */
+        #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+        .login-box { background:white; border-radius:20px; padding:50px 40px; max-width:420px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); text-align:center; }
+        .login-box h1 { color:#1a237e; font-size:1.8em; margin-bottom:6px; }
+        .login-box p { color:#777; margin-bottom:30px; font-size:.95em; }
+        .login-box input { width:100%; padding:14px 16px; border:2px solid #ddd; border-radius:10px; font-size:1em; margin-bottom:16px; outline:none; }
+        .login-box input:focus { border-color:#1a237e; }
+        .btn-login { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; }
+        .login-error { color:#c62828; font-size:.9em; margin-top:10px; display:none; }
 
-/* PORTAL */
-#portal{display:none;}
+        /* PORTAL */
+        #portal { display:none; }
+        .top-bar { background:white; border-radius:14px; padding:16px 24px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 20px rgba(0,0,0,.15); }
+        .top-bar h1 { color:#1a237e; font-size:1.4em; }
+        .top-bar p { color:#555; font-size:.88em; margin-top:2px; }
+        .btn-logout { background:#f5f5f5; border:1px solid #ddd; border-radius:8px; padding:8px 16px; cursor:pointer; font-size:.9em; color:#555; }
+        .btn-logout:hover { background:#ffe0e0; color:#c62828; }
 
-/* NAV */
-.nav-header{background:#0d1b4b;color:white;padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.4);}
-.nav-brand{display:flex;align-items:center;gap:12px;}
-.nav-brand-text span{font-size:1.1em;font-weight:700;display:block;}
-.nav-brand-text small{font-size:.74em;opacity:.65;display:block;margin-top:-2px;}
-.btn-logout{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 16px;cursor:pointer;font-size:.85em;color:white;}
-.btn-logout:hover{background:rgba(255,255,255,.22);}
+        .container { max-width:1000px; margin:0 auto; }
+        .card { background:white; border-radius:16px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,.12); margin-bottom:20px; }
+        .card h2 { color:#1a237e; margin-bottom:20px; font-size:1.15em; }
 
-/* HERO */
-.hero{background:linear-gradient(135deg,#1a3eb8 0%,#2d55d8 100%);padding:44px 24px 0;text-align:center;}
-.hero-title{color:white;font-size:2em;font-weight:800;margin-bottom:10px;line-height:1.2;}
-.hero-title span{color:#7dd3fc;}
-.hero-sub{color:rgba(255,255,255,.8);font-size:.97em;margin-bottom:36px;}
-.hero-wave{display:block;width:100%;height:60px;}
+        /* WORKSHEETS QUICK ACCESS */
+        .ws-section-label { font-weight:bold; color:#1a237e; font-size:.95em; margin-bottom:10px; }
+        .ws-tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+        @media(max-width:700px){ .ws-tiles { grid-template-columns:repeat(2,1fr); } }
+        @media(max-width:420px){ .ws-tiles { grid-template-columns:1fr; } }
+        .ws-tile {
+            background:#f0f3ff; border:2px solid #c5cae9; border-radius:12px;
+            padding:14px 12px 10px; cursor:pointer; transition:all .2s;
+            display:flex; flex-direction:column; gap:6px;
+        }
+        .ws-tile:hover { background:#e3e7ff; border-color:#3949ab; transform:translateY(-2px); box-shadow:0 6px 18px rgba(26,35,126,.15); }
+        .ws-tile-title { font-weight:bold; color:#1a237e; font-size:.97em; }
+        .ws-tile-sub { font-size:.82em; color:#666; }
+        .ws-copy-btn {
+            margin-top:6px; background:linear-gradient(135deg,#1a237e,#4a148c);
+            color:white; border:none; border-radius:7px; padding:5px 11px;
+            font-size:.78em; font-weight:bold; cursor:pointer; width:fit-content; align-self:flex-start;
+        }
+        .ws-copy-btn:hover { opacity:.85; }
+        .ws-section-divider { border:none; border-top:1px solid #e8eaf6; margin:16px 0; }
 
-/* TILES SECTION */
-.tiles-section{background:#f0f4ff;padding:28px 20px 0;}
-.tiles-inner{max-width:920px;margin:0 auto;}
-.tiles-heading{font-size:.78em;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#6b7a9e;margin-bottom:14px;}
-.tiles-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
-@media(max-width:700px){.tiles-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:380px){.tiles-grid{grid-template-columns:1fr;}}
-.tile{background:white;border-radius:18px;padding:18px 12px 16px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.09);transition:transform .18s,box-shadow .18s;cursor:pointer;border:none;display:flex;flex-direction:column;align-items:center;gap:7px;border-top-width:4px;border-top-style:solid;}
-.tile:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,.16);}
-.tile img{width:60px;height:60px;object-fit:contain;border-radius:10px;}
-.tile-label{font-size:.7em;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 10px;border-radius:20px;color:white;}
-.tile-name{font-size:.8em;color:#444;font-weight:600;line-height:1.3;}
-.tile-link{font-size:.7em;margin-top:1px;opacity:.7;font-weight:600;}
-.tile-ws1{border-top-color:#1a3eb8;}.tile-ws1 .tile-label{background:#1a3eb8;}.tile-ws1 .tile-link{color:#1a3eb8;}
-.tile-ws2{border-top-color:#059669;}.tile-ws2 .tile-label{background:#059669;}.tile-ws2 .tile-link{color:#059669;}
-.tile-ws3{border-top-color:#d97706;}.tile-ws3 .tile-label{background:#d97706;}.tile-ws3 .tile-link{color:#d97706;}
-.tile-ws4{border-top-color:#be185d;}.tile-ws4 .tile-label{background:#be185d;}.tile-ws4 .tile-link{color:#be185d;}
-.tile-ws5{border-top-color:#7c3aed;}.tile-ws5 .tile-label{background:#7c3aed;}.tile-ws5 .tile-link{color:#7c3aed;}
 
-/* KYLE STRIP */
-.kyle-strip{background:#fff8e1;border:1px solid #fcd34d;border-radius:14px;padding:12px 18px;margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.kyle-strip strong{color:#92400e;font-size:.85em;white-space:nowrap;}
-.kyle-links{display:flex;gap:8px;flex-wrap:wrap;}
-.kyle-btn{background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:4px 13px;font-size:.76em;color:#78350f;text-decoration:none;font-weight:700;}
-.kyle-btn:hover{background:#fde68a;}
+        /* QUICK ACCESS LINKS */
+        .qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+        @media(max-width:600px){ .qa-grid { grid-template-columns:1fr; } }
+        .qa-col { display:flex; flex-direction:column; }
+        .qa-ws-label { font-weight:bold; color:#1a237e; font-size:.85em; margin-bottom:6px; }
+        .qa-link-row { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
+        .qa-link { flex:1; display:block; color:#1a237e; text-decoration:none; font-size:.86em; padding:5px 10px; border-radius:7px; background:#f0f3ff; border:1px solid #c5cae9; transition:background .15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .qa-link:hover { background:#e3e7ff; border-color:#3949ab; }
+        .qa-sub { color:#888; font-size:.88em; font-weight:normal; }
+        .qa-copy { flex-shrink:0; background:none; border:1px solid #c5cae9; border-radius:6px; padding:4px 7px; font-size:.78em; cursor:pointer; color:#3949ab; transition:background .15s; }
+        .qa-copy:hover { background:#e3e7ff; }
+        /* KYLE CARD */
+        .kyle-card {
+            background:linear-gradient(135deg,#1a1a4e 0%,#1a237e 45%,#4a148c 100%);
+            border-radius:16px; padding:28px; box-shadow:0 4px 24px rgba(0,0,0,.3); margin-bottom:20px;
+        }
+        .kyle-card h2 { color:#e8eaf6; margin-bottom:6px; font-size:1.15em; }
+        .kyle-card-note { color:#b0bec5; font-size:.84em; margin-bottom:20px; }
+        /* KYLE LINKS */
+        .kyle-links-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+        @media(max-width:600px){ .kyle-links-grid { grid-template-columns:1fr; } }
+        .kyle-col { display:flex; flex-direction:column; }
+        .kyle-ws-label { font-weight:bold; color:#e8eaf6; font-size:.85em; margin-bottom:6px; }
+        .kyle-link { display:block; color:#fff; text-decoration:none; font-size:.88em; padding:5px 10px; border-radius:7px; margin-bottom:3px; transition:background .15s; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); }
+        .kyle-link:hover { background:rgba(255,255,255,.22); text-decoration:underline; }
 
-/* MAIN */
-.main-content{max-width:960px;margin:0 auto;padding:26px 20px 48px;}
-.card{background:white;border-radius:18px;padding:26px 28px;box-shadow:0 4px 18px rgba(0,0,0,.09);margin-bottom:22px;}
-.card h2{color:#0d1b4b;margin-bottom:18px;font-size:1.08em;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+        /* SEARCH FORM */
+        .search-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+        @media(max-width:600px){ .search-grid { grid-template-columns:1fr; } }
+        .form-group { display:flex; flex-direction:column; gap:6px; }
+        .form-group label { font-weight:bold; color:#444; font-size:.9em; }
+        .form-group select, .form-group input {
+            padding:11px 14px; border:2px solid #ddd; border-radius:10px;
+            font-size:.95em; outline:none; width:100%; background:white;
+        }
+        .form-group select:focus, .form-group input:focus { border-color:#1a237e; }
+        select:disabled, input:disabled { background:#f5f5f5; color:#999; }
+        .btn-search { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; margin-top:4px; }
+        .btn-search:hover { opacity:.9; }
+        .btn-search:disabled { opacity:.5; cursor:not-allowed; }
 
-/* SEARCH */
-.search-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
-@media(max-width:580px){.search-grid{grid-template-columns:1fr;}}
-.form-group{display:flex;flex-direction:column;gap:5px;}
-.form-group label{font-weight:700;color:#555;font-size:.82em;text-transform:uppercase;letter-spacing:.4px;}
-.form-group select,.form-group input{padding:11px 13px;border:2px solid #e0e7ff;border-radius:10px;font-size:.93em;outline:none;width:100%;background:white;color:#333;}
-.form-group select:focus,.form-group input:focus{border-color:#1a3eb8;}
-select:disabled,input:disabled{background:#f8f9ff;color:#aaa;}
-.btn-search{width:100%;padding:13px;background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;border:none;border-radius:12px;font-size:.98em;cursor:pointer;font-weight:bold;margin-top:2px;}
-.btn-search:hover{opacity:.9;}
-.btn-search:disabled{opacity:.5;cursor:not-allowed;}
+        /* RESULTS */
+        #resultsSection { display:none; }
+        .result-card { border:2px solid #e8eaf6; border-radius:14px; margin-bottom:16px; overflow:hidden; }
+        .result-header { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:14px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .result-header .score { font-size:1.4em; font-weight:bold; }
+        .result-header .meta { font-size:.88em; opacity:.9; }
+        .badge { display:inline-block; padding:4px 12px; border-radius:12px; font-size:.82em; font-weight:bold; }
+        .badge-pass { background:#c8e6c9; color:#1b5e20; }
+        .badge-fail { background:#ffcdd2; color:#b71c1c; }
+        .result-body { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+        .result-info { font-size:.92em; color:#555; }
+        .btn-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:.95em; font-weight:bold; white-space:nowrap; }
+        .btn-pdf:hover { opacity:.88; }
+        .no-result { text-align:center; padding:30px; color:#999; font-size:.95em; }
+        .loading-msg { text-align:center; padding:20px; color:#777; }
 
-/* RESULTS */
-#resultsSection{display:none;}
-.result-card{border:2px solid #e0e7ff;border-radius:14px;margin-bottom:14px;overflow:hidden;}
-.result-header{background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
-.result-header .score{font-size:1.4em;font-weight:bold;}
-.result-header .meta{font-size:.87em;opacity:.9;}
-.badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:.8em;font-weight:bold;}
-.badge-pass{background:#d1fae5;color:#065f46;}
-.badge-fail{background:#fee2e2;color:#991b1b;}
-.result-body{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.result-info{font-size:.9em;color:#555;}
-.btn-pdf{background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;border:none;border-radius:10px;padding:9px 20px;cursor:pointer;font-size:.9em;font-weight:bold;white-space:nowrap;}
-.btn-pdf:hover{opacity:.88;}
-.no-result{text-align:center;padding:28px;color:#999;font-size:.93em;}
-.loading-msg{text-align:center;padding:18px;color:#777;}
-
-/* TABLE */
-.table-wrap{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;font-size:.87em;}
-th{background:#0d1b4b;color:white;padding:10px 13px;text-align:left;white-space:nowrap;font-weight:600;}
-td{padding:9px 13px;border-bottom:1px solid #f0f0f8;vertical-align:middle;}
-tr:hover td{background:#f5f7ff;}
-.badge-ws{background:#e0e7ff;color:#3730a3;}
-.btn-view-sm{background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;border:none;border-radius:7px;padding:5px 13px;cursor:pointer;font-size:.8em;font-weight:bold;}
-
-/* PRINT MODAL */
-#printModal{display:none;position:fixed;inset:0;background:rgba(10,20,70,.6);z-index:999;align-items:center;justify-content:center;padding:20px;}
-#printModal.open{display:flex;}
-.modal-box{background:white;border-radius:22px;padding:28px;max-width:880px;width:100%;max-height:90vh;overflow-y:auto;}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
-.modal-header h2{color:#0d1b4b;font-size:1.1em;}
-.btn-print-pdf{background:linear-gradient(135deg,#1a3eb8,#3a6bff);color:white;border:none;border-radius:10px;padding:9px 18px;cursor:pointer;font-size:.9em;font-weight:bold;}
-.btn-close-modal{background:#f5f5f5;border:1px solid #ddd;border-radius:10px;padding:9px 15px;cursor:pointer;color:#555;}
-.sub-info-table{border-collapse:collapse;width:100%;margin-bottom:16px;}
-.sub-info-table td{padding:8px 11px;border:1px solid #e0e7ff;font-size:.9em;}
-.sub-info-table td:first-child{background:#e8eeff;font-weight:bold;width:120px;color:#0d1b4b;}
-.q-card{border:1px solid #e0e0e0;border-radius:10px;margin-bottom:11px;overflow:hidden;}
-.q-card-img{width:100%;max-height:200px;object-fit:cover;}
-.q-header{background:#f0f4ff;padding:10px 14px;font-weight:bold;color:#0d1b4b;font-size:.9em;border-bottom:1px solid #e0e7ff;display:flex;gap:8px;align-items:flex-start;}
-.qnum{background:#1a3eb8;color:white;border-radius:50%;width:24px;height:24px;min-width:24px;display:flex;align-items:center;justify-content:center;font-size:.8em;}
-.q-body{padding:11px 14px;}
-.opt-row{padding:6px 11px;border-radius:6px;margin-bottom:4px;font-size:.87em;border:1px solid #eee;display:flex;align-items:center;gap:8px;}
-.opt-sc{background:#d1fae5;border-color:#6ee7b7;font-weight:bold;}
-.opt-sw{background:#fee2e2;border-color:#fca5a5;font-weight:bold;}
-.opt-cm{background:#ecfdf5;border-color:#86efac;color:#065f46;}
-.opt-plain{background:#fafafa;color:#aaa;}
-.no-ans{color:#aaa;font-style:italic;font-size:.85em;}
-</style>
+        /* PRINT MODAL */
+        #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
+        #printModal.open { display:flex; }
+        .modal-box { background:white; border-radius:20px; padding:30px; max-width:880px; width:100%; max-height:90vh; overflow-y:auto; }
+        .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+        .modal-header h2 { color:#1a237e; font-size:1.15em; }
+        .btn-print-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 20px; cursor:pointer; font-size:.93em; font-weight:bold; }
+        .btn-close-modal { background:#f5f5f5; border:1px solid #ddd; border-radius:10px; padding:10px 16px; cursor:pointer; color:#555; }
+        .sub-info-table { border-collapse:collapse; width:100%; margin-bottom:18px; }
+        .sub-info-table td { padding:8px 11px; border:1px solid #ddd; font-size:.9em; }
+        .sub-info-table td:first-child { background:#f0f3ff; font-weight:bold; width:120px; }
+        .q-card { border:1px solid #e0e0e0; border-radius:10px; margin-bottom:12px; overflow:hidden; }
+        .q-card-img { width:100%; max-height:200px; object-fit:cover; }
+        .q-header { background:#f0f3ff; padding:10px 14px; font-weight:bold; color:#1a237e; font-size:.9em; border-bottom:1px solid #e0e0e0; display:flex; gap:8px; align-items:flex-start; }
+        .qnum { background:#1a237e; color:white; border-radius:50%; width:24px; height:24px; min-width:24px; display:flex; align-items:center; justify-content:center; font-size:.8em; }
+        .q-body { padding:12px 14px; }
+        .opt-row { padding:6px 11px; border-radius:6px; margin-bottom:4px; font-size:.88em; border:1px solid #eee; display:flex; align-items:center; gap:8px; }
+        .opt-sc { background:#c8e6c9; border-color:#4caf50; font-weight:bold; }
+        .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
+        .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
+        .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
+    </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="loginScreen">
-  <div class="login-box">
-    <img class="login-sticker" src="https://carlton-title.github.io/english-worksheets/6.png" alt="">
-    <h1>🏫 Teacher Dashboard</h1>
-    <p>Sikhio Sawadphadung Wittaya School<br>Nakhon Ratchasima 30140 Thailand</p>
-    <input type="password" id="pwInput" placeholder="Enter teacher password" autocomplete="off">
-    <button class="btn-login" onclick="doLogin()">🔐 Login</button>
-    <div class="login-error" id="loginError">❌ Incorrect password.</div>
-  </div>
+    <div class="login-box">
+        <h1>🏫 Teacher Dashboard</h1>
+        <p>Sikhio Sawadphadung Wittaya School<br>Nakhon Ratchasima 30140 Thailand</p>
+        <input type="password" id="pwInput" placeholder="Enter teacher password" autocomplete="off">
+        <button class="btn-login" onclick="doLogin()">🔐 Login</button>
+        <div class="login-error" id="loginError">❌ Incorrect password.</div>
+    </div>
 </div>
 
 <!-- PORTAL -->
 <div id="portal">
+<div class="container">
 
-<!-- NAV -->
-<div class="nav-header">
-  <div class="nav-brand">
-    <div class="nav-brand-text">
-      <span>🏫 Teacher Dashboard</span>
-      <small>Sikhio Sawadphadung Wittaya School</small>
+    <div class="top-bar">
+        <div>
+            <h1>🏫 Teacher Dashboard Sikhio Sawadphadung Wittaya School</h1>
+            <p>Worksheet Submission Portal &nbsp;·&nbsp; Monitor student progress &nbsp;·&nbsp; Search results &nbsp;·&nbsp; Download PDF records</p>
+        </div>
+        <button class="btn-logout" onclick="doLogout()">Logout ↩</button>
     </div>
-  </div>
-  <button class="btn-logout" onclick="doLogout()">Logout ↩</button>
-</div>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-title">Worksheet <span>Submission Portal</span></div>
-  <div class="hero-sub">Monitor student progress · Search results · Download PDF records</div>
-  <svg class="hero-wave" viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#f0f4ff"/>
-  </svg>
-</div>
-
-<!-- TILES -->
-<div class="tiles-section">
-  <div class="tiles-inner">
-    <div class="tiles-heading">📚 Quick Access — Worksheets</div>
-    <div class="tiles-grid">
-      <div class="tile tile-ws1" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet1.html','_blank')">
-        <img src="https://carlton-title.github.io/english-worksheets/1.png" alt="WS1">
-        <div class="tile-label">WS 1</div>
-        <div class="tile-name">Worksheet 1</div>
-        <div class="tile-link">Open →</div>
-      </div>
-      <div class="tile tile-ws2" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html','_blank')">
-        <img src="https://carlton-title.github.io/english-worksheets/2.png" alt="WS2">
-        <div class="tile-label">WS 2</div>
-        <div class="tile-name">Worksheet 2</div>
-        <div class="tile-link">Open →</div>
-      </div>
-      <div class="tile tile-ws3" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html','_blank')">
-        <img src="https://carlton-title.github.io/english-worksheets/3.png" alt="WS3">
-        <div class="tile-label">WS 3</div>
-        <div class="tile-name">Worksheet 3</div>
-        <div class="tile-link">Open →</div>
-      </div>
-      <div class="tile tile-ws4" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html','_blank')">
-        <img src="https://carlton-title.github.io/english-worksheets/4.png" alt="WS4">
-        <div class="tile-label">WS 4</div>
-        <div class="tile-name">Worksheet 4</div>
-        <div class="tile-link">Open →</div>
-      </div>
-      <div class="tile tile-ws5" onclick="window.open('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html','_blank')">
-        <img src="https://carlton-title.github.io/english-worksheets/5.png" alt="WS5">
-        <div class="tile-label">WS 5</div>
-        <div class="tile-name">Worksheet 5</div>
-        <div class="tile-link">Open →</div>
-      </div>
-    </div>
-    <div class="kyle-strip">
-      <strong>🧪 Kyle Test Mode:</strong>
-      <div class="kyle-links">
-        <a class="kyle-btn" href="https://carlton-title.github.io/english-worksheets/worksheet1.html?testmode=kyle" target="_blank">WS1</a>
-        <a class="kyle-btn" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html?testmode=kyle" target="_blank">WS2</a>
-        <a class="kyle-btn" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html?testmode=kyle" target="_blank">WS3</a>
-        <a class="kyle-btn" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle" target="_blank">WS4</a>
-        <a class="kyle-btn" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle" target="_blank">WS5</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="main-content">
-
-  <!-- SEARCH CARD -->
-  <div class="card">
-    <h2>🔍 Find Student Worksheet</h2>
-    <div class="search-grid">
-      <div class="form-group">
-        <label>Class / Section</label>
-        <select id="selSection" onchange="onSectionChange()">
-          <option value="">— Select Section —</option>
-          <optgroup label="M3">
-            <option>M3/2</option><option>M3/4</option><option>M3/6</option>
-            <option>M3/10</option><option>M3/12</option>
-          </optgroup>
-          <optgroup label="M4">
-            <option>M4/1</option><option>M4/2</option><option>M4/3</option>
-            <option>M4/4</option><option>M4/5</option><option>M4/6</option>
-            <option>M4/7</option><option>M4/8</option><option>M4/9</option>
-            <option>M4/10</option><option>M4/11</option><option>M4/12</option>
-            <option>M4/13</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Student Name</label>
-        <select id="selStudent" onchange="onStudentChange()" disabled>
-          <option value="">— Select Section First —</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Student ID (auto-filled)</label>
-        <input type="text" id="inputStudentId" placeholder="Auto-filled from name selection" disabled>
-      </div>
-      <div class="form-group">
-        <label>Worksheet Number</label>
-        <select id="selWorksheet">
-          <option value="">— Select Worksheet —</option>
-          <option value="WS1">Worksheet 1</option>
-          <option value="WS2">Worksheet 2</option>
-          <option value="WS3">Worksheet 3</option>
-          <option value="WS4">Worksheet 4</option>
-          <option value="WS5">Worksheet 5</option>
-          <option value="WS6">Worksheet 6</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn-search" id="btnSearch" onclick="doSearch()">🔎 Search</button>
-  </div>
-
-  <!-- RESULTS -->
-  <div id="resultsSection">
+    <!-- WORKSHEETS QUICK ACCESS -->
     <div class="card">
-      <h2 id="resultsTitle">Search Results</h2>
-      <div id="resultsBody"></div>
-    </div>
-  </div>
+        <h2>🔗 Worksheets Quick Access</h2>
+        <p style="color:#888;font-size:.82em;margin:-10px 0 16px;">Click a link to open the worksheet in a new tab. Use 📋 to copy the URL.</p>
+        <div class="qa-grid">
+            <div class="qa-col">
+                <div class="qa-ws-label">📚 Worksheet 1</div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html" target="_blank">WS1 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html" target="_blank">WS1 — M3 (B1) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html" target="_blank">WS1 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html" target="_blank">WS1 — M4 (B1) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet1.html')">📋</button></div>
 
-  <!-- ALL SUBMISSIONS -->
-  <div class="card">
-    <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;margin-left:6px;"></span>
-      <button onclick="loadAll()" style="margin-left:auto;background:#e8eeff;border:1px solid #c7d2fe;border-radius:8px;padding:5px 14px;cursor:pointer;color:#1a3eb8;font-size:.78em;font-weight:bold;">↻ Refresh</button>
-    </h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>#</th><th>ID</th><th>Name</th><th>Thai Name</th>
-          <th>Section</th><th>Worksheet</th><th>Score</th>
-          <th>Status</th><th>Submitted</th><th></th>
-        </tr></thead>
-        <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
-      </table>
-    </div>
-  </div>
+                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 2</div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html" target="_blank">WS2 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html" target="_blank">WS2 — M3 (B1) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html" target="_blank">WS2 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html" target="_blank">WS2 — M4 (B1) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html')">📋</button></div>
 
-</div><!-- /main-content -->
-</div><!-- /portal -->
+                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 3</div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html" target="_blank">WS3 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html" target="_blank">WS3 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html" target="_blank">WS3 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html" target="_blank">WS3 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html')">📋</button></div>
+            </div>
+
+            <div class="qa-col">
+                <div class="qa-ws-label">📚 Worksheet 4</div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html" target="_blank">WS4 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html" target="_blank">WS4 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html" target="_blank">WS4 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html" target="_blank">WS4 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html')">📋</button></div>
+
+                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 5</div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">WS5 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html" target="_blank">WS5 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html" target="_blank">WS5 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html')">📋</button></div>
+                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html" target="_blank">WS5 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html')">📋</button></div>
+
+                <div class="qa-ws-label" style="margin-top:14px;opacity:.45;">📚 Worksheet 6</div>
+                <div class="qa-link-row" style="opacity:.4;pointer-events:none;"><a class="qa-link">WS6 — Coming next week</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KYLE TEST MODE CARD -->
+    <div class="kyle-card">
+        <h2>🧪 Kyle Test Mode — Teacher Only</h2>
+        <p class="kyle-card-note">Opens each worksheet with Kyle (ID 54565) pre-selected. Scores record normally to Google Sheets &amp; Supabase.</p>
+        <div class="kyle-links-grid">
+            <div class="kyle-col">
+                <div class="kyle-ws-label">Worksheet 1</div>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html?testmode=kyle" target="_blank">WS1 M3 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html?testmode=kyle" target="_blank">WS1 M3 (B1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html?testmode=kyle" target="_blank">WS1 M4 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet1.html?testmode=kyle" target="_blank">WS1 M4 (B1) Test Mode</a>
+
+                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 2</div>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html?testmode=kyle" target="_blank">WS2 M3 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html?testmode=kyle" target="_blank">WS2 M3 (B1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html?testmode=kyle" target="_blank">WS2 M4 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html?testmode=kyle" target="_blank">WS2 M4 (B1) Test Mode</a>
+
+                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 3</div>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html?testmode=kyle" target="_blank">WS3 M3 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html?testmode=kyle" target="_blank">WS3 M3 (A2) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html?testmode=kyle" target="_blank">WS3 M4 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html?testmode=kyle" target="_blank">WS3 M4 (A2) Test Mode</a>
+            </div>
+            <div class="kyle-col">
+                <div class="kyle-ws-label">Worksheet 4</div>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle" target="_blank">WS4 M3 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle" target="_blank">WS4 M3 (A2) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle" target="_blank">WS4 M4 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle" target="_blank">WS4 M4 (A2) Test Mode</a>
+
+                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 5</div>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle" target="_blank">WS5 M3 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle" target="_blank">WS5 M3 (A2) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html?testmode=kyle" target="_blank">WS5 M4 (A1) Test Mode</a>
+                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html?testmode=kyle" target="_blank">WS5 M4 (A2) Test Mode</a>
+
+                <div class="kyle-ws-label" style="margin-top:14px;opacity:.5;">Worksheet 6</div>
+                <span class="kyle-link" style="opacity:.45;cursor:default;">WS6 — Coming next week</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALL SUBMISSIONS — loaded silently for search; table not shown -->
+    <span id="allCount" style="display:none;"></span>
+    <table style="display:none;"><tbody id="allBody"></tbody></table>
+
+    <!-- SEARCH CARD -->
+    <div class="card">
+        <h2>🔍 Find Student Worksheet</h2>
+        <div class="search-grid">
+            <div class="form-group">
+                <label>Class / Section</label>
+                <select id="selSection" onchange="onSectionChange()">
+                    <option value="">— Select Section —</option>
+                    <optgroup label="M3">
+                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                        <option>M3/10</option><option>M3/12</option>
+                    </optgroup>
+                    <optgroup label="M4">
+                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
+                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
+                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
+                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
+                        <option>M4/13</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Student Name</label>
+                <select id="selStudent" onchange="onStudentChange()" disabled>
+                    <option value="">— Select Section First —</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Student ID (auto-filled)</label>
+                <input type="text" id="inputStudentId" placeholder="Auto-filled from name selection" disabled>
+            </div>
+            <div class="form-group">
+                <label>Worksheet Number</label>
+                <select id="selWorksheet">
+                    <option value="">— Select Worksheet —</option>
+                    <option value="WS1">Worksheet 1</option>
+                    <option value="WS2">Worksheet 2</option>
+                    <option value="WS3">Worksheet 3</option>
+                    <option value="WS4">Worksheet 4</option>
+                    <option value="WS5">Worksheet 5</option>
+                    <option value="WS6">Worksheet 6</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-search" id="btnSearch" onclick="doSearch()">🔎 Search</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="resultsSection">
+        <div class="card">
+            <h2 id="resultsTitle">Search Results</h2>
+            <div id="resultsBody"></div>
+        </div>
+    </div>
+
+    <!-- NO SUBMISSION CHECKER -->
+    <div class="card">
+        <h2>📭 No Worksheet Submitted Search</h2>
+        <p style="color:#666;font-size:.9em;margin-bottom:4px;">Cross-references your class roster against Supabase &amp; Google Sheets submission records.</p>
+        <p style="color:#999;font-size:.82em;margin-bottom:18px;">Results show each student's ID, Thai name, nickname, the date the worksheet was tasked (from Supabase), and a "No Worksheet Submitted" remark.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:flex-end;margin-bottom:0;">
+            <div class="form-group">
+                <label>Class / Section</label>
+                <select id="nsSelSection">
+                    <option value="">— Select Section —</option>
+                    <optgroup label="M3">
+                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
+                        <option>M3/10</option><option>M3/12</option>
+                    </optgroup>
+                    <optgroup label="M4">
+                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
+                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
+                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
+                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
+                        <option>M4/13</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Worksheet Number</label>
+                <select id="nsSelWorksheet">
+                    <option value="">— Select Worksheet —</option>
+                    <option value="WS1">Worksheet 1</option>
+                    <option value="WS2">Worksheet 2</option>
+                    <option value="WS3">Worksheet 3</option>
+                    <option value="WS4">Worksheet 4</option>
+                    <option value="WS5">Worksheet 5</option>
+                    <option value="WS6">Worksheet 6</option>
+                </select>
+            </div>
+            <div class="form-group" style="display:flex;align-items:flex-end;">
+                <button class="btn-search" id="btnNsCheck" onclick="doNoSubCheck()" style="margin-top:0;white-space:nowrap;">🔍 Check</button>
+            </div>
+        </div>
+        <div id="nsResults" style="margin-top:18px;"></div>
+    </div>
+
+</div>
+</div>
 
 <!-- PRINT MODAL -->
 <div id="printModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h2 id="modalTitle">Submission Detail</h2>
-      <div style="display:flex;gap:10px;">
-        <button class="btn-print-pdf" onclick="doPrint()">📥 Download PDF Copy</button>
-        <button class="btn-close-modal" onclick="closeModal()">✕ Close</button>
-      </div>
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modalTitle">Submission Detail</h2>
+            <div style="display:flex;gap:10px;">
+                <button class="btn-print-pdf" onclick="doPrint()">📥 Download PDF Copy</button>
+                <button class="btn-close-modal" onclick="closeModal()">✕ Close</button>
+            </div>
+        </div>
+        <div id="printContent"></div>
     </div>
-    <div id="printContent"></div>
-  </div>
 </div>
 
 <script>
+// ── Copy URL ──
+function copyURL(url) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){
+            showCopyToast('✅ Link copied!');
+        }).catch(function(){ fallbackCopy(url); });
+    } else { fallbackCopy(url); }
+}
+function fallbackCopy(url) {
+    var ta = document.createElement('textarea');
+    ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showCopyToast('✅ Link copied!');
+}
+function showCopyToast(msg) {
+    var t = document.getElementById('copyToast');
+    if (!t) {
+        t = document.createElement('div'); t.id = 'copyToast';
+        t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a237e;color:white;padding:10px 22px;border-radius:20px;font-size:.92em;font-weight:bold;z-index:9999;display:none;';
+        document.body.appendChild(t);
+    }
+    t.textContent = msg; t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function(){ t.style.display = 'none'; }, 2000);
+}
+
+
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var TEACHER_PASSWORD = 'Carlton2026!';
@@ -691,6 +773,166 @@ function doPrint() {
 }
 
 document.getElementById('printModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ── No-Submission Checker ──────────────────────────────────────────────────
+async function doNoSubCheck() {
+    var section   = document.getElementById('nsSelSection').value;
+    var worksheet = document.getElementById('nsSelWorksheet').value;
+    var btn       = document.getElementById('btnNsCheck');
+    var out       = document.getElementById('nsResults');
+    if (!section || !worksheet) { alert('Please select both a Section and a Worksheet.'); return; }
+
+    btn.disabled = true; btn.textContent = '⏳ Checking…';
+    out.innerHTML = '<div class="loading-msg">🔍 Checking Supabase submission records…</div>';
+
+    try {
+        // 1. Fetch every submission record for this section + worksheet from Supabase
+        var url = SUPABASE_URL
+            + '/rest/v1/worksheet_submissions?select=student_id,student_name,score,status,submitted_at'
+            + '&section=eq.' + encodeURIComponent(section)
+            + '&worksheet=eq.' + encodeURIComponent(worksheet)
+            + '&order=student_id.asc';
+        var res  = await fetch(url, { headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
+        var subs = await res.json();
+
+        // 2a. Derive the earliest submission date for this section+worksheet
+        //     — used as "Date Tasked" for non-submitting students
+        var earliestDate = '—';
+        if (subs.length > 0) {
+            var earliest = subs.reduce(function(min, r) {
+                return r.submitted_at && r.submitted_at < min ? r.submitted_at : min;
+            }, subs[0].submitted_at || '');
+            if (earliest) {
+                var ed = new Date(earliest);
+                earliestDate = (ed.getMonth()+1).toString().padStart(2,'0') + '/'
+                    + ed.getDate().toString().padStart(2,'0') + '/'
+                    + ed.getFullYear();
+            }
+        }
+
+        // 2b. Build a map: student_id → best attempt info
+        var subMap = {};
+        subs.forEach(function(r) {
+            var sid = String(r.student_id);
+            if (!subMap[sid]) {
+                subMap[sid] = { name: r.student_name, score: r.score, status: r.status, attempts: 0 };
+            }
+            subMap[sid].attempts++;
+            // Keep the highest score across attempts
+            if ((r.score || 0) > (subMap[sid].score || 0)) {
+                subMap[sid].score  = r.score;
+                subMap[sid].status = r.status;
+            }
+        });
+
+        // 3. Get the class roster
+        var roster = studentData[section];
+        if (!roster || roster.length === 0) {
+            // Fallback: derive roster from Supabase submission student names
+            out.innerHTML = '<div class="no-result">⚠️ Roster for ' + section + ' not found locally. Showing students who DID submit only.</div>';
+            btn.disabled = false; btn.textContent = '🔍 Check';
+            return;
+        }
+
+        // 4. Split into submitted vs not submitted
+        var notDone = [], done = [];
+        roster.forEach(function(s) {
+            var sid = String(s.id);
+            if (subMap[sid]) {
+                done.push({ student: s, sub: subMap[sid] });
+            } else {
+                notDone.push(s);
+            }
+        });
+
+        var wsLabel   = worksheet.replace('WS', 'Worksheet ');
+        var total     = roster.length;
+        var nSubmitted = done.length;
+        var nMissing  = notDone.length;
+        var pct       = Math.round((nSubmitted / total) * 100);
+
+        // 5. Build progress bar + summary
+        var barColor  = pct === 100 ? '#2e7d32' : pct >= 70 ? '#f57f17' : '#c62828';
+        var html = ''
+            + '<div style="margin-bottom:14px;">'
+            +   '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.88em;font-weight:bold;">'
+            +     '<span style="color:#1a237e;">' + section + ' — ' + wsLabel + '</span>'
+            +     '<span style="color:' + barColor + ';">' + nSubmitted + ' / ' + total + ' submitted (' + pct + '%)</span>'
+            +   '</div>'
+            +   '<div style="background:#e8eaf6;border-radius:8px;height:10px;overflow:hidden;">'
+            +     '<div style="background:' + barColor + ';height:100%;width:' + pct + '%;border-radius:8px;transition:width .4s;"></div>'
+            +   '</div>'
+            + '</div>';
+
+        // 6. NOT SUBMITTED table
+        if (nMissing === 0) {
+            html += '<div style="text-align:center;padding:18px;background:#e8f5e9;border-radius:12px;color:#1b5e20;font-weight:bold;">✅ All ' + total + ' students in ' + section + ' have submitted ' + wsLabel + '!</div>';
+        } else {
+            html += '<div style="margin-bottom:8px;">'
+                +   '<span style="background:#ffcdd2;color:#b71c1c;padding:5px 14px;border-radius:12px;font-weight:bold;font-size:.88em;">❌ ' + nMissing + ' student' + (nMissing > 1 ? 's have' : ' has') + ' NOT submitted</span>'
+                + '</div>'
+                + '<div style="overflow-x:auto;margin-bottom:18px;">'
+                + '<table style="width:100%;border-collapse:collapse;font-size:.88em;">'
+                + '<thead><tr style="background:#ffcdd2;">'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">#</th>'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Student ID</th>'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Full Name (Thai)</th>'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Nickname</th>'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Date Tasked</th>'
+                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Remark</th>'
+                + '</tr></thead><tbody>'
+                + notDone.map(function(s, i) {
+                    return '<tr style="background:' + (i%2===0?'#fff':'#fff9f9') + ';">'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;">' + (i+1) + '</td>'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;font-family:monospace;">' + s.id + '</td>'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;">' + s.name + '</td>'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;color:#888;">' + (s.nick||'—') + '</td>'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;color:#555;">' + earliestDate + '</td>'
+                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;"><span style="background:#ffcdd2;color:#b71c1c;padding:2px 9px;border-radius:10px;font-size:.8em;font-weight:bold;white-space:nowrap;">No Worksheet Submitted</span></td>'
+                        + '</tr>';
+                }).join('')
+                + '</tbody></table></div>';
+        }
+
+        // 7. SUBMITTED table (collapsible summary)
+        if (done.length > 0) {
+            html += '<details style="margin-top:4px;">'
+                + '<summary style="cursor:pointer;font-size:.88em;font-weight:bold;color:#1a237e;padding:6px 0;">✅ Show ' + done.length + ' students who submitted</summary>'
+                + '<div style="overflow-x:auto;margin-top:10px;">'
+                + '<table style="width:100%;border-collapse:collapse;font-size:.85em;">'
+                + '<thead><tr style="background:#e8f5e9;">'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">#</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Student ID</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Full Name</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Nick</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Score</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Result</th>'
+                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Attempts</th>'
+                + '</tr></thead><tbody>'
+                + done.map(function(d, i) {
+                    var isPassed = d.sub.status === 'PASSED';
+                    return '<tr style="background:' + (i%2===0?'#fff':'#f9fbe7') + ';">'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + (i+1) + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-family:monospace;">' + d.student.id + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + d.student.name + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;color:#888;">' + (d.student.nick||'—') + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-weight:bold;">' + (d.sub.score !== null ? d.sub.score : '—') + '</td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">'
+                        +   '<span style="background:' + (isPassed?'#c8e6c9':'#ffcdd2') + ';color:' + (isPassed?'#1b5e20':'#b71c1c') + ';padding:2px 9px;border-radius:10px;font-size:.82em;font-weight:bold;">'
+                        +   (isPassed ? '✅ PASS' : '❌ FAIL') + '</span></td>'
+                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;color:#888;">' + d.sub.attempts + '</td>'
+                        + '</tr>';
+                }).join('')
+                + '</tbody></table></div></details>';
+        }
+
+        out.innerHTML = html;
+
+    } catch(e) {
+        out.innerHTML = '<div class="no-result">❌ Error fetching records: ' + e.message + '</div>';
+    }
+    btn.disabled = false; btn.textContent = '🔍 Check';
+}
 </script>
 </body>
 </html>
