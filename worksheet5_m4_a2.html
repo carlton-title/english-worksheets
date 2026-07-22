@@ -772,22 +772,6 @@
                     + 'โอกาสเหลือ: ' + remaining + ' ครั้ง'
                     + '</span>';
             }
-        } else {
-            if (attempts >= maxAttempts && !TEST_STUDENT_IDS.includes(String(studentId))) {
-                statusEl.innerHTML = '<span class="status-fail">'
-                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
-                    + 'คุณใช้ครบจำนวนครั้งที่อนุญาตแล้ว<br>'
-                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
-                    + 'โอกาสเหลือ: 0 ครั้ง'
-                    + '</span>';
-            } else {
-                var remaining = maxAttempts - attempts;
-                statusEl.innerHTML = '<span class="status-fail">'
-                    + '&#x274C; ยังไม่ผ่านค่ะ<br>'
-                    + 'คะแนนที่ต้องการ: 8, 9, 10<br>'
-                    + 'โอกาสเหลือ: ' + remaining + ' ครั้ง'
-                    + '</span>';
-            }
         }
 
         var dateVal = document.getElementById('date').value;
