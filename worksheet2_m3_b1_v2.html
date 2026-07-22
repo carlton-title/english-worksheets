@@ -611,19 +611,11 @@
         }
 
         function submitToGoogleSheet(studentId, nickname, section, score, status) {
-            const data = {
-                studentId: studentId,
-                nickname: nickname,
-                section: section,
-                score: score,
-                date: new Date().toISOString(),
-                status: status
-            };
-
-            fetch(M3_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(data)
-            }).catch(err => console.log('Score submitted'));
+            var params = new URLSearchParams({
+        studentId: studentId, nickname: nickname, section: section,
+        score: score, worksheet: 'WS2', status: status
+    });
+    fetch(M3_SCRIPT_URL + '?' + params, { method: 'GET', mode: 'no-cors' }).catch(() => {});
         }
 
         function resetForm() {
