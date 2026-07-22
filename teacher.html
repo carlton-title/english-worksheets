@@ -752,29 +752,52 @@ function buildModal(s) {
     var stBadge = getStatusBadge(s.status); var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
     var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
     var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
-    var answers = s.answers || [];
+    var answers = s.answers || {};
+    var isReconstructed = !Array.isArray(answers) && answers._reconstructed === 'true';
     document.getElementById('modalTitle').textContent = wsLabel+' — '+(s.student_name||s.student_id);
-    var qHtml = answers.map(function(a,idx){
-        var imgHtml = a.question_image ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
-        var optHtml = '';
-        if (a.selected_option === null || a.selected_option === undefined) {
-            optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
-        } else if (a.selected_option === a.correct_option) {
-            optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
-        } else {
-            optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
-                    + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
+    var qHtml;
+    if (isReconstructed) {
+        // Reconstructed format: {Q1:"text", Q2:"text", ..., _reconstructed:"true"}
+        // First score questions are correct, remaining are wrong
+        var score = s.score || 0;
+        qHtml = '';
+        for (var i = 1; i <= 10; i++) {
+            var ansText = answers['Q'+i] || '—';
+            var isCorrect = (i <= score);
+            var optHtml = isCorrect
+                ? '<div class="opt-row opt-sc">✅ ' + ansText + '</div>'
+                : '<div class="opt-row opt-sw">❌ ' + ansText + '</div>';
+            qHtml += '<div class="q-card">'
+                + '<div class="q-header"><div class="qnum">'+i+'</div><span>Question '+i+'</span></div>'
+                + '<div class="q-body">'+optHtml+'</div></div>';
         }
-        return '<div class="q-card">'+imgHtml
-            +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
-            +'<div class="q-body">'+optHtml+'</div></div>';
-    }).join('');
+        qHtml += '<p style="font-size:.78em;color:#999;text-align:center;margin-top:8px;font-style:italic;">⚠️ Answers reconstructed from recorded score — original digital submission not captured.</p>';
+    } else {
+        // Structured array format (WS4/WS5 live submissions)
+        var answersArr = Array.isArray(answers) ? answers : [];
+        qHtml = answersArr.map(function(a,idx){
+            var imgHtml = a.question_image ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
+            var optHtml = '';
+            if (a.selected_option === null || a.selected_option === undefined) {
+                optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+            } else if (a.selected_option === a.correct_option) {
+                optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
+            } else {
+                optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
+                        + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
+            }
+            return '<div class="q-card">'+imgHtml
+                +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
+                +'<div class="q-body">'+optHtml+'</div></div>';
+        }).join('');
+    }
     document.getElementById('printContent').innerHTML =
         '<table class="sub-info-table">'
         +'<tr><td>Student Name</td><td><b>'+(s.student_name||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
         +'<tr><td>Thai Name</td><td><b>'+(s.thai_name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
         +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td></tr>'
-        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#065f46':'#991b1b')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
+        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#065f46':s.status==='AVERAGE'?'#92400e':s.status==='COMPLETED'?'#1e40af':'#991b1b')+'">'
+        +({PASSED:'✅ PASSED',AVERAGE:'🟡 AVERAGE',COMPLETED:'🔵 COMPLETED',FAILED:'❌ FAILED'}[s.status]||s.status)+'</b></td></tr>'
         +'<tr><td>Submitted</td><td colspan="3">'+dt+'</td></tr>'
         +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
         +'</table>'
