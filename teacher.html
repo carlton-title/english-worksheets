@@ -681,7 +681,8 @@ function renderResults(results, studentId, worksheet, sheetScore) {
         return;
     }
     document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
-        var isPassed = s.status === 'PASSED';
+        var stBadge = getStatusBadge(s.status);
+        var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
         var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
         return '<div class="result-card">'
             +'<div class="result-header">'
