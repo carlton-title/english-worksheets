@@ -773,23 +773,45 @@ function buildModal(s) {
         }
         qHtml += '<p style="font-size:.78em;color:#999;text-align:center;margin-top:8px;font-style:italic;">⚠️ Answers reconstructed from recorded score — original digital submission not captured.</p>';
     } else {
-        // Structured array format (WS4/WS5 live submissions)
-        var answersArr = Array.isArray(answers) ? answers : [];
-        qHtml = answersArr.map(function(a,idx){
-            var imgHtml = a.question_image ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
-            var optHtml = '';
-            if (a.selected_option === null || a.selected_option === undefined) {
-                optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
-            } else if (a.selected_option === a.correct_option) {
-                optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
-            } else {
-                optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
-                        + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
-            }
-            return '<div class="q-card">'+imgHtml
-                +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
-                +'<div class="q-body">'+optHtml+'</div></div>';
-        }).join('');
+        // Object format: {Q1:{selected,correct_answer,is_correct,question?}, ...} — used by WS2/WS3/WS4/WS5
+        var qKeys = Object.keys(answers).filter(function(k){ return /^Q\d+$/.test(k); });
+        qKeys.sort(function(a,b){ return parseInt(a.slice(1)) - parseInt(b.slice(1)); });
+        if (qKeys.length > 0) {
+            qHtml = qKeys.map(function(k){
+                var a = answers[k];
+                var qNum = parseInt(k.slice(1));
+                var optHtml = '';
+                if (a.selected === null || a.selected === undefined) {
+                    optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+                } else if (a.is_correct) {
+                    optHtml = '<div class="opt-row opt-sc">✅ '+a.selected+'</div>';
+                } else {
+                    optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected+'</div>'
+                            +(a.correct_answer ? '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_answer+'</div>' : '');
+                }
+                return '<div class="q-card">'
+                    +'<div class="q-header"><div class="qnum">'+qNum+'</div><span>'+(a.question||'Question '+qNum)+'</span></div>'
+                    +'<div class="q-body">'+optHtml+'</div></div>';
+            }).join('');
+        } else {
+            // Legacy array format
+            var answersArr = Array.isArray(answers) ? answers : [];
+            qHtml = answersArr.map(function(a,idx){
+                var imgHtml = a.question_image ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
+                var optHtml = '';
+                if (a.selected_option === null || a.selected_option === undefined) {
+                    optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+                } else if (a.selected_option === a.correct_option) {
+                    optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
+                } else {
+                    optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
+                            + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
+                }
+                return '<div class="q-card">'+imgHtml
+                    +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
+                    +'<div class="q-body">'+optHtml+'</div></div>';
+            }).join('');
+        }
     }
     document.getElementById('printContent').innerHTML =
         '<table class="sub-info-table">'
