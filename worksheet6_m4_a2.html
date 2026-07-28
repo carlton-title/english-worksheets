@@ -201,7 +201,7 @@ async function loadThaiNames(section) {
   students.forEach(function(s) {
     var opt = document.createElement('option');
     opt.value = s.student_id;
-    opt.textContent = s.thai_name || s.name;
+    opt.textContent = (s.thai_name || s.name) + ' (' + (s.nickname || s.name) + ')';
     opt.dataset.nick = s.nickname || s.name;
     opt.dataset.name = s.name;
     thaiNameSelect.appendChild(opt);
