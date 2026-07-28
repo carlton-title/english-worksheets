@@ -163,7 +163,7 @@ var KYLE_DATA = { id: '54565', name: 'Kyle', nick: 'Kyle' };
 var studentData = {};
 
 async function loadStudentsFromSupabase(section) {
-  var url = SUPABASE_URL + '/rest/v1/students?select=id,name,nick&section=eq.' + encodeURIComponent(section) + '&order=name.asc';
+  var url = SUPABASE_URL + '/rest/v1/students?select=student_id,nickname,name&section=eq.' + encodeURIComponent(section) + '&order=name.asc';
   var resp = await fetch(url, {
     headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
   });
@@ -206,9 +206,9 @@ async function loadThaiNames(section) {
   thaiNameSelect.innerHTML = '<option value="">— Select your name —</option>';
   students.forEach(function(s) {
     var opt = document.createElement('option');
-    opt.value = s.id;
+    opt.value = s.student_id;
     opt.textContent = s.name;
-    opt.dataset.nick = s.nick || s.name;
+    opt.dataset.nick = s.nickname || s.name;
     opt.dataset.name = s.name;
     thaiNameSelect.appendChild(opt);
   });
