@@ -147,6 +147,7 @@
 <script>
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var TEST_STUDENT_IDS = ['54565'];
 var maxAttempts = 3;
@@ -435,6 +436,16 @@ async function submitQuiz() {
         })
       });
     } catch(e) { console.warn('Supabase save failed:', e); }
+
+    // Send to Google Sheets via Apps Script
+    var p = '?studentId=' + encodeURIComponent(currentStudentId)
+        + '&nickname=' + encodeURIComponent(currentNickname)
+        + '&section=' + encodeURIComponent(currentSection)
+        + '&score=' + encodeURIComponent(score)
+        + '&worksheet=WS6'
+        + '&status=' + encodeURIComponent(score >= 8 ? 'PASSED' : 'FAILED')
+        + '&date=' + encodeURIComponent(new Date().toISOString());
+    fetch(SCRIPT_URL + p).catch(function(e) { console.warn('Apps Script error:', e); });
   }
 
   showResult(score);
