@@ -293,8 +293,7 @@
   <div class="info-banner">
     <p>
       <strong>Instructions:</strong> Select your class section and name, then answer all 10 questions.
-      You need <strong>8/10 or more</strong> to pass. You have <strong>3 attempts</strong>.
-      Questions are shuffled each attempt â good luck! ð
+      You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!
     </p>
   </div>
 
@@ -401,6 +400,20 @@ async function loadThaiNames() {
 
   if (!section) {
     thaiNameSelect.innerHTML = '<option value="">â Select your section first â</option>';
+    return;
+  }
+
+  // Kyle Test Mode: only show Kyle, no live students
+  if (isKyleTestMode) {
+    thaiNameSelect.innerHTML = '';
+    var kOpt = document.createElement('option');
+    kOpt.value = KYLE_DATA.id;
+    kOpt.textContent = KYLE_DATA.name;
+    kOpt.dataset.nick = KYLE_DATA.nick;
+    kOpt.dataset.name = KYLE_DATA.name;
+    thaiNameSelect.appendChild(kOpt);
+    thaiNameSelect.disabled = false;
+    autoFillStudent();
     return;
   }
 
@@ -578,19 +591,17 @@ function startWorksheet() {
 // âââ RENDER QUESTIONS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 function renderQuestions(studentId, nickname) {
   userAnswers = {};
-  var seed = parseInt(studentId) + attempts * 1000;
-  displayQuestions = seededShuffle(questions, seed);
+  var seed = parseInt(studentId) * 137 + attempts * 999983;
+  displayQuestions = isKyleTestMode ? questions.slice() : seededShuffle(questions, seed);
 
   document.getElementById('quizStudentInfo').textContent = nickname + ' | ' + currentSection;
   updateAttemptsDisplay();
 
   var container = document.getElementById('questionsContainer');
   container.innerHTML = '';
-  var letters = ['A', 'B', 'C', 'D'];
 
   displayQuestions.forEach(function(q, idx) {
-    var optSeed = seed + q.id * 100;
-    var shuffledOpts = seededShuffle(q.options, optSeed);
+    var shuffledOpts = isKyleTestMode ? q.options.slice() : seededShuffle(q.options, seed + q.id * 100);
 
     var card = document.createElement('div');
     card.className = 'question-card';
@@ -609,20 +620,13 @@ function renderQuestions(studentId, nickname) {
     var grid = document.createElement('div');
     grid.className = 'options-grid';
 
-    shuffledOpts.forEach(function(opt, oi) {
+    shuffledOpts.forEach(function(opt) {
       var btn = document.createElement('button');
       btn.className = 'option-btn';
       btn.setAttribute('data-qid', q.id);
       btn.setAttribute('data-opt', opt);
       btn.onclick = function() { selectOption(q.id, opt, card); };
-
-      var letter = document.createElement('span');
-      letter.className = 'option-letter';
-      letter.textContent = letters[oi];
-      btn.appendChild(letter);
-
-      var text = document.createTextNode(' ' + opt);
-      btn.appendChild(text);
+      btn.appendChild(document.createTextNode(opt));
 
       grid.appendChild(btn);
     });
