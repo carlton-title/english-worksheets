@@ -284,7 +284,7 @@
 
   <!-- HEADER -->
   <div class="header">
-    <div class="title">ð WORKSHEET 6 ð</div>
+    <div class="title">📚 WORKSHEET 6 🔍</div>
     <div class="subtitle">Research Skills and Information Gathering</div>
     <div class="subtitle">M3 (A1) &nbsp;|&nbsp; Sections 2, 4 &amp; 6</div>
   </div>
@@ -299,20 +299,20 @@
 
   <!-- STUDENT FORM -->
   <div class="form-section" id="formSection">
-    <h2>ð¤ Student Information</h2>
+    <h2>👤 Student Information</h2>
     <div class="form-group">
       <label for="section">Class Section</label>
       <select id="section" onchange="loadThaiNames()">
-        <option value="">â Select your section â</option>
+        <option value="">— Select your section —</option>
         <option value="M3/2">M3/2</option>
         <option value="M3/4">M3/4</option>
         <option value="M3/6">M3/6</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="thaiName">Your Name (à¸à¸·à¹à¸­)</label>
+      <label for="thaiName">Your Name (ชื่อ)</label>
       <select id="thaiName" onchange="autoFillStudent()" disabled>
-        <option value="">â Select your section first â</option>
+        <option value="">— Select your section first —</option>
       </select>
     </div>
     <div class="form-row">
@@ -325,43 +325,43 @@
         <input type="text" id="studentId" placeholder="Auto-filled" readonly>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="startWorksheet()">Start Worksheet â¶</button>
+    <button class="btn btn-primary" onclick="startWorksheet()">Start Worksheet ▶</button>
   </div>
 
   <!-- QUIZ SECTION -->
   <div class="quiz-section" id="quizSection">
     <div class="quiz-header">
-      <div class="student-info" id="quizStudentInfo">â</div>
+      <div class="student-info" id="quizStudentInfo">—</div>
       <div class="attempts-badge" id="attemptsBadge">Attempt 1 / 3</div>
     </div>
     <div id="questionsContainer"></div>
     <div class="submit-area">
-      <button class="btn btn-primary" onclick="submitAnswers()" style="max-width:280px;">Submit Answers â</button>
+      <button class="btn btn-primary" onclick="submitAnswers()" style="max-width:280px;">Submit Answers ✔</button>
     </div>
   </div>
 
   <!-- SCORE SECTION -->
   <div class="score-section" id="scoreSection">
     <div class="score-circle" id="scoreCircle">
-      <div class="score-number" id="scoreNumber">â</div>
+      <div class="score-number" id="scoreNumber">—</div>
       <div class="score-label">out of 10</div>
     </div>
-    <div class="score-status" id="scoreStatus">â</div>
-    <div class="score-message" id="scoreMessage">â</div>
+    <div class="score-status" id="scoreStatus">—</div>
+    <div class="score-message" id="scoreMessage">—</div>
     <div class="attempts-history" id="attemptsHistory"></div>
     <div class="final-message" id="finalMessage" style="display:none;"></div>
     <div class="answer-review" id="answerReview"></div>
     <div class="score-actions" id="scoreActions">
-      <button class="btn btn-secondary" onclick="printWorksheet()">ð¨ Print Results</button>
-      <button class="btn btn-secondary" id="tryAgainBtn" onclick="tryAgain()">ð Try Again</button>
-      <button class="btn btn-secondary" onclick="resetForm()">ð New Student</button>
+      <button class="btn btn-secondary" onclick="printWorksheet()">🖨 Print Results</button>
+      <button class="btn btn-secondary" id="tryAgainBtn" onclick="tryAgain()">🔄 Try Again</button>
+      <button class="btn btn-secondary" onclick="resetForm()">🔁 New Student</button>
     </div>
   </div>
 
 </div>
 
 <script>
-// âââ CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── CONFIG ────────────────────────────────────────────────────────────────────
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
@@ -370,7 +370,7 @@ var TEACHER_PASSWORD = 'Carlton2026!';
 var TEST_STUDENT_IDS = ['54565'];
 var maxAttempts = 3;
 
-// âââ STUDENT DATA (Supabase-fetch) ââââââââââââââââââââââââââââââââââââââââââââ
+// ─── STUDENT DATA (Supabase-fetch) ────────────────────────────────────────────
 var studentData = {};
 
 async function loadStudentsFromSupabase(section) {
@@ -393,13 +393,13 @@ async function loadStudentsFromSupabase(section) {
 async function loadThaiNames() {
   var section = document.getElementById('section').value;
   var thaiNameSelect = document.getElementById('thaiName');
-  thaiNameSelect.innerHTML = '<option value="">â Loading... â</option>';
+  thaiNameSelect.innerHTML = '<option value="">— Loading... —</option>';
   thaiNameSelect.disabled = true;
   document.getElementById('nickname').value = '';
   document.getElementById('studentId').value = '';
 
   if (!section) {
-    thaiNameSelect.innerHTML = '<option value="">â Select your section first â</option>';
+    thaiNameSelect.innerHTML = '<option value="">— Select your section first —</option>';
     return;
   }
 
@@ -422,7 +422,7 @@ async function loadThaiNames() {
   }
 
   var students = studentData[section] || [];
-  thaiNameSelect.innerHTML = '<option value="">â Select your name â</option>';
+  thaiNameSelect.innerHTML = '<option value="">— Select your name —</option>';
   students.forEach(function(s) {
     var opt = document.createElement('option');
     opt.value = s.id;
@@ -446,7 +446,7 @@ function autoFillStudent() {
   }
 }
 
-// âââ QUESTIONS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── QUESTIONS ────────────────────────────────────────────────────────────────
 var questions = [
   {
     id: 1,
@@ -487,7 +487,7 @@ var questions = [
   {
     id: 7,
     text: 'When you find useful information, what is important to write down?',
-    options: ['The whole book word for word', 'Only the pictures', 'Where you found it (the source)', 'Nothing â just remember it'],
+    options: ['The whole book word for word', 'Only the pictures', 'Where you found it (the source)', 'Nothing — just remember it'],
     answer: 'Where you found it (the source)'
   },
   {
@@ -510,7 +510,7 @@ var questions = [
   }
 ];
 
-// âââ SEEDED RNG & SHUFFLE ââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── SEEDED RNG & SHUFFLE ────────────────────────────────────────────────────
 function seededRandom(seed) {
   var x = Math.sin(seed + 1) * 10000;
   return x - Math.floor(x);
@@ -526,7 +526,7 @@ function seededShuffle(arr, seed) {
   return a;
 }
 
-// âââ APP STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── APP STATE ────────────────────────────────────────────────────────────────
 var userAnswers = {};
 var attempts = 0;
 var allAttemptScores = [];
@@ -534,7 +534,7 @@ var displayQuestions = [];
 var currentStudentId, currentNickname, currentSection, currentThaiName;
 var isTestStudent = false;
 
-// âââ LOAD EXISTING PROGRESS ââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── LOAD EXISTING PROGRESS ──────────────────────────────────────────────────
 function loadProgress(studentId, section) {
   try {
     var key = 'ws6_m3_a1_' + studentId + '_' + section;
@@ -554,7 +554,7 @@ function saveProgress(studentId, section) {
   } catch(e) {}
 }
 
-// âââ START ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── START ────────────────────────────────────────────────────────────────────
 function startWorksheet() {
   var section = document.getElementById('section').value;
   var thaiNameSelect = document.getElementById('thaiName');
@@ -588,7 +588,7 @@ function startWorksheet() {
   renderQuestions(studentId, nickname);
 }
 
-// âââ RENDER QUESTIONS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── RENDER QUESTIONS ─────────────────────────────────────────────────────────
 function renderQuestions(studentId, nickname) {
   userAnswers = {};
   var seed = parseInt(studentId) * 137 + attempts * 999983;
@@ -646,12 +646,12 @@ function selectOption(qId, opt, card) {
 }
 
 function updateAttemptsDisplay() {
-  var remaining = isTestStudent ? 'â' : (maxAttempts - attempts);
+  var remaining = isTestStudent ? '∞' : (maxAttempts - attempts);
   document.getElementById('attemptsBadge').textContent =
-    'Attempt ' + (isTestStudent ? '(test)' : (attempts + 1)) + ' / ' + (isTestStudent ? 'â' : maxAttempts);
+    'Attempt ' + (isTestStudent ? '(test)' : (attempts + 1)) + ' / ' + (isTestStudent ? '∞' : maxAttempts);
 }
 
-// âââ SUBMIT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
 function submitAnswers() {
   if (Object.keys(userAnswers).length < displayQuestions.length) {
     alert('Please answer all ' + displayQuestions.length + ' questions before submitting.');
@@ -689,9 +689,9 @@ function showScore(score, status) {
 
   var statusEl = document.getElementById('scoreStatus');
   statusEl.className = 'score-status status-' + status.toLowerCase();
-  if (status === 'PASSED') statusEl.textContent = 'ð PASSED! Well done!';
-  else if (status === 'AVERAGE') statusEl.textContent = 'ð AVERAGE - Keep studying!';
-  else statusEl.textContent = 'â FAILED - Don\'t give up!';
+  if (status === 'PASSED') statusEl.textContent = '🎉 PASSED! Well done!';
+  else if (status === 'AVERAGE') statusEl.textContent = '📊 AVERAGE - Keep studying!';
+  else statusEl.textContent = '❌ FAILED - Don\'t give up!';
 
   var msg = document.getElementById('scoreMessage');
   if (status === 'PASSED') {
@@ -705,10 +705,10 @@ function showScore(score, status) {
   // Attempts history
   var histDiv = document.getElementById('attemptsHistory');
   if (allAttemptScores.length > 0) {
-    var html = '<h4>ð Your Attempt History</h4>';
+    var html = '<h4>📋 Your Attempt History</h4>';
     allAttemptScores.forEach(function(a) {
       var st = a.score >= 8 ? 'PASSED' : a.score >= 5 ? 'AVERAGE' : 'FAILED';
-      html += '<div class="attempt-row"><span>Attempt ' + a.attempt + '</span><span>' + a.score + '/10 â ' + st + '</span></div>';
+      html += '<div class="attempt-row"><span>Attempt ' + a.attempt + '</span><span>' + a.score + '/10 — ' + st + '</span></div>';
     });
     histDiv.innerHTML = html;
     histDiv.style.display = 'block';
@@ -719,7 +719,7 @@ function showScore(score, status) {
   var tryAgainBtn = document.getElementById('tryAgainBtn');
   if (!isTestStudent && attempts >= maxAttempts) {
     var best = Math.max.apply(null, allAttemptScores.map(function(a){ return a.score; }));
-    finalMsg.textContent = 'â You have used all ' + maxAttempts + ' attempts. Your best score was ' + best + '/10.';
+    finalMsg.textContent = '✅ You have used all ' + maxAttempts + ' attempts. Your best score was ' + best + '/10.';
     finalMsg.style.display = 'block';
     tryAgainBtn.style.display = 'none';
   } else {
@@ -727,13 +727,13 @@ function showScore(score, status) {
     tryAgainBtn.style.display = 'inline-block';
     var remaining = maxAttempts - attempts;
     if (!isTestStudent && remaining > 0 && status !== 'PASSED') {
-      tryAgainBtn.textContent = 'ð Try Again (' + remaining + ' left)';
+      tryAgainBtn.textContent = '🔄 Try Again (' + remaining + ' left)';
     }
   }
 
   // Answer review
   var reviewDiv = document.getElementById('answerReview');
-  var reviewHtml = '<h3>ð Answer Review</h3>';
+  var reviewHtml = '<h3>📝 Answer Review</h3>';
   displayQuestions.forEach(function(q, idx) {
     var userAns = userAnswers[q.id];
     var isCorrect = userAns === q.answer;
@@ -741,8 +741,8 @@ function showScore(score, status) {
       '<div class="review-q">' + (idx+1) + '. ' + q.text + '</div>' +
       '<div class="review-a">' +
         (isCorrect
-          ? 'â <span style="color:#166534">Your answer: ' + userAns + '</span>'
-          : 'â <span style="color:#991b1b">Your answer: ' + userAns + '</span> &nbsp;|&nbsp; â <span style="color:#166534">Correct: ' + q.answer + '</span>'
+          ? '✅ <span style="color:#166534">Your answer: ' + userAns + '</span>'
+          : '❌ <span style="color:#991b1b">Your answer: ' + userAns + '</span> &nbsp;|&nbsp; ✅ <span style="color:#166534">Correct: ' + q.answer + '</span>'
         ) +
       '</div>' +
       '</div>';
@@ -750,7 +750,7 @@ function showScore(score, status) {
   reviewDiv.innerHTML = reviewHtml;
 }
 
-// âââ TRY AGAIN ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── TRY AGAIN ────────────────────────────────────────────────────────────────
 function tryAgain() {
   if (!isTestStudent && attempts >= maxAttempts) {
     alert('You have used all your attempts.');
@@ -761,7 +761,7 @@ function tryAgain() {
   renderQuestions(currentStudentId, currentNickname);
 }
 
-// âââ RESET ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── RESET ────────────────────────────────────────────────────────────────────
 function resetForm() {
   currentStudentId = null; currentNickname = null;
   currentSection = null; currentThaiName = null;
@@ -769,7 +769,7 @@ function resetForm() {
   displayQuestions = [];
 
   document.getElementById('section').value = '';
-  document.getElementById('thaiName').innerHTML = '<option value="">â Select your section first â</option>';
+  document.getElementById('thaiName').innerHTML = '<option value="">— Select your section first —</option>';
   document.getElementById('thaiName').disabled = true;
   document.getElementById('nickname').value = '';
   document.getElementById('studentId').value = '';
@@ -782,10 +782,10 @@ function resetForm() {
   document.getElementById('answerReview').innerHTML = '';
   document.getElementById('finalMessage').style.display = 'none';
   document.getElementById('tryAgainBtn').style.display = 'inline-block';
-  document.getElementById('tryAgainBtn').textContent = 'ð Try Again';
+  document.getElementById('tryAgainBtn').textContent = '🔄 Try Again';
 }
 
-// âââ SUBMIT TO SUPABASE + GOOGLE SCRIPT ââââââââââââââââââââââââââââââââââââââ
+// ─── SUBMIT TO SUPABASE + GOOGLE SCRIPT ──────────────────────────────────────
 function submitToSheet(studentId, nickname, section, score, status) {
   // Build answer metadata
   var ans = {};
@@ -838,7 +838,7 @@ function submitToSheet(studentId, nickname, section, score, status) {
     .catch(function(e){ console.error('Script error:', e); });
 }
 
-// âââ PRINT ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── PRINT ────────────────────────────────────────────────────────────────────
 function printWorksheet() {
   window.print();
 }
