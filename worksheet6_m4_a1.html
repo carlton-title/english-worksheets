@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worksheet 6 M4 A1: Dreams and Life Goals</title>
+<style>
+* { box-sizing:border-box;margin:0;padding:0; }
+body { font-family:'Segoe UI',sans-serif;background:#f0f4ff;color:#1e1b4b;min-height:100vh; }
+.ws-header { background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;text-align:center;padding:28px 20px 22px; }
+.ws-header h1 { font-size:1.7rem;font-weight:800;letter-spacing:.5px; }
+.ws-header p { font-size:.95rem;opacity:.88;margin-top:6px; }
+.info-banner { background:#eef2ff;border-left:4px solid #6366f1;margin:20px auto;max-width:860px;padding:12px 18px;border-radius:8px;font-size:.93rem;color:#3730a3; }
+.info-banner strong { color:#4338ca; }
+.card { background:white;border-radius:14px;box-shadow:0 2px 12px rgba(79,70,229,.10);max-width:860px;margin:0 auto 24px;padding:28px; }
+.form-group { margin-bottom:18px; }
+label { display:block;font-weight:600;margin-bottom:6px;font-size:.9rem;color:#4338ca; }
+select,input[type=text] { width:100%;padding:10px 14px;border:2px solid #e0e7ff;border-radius:8px;font-size:.95rem;color:#1e1b4b;background:#f8f9ff; }
+select:focus,input:focus { outline:none;border-color:#6366f1; }
+.form-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+input[readonly] { background:#f1f5f9;color:#64748b;cursor:not-allowed; }
+.btn-primary { width:100%;padding:14px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px; }
+.btn-primary:hover { opacity:.93; }
+.btn-primary:disabled { opacity:.5;cursor:not-allowed; }
+.quiz-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px; }
+#quizStudentInfo { font-weight:700;font-size:1rem;color:#4338ca; }
+.attempts-display { background:#eef2ff;border-radius:8px;padding:6px 14px;font-size:.85rem;color:#4338ca;font-weight:600; }
+.question-card { background:#fafbff;border:2px solid #e0e7ff;border-radius:12px;padding:20px;margin-bottom:18px;transition:border-color .2s; }
+.question-card.answered { border-color:#6366f1; }
+.question-number { font-size:.78rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px; }
+.question-text { font-size:1rem;font-weight:600;color:#1e1b4b;margin-bottom:14px;line-height:1.5; }
+.options-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+@media (max-width:560px) { .options-grid { grid-template-columns:1fr; } }
+.option-btn { display:flex;align-items:center;padding:10px 14px;border:2px solid #e0e7ff;border-radius:8px;background:white;cursor:pointer;font-size:.93rem;color:#374151;text-align:left;transition:all .15s;font-family:inherit; }
+.option-btn:hover { border-color:#6366f1;background:#eef2ff; }
+.option-btn.selected { border-color:#6366f1;background:#eef2ff;color:#3730a3;font-weight:600; }
+.option-btn.correct { border-color:#16a34a;background:#dcfce7;color:#15803d; }
+.option-btn.incorrect { border-color:#dc2626;background:#fee2e2;color:#991b1b; }
+#submitBtn { display:none; }
+#resultSection { display:none; }
+.score-display { text-align:center;padding:30px 20px; }
+.score-circle { width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;margin:0 auto 16px; }
+.score-pass { background:#dcfce7;color:#15803d;border:4px solid #16a34a; }
+.score-fail { background:#fee2e2;color:#991b1b;border:4px solid #dc2626; }
+.score-label { font-size:1.1rem;font-weight:700;color:#1e1b4b; }
+.score-sub { font-size:.9rem;color:#64748b;margin-top:4px; }
+.feedback-msg { text-align:center;font-size:1rem;margin:16px 0;padding:12px;border-radius:8px; }
+.feedback-pass { background:#dcfce7;color:#15803d; }
+.feedback-fail { background:#fee2e2;color:#991b1b; }
+.btn-retry { display:block;width:100%;max-width:280px;margin:16px auto 0;padding:12px;background:#6366f1;color:white;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer; }
+h2 { font-size:1.15rem;font-weight:700;color:#4338ca;margin-bottom:20px; }
+#quizSection { display:none; }
+</style></head><body>
+<div class="ws-header"><h1>📖 WORKSHEET 6 📖</h1><p>Dreams and Life Goals</p><p>M4 (A1) &nbsp;|&nbsp; Sections 1–9</p></div>
+<div class="info-banner"><strong>Instructions:</strong> Select your class section and name, then answer all 10 questions. You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!</div>
+<div class="card" id="formSection">
+<h2>👤 Student Information</h2>
+<div class="form-group"><label for="section">Class Section</label>
+<select id="section" onchange="loadThaiNames(this.value)">
+<option value="">— Select your section —</option>
+<option value="M4/1">M4/1</option><option value="M4/2">M4/2</option><option value="M4/3">M4/3</option><option value="M4/4">M4/4</option><option value="M4/5">M4/5</option><option value="M4/6">M4/6</option><option value="M4/7">M4/7</option><option value="M4/8">M4/8</option><option value="M4/9">M4/9</option>
+</select></div>
+<div class="form-group"><label for="thaiName">Your Name (ชื่อ)</label>
+<select id="thaiName" disabled onchange="autoFillStudent(this)"><option value="">— Select your section first —</option></select></div>
+<div class="form-row">
+<div class="form-group"><label>Nickname</label><input type="text" id="nickname" readonly placeholder="Auto-filled"></div>
+<div class="form-group"><label>Student ID</label><input type="text" id="studentId" readonly placeholder="Auto-filled"></div>
+</div>
+<button class="btn-primary" id="startBtn" onclick="startQuiz()" disabled>Start Worksheet ▶</button>
+</div>
+<div class="card" id="quizSection">
+<div class="quiz-header"><div id="quizStudentInfo"></div><div class="attempts-display" id="attemptsDisplay"></div></div>
+<div id="questionsContainer"></div>
+<button class="btn-primary" id="submitBtn" onclick="submitQuiz()">Submit Answers ✓</button>
+</div>
+<div class="card" id="resultSection">
+<div class="score-display"><div class="score-circle" id="scoreCircle"></div><div class="score-label" id="scoreLabel"></div><div class="score-sub" id="scoreSub"></div></div>
+<div class="feedback-msg" id="feedbackMsg"></div>
+<button class="btn-retry" id="retryBtn" onclick="retryQuiz()" style="display:none">Try Again 🔄</button>
+</div>
+<script>
+var SUPABASE_URL='https://smtgkffnptwjlgccsrti.supabase.co';
+var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+var TEST_STUDENT_IDS=['54565'];
+var maxAttempts=3;
+var isKyleTestMode=(new URLSearchParams(window.location.search).get('testmode')=='kyle');
+var KYLE_DATA={id:'54565',name:'Kyle',nick:'Kyle'};
+var studentData={};
+
+async function loadStudentsFromSupabase(s){
+  var r=await fetch(SUPABASE_URL+'/rest/v1/students?select=id,name,nick&section=eq.'+encodeURIComponent(s)+'&order=name.asc',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+  studentData[s]=await r.json();
+}
+
+async function loadThaiNames(section){
+  var sel=document.getElementById('thaiName');
+  sel.innerHTML='<option value="">— Loading... —</option>';
+  sel.disabled=true;
+  document.getElementById('nickname').value='';
+  document.getElementById('studentId').value='';
+  if(!section){sel.innerHTML='<option value="">— Select your section first —</option>';document.getElementById('startBtn').disabled=true;return;}
+  if(isKyleTestMode){
+    sel.innerHTML='';
+    var k=document.createElement('option');k.value=KYLE_DATA.id;k.textContent=KYLE_DATA.name;k.dataset.nick=KYLE_DATA.nick;k.dataset.name=KYLE_DATA.name;
+    sel.appendChild(k);sel.disabled=false;autoFillStudent(sel);return;
+  }
+  if(!studentData[section])await loadStudentsFromSupabase(section);
+  sel.innerHTML='<option value="">— Select your name —</option>';
+  studentData[section].forEach(function(s){var o=document.createElement('option');o.value=s.id;o.textContent=s.name;o.dataset.nick=s.nick||s.name;o.dataset.name=s.name;sel.appendChild(o);});
+  sel.disabled=false;
+}
+
+function autoFillStudent(sel){
+  sel=sel||document.getElementById('thaiName');
+  var o=sel.options[sel.selectedIndex];
+  if(o&&o.value){document.getElementById('nickname').value=o.dataset.nick||o.dataset.name;document.getElementById('studentId').value=o.value;document.getElementById('startBtn').disabled=false;}
+  else{document.getElementById('nickname').value='';document.getElementById('studentId').value='';document.getElementById('startBtn').disabled=true;}
+}
+
+function seededShuffle(arr,seed){
+  var a=arr.slice();
+  for(var i=a.length-1;i>0;i--){seed=(seed*1664525+1013904223)&0xffffffff;var j=Math.abs(seed)%(i+1);var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+
+var questions=[
+{id:1,text:'What does it mean to have a "dream" for your future?',options:['Something you see only when you sleep','A strong hope or wish for what you want to become','A plan you have already completed','A problem that is impossible to solve'],answer:'A strong hope or wish for what you want to become'},
+{id:2,text:'Which sentence uses "aspire" correctly?',options:['She aspires to become a nurse.','He aspires his dinner every evening.','They aspire the floor with a mop.','We aspire because we feel cold.'],answer:'She aspires to become a nurse.'},
+{id:3,text:'What is a "goal"?',options:['Only a score in a football match','Something you want to achieve or reach','A nightmare you have at night','A mistake you cannot fix'],answer:'Something you want to achieve or reach'},
+{id:4,text:'Choose the best word: "He _____ of becoming a pilot one day."',options:['dreams','sleeps','argues','forgets'],answer:'dreams'},
+{id:5,text:'What does "career" mean?',options:['A short trip you take for fun','The job or profession someone does for many years','A type of school subject','A place where you buy food'],answer:'The job or profession someone does for many years'},
+{id:6,text:'Which phrase means "to keep trying and work hard to get something"?',options:['give up','slow down','strive for','back away'],answer:'strive for'},
+{id:7,text:'"My life goal is to help my community." What does "life goal" mean?',options:['A game you play throughout your life','A daily task you must finish','Something important you want to do or become in your lifetime','A mistake you made in the past'],answer:'Something important you want to do or become in your lifetime'},
+{id:8,text:'What does "ambitious" mean?',options:['Being afraid of the future','Not caring about what happens next','Having a strong desire to succeed and achieve great things','Being lazy and avoiding work'],answer:'Having a strong desire to succeed and achieve great things'},
+{id:9,text:'Which action BEST helps someone achieve their dream?',options:['Waiting for good luck to arrive','Copying other people without thinking','Giving up whenever things get hard','Making a clear plan and working on it every day'],answer:'Making a clear plan and working on it every day'},
+{id:10,text:'Choose the correct sentence about dreams and goals:',options:['Dreams are useless and should be forgotten.','Goals are only for adults, not students.','Goals help us stay focused and work toward what we want.','Dreams always come true without any effort.'],answer:'Goals help us stay focused and work toward what we want.'}
+];
+
+var attempts=0,userAnswers={},displayQuestions=[],currentStudentId='',currentNickname='',currentSection='',quizLocked=false;
+
+function startQuiz(){
+  var sid=document.getElementById('studentId').value,nick=document.getElementById('nickname').value,sec=document.getElementById('section').value;
+  if(!sid||!nick||!sec)return;
+  currentStudentId=sid;currentNickname=nick;currentSection=sec;
+  document.getElementById('formSection').style.display='none';
+  document.getElementById('quizSection').style.display='block';
+  document.getElementById('resultSection').style.display='none';
+  renderQuestions(sid,nick);
+}
+
+function renderQuestions(sid,nick){
+  userAnswers={};var seed=parseInt(sid)*137+attempts*999983;
+  displayQuestions=isKyleTestMode?questions.slice():seededShuffle(questions,seed);
+  document.getElementById('quizStudentInfo').textContent=nick+' | '+currentSection;
+  updateAttemptsDisplay();
+  var c=document.getElementById('questionsContainer');c.innerHTML='';
+  displayQuestions.forEach(function(q,i){
+    var opts=isKyleTestMode?q.options.slice():seededShuffle(q.options,seed+q.id*100);
+    var card=document.createElement('div');card.className='question-card';card.setAttribute('data-qid',q.id);
+    var nb=document.createElement('div');nb.className='question-number';nb.textContent='Question '+(i+1);card.appendChild(nb);
+    var qt=document.createElement('div');qt.className='question-text';qt.textContent=q.text;card.appendChild(qt);
+    var g=document.createElement('div');g.className='options-grid';
+    opts.forEach(function(opt){var btn=document.createElement('button');btn.className='option-btn';btn.setAttribute('data-qid',q.id);btn.setAttribute('data-opt',opt);btn.onclick=function(){selectOption(q.id,opt,card);};btn.appendChild(document.createTextNode(opt));g.appendChild(btn);});
+    card.appendChild(g);c.appendChild(card);
+  });
+  document.getElementById('submitBtn').style.display='none';quizLocked=false;
+}
+
+function selectOption(qid,opt,card){
+  if(quizLocked)return;
+  userAnswers[qid]=opt;
+  card.querySelectorAll('.option-btn').forEach(function(b){b.classList.toggle('selected',b.getAttribute('data-opt')===opt);});
+  card.classList.add('answered');
+  if(Object.keys(userAnswers).length===displayQuestions.length)document.getElementById('submitBtn').style.display='block';
+}
+
+function updateAttemptsDisplay(){document.getElementById('attemptsDisplay').textContent='Attempt '+(attempts+1)+' of '+maxAttempts;}
+
+async function submitQuiz(){
+  quizLocked=true;attempts++;var score=0;
+  displayQuestions.forEach(function(q){
+    var chosen=userAnswers[q.id],ok=(chosen===q.answer);
+    if(ok)score++;
+    var card=document.querySelector('.question-card[data-qid="'+q.id+'"]');
+    if(card)card.querySelectorAll('.option-btn').forEach(function(b){var o=b.getAttribute('data-opt');if(o===q.answer)b.classList.add('correct');else if(o===chosen&&!ok)b.classList.add('incorrect');b.disabled=true;});
+  });
+  document.getElementById('submitBtn').style.display='none';
+  if(!TEST_STUDENT_IDS.includes(currentStudentId)){
+    try{
+      var ao={};displayQuestions.forEach(function(q,i){ao['Q'+(i+1)]={question:q.text,chosen:userAnswers[q.id]||'',correct:q.answer,isCorrect:userAnswers[q.id]===q.answer};});
+      await fetch('https://smtgkffnptwjlgccsrti.supabase.co/rest/v1/worksheet_scores',{method:'POST',headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs','Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({student_id:currentStudentId,worksheet:'WS6-M4-A1',score:score,total:10,attempt:attempts,answers:ao})});
+    }catch(e){console.warn(e);}
+  }
+  showResult(score);
+}
+
+function showResult(score){
+  var p=score>=8;
+  var ci=document.getElementById('scoreCircle');ci.textContent=score+'/10';ci.className='score-circle '+(p?'score-pass':'score-fail');
+  document.getElementById('scoreLabel').textContent=p?'🎉 Excellent work!':'📚 Keep practicing!';
+  document.getElementById('scoreSub').textContent=currentNickname+' | '+currentSection+' | Attempt '+attempts;
+  var fb=document.getElementById('feedbackMsg');fb.className='feedback-msg '+(p?'feedback-pass':'feedback-fail');
+  fb.textContent=p?'Great job! You scored '+score+' out of 10.':'You scored '+score+' out of 10. '+(attempts<maxAttempts?'You have '+(maxAttempts-attempts)+' attempt(s) left.':'No more attempts.');
+  document.getElementById('quizSection').style.display='none';
+  document.getElementById('resultSection').style.display='block';
+  document.getElementById('retryBtn').style.display=(!p&&attempts<maxAttempts)?'block':'none';
+}
+
+function retryQuiz(){
+  document.getElementById('resultSection').style.display='none';
+  document.getElementById('quizSection').style.display='block';
+  renderQuestions(currentStudentId,currentNickname);
+}
+</script>
+</body></html>
