@@ -545,7 +545,7 @@ function loadProgress(studentId, section) {
       attempts = data.attempts || 0;
       allAttemptScores = data.scores || [];
     }
-  } catch	e) {}
+  } catch(e) {}
 }
 
 function saveProgress(studentId, section) {
@@ -843,6 +843,12 @@ function submitToSheet(studentId, nickname, section, score, status) {
 function printWorksheet() {
   window.print();
 }
+
+  // Auto-trigger if browser pre-fills section on reload
+  document.addEventListener('DOMContentLoaded', function() {
+    var sec = document.getElementById('section');
+    if (sec && sec.value) loadThaiNames();
+  });
 </script>
 </body>
 </html>
