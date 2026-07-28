@@ -380,7 +380,7 @@ function renderQuestions(studentId, nickname) {
     container.appendChild(card);
   });
 
-  document.getElementById('submitBtn').style.display = 'none';
+  document.getElementById('submitBtn').style.display = 'block';
   quizLocked = false;
 }
 
@@ -391,9 +391,6 @@ function selectOption(qid, opt, card) {
     b.classList.toggle('selected', b.getAttribute('data-opt') === opt);
   });
   card.classList.add('answered');
-  if (Object.keys(userAnswers).length === displayQuestions.length) {
-    document.getElementById('submitBtn').style.display = 'block';
-  }
 }
 
 function updateAttemptsDisplay() {
