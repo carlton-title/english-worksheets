@@ -368,6 +368,8 @@ var SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70n
 var TEACHER_PASSWORD = 'Carlton2026!';
 var TEST_STUDENT_IDS = ['54565'];
 var maxAttempts = 3;
+var isKyleTestMode = (new URLSearchParams(window.location.search).get('testmode') === 'kyle');
+var KYLE_DATA = { id: '54565', name: 'Kyle', nick: 'Kyle' };
 
 // ─── STUDENT DATA (Supabase-fetch) ────────────────────────────────────────────
 var studentData = {};
