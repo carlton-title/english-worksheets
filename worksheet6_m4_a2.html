@@ -347,6 +347,12 @@ function renderQuestions(studentId, nickname) {
     numBadge.textContent = 'Question ' + (idx + 1);
     card.appendChild(numBadge);
 
+    var img = document.createElement('img');
+    img.src = 'WS6M4A2Q' + q.id + '.png';
+    img.alt = 'Question ' + q.id;
+    img.style.cssText = 'width:100%;max-width:400px;height:auto;border-radius:10px;margin:10px 0;display:block;';
+    card.appendChild(img);
+
     var qText = document.createElement('div');
     qText.className = 'question-text';
     qText.textContent = q.text;
