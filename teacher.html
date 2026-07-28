@@ -1,3 +1,5 @@
+Content-Type: text/plain; charset=utf-8
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,61 +24,12 @@
         #portal { display:none; }
         .top-bar { background:white; border-radius:14px; padding:16px 24px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; box-shadow:0 4px 20px rgba(0,0,0,.15); }
         .top-bar h1 { color:#1a237e; font-size:1.4em; }
-        .top-bar p { color:#555; font-size:.88em; margin-top:2px; }
         .btn-logout { background:#f5f5f5; border:1px solid #ddd; border-radius:8px; padding:8px 16px; cursor:pointer; font-size:.9em; color:#555; }
         .btn-logout:hover { background:#ffe0e0; color:#c62828; }
 
         .container { max-width:1000px; margin:0 auto; }
         .card { background:white; border-radius:16px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,.12); margin-bottom:20px; }
         .card h2 { color:#1a237e; margin-bottom:20px; font-size:1.15em; }
-
-        /* WORKSHEETS QUICK ACCESS */
-        .ws-section-label { font-weight:bold; color:#1a237e; font-size:.95em; margin-bottom:10px; }
-        .ws-tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
-        @media(max-width:700px){ .ws-tiles { grid-template-columns:repeat(2,1fr); } }
-        @media(max-width:420px){ .ws-tiles { grid-template-columns:1fr; } }
-        .ws-tile {
-            background:#f0f3ff; border:2px solid #c5cae9; border-radius:12px;
-            padding:14px 12px 10px; cursor:pointer; transition:all .2s;
-            display:flex; flex-direction:column; gap:6px;
-        }
-        .ws-tile:hover { background:#e3e7ff; border-color:#3949ab; transform:translateY(-2px); box-shadow:0 6px 18px rgba(26,35,126,.15); }
-        .ws-tile-title { font-weight:bold; color:#1a237e; font-size:.97em; }
-        .ws-tile-sub { font-size:.82em; color:#666; }
-        .ws-copy-btn {
-            margin-top:6px; background:linear-gradient(135deg,#1a237e,#4a148c);
-            color:white; border:none; border-radius:7px; padding:5px 11px;
-            font-size:.78em; font-weight:bold; cursor:pointer; width:fit-content; align-self:flex-start;
-        }
-        .ws-copy-btn:hover { opacity:.85; }
-        .ws-section-divider { border:none; border-top:1px solid #e8eaf6; margin:16px 0; }
-
-
-        /* QUICK ACCESS LINKS */
-        .qa-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
-        @media(max-width:600px){ .qa-grid { grid-template-columns:1fr; } }
-        .qa-col { display:flex; flex-direction:column; }
-        .qa-ws-label { font-weight:bold; color:#1a237e; font-size:.85em; margin-bottom:6px; }
-        .qa-link-row { display:flex; align-items:center; gap:6px; margin-bottom:3px; }
-        .qa-link { flex:1; display:block; color:#1a237e; text-decoration:none; font-size:.86em; padding:5px 10px; border-radius:7px; background:#f0f3ff; border:1px solid #c5cae9; transition:background .15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .qa-link:hover { background:#e3e7ff; border-color:#3949ab; }
-        .qa-sub { color:#888; font-size:.88em; font-weight:normal; }
-        .qa-copy { flex-shrink:0; background:none; border:1px solid #c5cae9; border-radius:6px; padding:4px 7px; font-size:.78em; cursor:pointer; color:#3949ab; transition:background .15s; }
-        .qa-copy:hover { background:#e3e7ff; }
-        /* KYLE CARD */
-        .kyle-card {
-            background:linear-gradient(135deg,#1a1a4e 0%,#1a237e 45%,#4a148c 100%);
-            border-radius:16px; padding:28px; box-shadow:0 4px 24px rgba(0,0,0,.3); margin-bottom:20px;
-        }
-        .kyle-card h2 { color:#e8eaf6; margin-bottom:6px; font-size:1.15em; }
-        .kyle-card-note { color:#b0bec5; font-size:.84em; margin-bottom:20px; }
-        /* KYLE LINKS */
-        .kyle-links-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-        @media(max-width:600px){ .kyle-links-grid { grid-template-columns:1fr; } }
-        .kyle-col { display:flex; flex-direction:column; }
-        .kyle-ws-label { font-weight:bold; color:#e8eaf6; font-size:.85em; margin-bottom:6px; }
-        .kyle-link { display:block; color:#fff; text-decoration:none; font-size:.88em; padding:5px 10px; border-radius:7px; margin-bottom:3px; transition:background .15s; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); }
-        .kyle-link:hover { background:rgba(255,255,255,.22); text-decoration:underline; }
 
         /* SEARCH FORM */
         .search-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
@@ -89,6 +42,7 @@
         }
         .form-group select:focus, .form-group input:focus { border-color:#1a237e; }
         select:disabled, input:disabled { background:#f5f5f5; color:#999; }
+
         .btn-search { width:100%; padding:14px; background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; font-size:1.05em; cursor:pointer; font-weight:bold; margin-top:4px; }
         .btn-search:hover { opacity:.9; }
         .btn-search:disabled { opacity:.5; cursor:not-allowed; }
@@ -101,15 +55,23 @@
         .result-header .meta { font-size:.88em; opacity:.9; }
         .badge { display:inline-block; padding:4px 12px; border-radius:12px; font-size:.82em; font-weight:bold; }
         .badge-pass { background:#c8e6c9; color:#1b5e20; }
-        .badge-average { background:#fff3e0; color:#e65100; }
-        .badge-completed { background:#e3f2fd; color:#1565c0; }
         .badge-fail { background:#ffcdd2; color:#b71c1c; }
         .result-body { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
         .result-info { font-size:.92em; color:#555; }
         .btn-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 22px; cursor:pointer; font-size:.95em; font-weight:bold; white-space:nowrap; }
         .btn-pdf:hover { opacity:.88; }
+
         .no-result { text-align:center; padding:30px; color:#999; font-size:.95em; }
         .loading-msg { text-align:center; padding:20px; color:#777; }
+
+        /* ALL SUBMISSIONS TABLE */
+        .table-wrap { overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; font-size:.9em; }
+        th { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; padding:11px 13px; text-align:left; white-space:nowrap; }
+        td { padding:10px 13px; border-bottom:1px solid #f0f0f0; vertical-align:middle; }
+        tr:hover td { background:#f5f7ff; }
+        .badge-ws { background:#e3f2fd; color:#0d47a1; }
+        .btn-view-sm { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:7px; padding:5px 13px; cursor:pointer; font-size:.82em; font-weight:bold; }
 
         /* PRINT MODAL */
         #printModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; align-items:center; justify-content:center; padding:20px; }
@@ -119,6 +81,7 @@
         .modal-header h2 { color:#1a237e; font-size:1.15em; }
         .btn-print-pdf { background:linear-gradient(135deg,#1a237e,#4a148c); color:white; border:none; border-radius:10px; padding:10px 20px; cursor:pointer; font-size:.93em; font-weight:bold; }
         .btn-close-modal { background:#f5f5f5; border:1px solid #ddd; border-radius:10px; padding:10px 16px; cursor:pointer; color:#555; }
+
         .sub-info-table { border-collapse:collapse; width:100%; margin-bottom:18px; }
         .sub-info-table td { padding:8px 11px; border:1px solid #ddd; font-size:.9em; }
         .sub-info-table td:first-child { background:#f0f3ff; font-weight:bold; width:120px; }
@@ -131,6 +94,7 @@
         .opt-sc { background:#c8e6c9; border-color:#4caf50; font-weight:bold; }
         .opt-sw { background:#ffcdd2; border-color:#f44336; font-weight:bold; }
         .opt-cm { background:#e8f5e9; border-color:#81c784; color:#2e7d32; }
+        .opt-plain { background:#fafafa; color:#aaa; }
         .no-ans { color:#aaa; font-style:italic; font-size:.85em; }
     </style>
 </head>
@@ -152,109 +116,34 @@
 <div class="container">
 
     <div class="top-bar">
-        <div>
-            <h1>🏫 Teacher Dashboard Sikhio Sawadphadung Wittaya School</h1>
-            <p>Worksheet Submission Portal &nbsp;·&nbsp; Monitor student progress &nbsp;·&nbsp; Search results &nbsp;·&nbsp; Download PDF records</p>
-        </div>
-        <button class="btn-logout" onclick="doLogout()">Logout ↩</button>
+        <h1>🏫 Teacher Dashboard — Worksheet Submissions</h1>
+        <button class="btn-logout" onclick="doLogout()">Logout</button>
     </div>
 
-    <!-- WORKSHEETS QUICK ACCESS -->
+    <!-- WORKSHEET LINKS CARD -->
     <div class="card">
-        <h2>🔗 Worksheets Quick Access</h2>
-        <p style="color:#888;font-size:.82em;margin:-10px 0 16px;">Click a link to open the worksheet in a new tab. Use 📋 to copy the URL.</p>
-        <div class="qa-grid">
-            <div class="qa-col">
-                <div class="qa-ws-label">📚 Worksheet 1</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec" target="_blank">WS1 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec" target="_blank">WS1 — M3 (B1) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec" target="_blank">WS1 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec" target="_blank">WS1 — M4 (B1) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec')">📋</button></div>
-
-                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 2</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html" target="_blank">WS2 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html" target="_blank">WS2 — M3 (B1) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html" target="_blank">WS2 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html" target="_blank">WS2 — M4 (B1) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html')">📋</button></div>
-
-                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 3</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html" target="_blank">WS3 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html" target="_blank">WS3 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html" target="_blank">WS3 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html" target="_blank">WS3 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html')">📋</button></div>
+        <h2>📚 Worksheet Links</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px;">
+            <div>
+                <div style="font-weight:700;color:#1a237e;margin-bottom:10px;font-size:.95em;">M3 Worksheets</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="https://worksheet1allaboutme.netlify.app/" target="_blank"
+                       style="display:inline-block;padding:9px 14px;background:#e8f5e9;border:1.5px solid #66bb6a;border-radius:8px;color:#2e7d32;font-weight:600;font-size:.9em;text-decoration:none;">
+                        🔗 Worksheet 1 — A2 &amp; B1
+                    </a>
+                </div>
             </div>
-
-            <div class="qa-col">
-                <div class="qa-ws-label">📚 Worksheet 4</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html" target="_blank">WS4 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html" target="_blank">WS4 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html" target="_blank">WS4 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html" target="_blank">WS4 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html')">📋</button></div>
-
-                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 5</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html" target="_blank">WS5 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html" target="_blank">WS5 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html" target="_blank">WS5 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html" target="_blank">WS5 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html')">📋</button></div>
-
-                <div class="qa-ws-label" style="margin-top:14px;">📚 Worksheet 6</div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m3_a1.html" target="_blank">WS6 — M3 (A1) &nbsp;<span class="qa-sub">M3 Sec 2, 4 &amp; 6</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet6_m3_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m3_a2.html" target="_blank">WS6 — M3 (A2) &nbsp;<span class="qa-sub">M3 Sec 10 &amp; 12</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet6_m3_a2.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m4_a1.html" target="_blank">WS6 — M4 (A1) &nbsp;<span class="qa-sub">M4 Sec 1–9</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet6_m4_a1.html')">📋</button></div>
-                <div class="qa-link-row"><a class="qa-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m4_a2.html" target="_blank">WS6 — M4 (A2) &nbsp;<span class="qa-sub">M4 Sec 10–13</span></a><button class="qa-copy" onclick="copyURL('https://carlton-title.github.io/english-worksheets/worksheet6_m4_a2.html')">📋</button></div>
+            <div>
+                <div style="font-weight:700;color:#1a237e;margin-bottom:10px;font-size:.95em;">M4 Worksheets</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                    <a href="https://m4worksheet1myfamilytree.netlify.app/" target="_blank"
+                       style="display:inline-block;padding:9px 14px;background:#e8f5e9;border:1.5px solid #66bb6a;border-radius:8px;color:#2e7d32;font-weight:600;font-size:.9em;text-decoration:none;">
+                        🔗 Worksheet 1 — A2 &amp; B1
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- KYLE TEST MODE CARD -->
-    <div class="kyle-card">
-        <h2>🧪 Kyle Test Mode — Teacher Only</h2>
-        <p class="kyle-card-note">Opens each worksheet with Kyle (ID 54565) pre-selected. Scores record normally to Google Sheets &amp; Supabase.</p>
-        <div class="kyle-links-grid">
-            <div class="kyle-col">
-                <div class="kyle-ws-label">Worksheet 1</div>
-                <a class="kyle-link" href="https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec?testmode=kyle" target="_blank">WS1 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec?testmode=kyle" target="_blank">WS1 M3 (B1) Test Mode</a>
-                <a class="kyle-link" href="https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec?testmode=kyle" target="_blank">WS1 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec?testmode=kyle" target="_blank">WS1 M4 (B1) Test Mode</a>
-
-                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 2</div>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_a1_v2.html?testmode=kyle" target="_blank">WS2 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m3_b1.html?testmode=kyle" target="_blank">WS2 M3 (B1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_a1.html?testmode=kyle" target="_blank">WS2 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet2_m4_b1.html?testmode=kyle" target="_blank">WS2 M4 (B1) Test Mode</a>
-
-                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 3</div>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a1.html?testmode=kyle" target="_blank">WS3 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m3_a2.html?testmode=kyle" target="_blank">WS3 M3 (A2) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a1.html?testmode=kyle" target="_blank">WS3 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet3_m4_a2.html?testmode=kyle" target="_blank">WS3 M4 (A2) Test Mode</a>
-            </div>
-            <div class="kyle-col">
-                <div class="kyle-ws-label">Worksheet 4</div>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a1.html?testmode=kyle" target="_blank">WS4 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m3_a2.html?testmode=kyle" target="_blank">WS4 M3 (A2) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a1.html?testmode=kyle" target="_blank">WS4 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet4_m4_a2.html?testmode=kyle" target="_blank">WS4 M4 (A2) Test Mode</a>
-
-                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 5</div>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a1.html?testmode=kyle" target="_blank">WS5 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m3_a2.html?testmode=kyle" target="_blank">WS5 M3 (A2) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a1.html?testmode=kyle" target="_blank">WS5 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet5_m4_a2.html?testmode=kyle" target="_blank">WS5 M4 (A2) Test Mode</a>
-
-                <div class="kyle-ws-label" style="margin-top:14px;">Worksheet 6</div>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m3_a1.html?testmode=kyle" target="_blank">WS6 M3 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m3_a2.html?testmode=kyle" target="_blank">WS6 M3 (A2) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m4_a1.html?testmode=kyle" target="_blank">WS6 M4 (A1) Test Mode</a>
-                <a class="kyle-link" href="https://carlton-title.github.io/english-worksheets/worksheet6_m4_a2.html?testmode=kyle" target="_blank">WS6 M4 (A2) Test Mode</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- ALL SUBMISSIONS — loaded silently for search; table not shown -->
-    <span id="allCount" style="display:none;"></span>
-    <table style="display:none;"><tbody id="allBody"></tbody></table>
 
     <!-- SEARCH CARD -->
     <div class="card">
@@ -311,47 +200,21 @@
         </div>
     </div>
 
-    <!-- NO SUBMISSION CHECKER -->
+    <!-- ALL SUBMISSIONS -->
     <div class="card">
-        <h2>📭 No Worksheet Submitted Search</h2>
-        <p style="color:#666;font-size:.9em;margin-bottom:4px;">Cross-references your class roster against Supabase &amp; Google Sheets submission records.</p>
-        <p style="color:#999;font-size:.82em;margin-bottom:6px;">Results mirror your Google Sheet — students with a score (even 0) count as submitted. Absent ("A") entries are excluded.</p>
-        <p style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:8px 12px;font-size:.82em;color:#795548;margin-bottom:18px;">⚠️ <b>First time?</b> Open your Google Sheet → Extensions → Apps Script → paste <b>SyncToSupabase.gs</b> → run <b>Sync ALL sheets now</b> to populate. After that it auto-updates whenever you edit a score.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:flex-end;margin-bottom:0;">
-            <div class="form-group">
-                <label>Class / Section</label>
-                <select id="nsSelSection">
-                    <option value="">— Select Section —</option>
-                    <optgroup label="M3">
-                        <option>M3/2</option><option>M3/4</option><option>M3/6</option>
-                        <option>M3/10</option><option>M3/12</option>
-                    </optgroup>
-                    <optgroup label="M4">
-                        <option>M4/1</option><option>M4/2</option><option>M4/3</option>
-                        <option>M4/4</option><option>M4/5</option><option>M4/6</option>
-                        <option>M4/7</option><option>M4/8</option><option>M4/9</option>
-                        <option>M4/10</option><option>M4/11</option><option>M4/12</option>
-                        <option>M4/13</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Worksheet Number</label>
-                <select id="nsSelWorksheet">
-                    <option value="">— Select Worksheet —</option>
-                    <option value="WS1">Worksheet 1</option>
-                    <option value="WS2">Worksheet 2</option>
-                    <option value="WS3">Worksheet 3</option>
-                    <option value="WS4">Worksheet 4</option>
-                    <option value="WS5">Worksheet 5</option>
-                    <option value="WS6">Worksheet 6</option>
-                </select>
-            </div>
-            <div class="form-group" style="display:flex;align-items:flex-end;">
-                <button class="btn-search" id="btnNsCheck" onclick="doNoSubCheck()" style="margin-top:0;white-space:nowrap;">🔍 Check</button>
-            </div>
+        <h2>📋 All Submissions <span id="allCount" style="color:#999;font-weight:normal;font-size:.85em;"></span>
+            <button onclick="loadAll()" style="float:right;background:#f0f3ff;border:1px solid #c5cae9;border-radius:8px;padding:6px 14px;cursor:pointer;color:#1a237e;font-size:.82em;font-weight:bold;">↻ Refresh</button>
+        </h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr>
+                    <th>#</th><th>ID</th><th>Name</th><th>Thai Name</th>
+                    <th>Section</th><th>Worksheet</th><th>Score</th>
+                    <th>Status</th><th>Submitted</th><th></th>
+                </tr></thead>
+                <tbody id="allBody"><tr><td colspan="10" class="loading-msg">Loading…</td></tr></tbody>
+            </table>
         </div>
-        <div id="nsResults" style="margin-top:18px;"></div>
     </div>
 
 </div>
@@ -372,40 +235,13 @@
 </div>
 
 <script>
-// ── Copy URL ──
-function copyURL(url) {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function(){
-            showCopyToast('✅ Link copied!');
-        }).catch(function(){ fallbackCopy(url); });
-    } else { fallbackCopy(url); }
-}
-function fallbackCopy(url) {
-    var ta = document.createElement('textarea');
-    ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-    showCopyToast('✅ Link copied!');
-}
-function showCopyToast(msg) {
-    var t = document.getElementById('copyToast');
-    if (!t) {
-        t = document.createElement('div'); t.id = 'copyToast';
-        t.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a237e;color:white;padding:10px 22px;border-radius:20px;font-size:.92em;font-weight:bold;z-index:9999;display:none;';
-        document.body.appendChild(t);
-    }
-    t.textContent = msg; t.style.display = 'block';
-    clearTimeout(t._timer);
-    t._timer = setTimeout(function(){ t.style.display = 'none'; }, 2000);
-}
-
-
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var TEACHER_PASSWORD = 'Carlton2026!';
 var IMAGE_BASE = 'https://carlton-title.github.io/english-worksheets/';
 var allSubmissions = [];
 
+// ── Student data ──
 var studentData = {
     'M3/2': [
         {id:'37581',name:'เด็กชายกฤษณะ จันทร์ชมชื่น',nick:'Q'},
@@ -525,8 +361,8 @@ var studentData = {
         {id:'37790',name:'เด็กหญิงอนุธิดา ลาวดีพะเนา',nick:'Fern'},
         {id:'37791',name:'เด็กหญิงอาริษา แสงสุวรรณ',nick:'Mai'},
         {id:'37792',name:'เด็กหญิงอิงดาว เกตุค้างพลู',nick:'Aingdaw'}
-    ],
-    'M4/1':[{id:'36771',name:'นายทวีชัย ศรีจันทึก',nick:'Ton'},{id:'36788',name:'นางสาวกฤติยาณี ชัยสงคราม',nick:'Aoy'},{id:'36830',name:'นางสาวกัญญาภัค เร็วจันทึก',nick:'Ploy 1'},{id:'36835',name:'นางสาวธนัชชา ศรีหาวงษ์',nick:'Beer'},{id:'36838',name:'นางสาวพรรณิภา คงชัย',nick:'Palm'},{id:'36840',name:'นางสาวพิมพ์ลภัส ประพงศ์พันธุ์',nick:'Mean'},{id:'36845',name:'นางสาวศิริญากรณ์ บุญธรรม',nick:'Vermicelli'},{id:'36850',name:'นางสาวอาภรณ์รัตน์ เสือรักวงษ์',nick:'Fang 1'},{id:'36857',name:'นายพิชชากร เเสงเเก้ว',nick:'Bas'},{id:'36886',name:'นางสาวบัณฑิตา สารฤทธิ์',nick:'August'},{id:'36889',name:'นางสาวภาวินี สิงห์มหา',nick:'Ploy 2'},{id:'36905',name:'นางสาวเกวลิน อิสริยานนท์',nick:'Gew'},{id:'36934',name:'นายชานนท์ ฤทธิ์ชัยเจริญ',nick:'Cha'},{id:'36939',name:'นายนาฤทธิ์ ตรีมงคล',nick:'Tan'},{id:'36951',name:'นายศรัญยู ทองจันทึก',nick:'U'},{id:'36970',name:'นางสาววิไลลักษณ์ อังกรรัมย์',nick:'Farn'},{id:'36975',name:'นายกนต์ธีร์ สงโนนสูง',nick:'Korn'},{id:'36989',name:'นายศักดากร ทวีลาภ',nick:'Pai'},{id:'36991',name:'นายศุภกร สิงห์จันทึก',nick:'Mix'},{id:'36997',name:'นายอัครวินท์ บุญมา',nick:'Yo'},{id:'37013',name:'นางสาวศศิธร เพียงจันทึก',nick:'Mook'},{id:'37032',name:'นางสาวชญาดา บำรุงตา',nick:'Wan'},{id:'37044',name:'นางสาวพิชญธิดา โสจันทึก',nick:'Baitoey'},{id:'37063',name:'นายกัญจน์ ฉิมพลี',nick:'Jay'},{id:'37116',name:'นายพิชญุตม์ พันธ์งาม',nick:'Tawan'},{id:'37129',name:'นางสาวณัฐชวลี ปราณีตพลกรัง',nick:'Fang 2'},{id:'37140',name:'นางสาววรรณิสา พวกจันทึก',nick:'Mochi'},{id:'39503',name:'นางสาวทิตาธร สอจันทึก',nick:'Fang 3'},{id:'39504',name:'นางสาวสุภัสสรา รักษาสุวรรณ',nick:'Aum'},{id:'39505',name:'นางสาวคีตภัทร สีโท',nick:'Kito'},{id:'39506',name:'นายกิตติศักดิ์ เกงขุนทด',nick:'Vayu'},{id:'39507',name:'นางสาวสุริยาพร ถังกระโทก',nick:'Aom'},{id:'39508',name:'นางสาวชุติกาญจน์ กอบขุนทด',nick:'Idea'},{id:'39509',name:'นางสาวกัณญาลัก แรมจันทึก',nick:'Paerw'},{id:'39510',name:'นางสาววิกันดา สมขุนทด',nick:'Kawfang'},{id:'39511',name:'นางสาวพิมพ์พิกา ไลน้ำอ้อม',nick:'Yew'},{id:'39512',name:'นางสาวศิริกานดา นนท์ประสาท',nick:'Maysa'},{id:'39513',name:'นายปภังกร ถิ่นวงษ์แย',nick:'Pao'},{id:'39514',name:'นางสาวศิวะภาพร สาแช',nick:'Ming'},{id:'39515',name:'นางสาวพิมพ์ชนก อุดมจิตร',nick:'Fah'},{id:'54565',name:'Test Student',nick:'Kyle'}],
+    ]
+        'M4/1':[{id:'36771',name:'นายทวีชัย ศรีจันทึก',nick:'Ton'},{id:'36788',name:'นางสาวกฤติยาณี ชัยสงคราม',nick:'Aoy'},{id:'36830',name:'นางสาวกัญญาภัค เร็วจันทึก',nick:'Ploy 1'},{id:'36835',name:'นางสาวธนัชชา ศรีหาวงษ์',nick:'Beer'},{id:'36838',name:'นางสาวพรรณิภา คงชัย',nick:'Palm'},{id:'36840',name:'นางสาวพิมพ์ลภัส ประพงศ์พันธุ์',nick:'Mean'},{id:'36845',name:'นางสาวศิริญากรณ์ บุญธรรม',nick:'Vermicelli'},{id:'36850',name:'นางสาวอาภรณ์รัตน์ เสือรักวงษ์',nick:'Fang 1'},{id:'36857',name:'นายพิชชากร เเสงเเก้ว',nick:'Bas'},{id:'36886',name:'นางสาวบัณฑิตา สารฤทธิ์',nick:'August'},{id:'36889',name:'นางสาวภาวินี สิงห์มหา',nick:'Ploy 2'},{id:'36905',name:'นางสาวเกวลิน อิสริยานนท์',nick:'Gew'},{id:'36934',name:'นายชานนท์ ฤทธิ์ชัยเจริญ',nick:'Cha'},{id:'36939',name:'นายนาฤทธิ์ ตรีมงคล',nick:'Tan'},{id:'36951',name:'นายศรัญยู ทองจันทึก',nick:'U'},{id:'36970',name:'นางสาววิไลลักษณ์ อังกรรัมย์',nick:'Farn'},{id:'36975',name:'นายกนต์ธีร์ สงโนนสูง',nick:'Korn'},{id:'36989',name:'นายศักดากร ทวีลาภ',nick:'Pai'},{id:'36991',name:'นายศุภกร สิงห์จันทึก',nick:'Mix'},{id:'36997',name:'นายอัครวินท์ บุญมา',nick:'Yo'},{id:'37013',name:'นางสาวศศิธร เพียงจันทึก',nick:'Mook'},{id:'37032',name:'นางสาวชญาดา บำรุงตา',nick:'Wan'},{id:'37044',name:'นางสาวพิชญธิดา โสจันทึก',nick:'Baitoey'},{id:'37063',name:'นายกัญจน์ ฉิมพลี',nick:'Jay'},{id:'37116',name:'นายพิชญุตม์ พันธ์งาม',nick:'Tawan'},{id:'37129',name:'นางสาวณัฐชวลี ปราณีตพลกรัง',nick:'Fang 2'},{id:'37140',name:'นางสาววรรณิสา พวกจันทึก',nick:'Mochi'},{id:'39503',name:'นางสาวทิตาธร สอจันทึก',nick:'Fang 3'},{id:'39504',name:'นางสาวสุภัสสรา รักษาสุวรรณ',nick:'Aum'},{id:'39505',name:'นางสาวคีตภัทร สีโท',nick:'Kito'},{id:'39506',name:'นายกิตติศักดิ์ เกงขุนทด',nick:'Vayu'},{id:'39507',name:'นางสาวสุริยาพร ถังกระโทก',nick:'Aom'},{id:'39508',name:'นางสาวชุติกาญจน์ กอบขุนทด',nick:'Idea'},{id:'39509',name:'นางสาวกัณญาลัก แรมจันทึก',nick:'Paerw'},{id:'39510',name:'นางสาววิกันดา สมขุนทด',nick:'Kawfang'},{id:'39511',name:'นางสาวพิมพ์พิกา ไลน้ำอ้อม',nick:'Yew'},{id:'39512',name:'นางสาวศิริกานดา นนท์ประสาท',nick:'Maysa'},{id:'39513',name:'นายปภังกร ถิ่นวงษ์แย',nick:'Pao'},{id:'39514',name:'นางสาวศิวะภาพร สาแช',nick:'Ming'},{id:'39515',name:'นางสาวพิมพ์ชนก อุดมจิตร',nick:'Fah'},{id:'54565',name:'Test Student',nick:'Kyle'}],
     'M4/2':[{id:'36120',name:'นายชินาธิป เศียรนอก',nick:'Kun'},{id:'36175',name:'นายวรเมธ แซ่ย่าง',nick:'Li'},{id:'36428',name:'นางสาวอมรรัตน์ พูลพุทธา',nick:'Maprang'},{id:'36782',name:'นายวชิตะ หมื่นแคล้ว',nick:'Sunday'},{id:'36785',name:'นายศิวนาถ ยอดนอก',nick:'Film 1'},{id:'36804',name:'นางสาววรัทยา ฝุ่นทอง',nick:'Nxmpxn'},{id:'36811',name:'นายคณาธิป กันจันทึก',nick:'Nack'},{id:'36813',name:'นายเตโชดม ทองดอนพุ่ม',nick:'Guy'},{id:'36867',name:'นายศุภสิน ป้อมสุวรรณ',nick:'Save'},{id:'36956',name:'นางสาวกนกพร แดงชาติ',nick:'Film'},{id:'36965',name:'นางสาวนิชนันท์ โตสูงเนิน',nick:'Naming'},{id:'36967',name:'นางสาวรัตนาวดี เนยสูงเนิน',nick:'Kingpai'},{id:'36968',name:'นางสาววรรณวนัช กรวยสูงเนิน',nick:'Bonus'},{id:'36990',name:'นายศิรวิทย์ แสงฤทธิไกร',nick:'Poon'},{id:'37004',name:'นางสาวพรชนัน กลิ่นโสภณ',nick:'Palm'},{id:'37019',name:'นายชัยอนันต์ เชื้อจันทึก',nick:'Jay'},{id:'37026',name:'นายภาคิน เปลี้ยจันทึก',nick:'Aut'},{id:'37029',name:'นายรัตนชัย คณโฑเงิน',nick:'Kong'},{id:'37067',name:'นายธันวา สุขล้น',nick:'Thanwa'},{id:'37077',name:'นายพิชาชาญ วงษ์อินทร์',nick:'Pause'},{id:'37085',name:'นายอริญชัย บุญค้ำ',nick:'Aoo'},{id:'37090',name:'นางสาวขวัญนรินพร นิ่มทอง',nick:'Kwan'},{id:'37105',name:'นางสาวสิราลักษณ์ ม่วงราม',nick:'Manaw'},{id:'37127',name:'นางสาวจิราพัชร คำตัน',nick:'Woonsen'},{id:'37149',name:'นายกิตตินันท์ อุระภูมิ',nick:'Kittinan'},{id:'39516',name:'นายกิตติศักดิ์ มาตรนอก',nick:'King'},{id:'39517',name:'นายพงศธร จริงสูงเนิน',nick:'Phai'},{id:'39518',name:'นายพงศกร มาตย์นอก',nick:'Gae'},{id:'39519',name:'นายพรหมพิริยะ บุญจันทึก',nick:'Diamond'},{id:'39521',name:'นายธนวัฒน์ ไทยมณี',nick:'Cee'},{id:'39522',name:'นายธนภัทร ใยยะธรรม',nick:'Path'},{id:'39523',name:'นายอัคซ๊าส โมหะหมัด',nick:'Akzard'},{id:'39524',name:'นายสุรเดช กระโห้',nick:'Bas'},{id:'39525',name:'นายศิรายุธ แทนขุนทด',nick:'Aom'},{id:'39526',name:'นางสาวกชกร สวยกลาง',nick:'?'},{id:'39527',name:'นายภูริณัฐ สังข์โต',nick:'Ball'},{id:'39528',name:'นายฤทธิ์ทา กรุณรัมย์',nick:'Boss'},{id:'39529',name:'นายธรา รัตนรักษ์',nick:'Gohung'},{id:'39530',name:'นางสาวสุพัตรา บุตรกระโทก',nick:'Cherry'},{id:'39531',name:'นายวรากร ศรีเพ็ชร์',nick:'Kay'}],
     'M4/3':[{id:'36770',name:'นายเตชิต ภิรมย์',nick:'Tete'},{id:'36839',name:'นางสาวพิชชาภา ขำมะลัง',nick:'Pai'},{id:'36877',name:'นางสาวชลิตา เสริฐสูงเนิน',nick:'Guitar'},{id:'36883',name:'นางสาวธนาภา มาสิงห์',nick:'Meiji'},{id:'36890',name:'นางสาวรมนรินทร์ สิมาแก้ว',nick:'Tonhm'},{id:'36923',name:'นางสาวรมิดา เพียรพ่วงพันธ์',nick:'Fame'},{id:'36924',name:'นางสาววรัญญา ส่งแสง',nick:'Baikhao'},{id:'36958',name:'นางสาวจีรภรณ์ สงขุนทด',nick:'Bell'},{id:'36977',name:'นายญาณากร ดงงาม',nick:'Tawan'},{id:'36982',name:'นายนิธิกร เอ็นจันทึก',nick:'Bom'},{id:'36993',name:'นายสุทธินันท์ แสนบุญ',nick:'Jigzaw'},{id:'36998',name:'นายอาเมียร์คาน โมหะหมัด',nick:'Amirkhan'},{id:'37007',name:'นางสาวแพรวา สินปรุ',nick:'Namprik'},{id:'37008',name:'นางสาวมริษา ม่วงเมือง',nick:'Kafiw'},{id:'37033',name:'นางสาวชวัลลักษณ์ ดาระศาสตร์',nick:'Chawanlak'},{id:'37035',name:'นางสาวณัฐธิดา เข็มชู',nick:'Natthida'},{id:'37039',name:'นางสาวบัณฑิตา ปีจัตุรัส',nick:'Tonhoom'},{id:'37045',name:'นางสาวพิชญา มาจันทึก',nick:'Pham'},{id:'37100',name:'นางสาวพลอยปภัส เหนียวจันทึก',nick:'Pleng'},{id:'37162',name:'นายเศรษฐพงศ์ ขันสิงห์',nick:'Tiewkhao'},{id:'37182',name:'นางสาวพนัชกร แหลมทองหลาง',nick:'Namkaeng'},{id:'37192',name:'นางสาวอัญชิสา นามบุญ',nick:'Anchisa'},{id:'37210',name:'นายอนุรักษ์ อินคงมะดัน',nick:'Auto'},{id:'39532',name:'นายรัฐธีร์ รพีไชยรุจน์',nick:'Kate'},{id:'39533',name:'นายคณนาถ ไพฑูรย์',nick:'Namo'},{id:'39534',name:'นางสาวอิงอร สวัสดีลาภา',nick:'Ing-On'},{id:'39535',name:'นางสาววรัญญา แข็งฤทธิ์',nick:'Nampan'},{id:'39536',name:'นางสาวทิพย์วิภา รัตนวรรณ',nick:'Nectar'},{id:'39537',name:'นายอาชาวิน สาสูงเนิน',nick:'Nammo'},{id:'39538',name:'นางสาวสุพรรษา มูลจันทึก',nick:'Khaohom'},{id:'39539',name:'นางสาวกิตตินันท์ กล่อมสูงเนิน',nick:'Pakkad'},{id:'39540',name:'นายธนโชติ เทียมขุนทด',nick:'Thanachot'},{id:'39541',name:'นางสาวเบญจมาศ ภูหงษ์ทอง',nick:'Benochaimt'},{id:'39542',name:'นางสาวรนารี มณีโชติ',nick:'Neem'},{id:'39543',name:'นายณัฐพล ช่างไม้',nick:'Gus'},{id:'39544',name:'นางสาววรรณวิสา กลิ่นเดช',nick:'May'},{id:'39545',name:'นางสาวจิรนันท์ ทุระพล',nick:'Nun'},{id:'39546',name:'นางสาวธัญญรักษ์ กรินทร์',nick:'Maysa'},{id:'39547',name:'นางสาวธัญชนก พลจันทึก',nick:'Kaimook'},{id:'39548',name:'นายอดิเทพ พรมสูง',nick:'Mix'}],
     'M4/4':[{id:'36803',name:'นางสาววรรณิศา ดาววงค์',nick:'Piano'},{id:'36812',name:'นายฐิติพล แถบทอง',nick:'Kool'},{id:'36828',name:'นายสุวิจักขณ์ งัดสันเทียะ',nick:'Dew 1'},{id:'36836',name:'นางสาวปวริศา ศรีเพ็ชร',nick:'Kan'},{id:'36864',name:'นายรพีภัทร ใจห้าว',nick:'Name'},{id:'36938',name:'นายดลธรรม จงจันทึก',nick:'Namo 1'},{id:'36942',name:'นายพสิษฐ์ อินทร์ทอง',nick:'Pun'},{id:'36960',name:'นางสาวฉัตรธิดา เชื้อนิล',nick:'Manow'},{id:'36963',name:'นางสาวชุติญา ทรวงโพธิ์',nick:'Praewa'},{id:'36974',name:'นางสาวอนัตญา อาจสุนทร',nick:'Eye'},{id:'36979',name:'นายทยากร เร็วจันทึก',nick:'Stam'},{id:'36999',name:'นางสาวกัญญมาศ ชอบสุข',nick:'Mint 2'},{id:'37038',name:'นางสาวนันทิกานต์ เกี้ยวกระโทก',nick:'Ice 1'},{id:'37050',name:'นางสาวภาวิดา จิตต์โสธร',nick:'Mild'},{id:'37051',name:'นางสาวภาวิตา จิตต์โสธร',nick:'Mint 1'},{id:'37052',name:'นางสาวภิญญดาพัชญ์ เพชรจันทึก',nick:'Nadear'},{id:'37053',name:'นางสาวลัดดาวัลย์ แมนจันทึก',nick:'Ploy'},{id:'37071',name:'นายธีรภัทร พลจันทึก',nick:'Mos'},{id:'37089',name:'นางสาวกุลภรณ์ ปราเดช',nick:'Ywwa'},{id:'37120',name:'นายศิกรพัฒน์ ข่อยจัตุรัส',nick:'Program'},{id:'37154',name:'นายนิรันดร์เทพ สุพรรณนิล',nick:'Numnuea'},{id:'39549',name:'นางสาวทัศนีย์ รักษาพันธุ์',nick:'Thip'},{id:'39550',name:'นางสาวศศิกานต์ ชำนาญ',nick:'Eye'},{id:'39551',name:'นายวรวุธ อาจสูงเนิน',nick:'Dew 2'},{id:'39552',name:'นายอริญชัย ปัถมัง',nick:'Kim'},{id:'39553',name:'นางสาวพิมพ์ลภัส วิเชียรรัตน์',nick:'Meemee'},{id:'39554',name:'นางสาวสุชาดา บัวแก้ว',nick:'Ping'},{id:'39555',name:'นางสาวณัฐณิชา คมสันเทียะ',nick:'Aingeye'},{id:'39556',name:'นางสาวกัญจากรณ์ นิลครบุรี',nick:'Kanja'},{id:'39557',name:'นางสาวภาสินี ภูจันทึก',nick:'Cream'},{id:'39558',name:'นางสาวชนัฐปภา ทุติสูงเนิน',nick:'Noodee'},{id:'39559',name:'นางสาววาสนา วรสิงห์',nick:'Baitoey'},{id:'39560',name:'นายสิรดนัย กัลยาศรี',nick:'Biw'},{id:'39561',name:'นายอรรถพันธ์ เรืองศรี',nick:'Golf'},{id:'39562',name:'นางสาวพิชญา อมรเนติรัตน์',nick:'Minnie'},{id:'39563',name:'นางสาวพิชชานันท์ ไตรประวัติ',nick:'Aom'},{id:'39564',name:'นางสาววรรณชนก จันทร์ที',nick:'Namo 2'},{id:'39565',name:'นางสาวศิรัตน์ตา พิศแลงาม',nick:'Ice 2'},{id:'39566',name:'นางสาววรัญญา เพ็งสูงเนิน',nick:'Pang'},{id:'39567',name:'นายสถาพร เกลี้ยงพุดซา',nick:'Sunz'}],
@@ -534,22 +370,13 @@ var studentData = {
     'M4/6':[{id:'36768',name:'นายเชิดศักดิ์ แขกสันเทียะ',nick:'Comford'},{id:'36784',name:'นายศราวิน ฟุ้งสุข',nick:'Pao'},{id:'36871',name:'นายอธิวัฒน์ คำโสม',nick:'Gunn'},{id:'36888',name:'นางสาวพลอยไพลิน ปรีชายุทธ์',nick:'Ploy'},{id:'36893',name:'นางสาวสุชานาถ หร่ายพิมาย',nick:'Fah'},{id:'36922',name:'นางสาวภัทรวรินทร์ ขาบจันทึก',nick:'Peaky'},{id:'36986',name:'นายวรพล สุภาพ',nick:'Kao'},{id:'37021',name:'นายธนปพน ธาตะนะ',nick:'Geno'},{id:'37042',name:'นางสาวปรมา โลนขุนทด',nick:'Ming'},{id:'37110',name:'นายชลธีร์ แสงวิเศษ',nick:'Nam'},{id:'37126',name:'นางสาวจิราเจต เศษจันทึก',nick:'Lukked'},{id:'37133',name:'นางสาวฝันตรงจิต คุณไทยสง',nick:'Tam'},{id:'37139',name:'นางสาววรกมล จอมเกาะ',nick:'Fangkhaw'},{id:'37142',name:'นางสาวศศิกานต์ ทีจันทึก',nick:'Pam'},{id:'37155',name:'นายบัญญวัต กอสันเทียะ',nick:'Manu'},{id:'37157',name:'นายพสิษฐ์ มั่งสูงเนิน',nick:'Mon'},{id:'37165',name:'นายอรรถพล เกยพุทรา',nick:'Zee'},{id:'37166',name:'นางสาวกชนิภา เชื้อสูงเนิน',nick:'Khoahom'},{id:'37189',name:'นางสาวศุภดา เวกสูงเนิน',nick:'Manaw'},{id:'37193',name:'นายชลพัชร นาถาบำรุง',nick:'Annfuse'},{id:'37201',name:'นายพิตตินันท์ ขันจันทึก',nick:'Titan'},{id:'37538',name:'นางสาวอัญมณี เพื่อนกลาง',nick:'Fang'},{id:'39579',name:'นางสาวอธิชา จันทร์สูงเนิน',nick:'View'},{id:'39580',name:'นางสาวรุ่งรวิน โคตรจันทึก',nick:'Irin 1'},{id:'39581',name:'นางสาวสุดารัตน์ ทัดกลาง',nick:'Pooklook'},{id:'39582',name:'นางสาวสิริลักษณ์ อาญาเมือง',nick:'Cake'},{id:'39583',name:'นางสาวรวินท์นิภา อักษรเสือ',nick:'Gafew'},{id:'39584',name:'นายวิภู แพงไตร',nick:'Boom'},{id:'39585',name:'นางสาวธัญรัตน์ เนียมกลาง',nick:'Hom'},{id:'39586',name:'นางสาวชลดา บุรินทร์รัมย์',nick:'Om Am'},{id:'39587',name:'นายภาคิน เดิดขุนทด',nick:'Not'},{id:'39588',name:'นางสาวศิริธาดา หอมจันทร์',nick:'Khaimuk'},{id:'39589',name:'นางสาวสิริวิมล ปะเกาทัน',nick:'Tong'},{id:'39590',name:'นางสาวกรพินธุ์ บัวประทุม',nick:'Jang'},{id:'39591',name:'นางสาวพรีมสุดา ธรหาญ',nick:'Prem'},{id:'39592',name:'นายณัฐพงศ์ พรมสุรินทร์',nick:'Sun'},{id:'39593',name:'นางสาวกุลปริยา แป้นโพธิ์',nick:'Irin 2'},{id:'39594',name:'นางสาวพิมพ์นภัส พิณพิมาย',nick:'Whan'},{id:'39595',name:'นางสาวฟาเดีย เย๊ะ',nick:'Fadia'},{id:'39596',name:'นายวงศกร สมน้อย',nick:'Satang'},{id:'39628',name:'ณัฐพล โอดจันทึก',nick:'Guy'}],
     'M4/7':[{id:'36801',name:'นางสาวพิยดาวัลย์ เจตนา',nick:'Chompu'},{id:'36807',name:'นางสาวสุภาภรณ์ ศรีคำภา',nick:'Khaofang'},{id:'36913',name:'นางสาวนิชาภา นะโนนชัย',nick:'Nicha'},{id:'36919',name:'นางสาวพรรัมภา เพียราชโยทา',nick:'Pan'},{id:'37012',name:'นางสาววรัญญา โอษฐ์จัทร์ศรี',nick:'Koy'},{id:'37041',name:'นางสาวปภาดา อิ่มจันทึก',nick:'Khim'},{id:'37048',name:'นางสาวภัทรวดี พรมภิรมย์',nick:'Ploy'},{id:'37054',name:'นางสาววรัชชญา กรมไธสง',nick:'Prim'},{id:'37084',name:'นายสิทธิพงษ์ โพธิ์ศรี',nick:'Champhgne'},{id:'37086',name:'นายเอกราช กันยาสาย',nick:'Manyu'},{id:'37123',name:'นางสาวกันยกร ศรีสารากร',nick:'Hya'},{id:'37130',name:'นางสาวปรียานุช พิมพ์จันทึก',nick:'Milk'},{id:'37143',name:'นางสาวศศิวิมล พินิจรัมย์',nick:'Stamp'},{id:'37144',name:'นางสาวสุกัญญา เพ้ยจันทึก',nick:'Aom'},{id:'37147',name:'นางสาวอทิชา ชูขุนทด',nick:'Aum'},{id:'37158',name:'นายพิชยะ ชัยวงศ์',nick:'Film'},{id:'37160',name:'นายวุฒิภัทร ภาวจันทึก',nick:'Morgan'},{id:'37163',name:'นายสัญชัย ผิวสายคำ',nick:'San'},{id:'37173',name:'นางสาวณัฐทิตา เรืองจันทึก',nick:'Praewa'},{id:'37183',name:'นางสาวภรณ์พชร สมฤทธิ์',nick:'Eve'},{id:'37188',name:'นางสาววิชญาพร เรืองจันทึก',nick:'Krathiu'},{id:'39597',name:'นายอัครพล ไทยมณี',nick:'Owen'},{id:'39598',name:'นางสาวเจนจิรา ตันเฮา',nick:'Pin'},{id:'39599',name:'นายเอกรินทร์ แกมขุนทด',nick:'Earth'},{id:'39600',name:'นายพงศธร ทองรักษ์',nick:'Pao'},{id:'39601',name:'นางสาวพิมพ์นิภา สายแก้ว',nick:'Tangmo'},{id:'39602',name:'นายศุภรักษ์ มิลขุนทด',nick:'Art'},{id:'39603',name:'นายธนัช ศรีวัฒนะ',nick:'Protae'},{id:'39604',name:'นางสาวสุกานดา องค์ตะคุ',nick:'Gam'},{id:'39605',name:'นางสาวพิชยาภา พลจันทึก',nick:'Cream'},{id:'39606',name:'นายพลช จงเจนกลาง',nick:'Pao'},{id:'39607',name:'นางสาวณภัสสรณ์ ผาสุข',nick:'Hom'},{id:'39608',name:'นางสาวพิชญา นักระนาด',nick:'Pink'},{id:'39610',name:'นางสาวกวินธิดา มีบทสม',nick:'Phak Wan'},{id:'39611',name:'นางสาวณธพร ผินงูเหลือม',nick:'Mameow'},{id:'39612',name:'นายอนุชา เปราะจันทึก',nick:'Mamay'},{id:'39613',name:'นายอริณ ชูวิชับ',nick:'Kak'},{id:'39614',name:'นายพลากร มันกระโทก',nick:'Kay'},{id:'39615',name:'นายจิรวัฒน์ ขอเชื้อกลาง',nick:'Film'},{id:'39617',name:'นางสาวธนันท์รัฐ ด้วงจอกนอก',nick:'Eve'}],
     'M4/8':[{id:'36988',name:'นายวีรากร เงสันเทียะ',nick:'Fresh'},{id:'37064',name:'นายชานนท์ กล้าวาจา',nick:'Pao'},{id:'37093',name:'นางสาวณรัตรศภรณ์ เพียรทำดี',nick:'Khaimook'},{id:'37107',name:'นายกฤษณะกันต์ ปัญญางาน',nick:'Best'},{id:'37111',name:'นายณัฐวัช แป้นจันทึก',nick:'Beam'},{id:'37112',name:'นายธนกฤต พรหมรุกขชาติ',nick:'Scale'},{id:'37118',name:'นายเมธากานต์ นิลสูงเนิน',nick:'Wan'},{id:'37119',name:'นายวัชรพล มะหายันทะ',nick:'Euro'},{id:'37121',name:'นายสุชาครีย์ อาศัยป่า',nick:'Namcha 1'},{id:'37124',name:'นางสาวกานต์พิชชา การุณสิต',nick:'Kan'},{id:'37125',name:'นางสาวกานต์พิชชา ศิริไพฑูรย์',nick:'Ploy'},{id:'37134',name:'นางสาวพิชญา เวียงจันทึก',nick:'Ice'},{id:'37136',name:'นางสาวพีชญา ศรีสูงเนิน',nick:'Pream'},{id:'37137',name:'นางสาวภิญญาพัชญ์ อ่วมทอน',nick:'Mook'},{id:'37141',name:'นางสาววิภาดา งอบโคกกรวด',nick:'Fahsai'},{id:'37145',name:'นางสาวสุปรียา เสือสูงเนิน',nick:'Bumbim'},{id:'37146',name:'นางสาวหทัยชนก ต่อสันเทียะ',nick:'Pakad'},{id:'37148',name:'นางสาวอภิสรา มุนจันทึก',nick:'Earn'},{id:'37150',name:'นายกิตติศักดิ์ เดชวรรณ',nick:'Tonkla'},{id:'37156',name:'นายปมัญญา เสริมเฉลียว',nick:'Pun'},{id:'37168',name:'นางสาวกวินธิดา ทีจันทึก',nick:'Cream'},{id:'37170',name:'นางสาวจิรัชญา มะโนใหม่',nick:'Mint'},{id:'37177',name:'นางสาวนฤมล พรพิทัก',nick:'Namtan'},{id:'37195',name:'นายณเดช เกตุจันทึก',nick:'Bonus'},{id:'39618',name:'นายชีวานนท์ จุดาบุตร',nick:'Kuptun'},{id:'39619',name:'นางสาวณัชกมล เชื้อไพบูลย์',nick:'Tangtai'},{id:'39620',name:'นายวรวิทย์ ทองภักดี',nick:'Worawit'},{id:'39621',name:'นางสาวจิรภิญญา ฉาดนอก',nick:'Jirapinya'},{id:'39622',name:'นางสาวมลฤดี อิ่มจันทึก',nick:'Mee'},{id:'39623',name:'นางสาวกัลชลิกา อันทะสา',nick:'Penneung'},{id:'39624',name:'นางสาวศศิชา ขุยจันทึก',nick:'Namcha 2'},{id:'39625',name:'นางสาวธนัชชา หล่าแก้ว',nick:'Por'},{id:'39626',name:'นางสาววิลาสินี โอษฐ์จันทร์ศรี',nick:'Kluay'},{id:'39627',name:'นายณัฐภูมิ ทรัพย์กลาง',nick:'Film'},{id:'39628',name:'นายณัฐพล โอดจันทึก',nick:'Nattaphon'},{id:'39629',name:'นางสาวณัฐกฤตา พลศรี',nick:'Kaoiao'},{id:'39630',name:'นางสาวปิยนันท์ เพ็ชรงาม',nick:'Toey'},{id:'39631',name:'นางสาวจิรัชญา สีสะอาด',nick:'Namwan'},{id:'39632',name:'นางสาวสิมาภรณ์ เจือจันทึก',nick:'Ked'},{id:'39633',name:'นางสาววรรณวิษา จำปาทอง',nick:'Nam'},{id:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'}],
-    'M4/9':[{id:'36795',name:'นางสาวธนัสถา ม่วงมนตรี',nick:'Meen'},{id:'36897',name:'นายโภควินท์ เหมจันทึก',nick:'Phokha'},{id:'37059',name:'นางสาวสุกฤต บุตรหล่อ',nick:'Jam'},{id:'37066',name:'นายต้นน้ำ ฉิพิมาย',nick:'Kungfu 1'},{id:'37122',name:'นายเอริค สตรูเซโร',nick:'Eric'},{id:'37138',name:'นางสาวรมิตา ชัยเทพ',nick:'Numnuea'},{id:'37153',name:'นายธีระภัทร รักษาสระน้อย',nick:'Teerapat'},{id:'37176',name:'นางสาวดวงกมล เมืองจันทึก',nick:'Preaw'},{id:'37200',name:'นายพัทธดนย์ วงษ์มา',nick:'Tennis'},{id:'37204',name:'นายภานุทัศน์ วาจาสิทธิ์',nick:'Kungfu 2'},{id:'37207',name:'นายศักดิ์สิทธิ์ นั่งสันเทียะ',nick:'Kafiw'},{id:'37208',name:'นายศิวกร พวงศรี',nick:'Fiwjer'},{id:'37211',name:'นายอภินันท์ เชิดกฤษ์',nick:'JJ'},{id:'37212',name:'นางสาวกมลชนก เพียซ้าย',nick:'Baitoey'},{id:'37213',name:'นางสาวเกวลิน ชูจันทร์',nick:'Poppy'},{id:'37215',name:'นางสาวชลธิชา หวังบัวกลาง',nick:'Smile'},{id:'37216',name:'นางสาวฐิตินันท์ สิงห์ทอง',nick:'Khowhom'},{id:'37217',name:'นางสาวณฐกมล ธรรมกิตติศักดิ์',nick:'Pai'},{id:'37218',name:'นางสาวณิชมน นวลผ่อง',nick:'Ying'},{id:'37219',name:'นางสาวธัญชนก ยวงจันทึก',nick:'Tonnam'},{id:'37220',name:'นางสาวนิติณัฐดา พิมสิม',nick:'Satang'},{id:'37221',name:'นางสาวพรนภัทร ลากูล',nick:'Aoey'},{id:'37222',name:'นางสาวพัชริดา วงศ์ดาว',nick:'Nana'},{id:'37224',name:'นางสาวแพรทิพย์ ม่วงจันทึก',nick:'Boklook'},{id:'37225',name:'นางสาวภัทรวดี คราจันทึก',nick:'Fom'},{id:'37227',name:'นางสาววริศรา สีดา',nick:'Ice'},{id:'37228',name:'นางสาววิศราภรณ์ สุขมา',nick:'O-May'},{id:'37229',name:'นางสาวศศิกานต์ สายจันทร์',nick:'Gun'},{id:'37231',name:'นางสาวสุธีธิดา แก้ววิเชียร',nick:'Aeiy'},{id:'37232',name:'นางสาวสุรีพร ต้นกันยา',nick:'Praewa'},{id:'37235',name:"นางสาวอิชญ์อาณิก ปรีชากิจโกศล",nick:"Nam'ing"},{id:'37236',name:'นางสาวเอมวิกา คูณจันทึก',nick:'AongAey'},{id:'37264',name:'นางสาวน้ำเพชร เตือนจันทึก',nick:'Phet'},{id:'39634',name:'นายฐิติศักดิ์ เพียซ้าย',nick:'Frame'},{id:'39635',name:'นางสาววริศรา เกตุพิบูรณ์',nick:'Kao'},{id:'39636',name:'นายนักรบ หนึ่งจันทึก',nick:'Tang'},{id:'39637',name:'นายวงศกร บุญแซม',nick:'Tonkla'},{id:'39638',name:'นายปณวัฒน์ มีวงค์สม',nick:'Max'},{id:'39639',name:'นายตะวัน สระแก้ว',nick:'Tawan'},{id:'39640',name:'นายธนกฤติ หนูน้อยจันทึก',nick:'Sea'}],
+    'M4/9':[{id:'36795',name:'นางสาวธนัสถา ม่วงมนตรี',nick:'Meen'},{id:'36897',name:'นายโภควินท์ เหมจันทึก',nick:'Phokha'},{id:'37059',name:'นางสาวสุกฤต บุตรหล่อ',nick:'Jam'},{id:'37066',name:'นายต้นน้ำ ฉิพิมาย',nick:'Kungfu 1'},{id:'37122',name:'นายเอริค สตรูเซโร',nick:'Eric'},{id:'37138',name:'นางสาวรมิตา ชัยเทพ',nick:'Numnuea'},{id:'37153',name:'นายธีระภัทร รักษาสระน้อย',nick:'Teerapat'},{id:'37176',name:'นางสาวดวงกมล เมืองจันทึก',nick:'Preaw'},{id:'37200',name:'นายพัทธดนย์ วงษ์มา',nick:'Tennis'},{id:'37204',name:'นายภานุทัศน์ วาจาสิทธิ์',nick:'Kungfu 2'},{id:'37207',name:'นายศักดิ์สิทธิ์ นั่งสันเทียะ',nick:'Kafiw'},{id:'37208',name:'นายศิวกร พวงศรี',nick:'Fiwjer'},{id:'37211',name:'นายอภินันท์ เชิดกฤษ์',nick:'JJ'},{id:'37212',name:'นางสาวกมลชนก เพียซ้าย',nick:'Baitoey'},{id:'37213',name:'นางสาวเกวลิน ชูจันทร์',nick:'Poppy'},{id:'37215',name:'นางสาวชลธิชา หวังบัวกลาง',nick:'Smile'},{id:'37216',name:'นางสาวฐิตินันท์ สิงห์ทอง',nick:'Khowhom'},{id:'37217',name:'นางสาวณฐกมล ธรรมกิตติศักดิ์',nick:'Pai'},{id:'37218',name:'นางสาวณิชมน นวลผ่อง',nick:'Ying'},{id:'37219',name:'นางสาวธัญชนก ยวงจันทึก',nick:'Tonnam'},{id:'37220',name:'นางสาวนิติณัฐดา พิมสิม',nick:'Satang'},{id:'37221',name:'นางสาวพรนภัทร ลากูล',nick:'Aoey'},{id:'37222',name:'นางสาวพัชริดา วงศ์ดาว',nick:'Nana'},{id:'37224',name:'นางสาวแพรทิพย์ ม่วงจันทึก',nick:'Boklook'},{id:'37225',name:'นางสาวภัทรวดี คราจันทึก',nick:'Fom'},{id:'37227',name:'นางสาววริศรา สีดา',nick:'Ice'},{id:'37228',name:'นางสาววิศราภรณ์ สุขมา',nick:'O-May'},{id:'37229',name:'นางสาวศศิกานต์ สายจันทร์',nick:'Gun'},{id:'37231',name:'นางสาวสุธีธิดา แก้ววิเชียร',nick:'Aeiy'},{id:'37232',name:'นางสาวสุรีพร ต้นกันยา',nick:'Praewa'},{id:'37235',name:'นางสาวอิชญ์อาณิก ปรีชากิจโกศล',nick:'Nam\'ing'},{id:'37236',name:'นางสาวเอมวิกา คูณจันทึก',nick:'AongAey'},{id:'37264',name:'นางสาวน้ำเพชร เตือนจันทึก',nick:'Phet'},{id:'39634',name:'นายฐิติศักดิ์ เพียซ้าย',nick:'Frame'},{id:'39635',name:'นางสาววริศรา เกตุพิบูรณ์',nick:'Kao'},{id:'39636',name:'นายนักรบ หนึ่งจันทึก',nick:'Tang'},{id:'39637',name:'นายวงศกร บุญแซม',nick:'Tonkla'},{id:'39638',name:'นายปณวัฒน์ มีวงค์สม',nick:'Max'},{id:'39639',name:'นายตะวัน สระแก้ว',nick:'Tawan'},{id:'39640',name:'นายธนกฤติ หนูน้อยจันทึก',nick:'Sea'}],
     'M4/10':[{id:'36894',name:'นายกิตติคุณ คงพะเนา',nick:'Gust'},{id:'36895',name:'นายศุภกฤต นาน้อย',nick:'Gan/ Mub'},{id:'36903',name:'นายกฎชกร ฟดสูงเนิน',nick:'Kot'},{id:'36909',name:'นางสาวชลธิชา เสาวรส',nick:'Thicha'},{id:'36917',name:'นางสาวปุณณภา เยสูงเนิน',nick:'Napha'},{id:'36918',name:'นางสาวปุณยนุช สาระ',nick:'Kafae'},{id:'36921',name:'นางสาวภัทรวดี นาโควงค์',nick:'Grace'},{id:'36971',name:'นางสาวศิริพร นิลโนรี',nick:'Aom'},{id:'37000',name:'นางสาวกาญจน์เกล้า วงษ์ลักษณ์',nick:'Namkhing'},{id:'37017',name:'นางสาวอินทิมา จันทร์อินทร์',nick:'Ain'},{id:'37020',name:'นายเทพบดี พิพัธน์',nick:'Pao'},{id:'37034',name:'นางสาวณัฐชยา ขอสีกลาง',nick:'Kaimook'},{id:'37040',name:'นางสาวปพิชญา แสนกุล',nick:'Manow'},{id:'37194',name:'นายณฐภัทร วงศ์วีระพันธุ์',nick:'Nai'},{id:'37196',name:'นายธนกร สิงห์สีโว',nick:'Tee'},{id:'37247',name:'นายศิริอัฐฎากรณ์ จูมจันทร์',nick:'Korn'},{id:'37259',name:'นางสาวฐิตารีย์ สุดหา',nick:'Rin'},{id:'39641',name:'นายพลภิภัทร ต้นกันยา',nick:'Mark'},{id:'39642',name:'นางสาวไอริน มิ่งมาลี',nick:'Ice'},{id:'39643',name:'นางสาวณัฐธิดา สมพงษ์',nick:'Jaja'},{id:'39644',name:'นางสาวณัฐญาดา สอนบุญชู',nick:'Lak'},{id:'39645',name:'นายสรวิชญ์ ประเสริฐ',nick:'Win'},{id:'39646',name:'นางสาววาสนา เจริญรัตน์',nick:'Mint'},{id:'39647',name:'นางสาวณิชมน พิมพ์หนองเรือ',nick:'Kaowtip'},{id:'39648',name:'นางสาวภัทรธิดา วงษ์แก้ว',nick:'Stang'},{id:'39649',name:'นางสาวกัญญพัชร จันทรโคตร',nick:'Chompoo'},{id:'39650',name:'นางสาวพิกุลแก้ว รัตนพงศ์พร',nick:'Kam'},{id:'39651',name:'นางสาวปลายฉัตร พับขุนทด',nick:'Ploy'},{id:'39652',name:'นางสาวกุลนิดา เรียบเรียง',nick:'First'}],
     'M4/11':[{id:'36896',name:'นายบูรณ์พิภพ ศรีงาม',nick:'BeeBee'},{id:'36898',name:'นายบุญชัย พัดดำ',nick:'Prab'},{id:'36944',name:'นายพีรัช ใจหมั่น',nick:'Raie'},{id:'36980',name:'นายธนดล ทิพย์ธงชัย',nick:'Mon1'},{id:'36987',name:'นายวัชรินทร์ โสโพ',nick:'Dan'},{id:'37115',name:'นายปุณญพัฒน์ พันแสน',nick:'Gun'},{id:'37117',name:'นายภูผา สุรพล',nick:'Paint'},{id:'37164',name:'นายสุกฤษฎิ์ จันทร์แก้ว',nick:'Q'},{id:'37167',name:'นางสาวกฤชษา ทีปกรกุล',nick:'Noona'},{id:'37171',name:'นางสาวจุฬาลักษณ์ แพงไธสงค์',nick:'View'},{id:'37202',name:'นายพีรวัส เนตรแสงศรี',nick:'Satang'},{id:'37244',name:'นายภาคิณ พึ่งเสือ',nick:'Fifa'},{id:'37273',name:'นางสาวหนึ่งน้ำทิพย์ วงค์ศักดิ์',nick:'Mon2'},{id:'37537',name:'นางสาวดาริกา ดาษไธสง',nick:'Aomsin'},{id:'39653',name:'นายพิธา ขวานอก',nick:'Porche'},{id:'39654',name:'นายรัชภูมิ ราชวงศ์',nick:'Phum'},{id:'39655',name:'นางสาวมาริสา อ้ายจันทึก',nick:'Jaiya'},{id:'39656',name:'นายณวีร์ภัทร นิธิโชคนนทรัตน์',nick:'Pao'},{id:'39657',name:'นายชาคริต ทองดีนอก',nick:'Frash'},{id:'39658',name:'นายนฤดม ไหมเตียงกลาง',nick:'Non'},{id:'39659',name:'นางสาวสุกันยา บุรัชกาล',nick:'Prink'},{id:'39660',name:'นางสาวธันยทิพย์ ถมมา',nick:'Irin'}],
     'M4/12':[{id:'36787',name:'นางสาวกนกวรรณ สีมอด',nick:'Pancake'},{id:'36796',name:'นางสาวธีนิดา ดวงจันทึก',nick:'Peiyw'},{id:'36799',name:'นางสาวปัญญาพร เนื่องนรินทร์',nick:'Sand'},{id:'36914',name:'นางสาวปภัสสรา คูเมือง',nick:'VR'},{id:'36932',name:'นายก้องภพ เอี่ยมจะบก',nick:'Night'},{id:'36952',name:'นายโสภณวิชญ์ รักษาเพชร',nick:'Keane'},{id:'36959',name:'นางสาวจุฑารัตน์ ทุมพร',nick:'Khim'},{id:'36966',name:'นางสาวภรณ์ชนก ชากรณ์',nick:'Jeed'},{id:'36981',name:'นายธนากร ธรรมรักษ์',nick:'Art'},{id:'37009',name:'นางสาวมีนา สุรัตน์',nick:'Meena'},{id:'37046',name:'นางสาวพิชญาภา แซะจอหอ',nick:'Nana'},{id:'37055',name:'นางสาววัลลภัคร แก้วกลาง',nick:'Namoun'},{id:'37058',name:'นางสาวสรัลพร อมรพิริยะ',nick:'Bahmee'},{id:'37097',name:'นางสาวนันท์นภัส พงษ์พยายาม',nick:'Paint'},{id:'37104',name:'นางสาววนิดา โพธิ์นอก',nick:'Peemai'},{id:'37131',name:'นางสาวปลายฟ้า สระทองแก้ว',nick:'Aungpao'},{id:'37132',name:'นางสาวปิยะวดี ชัยสงคราม',nick:'Sa'},{id:'37159',name:'นายรัตตัญญู หีบเเก้ว',nick:'Mammass'},{id:'37169',name:'นางสาวกานต์สินี ตาจันทึก',nick:'View'},{id:'37180',name:'นางสาวนัธสิมา บุตะคุ',nick:'Kantong'},{id:'37181',name:'นางสาวบัณฑิตา หล่ำจันทึก',nick:'Aem'},{id:'37186',name:'นางสาวรัตนพร เศษสิงห์',nick:'Kartai'},{id:'37198',name:'นายปณวัตร ไฝจันทึก',nick:'Smart'},{id:'37205',name:'นายภูมิพัฒน์ ภูมิจันทึก',nick:'Jeen'},{id:'37206',name:'นายวงศกร หมอกจันทึก',nick:'Nuea'},{id:'37209',name:'นายสิรภพ ภูวิภาค',nick:'Mark'},{id:'37233',name:'นางสาวอัญชิสา อ่องอ้น',nick:'Meen'},{id:'37271',name:'นางสาวศรัณย์พร สิทธิทูล',nick:'Zee'},{id:'38277',name:'นางสาวภูริชญา กลิ่นหอม',nick:'Namthip'},{id:'39661',name:'นางสาวจันทกานต์ ฮึมจันทึก',nick:'Tar'},{id:'39662',name:'นางสาวเพ็ญพิมล สาครวงษ์สุริย',nick:'Baifern'},{id:'39663',name:'นางสาววรัญญา จอดนอก',nick:'Yaem'},{id:'39664',name:'นางสาวภัชรมน ราชประดิษฐ',nick:'Mew'},{id:'39665',name:'นายภานุวัฒน์ ทองหุ้ม',nick:'Kiv'},{id:'39666',name:'นางสาวปณิตา ติจันทึก',nick:'Meiw'},{id:'54565',name:'Test Student',nick:'Kyle'}],
     'M4/13':[{id:'36900',name:'นายภูริ สนสูงเนิน',nick:'Nuea'},{id:'37015',name:'นางสาวศิวพร แสนใจ',nick:'Mudmee'},{id:'37108',name:'นายจิรพัฒน์ สายทอง',nick:'Todd'},{id:'37135',name:'นางสาวพิมพ์ชนก วรรณวงค์',nick:'Pim'},{id:'37197',name:'นายธีรภัทร ย้อยแสง',nick:'Kao'},{id:'37199',name:'นายปรินทร ป่วนสันเทียะ',nick:'Benten'},{id:'37230',name:'นางสาวศิรประภา เสนาภักดิ์',nick:'Madmee'},{id:'37234',name:'นางสาวอารยา วนากลาง',nick:'Namwan'},{id:'37239',name:'นายธนกฤต สระทองอุ่น',nick:'Pond'},{id:'37241',name:'นายปัณณกานต์ สิงห์สวัสดิ์',nick:'Pun'},{id:'37242',name:'นายพชร เพชรวัชรานนท์',nick:'Dome'},{id:'37243',name:'นายภควัต อุดมนาม',nick:'AB'},{id:'37246',name:'นายรณกร สระทองอุ่น',nick:'Pong'},{id:'37248',name:'นายสิรภัทร ภูวิภาค',nick:'Mac'},{id:'37249',name:'นายสิริชัย ธูปขุนทด',nick:'Munggorn'},{id:'37250',name:'นายอธิป พิมพา',nick:'It'},{id:'37252',name:'นายอาทิวราห์ นารถสูงเนิน',nick:'Tan'},{id:'37254',name:'นางสาวกรกนก แสวงจันทร์',nick:'Nam'},{id:'37255',name:'นางสาวกรชนก เจริญสุข',nick:'Endu'},{id:'37257',name:'นางสาวกัณฑารีย์ ศศิปริยาพงศ์',nick:'Kan'},{id:'37258',name:'นางสาวชาลิดา เหยียดรัมย์',nick:'Looktan'},{id:'37261',name:'นางสาวณัฐดาวรรณ วรรณรักษาศักดิ์',nick:'Nooin'},{id:'37262',name:'นางสาวณัฐธยาน์ ธงศรี',nick:'Nut'},{id:'37265',name:'นางสาวปุณยพร วงษ์เส็ง',nick:'Ice'},{id:'37268',name:'นางสาวพิชญธิดา อิ่มวัฒนกุล',nick:'Prae'},{id:'37270',name:'นางสาววัลธภัชฏ์ คีรีวงษ์',nick:'Kokluai'},{id:'39667',name:'นางสาวนันท์นภัส ถวิลการ',nick:'Pinto'},{id:'39668',name:'นางสาวภิญญดา ทองคำ',nick:'Nick'},{id:'39669',name:'นายกลกร เห็มสุวรรณ์',nick:'Sek'},{id:'39670',name:'นายรัชชานนท์ วิภาคโสภณชัย',nick:'Indo'},{id:'39671',name:'นายกฤตเมธ อ่ำรอด',nick:'Kong'},{id:'39672',name:'นายถิรทักษ์ สีหะวงค์',nick:'Thakky'},{id:'39673',name:'นางสาวขวัญข้าว พรมสอน',nick:'Gress'},{id:'39674',name:'นายประสพสุข จีระประพันธ์กุล',nick:'Guts'},{id:'39675',name:'นางสาววรินทร มีเม่น',nick:'First'},{id:'54565',name:'Test Student',nick:'Kyle'}],
     // M3/10, M3/12: loaded dynamically from Supabase submissions
 };
-
-// ── Status badge helper ──
-function getStatusBadge(status) {
-    var s = (status || '').toUpperCase();
-    if (s === 'PASSED' || s === 'PASS') return {cls:'badge-passed', label:'PASSED'};
-    if (s === 'AVERAGE')               return {cls:'badge-average', label:'AVERAGE'};
-    if (s === 'COMPLETED')             return {cls:'badge-completed', label:'COMPLETED'};
-    return {cls:'badge-failed', label: s || 'FAILED'};
-}
 
 // ── Auth ──
 function doLogin() {
@@ -583,15 +410,19 @@ async function onSectionChange() {
     sel.innerHTML = '<option value="">Loading…</option>';
     sel.disabled = true;
     idInput.value = '';
+
     if (!section) { sel.innerHTML='<option value="">— Select Section First —</option>'; return; }
+
     var students = studentData[section];
     if (!students) {
+        // Load from Supabase submissions for this section
         try {
             var res = await fetch(
                 SUPABASE_URL+'/rest/v1/worksheet_submissions?select=student_id,student_name,thai_name&section=eq.'+encodeURIComponent(section),
                 {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
             );
             var rows = await res.json();
+            // Deduplicate by student_id
             var seen = {}; students = [];
             rows.forEach(function(r){
                 if (!seen[r.student_id]) {
@@ -601,11 +432,13 @@ async function onSectionChange() {
             });
         } catch(e) { students = []; }
     }
+
     if (!students || students.length === 0) {
         sel.innerHTML = '<option value="">No students found for this section yet</option>';
         sel.disabled = true;
         return;
     }
+
     sel.innerHTML = '<option value="">— Select Student —</option>'
         + students.map(function(s){
             return '<option value="'+s.id+'" data-name="'+s.name+'" data-nick="'+s.nick+'">'
@@ -625,12 +458,15 @@ async function doSearch() {
     var section = document.getElementById('selSection').value;
     var studentId = document.getElementById('inputStudentId').value.trim();
     var worksheet = document.getElementById('selWorksheet').value;
+
     if (!section || !studentId || !worksheet) {
         alert('Please select Section, Student, and Worksheet Number.');
         return;
     }
+
     var btn = document.getElementById('btnSearch');
     btn.disabled = true; btn.textContent = 'Searching…';
+
     try {
         var url = SUPABASE_URL+'/rest/v1/worksheet_submissions?select=*'
             +'&student_id=eq.'+encodeURIComponent(studentId)
@@ -638,63 +474,34 @@ async function doSearch() {
             +'&order=submitted_at.desc';
         var res = await fetch(url, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
         var results = await res.json();
-        if (!results || results.length === 0) {
-            // Fall back to sheet_scores (scores synced from Google Sheet)
-            var url2 = SUPABASE_URL+'/rest/v1/sheet_scores?select=*'
-                +'&student_id=eq.'+encodeURIComponent(studentId)
-                +'&worksheet=eq.'+encodeURIComponent(worksheet)
-                +'&limit=1';
-            var res2 = await fetch(url2, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
-            var sheetResults = await res2.json();
-            renderResults([], studentId, worksheet, sheetResults && sheetResults.length ? sheetResults[0] : null);
-        } else {
-            renderResults(results, studentId, worksheet, null);
-        }
+        renderResults(results, studentId, worksheet);
     } catch(e) {
         document.getElementById('resultsBody').innerHTML = '<div class="no-result">⚠️ Error fetching results.</div>';
     }
     btn.disabled = false; btn.textContent = '🔎 Search';
 }
 
-function renderResults(results, studentId, worksheet, sheetScore) {
+function renderResults(results, studentId, worksheet) {
     var sec = document.getElementById('resultsSection');
     sec.style.display = 'block';
     var wsLabel = worksheet.replace('WS','Worksheet ');
-    document.getElementById('resultsTitle').textContent = '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+    document.getElementById('resultsTitle').textContent =
+        '📄 Results for ID ' + studentId + ' — ' + wsLabel;
+
     if (!results || results.length === 0) {
-        if (sheetScore) {
-            // Show score from Google Sheet sync
-            var badgeMap = {PASSED:'badge-passed',AVERAGE:'badge-average',COMPLETED:'badge-completed',FAILED:'badge-failed'};
-            var badgeCls = badgeMap[sheetScore.status] || 'badge-failed';
-            var updated = sheetScore.updated_at ? new Date(sheetScore.updated_at).toLocaleString() : '—';
-            document.getElementById('resultsBody').innerHTML =
-                '<div class="result-card" style="border-left:4px solid #f59e0b">'
-                +'<div class="result-header">'
-                +'<span><b>📊 Score from Google Sheet</b></span>'
-                +'<span class="score">'+sheetScore.score+'/10</span>'
-                +'<span class="badge '+badgeCls+'">'+sheetScore.status+'</span>'
-                +'<span class="meta">Updated: '+updated+'</span>'
-                +'</div>'
-                +'<div class="result-body">'
-                +'<div class="result-info">👤 <b>'+(sheetScore.student_name||studentId)+'</b>'
-                +' &nbsp;|&nbsp; 🏫 '+(sheetScore.section||'—')+'</div>'
-                +'<div style="color:#92400e;font-size:0.85em;margin-top:6px">⚠️ No digital submission on file — score recorded from teacher\'s Google Sheet.</div>'
-                +'</div></div>';
-        } else {
-            document.getElementById('resultsBody').innerHTML =
-                '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
-        }
+        document.getElementById('resultsBody').innerHTML =
+            '<div class="no-result">❌ No submitted worksheets found for this student.<br>The student has not attempted '+wsLabel+' yet.</div>';
         return;
     }
+
     document.getElementById('resultsBody').innerHTML = results.map(function(s, i) {
-        var stBadge = getStatusBadge(s.status);
-        var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
+        var isPassed = s.status === 'PASSED';
         var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
         return '<div class="result-card">'
             +'<div class="result-header">'
             +'<span><b>Attempt '+(i+1)+'</b></span>'
             +'<span class="score">'+s.score+'/'+(s.total_questions||10)+'</span>'
-            +'<span class="badge '+ stBadge.cls +'">'+ stBadge.label +'</span>'
+            +'<span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</span>'
             +'<span class="meta">'+dt+'</span>'
             +'</div>'
             +'<div class="result-body">'
@@ -721,7 +528,7 @@ async function loadAll() {
             return;
         }
         tbody.innerHTML = allSubmissions.map(function(s,i) {
-            var stBadge = getStatusBadge(s.status); var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
+            var isPassed = s.status==='PASSED';
             var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
             return '<tr>'
                 +'<td>'+(i+1)+'</td>'
@@ -731,7 +538,7 @@ async function loadAll() {
                 +'<td>'+(s.section||'—')+'</td>'
                 +'<td><span class="badge badge-ws">'+(s.worksheet||'').replace('WS','WS ')+'</span></td>'
                 +'<td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td>'
-                +'<td><span class="badge '+stBadge.cls+'">'+stBadge.label+'</span></td>'
+                +'<td><span class="badge '+(isPassed?'badge-pass':'badge-fail')+'">'+(isPassed?'✅ Pass':'❌ Fail')+'</span></td>'
                 +'<td style="font-size:.82em;color:#666;">'+dt+'</td>'
                 +'<td><button class="btn-view-sm" onclick="viewSubmission('+s.id+')">View</button></td>'
                 +'</tr>';
@@ -744,6 +551,7 @@ async function loadAll() {
 // ── Print Modal ──
 function viewSubmission(id) {
     var s = allSubmissions.find(function(x){ return x.id===id; });
+    // If not in allSubmissions (came from search), fetch it
     if (!s) {
         fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions?id=eq.'+id,
             {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}})
@@ -755,83 +563,46 @@ function viewSubmission(id) {
 }
 
 function buildModal(s) {
-    var stBadge = getStatusBadge(s.status); var isPassed = (s.status === 'PASSED' || s.status === 'PASS');
+    var isPassed = s.status==='PASSED';
     var dt = s.submitted_at ? new Date(s.submitted_at).toLocaleString() : '—';
     var wsLabel = (s.worksheet||'').replace('WS','Worksheet ');
-    var answers = s.answers || {};
-    var isReconstructed = !Array.isArray(answers) && answers._reconstructed === 'true';
-    document.getElementById('modalTitle').textContent = wsLabel+' — '+(s.student_name||s.student_id);
-    var qHtml;
-    if (isReconstructed) {
-        // Reconstructed format: {Q1:"text", Q2:"text", ..., _reconstructed:"true"}
-        // First score questions are correct, remaining are wrong
-        var score = s.score || 0;
-        qHtml = '';
-        for (var i = 1; i <= 10; i++) {
-            var ansText = answers['Q'+i] || '—';
-            var isCorrect = (i <= score);
-            var optHtml = isCorrect
-                ? '<div class="opt-row opt-sc">✅ ' + ansText + '</div>'
-                : '<div class="opt-row opt-sw">❌ ' + ansText + '</div>';
-            qHtml += '<div class="q-card">'
-                + '<div class="q-header"><div class="qnum">'+i+'</div><span>Question '+i+'</span></div>'
-                + '<div class="q-body">'+optHtml+'</div></div>';
-        }
-        qHtml += '<p style="font-size:.78em;color:#999;text-align:center;margin-top:8px;font-style:italic;">⚠️ Answers reconstructed from recorded score — original digital submission not captured.</p>';
-    } else {
-        // Object format: {Q1:{selected,correct_answer,is_correct,question?}, ...} — used by WS2/WS3/WS4/WS5
-        var qKeys = Object.keys(answers).filter(function(k){ return /^Q\d+$/.test(k); });
-        qKeys.sort(function(a,b){ return parseInt(a.slice(1)) - parseInt(b.slice(1)); });
-        if (qKeys.length > 0) {
-            qHtml = qKeys.map(function(k){
-                var a = answers[k];
-                var qNum = parseInt(k.slice(1));
-                var optHtml = '';
-                if (a.selected === null || a.selected === undefined) {
-                    optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
-                } else if (a.is_correct) {
-                    optHtml = '<div class="opt-row opt-sc">✅ '+a.selected+'</div>';
-                } else {
-                    optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected+'</div>'
-                            +(a.correct_answer ? '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_answer+'</div>' : '');
-                }
-                return '<div class="q-card">'
-                    +'<div class="q-header"><div class="qnum">'+qNum+'</div><span>'+(a.question||'Question '+qNum)+'</span></div>'
-                    +'<div class="q-body">'+optHtml+'</div></div>';
-            }).join('');
+    var answers = s.answers || [];
+
+    document.getElementById('modalTitle').textContent =
+        wsLabel+' — '+(s.student_name||s.student_id);
+
+    var qHtml = answers.map(function(a,idx){
+        var imgHtml = a.question_image
+            ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
+        var optHtml = '';
+        if (a.selected_option === null || a.selected_option === undefined) {
+            optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
+        } else if (a.selected_option === a.correct_option) {
+            optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
         } else {
-            // Legacy array format
-            var answersArr = Array.isArray(answers) ? answers : [];
-            qHtml = answersArr.map(function(a,idx){
-                var imgHtml = a.question_image ? '<img src="'+IMAGE_BASE+a.question_image+'" class="q-card-img" alt="">' : '';
-                var optHtml = '';
-                if (a.selected_option === null || a.selected_option === undefined) {
-                    optHtml = '<div class="no-ans">⚠️ No answer selected</div>';
-                } else if (a.selected_option === a.correct_option) {
-                    optHtml = '<div class="opt-row opt-sc">✅ '+a.selected_option+'</div>';
-                } else {
-                    optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
-                            + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
-                }
-                return '<div class="q-card">'+imgHtml
-                    +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
-                    +'<div class="q-body">'+optHtml+'</div></div>';
-            }).join('');
+            optHtml = '<div class="opt-row opt-sw">❌ Student answered: '+a.selected_option+'</div>'
+                    + '<div class="opt-row opt-cm">✔ Correct answer: '+a.correct_option+'</div>';
         }
-    }
+        return '<div class="q-card">'
+            +imgHtml
+            +'<div class="q-header"><div class="qnum">'+(idx+1)+'</div><span>'+(a.question_text||'')+'</span></div>'
+            +'<div class="q-body">'+optHtml+'</div>'
+            +'</div>';
+    }).join('');
+
     document.getElementById('printContent').innerHTML =
         '<table class="sub-info-table">'
         +'<tr><td>Student Name</td><td><b>'+(s.student_name||'—')+'</b></td><td>Student ID</td><td><b>'+(s.student_id||'—')+'</b></td></tr>'
         +'<tr><td>Thai Name</td><td><b>'+(s.thai_name||'—')+'</b></td><td>Section</td><td><b>'+(s.section||'—')+'</b></td></tr>'
         +'<tr><td>Worksheet</td><td><b>'+wsLabel+'</b></td><td>Score</td><td><b>'+s.score+'/'+(s.total_questions||10)+'</b></td></tr>'
-        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#065f46':s.status==='AVERAGE'?'#92400e':s.status==='COMPLETED'?'#1e40af':'#991b1b')+'">'
-        +({PASSED:'✅ PASSED',AVERAGE:'🟡 AVERAGE',COMPLETED:'🔵 COMPLETED',FAILED:'❌ FAILED'}[s.status]||s.status)+'</b></td></tr>'
+        +'<tr><td>Status</td><td colspan="3"><b style="color:'+(isPassed?'#1b5e20':'#b71c1c')+'">'+(isPassed?'✅ PASSED':'❌ FAILED')+'</b></td></tr>'
         +'<tr><td>Submitted</td><td colspan="3">'+dt+'</td></tr>'
         +'<tr><td>Printed On</td><td colspan="3">'+new Date().toLocaleString()+'</td></tr>'
         +'</table>'
-        +'<h3 style="color:#0d1b4b;margin:14px 0 10px;font-size:1em;">📝 Questions &amp; Answers</h3>'
+        +'<h3 style="color:#1a237e;margin:16px 0 12px;font-size:1em;">📝 Questions & Answers</h3>'
         +qHtml
-        +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:18px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
+        +'<p style="text-align:center;color:#bbb;font-size:.78em;margin-top:20px;">English Worksheets — carlton-title.github.io/english-worksheets/teacher.html</p>';
+
     document.getElementById('printModal').classList.add('open');
 }
 
@@ -868,165 +639,6 @@ function doPrint() {
 }
 
 document.getElementById('printModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-
-// ── No-Submission Checker ──────────────────────────────────────────────────
-async function doNoSubCheck() {
-    var section   = document.getElementById('nsSelSection').value;
-    var worksheet = document.getElementById('nsSelWorksheet').value;
-    var btn       = document.getElementById('btnNsCheck');
-    var out       = document.getElementById('nsResults');
-    if (!section || !worksheet) { alert('Please select both a Section and a Worksheet.'); return; }
-
-    btn.disabled = true; btn.textContent = '⏳ Checking…';
-    out.innerHTML = '<div class="loading-msg">🔍 Checking Google Sheet scores (sheet_scores)…</div>';
-
-    try {
-        // 1. Fetch scores from sheet_scores table (mirrors Google Sheets — authoritative source)
-        var url = SUPABASE_URL
-            + '/rest/v1/sheet_scores?select=student_id,student_name,score,status,updated_at'
-            + '&section=eq.' + encodeURIComponent(section)
-            + '&worksheet=eq.' + encodeURIComponent(worksheet)
-            + '&order=student_id.asc';
-        var res  = await fetch(url, { headers:{ 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
-        var subs = await res.json();
-
-        // 2a. Derive the earliest updated date for this section+worksheet (Date Tasked)
-        var earliestDate = '—';
-        if (subs.length > 0) {
-            var earliest = subs.reduce(function(min, r) {
-                return r.updated_at && r.updated_at < min ? r.updated_at : min;
-            }, subs[0].updated_at || '');
-            if (earliest) {
-                var ed = new Date(earliest);
-                earliestDate = (ed.getMonth()+1).toString().padStart(2,'0') + '/'
-                    + ed.getDate().toString().padStart(2,'0') + '/'
-                    + ed.getFullYear();
-            }
-        }
-
-        // 2b. Build a map: student_id → score info (one row per student in sheet_scores)
-        var subMap = {};
-        if (!Array.isArray(subs) || subs.length === 0) {
-            out.innerHTML = '<div style="background:#fff8e1;border:1px solid #ffe082;border-radius:10px;padding:18px;color:#795548;">'
-                + '⚠️ <b>No Google Sheet data found for ' + section + ' / ' + worksheet + '.</b><br><br>'
-                + 'You need to sync your Google Sheet first:<br>'
-                + '1. Open Google Sheets → Extensions → Apps Script<br>'
-                + '2. Paste the <b>SyncToSupabase.gs</b> file<br>'
-                + '3. From the sheet menu: 📊 Sync to Supabase → Sync ALL sheets now'
-                + '</div>';
-            btn.disabled = false; btn.textContent = '🔍 Check';
-            return;
-        }
-        subs.forEach(function(r) {
-            var sid = String(r.student_id);
-            subMap[sid] = { name: r.student_name, score: r.score, status: r.status };
-        });
-
-        // 3. Get the class roster
-        var roster = studentData[section];
-        if (!roster || roster.length === 0) {
-            // Fallback: derive roster from Supabase submission student names
-            out.innerHTML = '<div class="no-result">⚠️ Roster for ' + section + ' not found locally. Showing students who DID submit only.</div>';
-            btn.disabled = false; btn.textContent = '🔍 Check';
-            return;
-        }
-
-        // 4. Split into submitted vs not submitted
-        var notDone = [], done = [];
-        roster.forEach(function(s) {
-            var sid = String(s.id);
-            if (subMap[sid]) {
-                done.push({ student: s, sub: subMap[sid] });
-            } else {
-                notDone.push(s);
-            }
-        });
-
-        var wsLabel   = worksheet.replace('WS', 'Worksheet ');
-        var total     = roster.length;
-        var nSubmitted = done.length;
-        var nMissing  = notDone.length;
-        var pct       = Math.round((nSubmitted / total) * 100);
-
-        // 5. Build progress bar + summary
-        var barColor  = pct === 100 ? '#2e7d32' : pct >= 70 ? '#f57f17' : '#c62828';
-        var html = ''
-            + '<div style="margin-bottom:14px;">'
-            +   '<div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:.88em;font-weight:bold;">'
-            +     '<span style="color:#1a237e;">' + section + ' — ' + wsLabel + '</span>'
-            +     '<span style="color:' + barColor + ';">' + nSubmitted + ' / ' + total + ' submitted (' + pct + '%)</span>'
-            +   '</div>'
-            +   '<div style="background:#e8eaf6;border-radius:8px;height:10px;overflow:hidden;">'
-            +     '<div style="background:' + barColor + ';height:100%;width:' + pct + '%;border-radius:8px;transition:width .4s;"></div>'
-            +   '</div>'
-            + '</div>';
-
-        // 6. NOT SUBMITTED table
-        if (nMissing === 0) {
-            html += '<div style="text-align:center;padding:18px;background:#e8f5e9;border-radius:12px;color:#1b5e20;font-weight:bold;">✅ All ' + total + ' students in ' + section + ' have submitted ' + wsLabel + '!</div>';
-        } else {
-            html += '<div style="margin-bottom:8px;">'
-                +   '<span style="background:#ffcdd2;color:#b71c1c;padding:5px 14px;border-radius:12px;font-weight:bold;font-size:.88em;">❌ ' + nMissing + ' student' + (nMissing > 1 ? 's have' : ' has') + ' NOT submitted</span>'
-                + '</div>'
-                + '<div style="overflow-x:auto;margin-bottom:18px;">'
-                + '<table style="width:100%;border-collapse:collapse;font-size:.88em;">'
-                + '<thead><tr style="background:#ffcdd2;">'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">#</th>'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Student ID</th>'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Full Name (Thai)</th>'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Nickname</th>'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Date Tasked</th>'
-                + '<th style="padding:8px 10px;text-align:left;color:#b71c1c;">Remark</th>'
-                + '</tr></thead><tbody>'
-                + notDone.map(function(s, i) {
-                    return '<tr style="background:' + (i%2===0?'#fff':'#fff9f9') + ';">'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;">' + (i+1) + '</td>'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;font-family:monospace;">' + s.id + '</td>'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;">' + s.name + '</td>'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;color:#888;">' + (s.nick||'—') + '</td>'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;color:#555;">' + earliestDate + '</td>'
-                        + '<td style="padding:7px 10px;border-bottom:1px solid #ffcdd2;"><span style="background:#ffcdd2;color:#b71c1c;padding:2px 9px;border-radius:10px;font-size:.8em;font-weight:bold;white-space:nowrap;">No Worksheet Submitted</span></td>'
-                        + '</tr>';
-                }).join('')
-                + '</tbody></table></div>';
-        }
-
-        // 7. SUBMITTED table (collapsible summary)
-        if (done.length > 0) {
-            html += '<details style="margin-top:4px;">'
-                + '<summary style="cursor:pointer;font-size:.88em;font-weight:bold;color:#1a237e;padding:6px 0;">✅ Show ' + done.length + ' students who submitted</summary>'
-                + '<div style="overflow-x:auto;margin-top:10px;">'
-                + '<table style="width:100%;border-collapse:collapse;font-size:.85em;">'
-                + '<thead><tr style="background:#e8f5e9;">'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">#</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Student ID</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Full Name</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Nick</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Score</th>'
-                + '<th style="padding:7px 10px;text-align:left;color:#1b5e20;">Result</th>'
-                + '</tr></thead><tbody>'
-                + done.map(function(d, i) {
-                    var stBadge = getStatusBadge(d.sub.status); var isPassed = (d.sub.status === 'PASSED' || d.sub.status === 'PASS');
-                    return '<tr style="background:' + (i%2===0?'#fff':'#f9fbe7') + ';">'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + (i+1) + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-family:monospace;">' + d.student.id + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">' + d.student.name + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;color:#888;">' + (d.student.nick||'—') + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;font-weight:bold;">' + (d.sub.score !== null ? d.sub.score + '/10' : '—') + '</td>'
-                        + '<td style="padding:6px 10px;border-bottom:1px solid #c8e6c9;">'
-                        +   '<span class="badge ' + stBadge.cls + '">' + stBadge.label + '</span></td>'
-                        + '</tr>';
-                }).join('')
-                + '</tbody></table></div></details>';
-        }
-
-        out.innerHTML = html;
-
-    } catch(e) {
-        out.innerHTML = '<div class="no-result">❌ Error fetching records: ' + e.message + '</div>';
-    }
-    btn.disabled = false; btn.textContent = '🔍 Check';
-}
 </script>
 </body>
 </html>
