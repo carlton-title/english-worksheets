@@ -369,6 +369,8 @@ var SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70n
 var TEACHER_PASSWORD = 'Carlton2026!';
 var TEST_STUDENT_IDS = ['54565'];
 var maxAttempts = 3;
+
+// ─── KYLE TEST MODE ──────────────────────────────────────────────────────────
 var isKyleTestMode = (new URLSearchParams(window.location.search).get('testmode') === 'kyle');
 var KYLE_DATA = { id: '54565', name: 'Kyle', nick: 'Kyle' };
 
@@ -594,6 +596,9 @@ function startWorksheet() {
 function renderQuestions(studentId, nickname) {
   userAnswers = {};
   var seed = parseInt(studentId) * 137 + attempts * 999983;
+
+  // Kyle Test Mode: fixed order (no shuffle) so questions stay consistent for testing
+  // Regular students: seeded shuffle so each student sees a different order
   displayQuestions = isKyleTestMode ? questions.slice() : seededShuffle(questions, seed);
 
   document.getElementById('quizStudentInfo').textContent = nickname + ' | ' + currentSection;
@@ -603,6 +608,7 @@ function renderQuestions(studentId, nickname) {
   container.innerHTML = '';
 
   displayQuestions.forEach(function(q, idx) {
+    // Kyle: fixed answer order; students: shuffled per question
     var shuffledOpts = isKyleTestMode ? q.options.slice() : seededShuffle(q.options, seed + q.id * 100);
 
     var card = document.createElement('div');
@@ -629,7 +635,6 @@ function renderQuestions(studentId, nickname) {
       btn.setAttribute('data-opt', opt);
       btn.onclick = function() { selectOption(q.id, opt, card); };
       btn.appendChild(document.createTextNode(opt));
-
       grid.appendChild(btn);
     });
 
@@ -844,6 +849,12 @@ function submitToSheet(studentId, nickname, section, score, status) {
 function printWorksheet() {
   window.print();
 }
+
+  // Auto-trigger if browser pre-fills section on reload
+  document.addEventListener('DOMContentLoaded', function() {
+    var sec = document.getElementById('section');
+    if (sec && sec.value) loadThaiNames();
+  });
 </script>
 </body>
 </html>
