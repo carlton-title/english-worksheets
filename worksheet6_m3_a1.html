@@ -36,6 +36,7 @@
     .question-card:hover { border-color: #667eea; }
     .question-number { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 0.85em; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
     .question-text { font-size: 1.08em; color: #222; margin-bottom: 14px; line-height: 1.5; font-weight: 600; }
+    .question-image { width: 100%; max-width: 400px; height: auto; border-radius: 10px; margin: 10px 0; display: block; }
     .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } .form-row { flex-direction: column; } }
     .option-btn { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid #e0e7ff; border-radius: 10px; cursor: pointer; background: white; text-align: left; font-size: 0.95em; color: #333; transition: all 0.2s; width: 100%; }
@@ -289,6 +290,7 @@ function renderQuestions(studentId, nickname) {
     var shuffledOpts = isKyleTestMode ? q.options.slice() : seededShuffle(q.options, seed + q.id * 100);
     var card = document.createElement('div'); card.className = 'question-card'; card.setAttribute('data-qid', q.id);
     var nb = document.createElement('div'); nb.className = 'question-number'; nb.textContent = 'Question ' + (idx + 1); card.appendChild(nb);
+    var img = document.createElement('img'); img.className = 'question-image'; img.src = 'WS6M3Q' + q.id + '.png'; img.alt = 'Question ' + q.id; card.appendChild(img);
     var qt = document.createElement('div'); qt.className = 'question-text'; qt.textContent = q.text; card.appendChild(qt);
     var grid = document.createElement('div'); grid.className = 'options-grid';
     shuffledOpts.forEach(function(opt) {

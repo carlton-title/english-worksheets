@@ -30,6 +30,7 @@ input[readonly] { background:#f1f5f9;color:#64748b;cursor:not-allowed; }
 .question-card.answered { border-color:#6366f1; }
 .question-number { font-size:.78rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px; }
 .question-text { font-size:1rem;font-weight:600;color:#1e1b4b;margin-bottom:14px;line-height:1.5; }
+.question-image { width:100%;max-width:400px;height:auto;border-radius:10px;margin:10px 0;display:block; }
 .options-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
 @media (max-width:560px) { .options-grid { grid-template-columns:1fr; } }
 .option-btn { display:flex;align-items:center;padding:10px 14px;border:2px solid #e0e7ff;border-radius:8px;background:white;cursor:pointer;font-size:.93rem;color:#374151;text-align:left;transition:all .15s;font-family:inherit; }
@@ -201,6 +202,7 @@ function renderQuestions(sid,nick){
     var opts=isKyleTestMode?q.options.slice():seededShuffle(q.options,seed+q.id*100);
     var card=document.createElement('div');card.className='question-card';card.setAttribute('data-qid',q.id);
     var nb=document.createElement('div');nb.className='question-number';nb.textContent='Question '+(i+1);card.appendChild(nb);
+    var img=document.createElement('img');img.className='question-image';img.src='WS6M4Q'+q.id+'.png';img.alt='Question '+q.id;card.appendChild(img);
     var qt=document.createElement('div');qt.className='question-text';qt.textContent=q.text;card.appendChild(qt);
     var g=document.createElement('div');g.className='options-grid';
     opts.forEach(function(opt){var btn=document.createElement('button');btn.className='option-btn';btn.setAttribute('data-qid',q.id);btn.setAttribute('data-opt',opt);btn.onclick=function(){selectOption(q.id,opt,card);};btn.appendChild(document.createTextNode(opt));g.appendChild(btn);});
