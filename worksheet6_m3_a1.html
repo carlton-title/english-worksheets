@@ -7,297 +7,90 @@
   <title>Worksheet 6 M3 A1: Research Skills and Information Gathering</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      overflow: hidden;
-    }
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-    }
-    .title {
-      font-size: 2em;
-      font-weight: 700;
-      margin-bottom: 8px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .subtitle {
-      font-size: 1.1em;
-      opacity: 0.9;
-      margin-bottom: 4px;
-    }
-    .info-banner {
-      background: #f0f4ff;
-      border-left: 5px solid #667eea;
-      padding: 16px 24px;
-      margin: 20px 24px;
-      border-radius: 8px;
-    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center; padding: 30px 20px; }
+    .title { font-size: 2em; font-weight: 700; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .subtitle { font-size: 1.1em; opacity: 0.9; margin-bottom: 4px; }
+    .info-banner { background: #f0f4ff; border-left: 5px solid #667eea; padding: 16px 24px; margin: 20px 24px; border-radius: 8px; }
     .info-banner p { color: #444; font-size: 0.95em; line-height: 1.6; }
     .info-banner strong { color: #667eea; }
-    .form-section {
-      background: #f8f9ff;
-      padding: 24px;
-      margin: 0 24px 24px;
-      border-radius: 12px;
-      border: 2px solid #e0e7ff;
-    }
-    .form-section h2 {
-      color: #667eea;
-      font-size: 1.3em;
-      margin-bottom: 18px;
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      color: #444;
-      margin-bottom: 6px;
-    }
-    .form-group select,
-    .form-group input {
-      width: 100%;
-      padding: 10px 14px;
-      border: 2px solid #dde3ff;
-      border-radius: 8px;
-      font-size: 1em;
-      color: #333;
-      background: white;
-      transition: border-color 0.2s;
-    }
-    .form-group select:focus,
-    .form-group input:focus {
-      outline: none;
-      border-color: #667eea;
-    }
+    .form-section { background: #f8f9ff; padding: 24px; margin: 0 24px 24px; border-radius: 12px; border: 2px solid #e0e7ff; }
+    .form-section h2 { color: #667eea; font-size: 1.3em; margin-bottom: 18px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; color: #444; margin-bottom: 6px; }
+    .form-group select, .form-group input { width: 100%; padding: 10px 14px; border: 2px solid #dde3ff; border-radius: 8px; font-size: 1em; color: #333; background: white; transition: border-color 0.2s; }
+    .form-group select:focus, .form-group input:focus { outline: none; border-color: #667eea; }
     .form-row { display: flex; gap: 16px; }
     .form-row .form-group { flex: 1; }
-    .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      width: 100%;
-      font-size: 1.1em;
-      padding: 14px;
-    }
+    .btn { display: inline-block; padding: 12px 28px; border: none; border-radius: 10px; font-size: 1em; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; width: 100%; font-size: 1.1em; padding: 14px; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
-    .btn-secondary {
-      background: #f0f4ff;
-      color: #667eea;
-      border: 2px solid #667eea;
-      margin-right: 10px;
-    }
+    .btn-secondary { background: #f0f4ff; color: #667eea; border: 2px solid #667eea; margin-right: 10px; }
     .btn-secondary:hover { background: #667eea; color: white; }
     .quiz-section { padding: 0 24px 24px; display: none; }
-    .quiz-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f0f4ff;
-      padding: 14px 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+    .quiz-header { display: flex; justify-content: space-between; align-items: center; background: #f0f4ff; padding: 14px 20px; border-radius: 10px; margin-bottom: 20px; }
     .quiz-header .student-info { font-weight: 600; color: #333; }
-    .attempts-badge {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.9em;
-      font-weight: 600;
-    }
-    .question-card {
-      background: white;
-      border: 2px solid #e8ecff;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 18px;
-      transition: border-color 0.2s;
-    }
+    .attempts-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.9em; font-weight: 600; }
+    .question-card { background: white; border: 2px solid #e8ecff; border-radius: 14px; padding: 20px; margin-bottom: 18px; transition: border-color 0.2s; }
     .question-card:hover { border-color: #667eea; }
-    .question-number {
-      display: inline-block;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      font-size: 0.85em;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-    }
-    .question-image {
-      width: 100%;
-      max-width: 400px;
-      height: auto;
-      border-radius: 10px;
-      margin: 10px 0;
-      display: block;
-    }
-    .question-text {
-      font-size: 1.08em;
-      color: #222;
-      margin-bottom: 14px;
-      line-height: 1.5;
-      font-weight: 600;
-    }
-    .options-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    .question-number { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 0.85em; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
+    .question-text { font-size: 1.08em; color: #222; margin-bottom: 14px; line-height: 1.5; font-weight: 600; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } .form-row { flex-direction: column; } }
-    .option-btn {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 2px solid #e0e7ff;
-      border-radius: 10px;
-      cursor: pointer;
-      background: white;
-      text-align: left;
-      font-size: 0.95em;
-      color: #333;
-      transition: all 0.2s;
-      width: 100%;
-    }
+    .option-btn { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 2px solid #e0e7ff; border-radius: 10px; cursor: pointer; background: white; text-align: left; font-size: 0.95em; color: #333; transition: all 0.2s; width: 100%; }
     .option-btn:hover { border-color: #667eea; background: #f0f4ff; }
     .option-btn.selected { border-color: #667eea; background: #e8ecff; font-weight: 600; }
     .option-btn.correct { border-color: #22c55e; background: #dcfce7; color: #166534; }
     .option-btn.wrong { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
-    .option-letter {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #e0e7ff;
-      color: #667eea;
-      font-weight: 700;
-      font-size: 0.85em;
-    }
-    .option-btn.selected .option-letter { background: #667eea; color: white; }
-    .option-btn.correct .option-letter { background: #22c55e; color: white; }
-    .option-btn.wrong .option-letter { background: #ef4444; color: white; }
     .submit-area { text-align: center; margin-top: 24px; }
     .score-section { padding: 30px 24px; display: none; text-align: center; }
-    .score-circle {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-weight: 700;
-    }
+    .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; font-weight: 700; }
     .score-circle.passed { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; }
     .score-circle.failed { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .score-circle.average { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
     .score-number { font-size: 2.8em; line-height: 1; }
     .score-label { font-size: 0.85em; opacity: 0.9; }
-    .score-status {
-      font-size: 1.6em;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
+    .submission-timestamp { font-size: .9em; color: #555; margin: 4px auto 20px; font-weight: 500; padding: 7px 18px; background: #f0f4ff; border-radius: 8px; display: none; }
+    .submission-timestamp.late { color: #dc2626; font-weight: 600; background: #fff5f5; }
+    .score-status { font-size: 1.6em; font-weight: 700; margin-bottom: 10px; }
     .status-passed { color: #22c55e; }
     .status-failed { color: #ef4444; }
     .status-average { color: #f59e0b; }
     .score-message { color: #666; margin-bottom: 24px; font-size: 1em; line-height: 1.6; }
-    .attempts-history {
-      background: #f8f9ff;
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 20px;
-    }
+    .attempts-history { background: #f8f9ff; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
     .attempts-history h4 { color: #667eea; margin-bottom: 10px; }
-    .attempt-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      border-bottom: 1px solid #e8ecff;
-      font-size: 0.95em;
-      color: #444;
-    }
+    .attempt-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #e8ecff; font-size: 0.95em; color: #444; }
     .attempt-row:last-child { border-bottom: none; }
     .answer-review { margin-top: 24px; text-align: left; }
     .answer-review h3 { color: #667eea; margin-bottom: 14px; font-size: 1.1em; }
-    .review-item {
-      background: white;
-      border: 1px solid #e0e7ff;
-      border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 10px;
-    }
+    .review-item { background: white; border: 1px solid #e0e7ff; border-radius: 10px; padding: 14px; margin-bottom: 10px; }
     .review-item.correct-item { border-color: #22c55e; background: #f0fdf4; }
     .review-item.wrong-item { border-color: #ef4444; background: #fff5f5; }
     .review-q { font-weight: 600; color: #333; margin-bottom: 6px; font-size: 0.95em; }
     .review-a { font-size: 0.9em; }
     .review-a span { font-weight: 600; }
     .score-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-    .final-message {
-      background: #f0f4ff;
-      border-radius: 10px;
-      padding: 16px;
-      color: #667eea;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
+    .final-message { background: #f0f4ff; border-radius: 10px; padding: 16px; color: #667eea; font-weight: 600; margin-bottom: 20px; }
     @media print {
       body { background: white; padding: 0; }
       .container { box-shadow: none; border-radius: 0; }
       .btn, .score-actions, .quiz-section, .form-section, .info-banner { display: none !important; }
       .score-section { display: block !important; }
+      .submission-timestamp { display: block !important; }
     }
   </style>
 </head>
 <body>
 <div class="container">
-
-  <!-- HEADER -->
   <div class="header">
     <div class="title">📚 WORKSHEET 6 🔍</div>
     <div class="subtitle">Research Skills and Information Gathering</div>
     <div class="subtitle">M3 (A1) &nbsp;|&nbsp; Sections 2, 4 &amp; 6</div>
   </div>
-
-  <!-- INFO BANNER -->
   <div class="info-banner">
-    <p>
-      <strong>Instructions:</strong> Select your class section and name, then answer all 10 questions.
-      You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!
-    </p>
+    <p><strong>Instructions:</strong> Select your class section and name, then answer all 10 questions. You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!</p>
   </div>
-
-  <!-- STUDENT FORM -->
   <div class="form-section" id="formSection">
     <h2>👤 Student Information</h2>
     <div class="form-group">
@@ -327,8 +120,6 @@
     </div>
     <button class="btn btn-primary" onclick="startWorksheet()">Start Worksheet ▶</button>
   </div>
-
-  <!-- QUIZ SECTION -->
   <div class="quiz-section" id="quizSection">
     <div class="quiz-header">
       <div class="student-info" id="quizStudentInfo">—</div>
@@ -339,13 +130,12 @@
       <button class="btn btn-primary" onclick="submitAnswers()" style="max-width:280px;">Submit Answers ✔</button>
     </div>
   </div>
-
-  <!-- SCORE SECTION -->
   <div class="score-section" id="scoreSection">
     <div class="score-circle" id="scoreCircle">
       <div class="score-number" id="scoreNumber">—</div>
       <div class="score-label">out of 10</div>
     </div>
+    <div id="submissionTimestamp" class="submission-timestamp"></div>
     <div class="score-status" id="scoreStatus">—</div>
     <div class="score-message" id="scoreMessage">—</div>
     <div class="attempts-history" id="attemptsHistory"></div>
@@ -357,436 +147,235 @@
       <button class="btn btn-secondary" onclick="resetForm()">🔁 New Student</button>
     </div>
   </div>
-
 </div>
-
 <script>
-// ─── CONFIG ────────────────────────────────────────────────────────────────────
 var SUPABASE_URL = 'https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
 var SCRIPT_URL  = 'https://script.google.com/macros/s/AKfycbzlLebeREf4qvWfqVi70nmYN2SqAE94d_8P5BlfIHg_7LSZFAjudkXkiAuidUtZX-ay/exec';
-
-var TEACHER_PASSWORD = 'Carlton2026!';
 var TEST_STUDENT_IDS = ['54565'];
 var maxAttempts = 3;
-
-// ─── KYLE TEST MODE ──────────────────────────────────────────────────────────
 var isKyleTestMode = (new URLSearchParams(window.location.search).get('testmode') === 'kyle');
 var KYLE_DATA = { id: '54565', name: 'Kyle', nick: 'Kyle' };
 
-// ─── STUDENT DATA (Supabase-fetch) ────────────────────────────────────────────
-var studentData = {};
+// ─── SCHEDULE & TIMESTAMP ─────────────────────────────────────────────────────
+var SECTION_SCHEDULE = {
+  'M3/2': {day:5,sh:11,sm:0, eh:11,em:50},
+  'M3/4': {day:4,sh:13,sm:50,eh:14,em:40},
+  'M3/6': {day:6,sh:10,sm:10,eh:11,em:0}
+};
+var submissionTimestampISO = '';
+var submissionTimestampDisplay = '';
+var submissionIsLate = false;
 
+function captureSubmissionTime(section) {
+  var now = new Date();
+  submissionTimestampISO = now.toISOString();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var h = now.getHours(), m = now.getMinutes();
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  var hh = h % 12 || 12;
+  var mm = String(m).padStart(2,'0');
+  submissionTimestampDisplay = hh + ':' + mm + ' ' + ampm + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ', ' + weekdays[now.getDay()];
+  var sched = SECTION_SCHEDULE[section];
+  if (!sched) { submissionIsLate = false; return; }
+  if (now.getDay() !== sched.day) { submissionIsLate = true; return; }
+  var mins = h * 60 + m;
+  submissionIsLate = (mins < sched.sh * 60 + sched.sm || mins > sched.eh * 60 + sched.em);
+}
+
+function showTimestampEl() {
+  var el = document.getElementById('submissionTimestamp');
+  if (!el) return;
+  el.textContent = 'Submission: ' + submissionTimestampDisplay + (submissionIsLate ? ' — Late' : '');
+  el.style.display = 'block';
+  el.className = 'submission-timestamp' + (submissionIsLate ? ' late' : '');
+}
+
+// ─── STUDENT DATA ─────────────────────────────────────────────────────────────
+var studentData = {};
 async function loadStudentsFromSupabase(section) {
   try {
-    var url = SUPABASE_URL + '/rest/v1/students?section=eq.' + encodeURIComponent(section) +
-              '&is_test=neq.true&select=student_id,nickname,name&order=name.asc';
-    var resp = await fetch(url, {
-      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-    });
+    var url = SUPABASE_URL + '/rest/v1/students?section=eq.' + encodeURIComponent(section) + '&is_test=neq.true&select=student_id,nickname,name&order=name.asc';
+    var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
     var rows = await resp.json();
-    studentData[section] = rows.map(function(r) {
-      return { id: r.student_id, name: r.name || r.nickname, nick: r.nickname };
-    });
-  } catch (e) {
-    console.error('Failed to load students for', section, e);
-    studentData[section] = [];
-  }
+    studentData[section] = rows.map(function(r) { return { id: r.student_id, name: r.name || r.nickname, nick: r.nickname }; });
+  } catch (e) { studentData[section] = []; }
 }
 
 async function loadThaiNames() {
   var section = document.getElementById('section').value;
-  var thaiNameSelect = document.getElementById('thaiName');
-  thaiNameSelect.innerHTML = '<option value="">— Loading... —</option>';
-  thaiNameSelect.disabled = true;
-  document.getElementById('nickname').value = '';
-  document.getElementById('studentId').value = '';
-
-  if (!section) {
-    thaiNameSelect.innerHTML = '<option value="">— Select your section first —</option>';
-    return;
-  }
-
-  // Kyle Test Mode: only show Kyle, no live students
+  var sel = document.getElementById('thaiName');
+  sel.innerHTML = '<option value="">— Loading... —</option>'; sel.disabled = true;
+  document.getElementById('nickname').value = ''; document.getElementById('studentId').value = '';
+  if (!section) { sel.innerHTML = '<option value="">— Select your section first —</option>'; return; }
   if (isKyleTestMode) {
-    thaiNameSelect.innerHTML = '';
-    var kOpt = document.createElement('option');
-    kOpt.value = KYLE_DATA.id;
-    kOpt.textContent = KYLE_DATA.name;
-    kOpt.dataset.nick = KYLE_DATA.nick;
-    kOpt.dataset.name = KYLE_DATA.name;
-    thaiNameSelect.appendChild(kOpt);
-    thaiNameSelect.disabled = false;
-    autoFillStudent();
-    return;
+    sel.innerHTML = '';
+    var k = document.createElement('option'); k.value = KYLE_DATA.id; k.textContent = KYLE_DATA.name; k.dataset.nick = KYLE_DATA.nick; k.dataset.name = KYLE_DATA.name;
+    sel.appendChild(k); sel.disabled = false; autoFillStudent(); return;
   }
-
-  if (!studentData[section]) {
-    await loadStudentsFromSupabase(section);
-  }
-
+  if (!studentData[section]) await loadStudentsFromSupabase(section);
   var students = studentData[section] || [];
-  thaiNameSelect.innerHTML = '<option value="">— Select your name —</option>';
-  students.forEach(function(s) {
-    var opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = s.name + ' (' + s.nick + ')';
-    opt.dataset.nick = s.nick;
-    opt.dataset.name = s.name;
-    thaiNameSelect.appendChild(opt);
-  });
-  thaiNameSelect.disabled = false;
+  sel.innerHTML = '<option value="">— Select your name —</option>';
+  students.forEach(function(s) { var o = document.createElement('option'); o.value = s.id; o.textContent = s.name + ' (' + s.nick + ')'; o.dataset.nick = s.nick; o.dataset.name = s.name; sel.appendChild(o); });
+  sel.disabled = false;
 }
 
 function autoFillStudent() {
-  var thaiNameSelect = document.getElementById('thaiName');
-  var selectedOpt = thaiNameSelect.options[thaiNameSelect.selectedIndex];
-  if (selectedOpt && selectedOpt.value) {
-    document.getElementById('studentId').value = selectedOpt.value;
-    document.getElementById('nickname').value = selectedOpt.dataset.nick || '';
-  } else {
-    document.getElementById('studentId').value = '';
-    document.getElementById('nickname').value = '';
-  }
+  var sel = document.getElementById('thaiName');
+  var opt = sel.options[sel.selectedIndex];
+  if (opt && opt.value) { document.getElementById('studentId').value = opt.value; document.getElementById('nickname').value = opt.dataset.nick || ''; }
+  else { document.getElementById('studentId').value = ''; document.getElementById('nickname').value = ''; }
 }
 
 // ─── QUESTIONS ────────────────────────────────────────────────────────────────
 var questions = [
-  {
-    id: 1,
-    text: 'Where can you go to find books and information for a school project?',
-    options: ['The cafeteria', 'The library', 'The gym', 'The parking lot'],
-    answer: 'The library'
-  },
-  {
-    id: 2,
-    text: 'What is a keyword used for?',
-    options: ['To open a locked door', 'To search for information online', 'To play a video game', 'To write a poem'],
-    answer: 'To search for information online'
-  },
-  {
-    id: 3,
-    text: 'Which of these is a reliable source of information for school?',
-    options: ['A social media post from a stranger', 'An encyclopedia or educational website', 'A funny video online', 'A comment on a game app'],
-    answer: 'An encyclopedia or educational website'
-  },
-  {
-    id: 4,
-    text: 'What does "taking notes" mean?',
-    options: ['Stealing a notebook from someone', 'Drawing pictures in class', 'Writing down the most important information', 'Sending a message to a friend'],
-    answer: 'Writing down the most important information'
-  },
-  {
-    id: 5,
-    text: 'What is the internet?',
-    options: ['A type of food', 'A school game', 'A big network that connects computers all over the world', 'A kind of library card'],
-    answer: 'A big network that connects computers all over the world'
-  },
-  {
-    id: 6,
-    text: 'When you open a book to find information quickly, where do you look first?',
-    options: ['The last page', 'The table of contents', 'The middle of the book', 'The author\'s photo'],
-    answer: 'The table of contents'
-  },
-  {
-    id: 7,
-    text: 'When you find useful information, what is important to write down?',
-    options: ['The whole book word for word', 'Only the pictures', 'Where you found it (the source)', 'Nothing — just remember it'],
-    answer: 'Where you found it (the source)'
-  },
-  {
-    id: 8,
-    text: 'What is plagiarism?',
-    options: ['A good way to learn new things', 'Copying someone else\'s work and not giving them credit', 'A type of search engine', 'Organizing your research notes'],
-    answer: 'Copying someone else\'s work and not giving them credit'
-  },
-  {
-    id: 9,
-    text: 'Which group of keywords is BEST for searching information about healthy food?',
-    options: ['"food pictures nice"', '"I am hungry today"', '"healthy eating nutrition"', '"my lunch is good"'],
-    answer: '"healthy eating nutrition"'
-  },
-  {
-    id: 10,
-    text: 'After you finish gathering information, what should you do next?',
-    options: ['Start playing a game', 'Throw away all your notes', 'Organize the information and write a summary', 'Tell your teacher you are done and leave'],
-    answer: 'Organize the information and write a summary'
-  }
+  {id:1,text:'Where can you go to find books and information for a school project?',options:['The cafeteria','The library','The gym','The parking lot'],answer:'The library'},
+  {id:2,text:'What is a keyword used for?',options:['To open a locked door','To search for information online','To play a video game','To write a poem'],answer:'To search for information online'},
+  {id:3,text:'Which of these is a reliable source of information for school?',options:['A social media post from a stranger','An encyclopedia or educational website','A funny video online','A comment on a game app'],answer:'An encyclopedia or educational website'},
+  {id:4,text:'What does "taking notes" mean?',options:['Stealing a notebook from someone','Drawing pictures in class','Writing down the most important information','Sending a message to a friend'],answer:'Writing down the most important information'},
+  {id:5,text:'What is the internet?',options:['A type of food','A school game','A big network that connects computers all over the world','A kind of library card'],answer:'A big network that connects computers all over the world'},
+  {id:6,text:'When you open a book to find information quickly, where do you look first?',options:['The last page','The table of contents','The middle of the book',"The author's photo"],answer:'The table of contents'},
+  {id:7,text:'When you find useful information, what is important to write down?',options:['The whole book word for word','Only the pictures','Where you found it (the source)','Nothing — just remember it'],answer:'Where you found it (the source)'},
+  {id:8,text:'What is plagiarism?',options:['A good way to learn new things',"Copying someone else's work and not giving them credit",'A type of search engine','Organizing your research notes'],answer:"Copying someone else's work and not giving them credit"},
+  {id:9,text:'Which group of keywords is BEST for searching information about healthy food?',options:['"food pictures nice"','"I am hungry today"','"healthy eating nutrition"','"my lunch is good"'],answer:'"healthy eating nutrition"'},
+  {id:10,text:'After you finish gathering information, what should you do next?',options:['Start playing a game','Throw away all your notes','Organize the information and write a summary','Tell your teacher you are done and leave'],answer:'Organize the information and write a summary'}
 ];
-
-// ─── SEEDED RNG & SHUFFLE ────────────────────────────────────────────────────
-function seededRandom(seed) {
-  var x = Math.sin(seed + 1) * 10000;
-  return x - Math.floor(x);
-}
 
 function seededShuffle(arr, seed) {
   var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    seed = (seed * 9301 + 49297) % 233280;
-    var j = Math.floor((seed / 233280) * (i + 1));
-    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-  }
+  for (var i = a.length - 1; i > 0; i--) { seed = (seed * 9301 + 49297) % 233280; var j = Math.floor((seed / 233280) * (i + 1)); var tmp = a[i]; a[i] = a[j]; a[j] = tmp; }
   return a;
 }
 
-// ─── APP STATE ────────────────────────────────────────────────────────────────
-var userAnswers = {};
-var attempts = 0;
-var allAttemptScores = [];
-var displayQuestions = [];
-var currentStudentId, currentNickname, currentSection, currentThaiName;
-var isTestStudent = false;
+var userAnswers = {}, attempts = 0, allAttemptScores = [], displayQuestions = [];
+var currentStudentId, currentNickname, currentSection, currentThaiName, isTestStudent = false;
 
-// ─── LOAD EXISTING PROGRESS ──────────────────────────────────────────────────
 function loadProgress(studentId, section) {
-  try {
-    var key = 'ws6_m3_a1_' + studentId + '_' + section;
-    var raw = localStorage.getItem(key);
-    if (raw) {
-      var data = JSON.parse(raw);
-      attempts = data.attempts || 0;
-      allAttemptScores = data.scores || [];
-    }
-  } catch(e) {}
+  try { var raw = localStorage.getItem('ws6_m3_a1_' + studentId + '_' + section); if (raw) { var d = JSON.parse(raw); attempts = d.attempts || 0; allAttemptScores = d.scores || []; } } catch(e) {}
 }
-
 function saveProgress(studentId, section) {
-  try {
-    var key = 'ws6_m3_a1_' + studentId + '_' + section;
-    localStorage.setItem(key, JSON.stringify({ attempts: attempts, scores: allAttemptScores }));
-  } catch(e) {}
+  try { localStorage.setItem('ws6_m3_a1_' + studentId + '_' + section, JSON.stringify({ attempts: attempts, scores: allAttemptScores })); } catch(e) {}
 }
 
-// ─── START ────────────────────────────────────────────────────────────────────
 function startWorksheet() {
   var section = document.getElementById('section').value;
-  var thaiNameSelect = document.getElementById('thaiName');
-  var selectedOpt = thaiNameSelect.options[thaiNameSelect.selectedIndex];
+  var sel = document.getElementById('thaiName');
+  var opt = sel.options[sel.selectedIndex];
   var studentId = document.getElementById('studentId').value.trim();
   var nickname = document.getElementById('nickname').value.trim();
-  var thaiName = selectedOpt ? (selectedOpt.dataset.name || selectedOpt.textContent.split('(')[0].trim()) : '';
-
+  var thaiName = opt ? (opt.dataset.name || opt.textContent.split('(')[0].trim()) : '';
   if (!section) { alert('Please select your class section.'); return; }
   if (!studentId) { alert('Please select your name.'); return; }
   if (!nickname) { alert('Could not find your nickname. Please select your name again.'); return; }
-
-  currentStudentId = studentId;
-  currentNickname = nickname;
-  currentSection = section;
-  currentThaiName = thaiName;
+  currentStudentId = studentId; currentNickname = nickname; currentSection = section; currentThaiName = thaiName;
   isTestStudent = TEST_STUDENT_IDS.indexOf(studentId) !== -1;
-
   loadProgress(studentId, section);
-
-  if (!isTestStudent && attempts >= maxAttempts) {
-    var best = Math.max.apply(null, allAttemptScores.map(function(a){ return a.score; }));
-    alert('You have used all ' + maxAttempts + ' attempts. Your best score was ' + best + '/10.');
-    return;
-  }
-
+  if (!isTestStudent && attempts >= maxAttempts) { var best = Math.max.apply(null, allAttemptScores.map(function(a){ return a.score; })); alert('You have used all ' + maxAttempts + ' attempts. Your best score was ' + best + '/10.'); return; }
   document.getElementById('formSection').style.display = 'none';
   document.getElementById('scoreSection').style.display = 'none';
   document.getElementById('quizSection').style.display = 'block';
-
   renderQuestions(studentId, nickname);
 }
 
-// ─── RENDER QUESTIONS ─────────────────────────────────────────────────────────
 function renderQuestions(studentId, nickname) {
   userAnswers = {};
   var seed = parseInt(studentId) * 137 + attempts * 999983;
-
-  // Kyle Test Mode: fixed order (no shuffle) so questions stay consistent for testing
-  // Regular students: seeded shuffle so each student sees a different order
   displayQuestions = isKyleTestMode ? questions.slice() : seededShuffle(questions, seed);
-
   document.getElementById('quizStudentInfo').textContent = nickname + ' | ' + currentSection;
   updateAttemptsDisplay();
-
-  var container = document.getElementById('questionsContainer');
-  container.innerHTML = '';
-
+  var container = document.getElementById('questionsContainer'); container.innerHTML = '';
   displayQuestions.forEach(function(q, idx) {
-    // Kyle: fixed answer order; students: shuffled per question
     var shuffledOpts = isKyleTestMode ? q.options.slice() : seededShuffle(q.options, seed + q.id * 100);
-
-    var card = document.createElement('div');
-    card.className = 'question-card';
-    card.setAttribute('data-qid', q.id);
-
-    var numBadge = document.createElement('div');
-    numBadge.className = 'question-number';
-    numBadge.textContent = 'Question ' + (idx + 1);
-    card.appendChild(numBadge);
-
-    var img = document.createElement('img');
-    img.className = 'question-image';
-    img.src = 'WS6M3Q' + q.id + '.png';
-    img.alt = 'Question ' + q.id;
-    card.appendChild(img);
-
-    var qText = document.createElement('div');
-    qText.className = 'question-text';
-    qText.textContent = q.text;
-    card.appendChild(qText);
-
-    var grid = document.createElement('div');
-    grid.className = 'options-grid';
-
+    var card = document.createElement('div'); card.className = 'question-card'; card.setAttribute('data-qid', q.id);
+    var nb = document.createElement('div'); nb.className = 'question-number'; nb.textContent = 'Question ' + (idx + 1); card.appendChild(nb);
+    var qt = document.createElement('div'); qt.className = 'question-text'; qt.textContent = q.text; card.appendChild(qt);
+    var grid = document.createElement('div'); grid.className = 'options-grid';
     shuffledOpts.forEach(function(opt) {
-      var btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.setAttribute('data-qid', q.id);
-      btn.setAttribute('data-opt', opt);
+      var btn = document.createElement('button'); btn.className = 'option-btn'; btn.setAttribute('data-qid', q.id); btn.setAttribute('data-opt', opt);
       btn.onclick = function() { selectOption(q.id, opt, card); };
-      btn.appendChild(document.createTextNode(opt));
-      grid.appendChild(btn);
+      btn.appendChild(document.createTextNode(opt)); grid.appendChild(btn);
     });
-
-    card.appendChild(grid);
-    container.appendChild(card);
+    card.appendChild(grid); container.appendChild(card);
   });
 }
 
 function selectOption(qId, opt, card) {
   userAnswers[qId] = opt;
-  var btns = card.querySelectorAll('.option-btn');
-  btns.forEach(function(b) {
-    b.classList.remove('selected');
-    if (b.getAttribute('data-opt') === opt) b.classList.add('selected');
-  });
+  card.querySelectorAll('.option-btn').forEach(function(b) { b.classList.remove('selected'); if (b.getAttribute('data-opt') === opt) b.classList.add('selected'); });
 }
 
 function updateAttemptsDisplay() {
-  var remaining = isTestStudent ? '∞' : (maxAttempts - attempts);
-  document.getElementById('attemptsBadge').textContent =
-    'Attempt ' + (isTestStudent ? '(test)' : (attempts + 1)) + ' / ' + (isTestStudent ? '∞' : maxAttempts);
+  document.getElementById('attemptsBadge').textContent = 'Attempt ' + (isTestStudent ? '(test)' : (attempts + 1)) + ' / ' + (isTestStudent ? '∞' : maxAttempts);
 }
 
-// ─── SUBMIT ───────────────────────────────────────────────────────────────────
 function submitAnswers() {
-  if (Object.keys(userAnswers).length < displayQuestions.length) {
-    alert('Please answer all ' + displayQuestions.length + ' questions before submitting.');
-    return;
-  }
-
+  if (Object.keys(userAnswers).length < displayQuestions.length) { alert('Please answer all ' + displayQuestions.length + ' questions before submitting.'); return; }
   var score = 0;
-  displayQuestions.forEach(function(q) {
-    if (userAnswers[q.id] === q.answer) score++;
-  });
-
-  if (!isTestStudent) {
-    attempts++;
-    allAttemptScores.push({ attempt: attempts, score: score });
-    saveProgress(currentStudentId, currentSection);
-  }
-
-  var status;
-  if (score >= 8) status = 'PASSED';
-  else if (score >= 5) status = 'AVERAGE';
-  else status = 'FAILED';
-
+  displayQuestions.forEach(function(q) { if (userAnswers[q.id] === q.answer) score++; });
+  if (!isTestStudent) { attempts++; allAttemptScores.push({ attempt: attempts, score: score }); saveProgress(currentStudentId, currentSection); }
+  var status = score >= 8 ? 'PASSED' : score >= 5 ? 'AVERAGE' : 'FAILED';
+  captureSubmissionTime(currentSection);
   submitToSheet(currentStudentId, currentNickname, currentSection, score, status);
   showScore(score, status);
 }
 
 function showScore(score, status) {
   document.getElementById('quizSection').style.display = 'none';
-  var scoreSection = document.getElementById('scoreSection');
-  scoreSection.style.display = 'block';
-
+  document.getElementById('scoreSection').style.display = 'block';
   var circle = document.getElementById('scoreCircle');
   circle.className = 'score-circle ' + (status === 'PASSED' ? 'passed' : status === 'AVERAGE' ? 'average' : 'failed');
   document.getElementById('scoreNumber').textContent = score;
-
+  showTimestampEl();
   var statusEl = document.getElementById('scoreStatus');
   statusEl.className = 'score-status status-' + status.toLowerCase();
   if (status === 'PASSED') statusEl.textContent = '🎉 PASSED! Well done!';
   else if (status === 'AVERAGE') statusEl.textContent = '📊 AVERAGE - Keep studying!';
   else statusEl.textContent = '❌ FAILED - Don\'t give up!';
-
   var msg = document.getElementById('scoreMessage');
-  if (status === 'PASSED') {
-    msg.textContent = 'Excellent! You scored ' + score + '/10 on Research Skills and Information Gathering. Great job!';
-  } else if (status === 'AVERAGE') {
-    msg.textContent = 'You scored ' + score + '/10. You need 8 or more to pass. Review the feedback below and try again.';
-  } else {
-    msg.textContent = 'You scored ' + score + '/10. You need 8 or more to pass. Study the topics and try again.';
-  }
-
-  // Attempts history
+  if (status === 'PASSED') msg.textContent = 'Excellent! You scored ' + score + '/10 on Research Skills and Information Gathering. Great job!';
+  else if (status === 'AVERAGE') msg.textContent = 'You scored ' + score + '/10. You need 8 or more to pass. Review the feedback below and try again.';
+  else msg.textContent = 'You scored ' + score + '/10. You need 8 or more to pass. Study the topics and try again.';
   var histDiv = document.getElementById('attemptsHistory');
   if (allAttemptScores.length > 0) {
     var html = '<h4>📋 Your Attempt History</h4>';
-    allAttemptScores.forEach(function(a) {
-      var st = a.score >= 8 ? 'PASSED' : a.score >= 5 ? 'AVERAGE' : 'FAILED';
-      html += '<div class="attempt-row"><span>Attempt ' + a.attempt + '</span><span>' + a.score + '/10 — ' + st + '</span></div>';
-    });
-    histDiv.innerHTML = html;
-    histDiv.style.display = 'block';
+    allAttemptScores.forEach(function(a) { var st = a.score >= 8 ? 'PASSED' : a.score >= 5 ? 'AVERAGE' : 'FAILED'; html += '<div class="attempt-row"><span>Attempt ' + a.attempt + '</span><span>' + a.score + '/10 — ' + st + '</span></div>'; });
+    histDiv.innerHTML = html; histDiv.style.display = 'block';
   }
-
-  // Final message
   var finalMsg = document.getElementById('finalMessage');
   var tryAgainBtn = document.getElementById('tryAgainBtn');
   if (!isTestStudent && attempts >= maxAttempts) {
     var best = Math.max.apply(null, allAttemptScores.map(function(a){ return a.score; }));
     finalMsg.textContent = '✅ You have used all ' + maxAttempts + ' attempts. Your best score was ' + best + '/10.';
-    finalMsg.style.display = 'block';
-    tryAgainBtn.style.display = 'none';
+    finalMsg.style.display = 'block'; tryAgainBtn.style.display = 'none';
   } else {
-    finalMsg.style.display = 'none';
-    tryAgainBtn.style.display = 'inline-block';
+    finalMsg.style.display = 'none'; tryAgainBtn.style.display = 'inline-block';
     var remaining = maxAttempts - attempts;
-    if (!isTestStudent && remaining > 0 && status !== 'PASSED') {
-      tryAgainBtn.textContent = '🔄 Try Again (' + remaining + ' left)';
-    }
+    if (!isTestStudent && remaining > 0 && status !== 'PASSED') tryAgainBtn.textContent = '🔄 Try Again (' + remaining + ' left)';
   }
-
-  // Answer review
   var reviewDiv = document.getElementById('answerReview');
   var reviewHtml = '<h3>📝 Answer Review</h3>';
   displayQuestions.forEach(function(q, idx) {
-    var userAns = userAnswers[q.id];
-    var isCorrect = userAns === q.answer;
-    reviewHtml += '<div class="review-item ' + (isCorrect ? 'correct-item' : 'wrong-item') + '">' +
-      '<div class="review-q">' + (idx+1) + '. ' + q.text + '</div>' +
-      '<div class="review-a">' +
-        (isCorrect
-          ? '✅ <span style="color:#166534">Your answer: ' + userAns + '</span>'
-          : '❌ <span style="color:#991b1b">Your answer: ' + userAns + '</span> &nbsp;|&nbsp; ✅ <span style="color:#166534">Correct: ' + q.answer + '</span>'
-        ) +
-      '</div>' +
-      '</div>';
+    var userAns = userAnswers[q.id]; var isCorrect = userAns === q.answer;
+    reviewHtml += '<div class="review-item ' + (isCorrect ? 'correct-item' : 'wrong-item') + '"><div class="review-q">' + (idx+1) + '. ' + q.text + '</div><div class="review-a">' + (isCorrect ? '✅ <span style="color:#166534">Your answer: ' + userAns + '</span>' : '❌ <span style="color:#991b1b">Your answer: ' + userAns + '</span> &nbsp;|&nbsp; ✅ <span style="color:#166534">Correct: ' + q.answer + '</span>') + '</div></div>';
   });
   reviewDiv.innerHTML = reviewHtml;
 }
 
-// ─── TRY AGAIN ────────────────────────────────────────────────────────────────
 function tryAgain() {
-  if (!isTestStudent && attempts >= maxAttempts) {
-    alert('You have used all your attempts.');
-    return;
-  }
+  if (!isTestStudent && attempts >= maxAttempts) { alert('You have used all your attempts.'); return; }
   document.getElementById('scoreSection').style.display = 'none';
   document.getElementById('quizSection').style.display = 'block';
   renderQuestions(currentStudentId, currentNickname);
 }
 
-// ─── RESET ────────────────────────────────────────────────────────────────────
 function resetForm() {
-  currentStudentId = null; currentNickname = null;
-  currentSection = null; currentThaiName = null;
-  attempts = 0; allAttemptScores = []; userAnswers = {};
-  displayQuestions = [];
-
+  currentStudentId = null; currentNickname = null; currentSection = null; currentThaiName = null;
+  attempts = 0; allAttemptScores = []; userAnswers = {}; displayQuestions = [];
   document.getElementById('section').value = '';
   document.getElementById('thaiName').innerHTML = '<option value="">— Select your section first —</option>';
   document.getElementById('thaiName').disabled = true;
-  document.getElementById('nickname').value = '';
-  document.getElementById('studentId').value = '';
-
+  document.getElementById('nickname').value = ''; document.getElementById('studentId').value = '';
   document.getElementById('scoreSection').style.display = 'none';
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('formSection').style.display = 'block';
@@ -794,73 +383,27 @@ function resetForm() {
   document.getElementById('attemptsHistory').innerHTML = '';
   document.getElementById('answerReview').innerHTML = '';
   document.getElementById('finalMessage').style.display = 'none';
+  document.getElementById('submissionTimestamp').style.display = 'none';
   document.getElementById('tryAgainBtn').style.display = 'inline-block';
   document.getElementById('tryAgainBtn').textContent = '🔄 Try Again';
 }
 
-// ─── SUBMIT TO SUPABASE + GOOGLE SCRIPT ──────────────────────────────────────
 function submitToSheet(studentId, nickname, section, score, status) {
-  // Build answer metadata
   var ans = {};
-  displayQuestions.forEach(function(q) {
-    var userAns = userAnswers[q.id];
-    ans['Q' + q.id] = {
-      question: q.text,
-      selected: userAns,
-      correct_answer: q.answer,
-      is_correct: (userAns === q.answer)
-    };
-  });
+  displayQuestions.forEach(function(q) { var userAns = userAnswers[q.id]; ans['Q' + q.id] = { question: q.text, selected: userAns, correct_answer: q.answer, is_correct: (userAns === q.answer) }; });
   ans['_meta'] = { code: 'WS6M3A1' };
-
   var tn = currentThaiName || nickname;
   var now = new Date().toISOString().split('T')[0];
-
-  // Supabase submission
   fetch(SUPABASE_URL + '/rest/v1/worksheet_submissions', {
     method: 'POST',
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal'
-    },
-    body: JSON.stringify({
-      student_id:      studentId,
-      student_name:    tn,
-      section:         section,
-      worksheet:       'WS6',
-      score:           score,
-      total_questions: 10,
-      status:          status,
-      answers:         ans
-    })
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ student_id: studentId, student_name: tn, section: section, worksheet: 'WS6', score: score, total_questions: 10, status: status, submitted_at: submissionTimestampISO, answers: ans })
   }).catch(function(e){ console.error('Supabase error:', e); });
-
-  // Google Apps Script submission
-  var params = new URLSearchParams({
-    studentId: studentId,
-    nickname:  nickname,
-    section:   section,
-    score:     score,
-    worksheet: 'WS6',
-    date:      now,
-    status:    status
-  });
-  fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
-    .catch(function(e){ console.error('Script error:', e); });
+  var params = new URLSearchParams({ studentId: studentId, nickname: nickname, section: section, score: score, worksheet: 'WS6', date: now, status: status });
+  fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(function(e){ console.error('Script error:', e); });
 }
 
-// ─── PRINT ────────────────────────────────────────────────────────────────────
-function printWorksheet() {
-  window.print();
-}
-
-  // Auto-trigger if browser pre-fills section on reload
-  document.addEventListener('DOMContentLoaded', function() {
-    var sec = document.getElementById('section');
-    if (sec && sec.value) loadThaiNames();
-  });
+function printWorksheet() { window.print(); }
 </script>
 </body>
 </html>
