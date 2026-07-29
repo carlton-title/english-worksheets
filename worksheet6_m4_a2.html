@@ -60,7 +60,7 @@ h2 { font-size:1.15rem;font-weight:700;color:#4338ca;margin-bottom:20px; }
   .submission-timestamp { display:block!important; }
 }
 </style></head><body>
-<div class="ws-header"><h1>📖 WORKSHEET 6 📖</h1><p>Dreams and Life Goals</p><p>M4 (A1) &nbsp;|&nbsp; Sections 1–9</p></div>
+<div class="ws-header"><h1>📖 WORKSHEET 6 📖</h1><p>Dreams and Life Goals</p><p>M4 (A2) &nbsp;|&nbsp; Sections 10–13</p></div>
 <div class="info-banner"><strong>Instructions:</strong> Select your class section and name, then answer all 10 questions. You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!</div>
 <div class="card" id="formSection">
 <h2>👤 Student Information</h2>
@@ -138,7 +138,7 @@ function showTimestampEl(){
 }
 
 async function loadStudentsFromSupabase(s){
-  var r=await fetch(SUPABASE_URL+'/rest/v1/students?select=id,name,nick&section=eq.'+encodeURIComponent(s)+'&order=name.asc',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+  var r=await fetch(SUPABASE_URL+'/rest/v1/students?select=student_id,nickname,name&section=eq.'+encodeURIComponent(s)+'&is_test=neq.true&order=name.asc',{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
   studentData[s]=await r.json();
 }
 
@@ -150,7 +150,7 @@ async function loadThaiNames(section){
   if(isKyleTestMode){sel.innerHTML='';var k=document.createElement('option');k.value=KYLE_DATA.id;k.textContent=KYLE_DATA.name;k.dataset.nick=KYLE_DATA.nick;k.dataset.name=KYLE_DATA.name;sel.appendChild(k);sel.disabled=false;autoFillStudent(sel);return;}
   if(!studentData[section])await loadStudentsFromSupabase(section);
   sel.innerHTML='<option value="">— Select your name —</option>';
-  studentData[section].forEach(function(s){var o=document.createElement('option');o.value=s.id;o.textContent=s.name;o.dataset.nick=s.nick||s.name;o.dataset.name=s.name;sel.appendChild(o);});sel.disabled=false;
+  studentData[section].forEach(function(s){var o=document.createElement('option');o.value=s.student_id;o.textContent=s.name;o.dataset.nick=s.nickname||s.name;o.dataset.name=s.name;sel.appendChild(o);});sel.disabled=false;
 }
 
 function autoFillStudent(sel){
