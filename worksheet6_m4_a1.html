@@ -95,6 +95,7 @@ h2 { font-size:1.15rem;font-weight:700;color:#4338ca;margin-bottom:20px; }
 <script>
 var SUPABASE_URL='https://smtgkffnptwjlgccsrti.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtdGdrZmZucHR3amxnY2NzcnRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NDAxODIsImV4cCI6MjA5ODExNjE4Mn0.F2wlmHBtCPEqfZFiutSwtpH79TPe5GbJh1p3y6rm4qs';
+var SCRIPT_URL='https://script.google.com/macros/s/AKfycbx24U-FiTB6LvzvU_zEHqTbcC9GG-SWUhTRAHbPbO_arkcoskrV1qmjZFZ7RAF3Y7hf/exec';
 var TEST_STUDENT_IDS=['54565'];
 var maxAttempts=3;
 var isKyleTestMode=(new URLSearchParams(window.location.search).get('testmode')=='kyle');
@@ -232,10 +233,7 @@ async function submitQuiz(){
   document.getElementById('submitBtn').style.display='none';
   captureSubmissionTime(currentSection);
   if(!TEST_STUDENT_IDS.includes(currentStudentId)){
-    try{
-      var ao={};displayQuestions.forEach(function(q,i){ao['Q'+(i+1)]={question:q.text,chosen:userAnswers[q.id]||'',correct:q.answer,isCorrect:userAnswers[q.id]===q.answer};});
-      await fetch(SUPABASE_URL+'/rest/v1/worksheet_scores',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({student_id:currentStudentId,worksheet:'WS6-M4-A1',score:score,total:10,attempt:attempts,submitted_at:submissionTimestampISO,answers:ao})});
-    }catch(e){console.warn(e);}
+    submitToSheet(currentStudentId,currentNickname,currentSection,score,score>=8?'PASSED':'FAILED');
   }
   showResult(score);
 }
@@ -254,5 +252,18 @@ function showResult(score){
 }
 
 function retryQuiz(){document.getElementById('resultSection').style.display='none';document.getElementById('quizSection').style.display='block';renderQuestions(currentStudentId,currentNickname);}
+
+function submitToSheet(studentId,nickname,section,score,status){
+  var ts=document.getElementById('thaiName');
+  var tn=ts&&ts.selectedIndex>0?ts.options[ts.selectedIndex].dataset.name||nickname:nickname;
+  var ans={};
+  displayQuestions.forEach(function(q){
+    ans['Q'+q.id]={question:q.text,selected:userAnswers[q.id]||null,correct_answer:q.answer,is_correct:(userAnswers[q.id]===q.answer),question_image:'WS6M4Q'+q.id+'.png'};
+  });
+  ans['_meta']={code:'WS6M4A1'};
+  fetch(SUPABASE_URL+'/rest/v1/worksheet_submissions',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({student_id:String(studentId),student_name:tn,section:section,worksheet:'WS6',score:Number(score),total_questions:10,status:status,submitted_at:submissionTimestampISO,answers:ans})}).catch(function(e){console.warn('Supabase error:',e);});
+  var params=new URLSearchParams({studentId:studentId,nickname:nickname,section:section,score:score,worksheet:'WS6',date:new Date().toISOString().split('T')[0],status:status});
+  fetch(SCRIPT_URL+'?'+params.toString(),{method:'GET',mode:'no-cors'}).catch(function(e){console.warn('Script error:',e);});
+}
 </script>
 </body></html>
