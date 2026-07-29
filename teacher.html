@@ -581,7 +581,7 @@ async function doNoSubCheck() {
 
     var wsKey = ws; // e.g. WS1
     try {
-        var url = SUPABASE_URL + '/rest/v1/worksheet_submissions?select=student_id,worksheet_number&section=eq.' + encodeURIComponent(section) + '&worksheet_number=eq.' + encodeURIComponent(wsKey);
+        var url = SUPABASE_URL + '/rest/v1/worksheet_submissions?select=student_id,worksheet&section=eq.' + encodeURIComponent(section) + '&worksheet=eq.' + encodeURIComponent(wsKey);
         var resp = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
         var submissions = await resp.json();
         var submitted = new Set(submissions.map(function(s){ return String(s.student_id); }));
