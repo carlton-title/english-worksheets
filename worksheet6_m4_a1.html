@@ -104,15 +104,15 @@ var studentData={};
 
 // ─── SCHEDULE & TIMESTAMP ─────────────────────────────────────────────────────
 var SECTION_SCHEDULE={
-  'M4/1':{day:1,sh:14,sm:40,eh:15,em:30},
-  'M4/2':{day:6,sh:8, sm:30,eh:9, em:20},
-  'M4/3':{day:1,sh:13,sm:50,eh:14,em:40},
-  'M4/4':{day:2,sh:10,sm:10,eh:11,em:0},
-  'M4/5':{day:1,sh:13,sm:0, eh:13,em:50},
-  'M4/6':{day:3,sh:8, sm:30,eh:9, em:20},
-  'M4/7':{day:6,sh:13,sm:50,eh:14,em:40},
-  'M4/8':{day:4,sh:13,sm:0, eh:13,em:50},
-  'M4/9':{day:5,sh:13,sm:0, eh:13,em:50}
+  'M4/1': {year:2026,month:8,day:3},
+  'M4/2': {year:2026,month:8,day:7},
+  'M4/3': {year:2026,month:8,day:3},
+  'M4/4': {year:2026,month:8,day:5},
+  'M4/5': {year:2026,month:8,day:3},
+  'M4/6': {year:2026,month:8,day:7},
+  'M4/7': {year:2026,month:8,day:5},
+  'M4/8': {year:2026,month:8,day:4},
+  'M4/9': {year:2026,month:8,day:4}
 };
 var submissionTimestampISO='';
 var submissionTimestampDisplay='';
@@ -130,9 +130,7 @@ function captureSubmissionTime(section){
   submissionTimestampDisplay=hh+':'+mm+' '+ampm+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear()+', '+weekdays[now.getDay()];
   var sched=SECTION_SCHEDULE[section];
   if(!sched){submissionIsLate=false;return;}
-  if(now.getDay()!==sched.day){submissionIsLate=true;return;}
-  var mins=h*60+m;
-  submissionIsLate=(mins<sched.sh*60+sched.sm||mins>sched.eh*60+sched.em);
+  submissionIsLate=(now.getFullYear()!==sched.year||now.getMonth()+1!==sched.month||now.getDate()!==sched.day);
 }
 
 function showTimestampEl(){
