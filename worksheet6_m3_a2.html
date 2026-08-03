@@ -161,8 +161,8 @@ var KYLE_DATA = { id: '54565', name: 'Kyle', nick: 'Kyle' };
 
 // ─── SCHEDULE & TIMESTAMP ─────────────────────────────────────────────────────
 var SECTION_SCHEDULE = {
-  'M3/10': {day:5,sh:10,sm:10,eh:11,em:0},
-  'M3/12': {day:1,sh:8, sm:30,eh:9, em:20}
+  'M3/10': {year:2026, month:8, day:6},
+  'M3/12': {year:2026, month:8, day:3}
 };
 var submissionTimestampISO = '';
 var submissionTimestampDisplay = '';
@@ -180,9 +180,7 @@ function captureSubmissionTime(section) {
   submissionTimestampDisplay = hh + ':' + mm + ' ' + ampm + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ', ' + weekdays[now.getDay()];
   var sched = SECTION_SCHEDULE[section];
   if (!sched) { submissionIsLate = false; return; }
-  if (now.getDay() !== sched.day) { submissionIsLate = true; return; }
-  var mins = h * 60 + m;
-  submissionIsLate = (mins < sched.sh * 60 + sched.sm || mins > sched.eh * 60 + sched.em);
+  submissionIsLate = (now.getFullYear() !== sched.year || now.getMonth() + 1 !== sched.month || now.getDate() !== sched.day);
 }
 
 function showTimestampEl() {
