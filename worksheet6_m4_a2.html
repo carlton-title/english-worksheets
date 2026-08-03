@@ -125,7 +125,9 @@ function captureSubmissionTime(section){
   submissionTimestampDisplay=hh+':'+mm+' '+ampm+', '+months[now.getMonth()]+' '+now.getDate()+', '+now.getFullYear()+', '+weekdays[now.getDay()];
   var sched=SECTION_SCHEDULE[section];
   if(!sched){submissionIsLate=false;return;}
-  submissionIsLate=(now.getFullYear()!==sched.year||now.getMonth()+1!==sched.month||now.getDate()!==sched.day);
+  var schedDate=new Date(sched.year,sched.month-1,sched.day);
+  var todayDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  submissionIsLate=(todayDate>schedDate);
 }
 
 function showTimestampEl(){
