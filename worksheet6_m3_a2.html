@@ -87,7 +87,7 @@
   <div class="header">
     <div class="title">📚 WORKSHEET 6 🔍</div>
     <div class="subtitle">Research Skills and Information Gathering</div>
-    <div class="subtitle">M3 (A1) &nbsp;|&nbsp; Sections 2, 4 &amp; 6</div>
+    <div class="subtitle">M3 (A2) &nbsp;|&nbsp; Sections 10 &amp; 12</div>
   </div>
   <div class="info-banner">
     <p><strong>Instructions:</strong> Select your class section and name, then answer all 10 questions. You have <strong>3 attempts</strong>. Questions and choices are shuffled — good luck!</p>
@@ -137,6 +137,7 @@
       <div class="score-label">out of 10</div>
     </div>
     <div id="submissionTimestamp" class="submission-timestamp"></div>
+    <div id="scoreStudentInfo" style="font-size:.96em;font-weight:600;color:#555;margin-bottom:12px;padding:10px 16px;background:#f0f4ff;border-radius:8px;display:inline-block;margin-top:8px;"></div>
     <div class="score-status" id="scoreStatus">—</div>
     <div class="score-message" id="scoreMessage">—</div>
     <div class="attempts-history" id="attemptsHistory"></div>
@@ -328,6 +329,8 @@ function showScore(score, status) {
   circle.className = 'score-circle ' + (status === 'PASSED' ? 'passed' : status === 'AVERAGE' ? 'average' : 'failed');
   document.getElementById('scoreNumber').textContent = score;
   showTimestampEl();
+  var nameDisplay = (currentThaiName && currentThaiName !== currentNickname) ? currentThaiName + ' (' + currentNickname + ')' : currentNickname;
+  document.getElementById('scoreStudentInfo').textContent = '👤 ' + nameDisplay + '  |  ' + currentSection;
   var statusEl = document.getElementById('scoreStatus');
   statusEl.className = 'score-status status-' + status.toLowerCase();
   if (status === 'PASSED') statusEl.textContent = '🎉 PASSED! Well done!';
@@ -398,7 +401,7 @@ function submitToSheet(studentId, nickname, section, score, status) {
   fetch(SUPABASE_URL + '/rest/v1/worksheet_submissions', {
     method: 'POST',
     headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-    body: JSON.stringify({ student_id: studentId, student_name: tn, section: section, worksheet: 'WS6', score: score, total_questions: 10, status: status, submitted_at: submissionTimestampISO, answers: ans })
+    body: JSON.stringify({ student_id: studentId, student_name: tn, thai_name: currentThaiName || null, section: section, worksheet: 'WS6', score: score, total_questions: 10, status: status, submitted_at: submissionTimestampISO, answers: ans })
   }).catch(function(e){ console.error('Supabase error:', e); });
   var params = new URLSearchParams({ studentId: studentId, nickname: nickname, section: section, score: score, worksheet: 'WS6', date: now, status: status });
   fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' }).catch(function(e){ console.error('Script error:', e); });
